@@ -1,7 +1,11 @@
 # SOBIT Navigation Stack
+SOBIT EDU, MININ, PROのための自律移動パッケージ  
 
-```bash
-$ cd ~/catkin_ws/src/
-$ catkin_create_pkg sobit_mapping roscpp rospy std_msgs geometry_msgs sensor_msgs tf tf2_ros
-$ catkin_create_pkg sobit_navigation roscpp rospy std_msgs geometry_msgs sensor_msgs tf tf2_ros actionlib move_base_msgs
-```
+## [SOBIT Mapping](/sobit_mapping)  
+- 地図生成パッケージ
+
+## [SOBIT Navigation](/sobit_navigation) 
+- 自律移動パッケージ 
+
+
+- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
