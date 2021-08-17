@@ -1,0 +1,17 @@
+<!-- sobit_turtlebot_gmapping.launch -->
+<launch>
+
+    <!-- gmapping -->
+    <include file="$(find sobit_mapping)/config/mapping/sobit_turtlebot_gmapping.launch.xml"/>
+
+	<!--save_map_command.py--><!--This is not node -->
+	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" output="screen" launch-prefix="xterm -font r16 -bg darkblue -e">
+        <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
+    </node>
+    <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+
+    <!-- keyboard -->
+    <include file="$(find turtlebot_teleop)/launch/keyboard_teleop.launch"/>
+
+</launch>
