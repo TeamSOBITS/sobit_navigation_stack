@@ -15,7 +15,8 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 ---
 
 # Reference
-- [ubuntu 18.04+ROS Melodicでslam実行時トラブルシュート（シミュレータ環境）](https://demikko-no-bibouroku.hatenablog.com/entry/2020/08/11/015340)
+- 参照日：2021/08/17
+    - [ubuntu 18.04+ROS Melodicでslam実行時トラブルシュート（シミュレータ環境）](https://demikko-no-bibouroku.hatenablog.com/entry/2020/08/11/015340)
 
 ---
 
