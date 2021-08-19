@@ -9,8 +9,7 @@ $ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch
 ```
 - [sobit_turtlebot_gmapping.launch](/sobit_mapping/launch/sobit_turtlebot_gmapping.launch)
 - [ROS gmapping のパラメータ解説](https://sy-base.com/myrobotics/ros/gmapping/)
-
-[![](https://img.youtube.com/vi/jon18pnzHeI/0.jpg)](https://www.youtube.com/watch?v=jon18pnzHeI)
+- [sobit turtlebot gmapping demo(YouTube)](https://www.youtube.com/watch?v=jon18pnzHeI)
 
 ---
 
