@@ -9,7 +9,7 @@ import roslib.packages
 print "作った地図を保存するときは[Enter]キーを押してください。"
 Enter_key_trig = str(raw_input("\n\nWhen you save this map, press the 'Enter' key! : "))
 
-map_dir_path = rospy.get_param('map_save_path')
+map_dir_path = rospy.get_param('/save_map_command/map_save_path')
 map_name = "map_" + str(datetime.datetime.today().month) + "_" + str(datetime.datetime.today().day) + "_" + str(datetime.datetime.today().hour) + "_" + str(datetime.datetime.today().minute)
 
 cmd = "rosrun map_server map_saver -f " + map_dir_path + map_name
