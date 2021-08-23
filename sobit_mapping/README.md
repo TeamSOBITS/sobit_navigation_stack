@@ -17,6 +17,7 @@ SOBIT EDU, MINI用の地点登録
     - ロボットの現在地点が登録されます
     - 地点登録するには、端末で場所名を入力する
     - 登録を終了するには「q」を入力
+    - ロボットの移動は「キーボード」or「rviz上の2dnavGoal」
 - **注意点**
     - [sobit_turtlebot_gmapping.launch](/sobit_mapping/launch/sobit_turtlebot_create_location_file.launch)の「map_file」の指定を間違えない
     - Gazeboを使う場合は，[sobit_turtlebot_move_base.launch.xml](sobit_navigation/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml)の「cmd_vel」を設定を「navigation_velocity_smoother/raw_cmd_vel」から「mobile_base/commands/velocity」に変更してください。（GazeboではTopicに「cmd_vel_mux/input/navi」がないため）
