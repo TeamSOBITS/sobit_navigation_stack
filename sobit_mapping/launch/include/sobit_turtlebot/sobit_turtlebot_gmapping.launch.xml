@@ -1,3 +1,4 @@
+<!-- sobit_turtlebot_gmapping.launch.xml -->
 <launch>
     <arg name="scan_topic"  default="scan" />
     <arg name="base_frame"  default="base_footprint"/>

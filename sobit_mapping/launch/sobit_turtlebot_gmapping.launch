@@ -1,8 +1,7 @@
 <!-- sobit_turtlebot_gmapping.launch -->
 <launch>
-
     <!-- gmapping -->
-    <include file="$(find sobit_mapping)/config/mapping/sobit_turtlebot_gmapping.launch.xml"/>
+    <include file="$(find sobit_mapping)/launch/include/sobit_turtlebot/sobit_turtlebot_gmapping.launch.xml"/>
 
 	<!--save_map_command.py--><!--This is not node -->
 	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" output="screen" launch-prefix="xterm -font r16 -bg darkblue -e">
@@ -19,6 +18,4 @@
         <remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel_mux/input/teleop"/>
         <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/mobile_base/commands/velocity"/>
     </node>
-
-
 </launch>

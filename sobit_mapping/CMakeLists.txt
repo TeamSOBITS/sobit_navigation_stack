@@ -53,3 +53,10 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
+
+add_executable(create_location_file src/create_location_file.cpp)
+target_link_libraries(create_location_file  ${catkin_LIBRARIES})
+
+add_executable(display_location_marker src/display_location_marker.cpp)
+target_link_libraries(display_location_marker  ${catkin_LIBRARIES})
+
