@@ -11,7 +11,7 @@
 	</node>
 
     <!--save_3dmap_command.py--><!--This is not node -->
-	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" output="screen">
+	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" launch-prefix="xterm -font r16 -bg darkblue -e">
         <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
     </node>
 
