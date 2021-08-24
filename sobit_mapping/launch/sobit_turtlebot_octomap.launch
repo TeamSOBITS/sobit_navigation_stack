@@ -3,7 +3,7 @@
 	<include file="$(find sobit_mapping)/launch/sobit_turtlebot_rtabmap.launch" />
 
 	<!-- octomap -->
-	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node">
+	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
 		<remap from="cloud_in" to="/rtabmap/cloud_map" />
 		<param name="frame_id" type="string" value="map" />
 		<param name="latch" value="false" />
