@@ -1,7 +1,7 @@
 <launch>
 	<arg name="database_path" default="~/.ros/rtabmap.db" />
 
-	<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" launch-prefix="xterm -font r16 -bg darkblue -e">
+	<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" args="--delete_db_on_start" launch-prefix="xterm -font r16 -bg darkblue -e">
 		<param name="databse_path" type="string" value="$(arg database_path)" />
 		<param name="frame_id" type="string" value="base_footprint" />
 		<param name="odom_frame_id" type="string" value="odom" />
