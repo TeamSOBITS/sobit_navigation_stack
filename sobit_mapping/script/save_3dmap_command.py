@@ -12,27 +12,28 @@ Enter_key_trig = str(raw_input("\n\nWhen you save this map, press the 'Enter' ke
 map_dir_path = rospy.get_param('/save_3dmap_command/map_save_path')
 time_info = "_" + str(datetime.datetime.today().month) + "_" + str(datetime.datetime.today().day) + "_" + str(datetime.datetime.today().hour) + "_" + str(datetime.datetime.today().minute)
 
-map_name_3d = "map_3d_" + time_info + ".bt"
+map_name_3d = "map_3d" + time_info + ".bt"
 cmd_3d = "rosrun octomap_server octomap_saver -f " + map_dir_path + map_name_3d
 
-map_name_2d_multi = "map_2d_multi_" + time_info + ".bt"
+map_name_2d_multi = "map_2d_multi" + time_info + ".bt"
 cmd_3d_tmp = "rosrun octomap_server octomap_saver -f " + map_dir_path + map_name_2d_multi 
 cmd_2d_multi = "rosrun octomap_server octomap_server_multilayer " + map_dir_path + map_name_2d_multi
 
-map_name_2d = "map_2d_" + time_info
+map_name_2d = "map_2d" + time_info
 cmd_2d = "rosrun map_server map_saver -f " + map_dir_path + map_name_2d
 
 print "\n\n" + map_dir_path + map_name_3d
-print "\n\nPlease wait...\n\n"
+print "\n\nPlease wait...create 3d map\n\n"
 subprocess.call(cmd_3d, shell=True)# Do the command
 
 print "\n\n" + map_dir_path + cmd_2d_multi
-print "\n\nPlease wait...\n\n"
+print "\n\nPlease wait...create 3d_map_tmp\n\n"
 subprocess.call(cmd_3d_tmp, shell=True)# Do the command
+print "\n\nPlease wait...create 2d_map_multilayer\n\n"
 subprocess.call(cmd_2d_multi, shell=True)# Do the command
 
 print "\n\n" + map_dir_path + map_name_2d
-print "\n\nPlease wait...\n\n"
+print "\n\nPlease wait...create 2d_map\n\n"
 subprocess.call(cmd_2d, shell=True)# Do the command
 
 print "\n\nOK.finished. Please check it out!"
