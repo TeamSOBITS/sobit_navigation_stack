@@ -65,6 +65,7 @@ SOBIT EDU, MINI用の3次元地図生成(octomap)
 roslaunch sobit_mapping sobit_turtlebot_octomap.launch 
 ```
 - [sobit_turtlebot_octomap.launch](/sobit_mapping/launch/sobit_turtlebot_octomap.launch)
+- [Octomapで遊んでみた](https://qiita.com/ryu_software/items/d13a70aacfc6a71cacdb#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB)
 - [Setup RTAB-Map on Your Robot!](http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot)
 - [octomap_server](http://wiki.ros.org/octomap_server)
 
