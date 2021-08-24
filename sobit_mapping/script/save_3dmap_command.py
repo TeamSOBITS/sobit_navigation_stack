@@ -10,14 +10,16 @@ print "作った地図を保存するときは[Enter]キーを押してくださ
 Enter_key_trig = str(raw_input("\n\nWhen you save this map, press the 'Enter' key! : "))
 
 map_dir_path = rospy.get_param('/save_3dmap_command/map_save_path')
-map_name_3d = "map_3d_" + str(datetime.datetime.today().month) + "_" + str(datetime.datetime.today().day) + "_" + str(datetime.datetime.today().hour) + "_" + str(datetime.datetime.today().minute) + ".bt"
+time_info = "_" + str(datetime.datetime.today().month) + "_" + str(datetime.datetime.today().day) + "_" + str(datetime.datetime.today().hour) + "_" + str(datetime.datetime.today().minute)
+
+map_name_3d = "map_3d_" + time_info + ".bt"
 cmd_3d = "rosrun octomap_server octomap_saver -f " + map_dir_path + map_name_3d
 
-map_name_2d_multi = "map_2d_multi_" + str(datetime.datetime.today().month) + "_" + str(datetime.datetime.today().day) + "_" + str(datetime.datetime.today().hour) + "_" + str(datetime.datetime.today().minute) + ".bt"
+map_name_2d_multi = "map_2d_multi_" + time_info + ".bt"
 cmd_3d_tmp = "rosrun octomap_server octomap_saver -f " + map_dir_path + map_name_2d_multi 
 cmd_2d_multi = "rosrun octomap_server octomap_server_multilayer " + map_dir_path + map_name_2d_multi
 
-map_name_2d = "map_2d_" + str(datetime.datetime.today().month) + "_" + str(datetime.datetime.today().day) + "_" + str(datetime.datetime.today().hour) + "_" + str(datetime.datetime.today().minute)
+map_name_2d = "map_2d_" + time_info
 cmd_2d = "rosrun map_server map_saver -f " + map_dir_path + map_name_2d
 
 print "\n\n" + map_dir_path + map_name_3d
