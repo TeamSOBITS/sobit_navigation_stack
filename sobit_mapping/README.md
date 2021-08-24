@@ -70,7 +70,7 @@ roslaunch sobit_mapping sobit_turtlebot_octomap.launch
 - [octomap_server](http://wiki.ros.org/octomap_server)
 
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_octomap.png">
+    <img src="doc/img/sobit_turtlebot_octomap.jpg">
 </div> 
 
 ---
