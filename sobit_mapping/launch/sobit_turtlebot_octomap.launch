@@ -4,15 +4,35 @@
 
 	<!-- octomap -->
 	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
-		<remap from="cloud_in" to="/rtabmap/cloud_map" />
+		<remap from="cloud_in" to="/cloud_map" />
+        <rosparam>
+            frame_id : map
+            base_frame_id : base_footprint
+            latch : false
+            resolution : 0.05
+
+            filter_ground : true
+            ground_filter/distance : 0.10
+            ground_filter/angle : 0.20
+            ground_filter/plane_distance : 0.10
+            <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
+        </rosparam>
 		<param name="frame_id" type="string" value="map" />
+        <param name="base_frame_id" type="string" value="base_footprint" />
 		<param name="latch" value="false" />
+        <param name="filter_ground" value="true" />
+        
 		<param name="resolution" value="0.05" />
 	</node>
 
     <!--save_3dmap_command.py--><!--This is not node -->
+    <arg name="map_path" default="$(find sobit_mapping)/map/" />
 	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" launch-prefix="xterm -font r16 -bg darkblue -e">
-        <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
+        <param name="map_save_path" type="str" value="$(arg map_path)"/>
+    </node>
+    <!--projected_map_saver--><!--This is not node -->
+	<node name="projected_map_saver" pkg="sobit_mapping" type="projected_map_saver" launch-prefix="xterm -font r16 -bg darkblue -e">
+        <param name="map_save_path" type="str" value="$(arg map_path)"/>
     </node>
 
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->

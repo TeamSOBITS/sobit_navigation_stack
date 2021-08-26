@@ -1,0 +1,7 @@
+image: /home/sobits/catkin_ws/src/sobit_navigation_stack/sobit_mapping/map//projected_map_8_26_19_54.pgm
+resolution: 0.050000
+origin: [-2.250000, -5.200000, -nan]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

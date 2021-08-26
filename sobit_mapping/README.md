@@ -74,6 +74,26 @@ roslaunch sobit_mapping sobit_turtlebot_octomap.launch
     <img src="doc/img/sobit_turtlebot_octomap.jpg">
 </div> 
 
+- **各端末について**
+<div align="center">
+    <img src="doc/img/sobit_turtlebot_octomap_terminal.png">
+</div> 
+
+1. rtabmap
+    - 座標情報が付与された点群をOctoMapに付与するための処理を行う(rtabmapでも地図生成している)
+2. octomap_server_node
+    - rtabmapから送られてくる点群を用いてOctoMapを作成する
+3. turtlebot_teleop_key
+    - キーボードで入力した方向でロボットを移動させる
+4. save_3dmap_command
+    - 3次元地図や2次元地図を保存する
+    - save_3dmap_commandの端末上で「Enterキー」を入力すると保存
+5. projected_map_saver
+    - 立体的な障害物を押しつぶした2次元地図を保存する
+    - projected_map_saverの端末上で「sキー」を入力すると保存
+<div align="center">
+    <img src="doc/img/nomal_map_and_projected_map.jpg">
+</div> 
 ---
 
 - [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
