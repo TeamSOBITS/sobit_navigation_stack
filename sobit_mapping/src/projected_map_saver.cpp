@@ -75,7 +75,7 @@ class MapGenerator
       ));
       double yaw, pitch, roll;
       mat.getEulerYPR(yaw, pitch, roll);
-
+      if(!std::isfinite(yaw)) yaw = 0.0;
       fprintf(yaml, "image: %s\nresolution: %f\norigin: [%f, %f, %f]\nnegate: 0\noccupied_thresh: 0.65\nfree_thresh: 0.196\n\n",
               mapdatafile.c_str(), map_.info.resolution, map_.info.origin.position.x, map_.info.origin.position.y, yaw);
 
@@ -176,7 +176,7 @@ int main(int argc, char** argv)
   std::stringstream s;
   ros::NodeHandle pnh("~");
   std::string map_save_path = pnh.param<std::string>( "map_save_path", "/map" );
-  mapname = map_save_path + "/" + mapname 
+  mapname = map_save_path + mapname 
             + "_" + to_string(localTime->tm_mon + 1) 
             + "_" + to_string(localTime->tm_mday)
             + "_" + to_string(localTime->tm_hour)

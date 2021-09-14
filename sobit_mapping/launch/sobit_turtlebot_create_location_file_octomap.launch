@@ -1,7 +1,7 @@
 <!-- sobit_turtlebot_create_location_file.launch -->
 <launch>
     <!-- Navigation -->
-    <include file="$(find sobit_navigation)/launch/sobit_turtlebot_navigation.launch"/>
+    <include file="$(find sobit_navigation)/launch/sobit_turtlebot_navigation_octomap.launch"/>
     
     <!-- keyboard -->
     <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
