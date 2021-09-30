@@ -15,6 +15,12 @@
             ground_filter/distance : 0.10
             ground_filter/angle : 0.20
             ground_filter/plane_distance : 0.10
+
+            <!-- pointcloud_min_z : 0.1 -->
+            <!-- pointcloud_max_z : 1.0  -->
+            <!-- occupancy_min_z : 0.4 -->
+            <!-- occupancy_max_z : 1.0 -->
+
             <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
         </rosparam>
 		<param name="frame_id" type="string" value="map" />
