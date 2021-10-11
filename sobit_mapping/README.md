@@ -80,6 +80,22 @@ SOBIT EDU, MINI用の地点登録
         - [sobit_turtlebot_move_base_octomap.launch.xml](sobit_navigation/launch/include/sobit_turtlebot_octomap/sobit_turtlebot_move_base_octomap.launch.xml)の「cmd_vel」を設定を「navigation_velocity_smoother/raw_cmd_vel」から「mobile_base/commands/velocity」に変更（GazeboではTopicに「cmd_vel_mux/input/navi」がないため）
 
 - **使い方**
+```bash
+$ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
+```
+- [sobit_turtlebot_create_location_file.launch](/sobit_mapping/launch/sobit_turtlebot_create_location_file.launch)
+
+    or 
+
+```bash
+$ roslaunch sobit_mapping sobit_turtlebot_create_location_file_octomap.launch 
+```
+- [sobit_turtlebot_create_location_file_octomap.launch](/sobit_mapping/launch/sobit_turtlebot_create_location_file_octomap.launch)
+
+<div align="center">
+    <img src="doc/img/sobit_turtlebot_create_location_file.png">
+</div> 
+
     - ロボットの現在地点が登録されます
     - 地点登録するには、端末で場所名を入力する
     - 登録を終了するには「q」を入力
@@ -108,24 +124,8 @@ SOBIT EDU, MINI用の地点登録
         ========================================
         ```
 - **注意点**
-    - [sobit_turtlebot_gmapping.launch](/sobit_mapping/launch/sobit_turtlebot_create_location_file.launch)の「map_file」の指定を間違えない
+    - 「map_file」の指定を間違えない
     - launch起動直後、端末に多くの情報が流れるため、「Location Name :」という表記が流されてしまうかもしれませんが、 気にせずに場所名を入力すれば地点登録されます
-
-```bash
-$ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
-```
-- [sobit_turtlebot_create_location_file.launch](/sobit_mapping/launch/sobit_turtlebot_create_location_file.launch)
-
-    or 
-
-```bash
-$ roslaunch sobit_mapping sobit_turtlebot_create_location_file_octomap.launch 
-```
-- [sobit_turtlebot_create_location_file_octomap.launch](/sobit_mapping/launch/sobit_turtlebot_create_location_file_octomap.launch)
-
-<div align="center">
-    <img src="doc/img/sobit_turtlebot_create_location_file.png">
-</div> 
 
 ---
 
