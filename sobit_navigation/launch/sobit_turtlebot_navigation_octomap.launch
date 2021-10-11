@@ -1,4 +1,4 @@
-<!-- sobit_turtlebot_navigation.launch -->
+<!-- sobit_turtlebot_navigation_octomap.launch -->
 <launch>
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
