@@ -6,17 +6,16 @@ SOBIT EDU, MININ, PROのための自律移動パッケージ
 $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh 
 ```
 
-## [SOBIT Mapping](/sobit_mapping)  
-- 地図生成パッケージ
+# Manual
+- [SOBIT Mappingの使い方](sobit_mapping)
+- [SOBIT Navigationの使い方](sobit_navigation)
+- [SOBIT Navigation Libraryの使用方法](doc/readme/about_sobit_navigation_library.md)
 
-## [SOBIT Navigation](/sobit_navigation) 
-- 自律移動パッケージ 
-
----
-
-# Reference
-- 参照日：2021/08/17
-    - [ubuntu 18.04+ROS Melodicでslam実行時トラブルシュート（シミュレータ環境）](https://demikko-no-bibouroku.hatenablog.com/entry/2020/08/11/015340)
+# Tips
+- [AzureKinectでRTABMapを実行するための注意点](doc/readme/azure_kinect_rtabmap.md)
+- [障害物回避のためのパラメータ調整](doc/readme/obstacle_avoidance.md)
+- [全方向移動するためのパラメータ設定](doc/readme/omni_directional_mobile.md)
+- [projected_map(立体的な障害物を押しつぶした2次元地図)を用いたナビゲーションをする方法](doc/readme/projected_map_navigation.md)
 
 ---
 
