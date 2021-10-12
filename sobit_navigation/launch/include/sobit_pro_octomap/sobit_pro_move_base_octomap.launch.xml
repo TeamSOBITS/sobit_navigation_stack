@@ -1,26 +1,23 @@
-<!-- sobit_turtlebot_move_base.launch.xml -->
+<!-- sobit_pro_move_base.launch.xml -->
 <!-- 
     ROS navigation stack with velocity smoother and safety (reactive) controller
 -->
 <launch>
-    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_velocity_smoother.launch.xml"/>
-    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_safety_controller.launch.xml"/>
-    
     <arg name="odom_frame_id"   default="odom"/>
     <arg name="base_frame_id"   default="base_footprint"/>
     <arg name="global_frame_id" default="map"/>
     <arg name="odom_topic" default="odom" />
     <arg name="laser_topic" default="scan" />
-    <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_turtlebot/dummy.yaml"/>
+    <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_pro/dummy.yaml"/>
     <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -bg darkblue -e">
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_octomap/octomap_costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_octomap/octomap_costmap_common_params.yaml" command="load" ns="local_costmap" />   
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/local_costmap_params.yaml" command="load" />   
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/global_costmap_params.yaml" command="load" />
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/dwa_local_planner_params.yaml" command="load" />
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/move_base_params.yaml" command="load" />
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/global_planner_params.yaml" command="load" />
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/navfn_global_planner_params.yaml" command="load" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro_octomap/octomap_costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro_octomap/octomap_costmap_common_params.yaml" command="load" ns="local_costmap" />   
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro/local_costmap_params.yaml" command="load" />   
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro/dwa_local_planner_params.yaml" command="load" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro/move_base_params.yaml" command="load" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro/global_planner_params.yaml" command="load" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro/navfn_global_planner_params.yaml" command="load" />
         <!-- external params file that could be loaded into the move_base namespace -->
         <rosparam file="$(arg custom_param_file)" command="load" />
         
@@ -31,10 +28,7 @@
         <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
         <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
 
-        <!-- 実機を使うなら -->
-        <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/> 
-        <!-- Gazeboを使うなら -->
-        <!-- <remap from="cmd_vel" to="mobile_base/commands/velocity"/> -->
+        <remap from="cmd_vel" to="mobile_base/commands/velocity"/>
         
         <remap from="odom" to="$(arg odom_topic)"/>
         <remap from="scan" to="$(arg laser_topic)"/>

@@ -1,4 +1,4 @@
-<!-- sobit_turtlebot_amcl.launch.xml -->
+<!-- sobit_pro_amcl.launch.xml -->
 <launch>
     <arg name="use_map_topic"   default="false"/>
     <arg name="scan_topic"      default="scan"/> 
