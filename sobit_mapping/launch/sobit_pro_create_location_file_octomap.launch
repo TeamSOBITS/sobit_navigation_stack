@@ -1,0 +1,19 @@
+<!-- sobit_turtlebot_create_location_file.launch -->
+<launch>
+    <!-- Navigation -->
+    <include file="$(find sobit_navigation)/launch/sobit_pro_navigation_octomap.launch"/>
+    
+    <!-- keyboard -->
+    <include file="$(find sobit_pro_bringup)/launch/sobit_pro_ps4_control.launch"/>
+
+    <!-- create_location_file(ymal型ver) -->
+    <arg name="location_folder_path" default="$(find sobit_mapping)/map"/>
+    <group ns = "create_location_file">
+        <node pkg="sobit_mapping" type="create_location_file"  name="create_location_file" output="screen">
+            <param name="save_location_folder_path" type="string" value="$(arg location_folder_path)"/>
+        </node>
+        <node pkg="sobit_mapping" type="display_location_marker"  name="display_location_marker">
+        </node>
+    </group>
+
+</launch>

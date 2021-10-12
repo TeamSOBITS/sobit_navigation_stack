@@ -1,6 +1,6 @@
 <launch>
     <!-- rtabmap -->
-	<include file="$(find sobit_mapping)/launch/include/sobit_turtlebot_rtabmap.launch.xml" />
+	<include file="$(find sobit_mapping)/launch/include/sobit_pro_rtabmap.launch.xml" />
 
 	<!-- octomap -->
 	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
@@ -45,11 +45,5 @@
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
 
     <!-- keyboard -->
-    <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
-    <node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard" launch-prefix="xterm -font r16 -bg darkblue -e">
-        <param name="scale_linear" value="0.5" type="double"/>
-        <param name="scale_angular" value="1.5" type="double"/>
-        <remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel_mux/input/teleop"/>
-        <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/mobile_base/commands/velocity"/>
-    </node>
+    <include file="$(find sobit_pro_bringup)/launch/sobit_pro_ps4_control.launch"/>
 </launch>

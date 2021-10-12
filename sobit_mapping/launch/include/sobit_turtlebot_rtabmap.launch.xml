@@ -1,3 +1,4 @@
+<!-- sobit_turtlebot_rtabmap.launch.xml -->
 <launch>
 	<arg name="database_path" default="~/.ros/rtabmap.db" />
 

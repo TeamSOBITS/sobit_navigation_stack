@@ -23,7 +23,7 @@ obstacle_layer:
   publish_voxel_map: false
   observation_sources: laser_scan_sensor rgbd_sensor
   laser_scan_sensor: {sensor_frame: /base_laser_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
-  rgbd_sensor : {sensor_frame: /camera_depth_optical_frame, data_type: PointCloud2, topic: /camera/depth/points, marking: true, clearing: true}
+  rgbd_sensor : {sensor_frame: /camera_depth_optical_frame, data_type: PointCloud2, topic: /points2, marking: true, clearing: true}
   # for debugging only, let's you see the entire voxel grid
 
 #cost_scaling_factor and inflation_radius were now moved to the inflation_layer ns
