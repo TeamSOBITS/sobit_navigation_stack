@@ -53,4 +53,4 @@ DWAPlannerROS:
 
 
 # Differential-drive robot configuration - necessary?
-#  holonomic_robot: false
+  holonomic_robot: false
