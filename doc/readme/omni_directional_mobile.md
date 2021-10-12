@@ -33,7 +33,7 @@ move_baseでは，経路生成としてA*とDWAが用いられます．
     ```
 
 ## holonomic_robot (bool, default: true)
-- ホロノミックなロボットかどうか。全方位移動車両の場合にはtrueにする。差動二輪やステアリング型の場合はfalse。
+- ホロノミックなロボットかどうか。全方位移動車両の場合にはtrueにする。差動二輪やステアリング型の場合はfalse。  
 （要するにロボットが真横に旋回せずに直接移動できるかどうか）
     - [例：dwa_local_planner_params.yaml](sobit_navigation/param/sobit_pro/dwa_local_planner_params.yaml)
     ```xml
