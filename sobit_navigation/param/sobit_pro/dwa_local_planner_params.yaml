@@ -35,21 +35,36 @@ DWAPlannerROS:
   vtheta_samples: 20  # 20
 
 # Trajectory Scoring Parameters
-  path_distance_bias: 64.0      # 32.0   - weighting for how much it should stick to the global path plan
-  goal_distance_bias: 24.0      # 24.0   - wighting for how much it should attempt to reach its goal
-  occdist_scale: 0.5            # 0.01   - weighting for how much the controller should avoid obstacles
-  forward_point_distance: 0.325 # 0.325  - how far along to place an additional scoring point
-  stop_time_buffer: 0.2         # 0.2    - amount of time a robot must stop in before colliding for a valid traj.
-  scaling_speed: 0.25           # 0.25   - absolute velocity at which to start scaling the robot's footprint
-  max_scaling_factor: 0.2       # 0.2    - how much to scale the robot's footprint when at speed.
-  dwa: true
-  heading_lookahead: 0.60
-  heading_scoring: true
-  meter_scoreing: true
-  p_dist_scale: 0.6
-  g_dist_scale: 0.8
-  occdist_scale: 0.01
-  heading_scoring_timestep: 0.8 
+  # 各軌道のスコアリングに使用されるコスト関数の計算式
+  #cost =
+  #  path_distance_bias * (軌道の端点からパスまでの距離[m])
+  #  + goal_distance_bias * (軌道の終点からローカルゴールまでの距離[m])
+  #  + occdist_scale * (障害物コスト(0-254)の軌道に沿った最大障害物コスト)
+  #  + twirling_scale * (軌道の旋回速度の絶対値)
+  path_distance_bias: 64.0      # (double, default: 0.6) - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
+  goal_distance_bias: 24.0      # (double, default: 0.8) - コントローラーがどれだけ障害物をよけようとするかの重み
+  occdist_scale: 0.5            # (double, default: 0.01) -  ロボットの方向の変更にペナルティを課すための重み
+  twirling_scale: 0.0           # (double, default: 0.325) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
+  forward_point_distance: 0.325 # (double, default: 0.325) - 軌道が有効とみなされるために、ロボットが衝突前に停止しなければならない時間を秒単位で表示する
+  stop_time_buffer: 0.2         # (double, default: 0.2) - ロボットのフットプリントのスケーリングを開始する速度の絶対値(m/s)
+  scaling_speed: 0.25           # (double, default: 0.25) - ロボットのフットプリントをスケーリングする最大係数
+  max_scaling_factor: 0.2       # (double, default: 0.2) - プランナーが計画時に使用するコストグリッドを公開するかどうか。
+
+  # 経路のコストを計算する際に距離をコストマップのセル数で計算する場合はこちら
+  meter_scoreing: false          # (bool, default: false) - 経路のコストを計算する際に距離をコストマップのセル数で計算するか、距離で計算するか。
+  # ローカルパスのコスト
+  p_dist_scale: 0.6             # (double, default 0.6) - p_distを大きくするとよりグローバルパス近づく経路が生成される
+  g_dist_scale: 0.8             # (double, default 0.8) - d_distを大きくするとよりローカルゴール（グローバルパスがローカルコストマップウィンドウの端から出て行く点）を目指す経路が生成される
+  occdist_scale: 0.01           # (double, default 0.01) - occdist_scaleを大きくすると、障害物をより大きく回避するようなパスが生成される
+
+  heading_lookahead: 0.60       # (double [m], default: 0.325) - その場回転を評価するとき、どのくらい先をみるか。
+                                # ロボットが前進できない時、その場回転を選択することがある。その時、どれくらい先を見てコストを評価するか。
+                                # ロボットの少し先をスコアリングポイントとすることで、ロボットの向きを合わせることができる。
+  heading_scoring: true         # (bool, default: false) - コストを評価するとき、ロボットの向きも考慮に入れるかどうか。
+
+  heading_scoring_timestep: 0.8 # (double [s], default: 0.8) - 何秒先を見るか。heading_scoringをtrueにした時に使用される。
+  
+  dwa: true                     # (bool, default: true) - 経路計画の際にdwa（ダイナミックウィンドウアプローチ）という手法を使用するか。
 
 # Oscillation Prevention Parameters
   oscillation_reset_dist: 0.05  # 0.05   - how far to travel before resetting oscillation flags
@@ -58,7 +73,6 @@ DWAPlannerROS:
   publish_traj_pc : true
   publish_cost_grid_pc: true
   global_frame_id: odom
-
 
 # Differential-drive robot configuration - necessary?
   holonomic_robot: true
