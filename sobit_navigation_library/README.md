@@ -25,7 +25,7 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Position(
     const float64 qw,               // 姿勢 
     const std::string& frame_id,    // 基準フレーム
     const bool is_wait = false      // 移動完了までプログラムを待機させるか
-);               
+)          
 ```
 
 ### move2Location
