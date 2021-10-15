@@ -9,7 +9,7 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 # Manual
 - [SOBIT Mappingの使い方](sobit_mapping)
 - [SOBIT Navigationの使い方](sobit_navigation)
-- [SOBIT Navigation Libraryの使用方法](doc/readme/about_sobit_navigation_library.md)
+- [SOBIT Navigation Libraryの使い方](sobit_navigation_library)
 
 # Tips
 - [AzureKinectでRTABMapを実行するための注意点](doc/readme/azure_kinect_rtabmap.md)
