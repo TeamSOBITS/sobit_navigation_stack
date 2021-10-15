@@ -3,32 +3,43 @@
 ---
 
 ## ロボット構成パラメータ
-- 座標軸毎の最大加速度(m/s^2), 最大旋回加速度(rad/s^2)
 - acc_lim_x: 2.5 #(double, default: 2.5)
+    - x座標軸毎の最大加速度(m/s^2)
 - acc_lim_y: 2.5 #(double, default: 2.5) 
+    - y座標軸毎の最大加速度(m/s^2)
     - y軸方向に動けないロボットの場合は0にする
 - acc_lim_theta: 3.2 #(double, defautl: 3.2)
+    - 最大旋回加速度(rad/s^2)
 - acc_lim_trans: 1.0 #(double, default: 1.0)
+    - 最大加速度(m/s^2)？
 
-- 最大、最小並進速度(m/s)
 - max_vel_trans: 0.55 #(double, default: 0.55) 
-    - ロボットが直線上を移動するときの最大速度?
+    - 最大並進速度(m/s)
 - min_vel_trans: 0.1  #(double, default: 0.1) 
+    - 最小並進速度(m/s)
     - 負の値を設定すると後退動作が可能になる。
 
-- 座標軸毎の最大速度、最小速度(m/s)
 - max_vel_x: 0.55 #(double, default: 0.55) 
+    - x座標軸毎の最大速度(m/s)
     - x軸方向の移動速度=max_vel_transと同値にする
 - min_vel_x: 0.0  #(double, default: 0.0) 
+    - x座標軸毎の最小速度(m/s)
     - 負の値を設定すると後退動作が可能になる。
 - max_vel_y: 0.1  #(double, default: 0.1) 
+    - y座標軸毎の最大速度(m/s)
     - y軸方向に動けないロボットの場合は0にする
 - min_vel_y: -0.1 #(double, default: -0.1) 
+    - y座標軸毎の最小速度(m/s)
     - y軸方向に動けないロボットの場合は0にする
 
-- 最大, 最小旋回速度(rad/s)
 - max_vel_theta: 1.0 #(double, default: 1.0)
+    - 最大旋回速度(rad/s)
 - min_vel_theta: 0.4 #(double, default: 0.4)
+    - 最小旋回速度(rad/s)
+
+- holonomic_robot (bool, default: true)
+    - ホロノミックなロボットかどうか。全方位移動車両の場合にはtrueにする。差動二輪やステアリング型の場合はfalse。  
+    - 要するにロボットが真横に旋回せずに直接移動できるかどうか
 
 ---
 
@@ -181,12 +192,13 @@ cost =
 
 - restore_defaults: false #(bool default: false)
     - 元の構成に戻す
-    
+
 ---
 
 # 参考サイト
 - [ROSのナビゲーションmove_baseについて理解を深めてみる](https://sy-base.com/myrobotics/ros/ros-move_base/?amp)
 - [DWA Plannerの設定可能パラメータ一覧](https://qiita.com/np_hsgw/items/ab3d4e34f4c1c160871d)
+- [経路探索のパラメータの設定](http://dailyrobottechnology.blogspot.com/2014/12/812.html)
 
 ---
 
