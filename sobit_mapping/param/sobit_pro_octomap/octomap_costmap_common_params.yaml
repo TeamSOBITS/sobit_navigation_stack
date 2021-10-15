@@ -7,7 +7,7 @@ map_type: voxel
 
 obstacle_layer:
   enabled:              true
-  max_obstacle_height:  1.5
+  max_obstacle_height:  2.0
   origin_z:             0.0
   z_resolution:         0.2
   z_voxels:             2

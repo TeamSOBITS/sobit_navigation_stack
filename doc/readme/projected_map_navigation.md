@@ -12,7 +12,7 @@
 ```
 
 ## 02. コストマップのパラメータを変更
-- observation_sourcesにLRFとRGB-Dセンサのデータを追加する
+1. observation_sourcesにLRFとRGB-Dセンサのデータを追加する
     - [例1：octomap_costmap_common_params.yaml](sobit_navigation/param/sobit_pro_octomap/octomap_costmap_common_params.yaml)
     ```xml
     observation_sources:  scan rgbd
@@ -39,6 +39,15 @@
     laser_scan_sensor: {sensor_frame: /base_laser_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
     rgbd_sensor : {sensor_frame: /camera_depth_optical_frame, data_type: PointCloud2, topic: /camera/depth/points, marking: true, clearing: true}
     ```
+2.  orizin_zを変更
+    デフォルト値の「0.0」のままだと，RGB-Dセンサのセンサデータがコストマップに反映されません
+     - [例1：octomap_costmap_common_params.yaml](sobit_navigation/param/sobit_pro_octomap/octomap_costmap_common_params.yaml)
+     ```xml
+     origin_z: 1.5
+     ```
+     <div align="center">
+    <img src="doc/img/fix_costmap.png">
+    </div> 
 
 ---
 
