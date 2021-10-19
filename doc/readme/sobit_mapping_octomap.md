@@ -16,12 +16,12 @@ roslaunch sobit_mapping sobit_pro_octomap.launch
 ```
 
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_octomap.jpg">
+    <img src="doc/img/sobit_turtlebot_octomap.jpg" width="320">
 </div> 
 
-- **各端末について**
+### 各端末について
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_octomap_terminal.png">
+    <img src="doc/img/sobit_turtlebot_octomap_terminal.png" width="320">
 </div> 
 
 1. rtabmap
