@@ -1,6 +1,8 @@
 # 地点登録
 OctoMapは，3次元占有グリッドマップを生成します
 
+- [目次に戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/tree/main/sobit_mapping)
+
 ## 01. [sobit_turtlebot_create_location_file.launch](sobit_mapping/launch/sobit_pro_create_location_file_octomap.launch)
 SOBIT EDU, MINI用の地点登録(Gmapping)
 - **使う前に**
@@ -79,7 +81,7 @@ SOBIT PRO用の地点登録(Octomap)
 
 ---
 
-- [目次に戻る](#sobit-mapping)
+- [目次に戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/tree/main/sobit_mapping)
 
 ---
 
