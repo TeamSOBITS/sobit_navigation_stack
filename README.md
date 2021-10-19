@@ -8,6 +8,9 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 
 # Manual
 - [SOBIT Mappingの使い方](sobit_mapping)
+    1. [2次元地図生成(gmapping)](doc/readme/sobit_mapping_gmapping.md)
+    2. [3次元地図生成(octomap)](doc/readme/sobit_mapping_octomap.md)
+    3. [地点登録](doc/readme/sobit_mapping_create_location_file.md)
 - [SOBIT Navigationの使い方](sobit_navigation)
 - [SOBIT Navigation Libraryの使い方](sobit_navigation_library)
 
