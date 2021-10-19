@@ -37,7 +37,7 @@ roslaunch sobit_mapping sobit_pro_octomap.launch
     - 立体的な障害物を押しつぶした2次元地図を保存する
     - projected_map_saverの端末上で「sキー」を入力すると保存
 <div align="center">
-    <img src="doc/img/nomal_map_and_projected_map.jpg">
+    <img src="doc/img/nomal_map_and_projected_map.jpg" width="640">
 </div> 
 
 # 参考サイト
