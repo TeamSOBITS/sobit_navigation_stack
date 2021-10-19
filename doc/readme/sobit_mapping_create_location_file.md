@@ -44,9 +44,6 @@ SOBIT PRO用の地点登録(Octomap)
     ```
 
 ## How to Use
-<div align="center">
-    <img src="doc/img/sobit_turtlebot_create_location_file.png" width="640">
-</div> 
 - ロボットの現在地点が登録されます
 - 地点登録するには、端末で場所名を入力する
 - 登録を終了するには「q」を入力
@@ -79,6 +76,10 @@ transform.getRotation().w(): 0.0307304
 - **注意点**
     - 「map_file」の指定を間違えない
     - launch起動直後、端末に多くの情報が流れるため、「Location Name :」という表記が流されてしまうかもしれませんが、 気にせずに場所名を入力すれば地点登録されます
+
+<div align="center">
+    <img src="doc/img/sobit_turtlebot_create_location_file.png" width="640">
+</div> 
 
 ---
 
