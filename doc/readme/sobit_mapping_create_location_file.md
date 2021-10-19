@@ -14,7 +14,7 @@ SOBIT EDU, MINI用の地点登録(Gmapping)
     $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
     ```
 
-## 02. [sobit_pro_create_location_file_octomap.launch](sobit_mapping/launch/sobit_pro_create_location_file_octomap.launch)
+## 02. [sobit_turtlebot_create_location_file_octomap.launch](sobit_mapping/launch/sobit_turtlebot_create_location_file_octomap.launch)
 SOBIT EDU, MINI用の地点登録(Octomap)
 - **使う前に**
     1. [sobit_turtlebot_navigation_octomap.launch](sobit_navigation/launch/sobit_turtlebot_navigation_octomap.launch)の「map_file」に地点登録するMapのファイルパスを記入
@@ -45,7 +45,7 @@ SOBIT PRO用の地点登録(Octomap)
 
 ## How to Use
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_create_location_file.png">
+    <img src="doc/img/sobit_turtlebot_create_location_file.png" width="640">
 </div> 
 
     - ロボットの現在地点が登録されます
