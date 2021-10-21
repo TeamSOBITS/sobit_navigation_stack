@@ -52,18 +52,18 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 
 	ofstream ofs(file_name_, ios::app);
 	if(ofs) {
+		ofs << "\t- {" <<std::endl;
+		ofs << "\t\tlocation_name: " << location_name <<std::endl;
+		ofs << "\t\ttranslation_x: " << transform.getOrigin().x() << std::endl;
+		ofs << "\t\ttranslation_y: " << transform.getOrigin().y() << std::endl;
+		ofs << "\t\ttranslation_z: " << transform.getOrigin().z() << std::endl;
 		ofs << std::endl;
-		ofs << "# "<< location_name << " #" << std::endl;
+		ofs << "\t\trotation_x: " << transform.getRotation().x() << std::endl;
+		ofs << "\t\trotation_y: " << transform.getRotation().y() << std::endl;
+		ofs << "\t\trotation_z: " << transform.getRotation().z() << std::endl;
+		ofs << "\t\trotation_w: " << transform.getRotation().w() << std::endl;
+		ofs << "\t}" <<std::endl;
 		ofs << std::endl;
-		ofs << "/" << location_name << "_translation_x: " << transform.getOrigin().x() << std::endl;
-		ofs << "/" << location_name << "_translation_y: " << transform.getOrigin().y() << std::endl;
-		ofs << "/" << location_name << "_translation_z: " << transform.getOrigin().z() << std::endl;
-		ofs << std::endl;
-		ofs << "/" << location_name << "_rotation_x: " << transform.getRotation().x() << std::endl;
-		ofs << "/" << location_name << "_rotation_y: " << transform.getRotation().y() << std::endl;
-		ofs << "/" << location_name << "_rotation_z: " << transform.getRotation().z() << std::endl;
-		ofs << "/" << location_name << "_rotation_w: " << transform.getRotation().w() << std::endl;
-		ofs << "#======================================#" << std::endl;
 		ofs.close();
 		if(first_flag_ == true)
 			std::cout <<  "「" << file_name_ << "　」として保存完了。"  << std::endl;
@@ -113,6 +113,14 @@ void CreateLocationFile::createLocationFile() {
 	bool is_saved = false;
 	std::string location_name;
 	std::vector<std::string> location_names;
+	ofstream ofs(file_name_, ios::app);
+	if(ofs) {
+		ofs << "location_pose:" <<std::endl;
+	} else {
+		ofs.close();
+		std::cout <<  file_name_ << "　は作成できませんでした。ｍ(_ _;)ｍ"  << std::endl;
+		std::cout << "ファイルのパスを確認して下さい。" << std::endl;
+	}	
 	while(true) {
 		std::cout <<"========================================" << std::endl;
 		std::cout <<"[ 登録地点一覧 ]" << std::endl;
