@@ -57,7 +57,6 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 		ofs << "        translation_x: " << transform.getOrigin().x() << std::endl;
 		ofs << "        translation_y: " << transform.getOrigin().y() << std::endl;
 		ofs << "        translation_z: " << transform.getOrigin().z() << std::endl;
-		ofs << std::endl;
 		ofs << "        rotation_x: " << transform.getRotation().x() << std::endl;
 		ofs << "        rotation_y: " << transform.getRotation().y() << std::endl;
 		ofs << "        rotation_z: " << transform.getRotation().z() << std::endl;
