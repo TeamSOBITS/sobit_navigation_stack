@@ -53,14 +53,14 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 	ofstream ofs(file_name_, ios::app);
 	if(ofs) {
 		ofs << "    - {" <<std::endl;
-		ofs << "        location_name: " << location_name <<std::endl;
-		ofs << "        translation_x: " << transform.getOrigin().x() << std::endl;
-		ofs << "        translation_y: " << transform.getOrigin().y() << std::endl;
-		ofs << "        translation_z: " << transform.getOrigin().z() << std::endl;
-		ofs << "        rotation_x: " << transform.getRotation().x() << std::endl;
-		ofs << "        rotation_y: " << transform.getRotation().y() << std::endl;
-		ofs << "        rotation_z: " << transform.getRotation().z() << std::endl;
-		ofs << "        rotation_w: " << transform.getRotation().w() << std::endl;
+		ofs << "        location_name: \"" << location_name << "\","<<std::endl;
+		ofs << "        translation_x: " << transform.getOrigin().x() << "," << std::endl;
+		ofs << "        translation_y: " << transform.getOrigin().y() << "," << std::endl;
+		ofs << "        translation_z: " << transform.getOrigin().z() << "," << std::endl;
+		ofs << "        rotation_x: " << transform.getRotation().x() << "," << std::endl;
+		ofs << "        rotation_y: " << transform.getRotation().y() << "," << std::endl;
+		ofs << "        rotation_z: " << transform.getRotation().z() << "," << std::endl;
+		ofs << "        rotation_w: " << transform.getRotation().w() << "," << std::endl;
 		ofs << "    }" <<std::endl;
 		ofs << std::endl;
 		ofs.close();
