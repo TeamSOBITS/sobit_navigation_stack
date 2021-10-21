@@ -52,17 +52,17 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 
 	ofstream ofs(file_name_, ios::app);
 	if(ofs) {
-		ofs << "\t- {" <<std::endl;
-		ofs << "\t\tlocation_name: " << location_name <<std::endl;
-		ofs << "\t\ttranslation_x: " << transform.getOrigin().x() << std::endl;
-		ofs << "\t\ttranslation_y: " << transform.getOrigin().y() << std::endl;
-		ofs << "\t\ttranslation_z: " << transform.getOrigin().z() << std::endl;
+		ofs << "    - {" <<std::endl;
+		ofs << "        location_name: " << location_name <<std::endl;
+		ofs << "        translation_x: " << transform.getOrigin().x() << std::endl;
+		ofs << "        translation_y: " << transform.getOrigin().y() << std::endl;
+		ofs << "        translation_z: " << transform.getOrigin().z() << std::endl;
 		ofs << std::endl;
-		ofs << "\t\trotation_x: " << transform.getRotation().x() << std::endl;
-		ofs << "\t\trotation_y: " << transform.getRotation().y() << std::endl;
-		ofs << "\t\trotation_z: " << transform.getRotation().z() << std::endl;
-		ofs << "\t\trotation_w: " << transform.getRotation().w() << std::endl;
-		ofs << "\t}" <<std::endl;
+		ofs << "        rotation_x: " << transform.getRotation().x() << std::endl;
+		ofs << "        rotation_y: " << transform.getRotation().y() << std::endl;
+		ofs << "        rotation_z: " << transform.getRotation().z() << std::endl;
+		ofs << "        rotation_w: " << transform.getRotation().w() << std::endl;
+		ofs << "    }" <<std::endl;
 		ofs << std::endl;
 		ofs.close();
 		if(first_flag_ == true)
@@ -125,7 +125,7 @@ void CreateLocationFile::createLocationFile() {
 		std::cout <<"========================================" << std::endl;
 		std::cout <<"[ 登録地点一覧 ]" << std::endl;
 		int i = 1;
-		for ( const auto& name : location_names ) std::cout << "\t[ " << i++ << " ] : " << name << std::endl; 
+		for ( const auto& name : location_names ) std::cout << "    [ " << i++ << " ] : " << name << std::endl; 
 		std::cout <<  "\n[ ロボットの現在地点を登録 ] \n場所名を入力してください。「q」で終了。\nLocation Name : ";
 
 		std::getline(std::cin, location_name);
