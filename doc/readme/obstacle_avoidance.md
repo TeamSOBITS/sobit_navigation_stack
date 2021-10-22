@@ -28,6 +28,10 @@
 - [Dynamic Window Approach Tutorial(DWA)についてはこちら](https://gitlab.com/TeamSOBITS/path_planning_tutorial/-/tree/master/dwa_tutorial)
 - [base_local_plannerのパラメータについてはこちら](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/doc/readme/dwa_params.md)
 
+## 動的障害物の回避
+- shutdown_costmaps   (bool, default false)
+    - 障害物をコストマップに残し続けておくか。これをfalseにしておくと人等の移動物体はその移動軌跡が障害物となってコストマップに現れる。
+
 ## 02．リカバリーモード
 ローカルパスプランにおいては，障害物の出現位置によっては，当初進めると思っていたのにそれ以上進めなくなってしまう状況が起こりえます．通せんぼ状態です．
 
@@ -48,13 +52,13 @@
 ## 03．最経路計画
 ナビゲーション中にパスプランを再度行うためのパラメータについて説明します
 
-### max_planning_retries   (int32_t, default -1)
-- base_local_plannerで有効なパスが見つからなかった時に何度までパスの計算をリトライできるか？リトライの後にrecovery behaviorsに入る。-1に設定すると上限を設けない。
-- 例：[move_base_params.yaml](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
+- max_planning_retries   (int32_t, default -1)
+    - base_local_plannerで有効なパスが見つからなかった時に何度までパスの計算をリトライできるか？リトライの後にrecovery behaviorsに入る。-1に設定すると上限を設けない。
+    - 例：[move_base_params.yaml](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
-### planner_frequency   (double [Hz], default 0.0)
-- global plannerがグローバルパスを計算する頻度。0.0に設定すると、最初にゴールが設定された時のみにグローバルパスが計算される。
-- 例：[move_base_params.yaml](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
+- planner_frequency   (double [Hz], default 0.0)
+    - global plannerがグローバルパスを計算する頻度。0.0に設定すると、最初にゴールが設定された時のみにグローバルパスが計算される。
+    - 例：[move_base_params.yaml](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
 詳しくはこちら
 - [move_base でRecovery 行動に遷移する条件を調べてみた](https://qiita.com/MoriKen/items/1f1f2d1e6ef0046ec12a)
