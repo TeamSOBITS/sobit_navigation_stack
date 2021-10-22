@@ -28,7 +28,7 @@
 - [Dynamic Window Approach Tutorial(DWA)についてはこちら](https://gitlab.com/TeamSOBITS/path_planning_tutorial/-/tree/master/dwa_tutorial)
 - [base_local_plannerのパラメータについてはこちら](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/doc/readme/dwa_params.md)
 
-## 動的障害物の回避
+### 動的障害物の回避
 - shutdown_costmaps   (bool, default false)
     - 障害物をコストマップに残し続けておくか。これをfalseにしておくと人等の移動物体はその移動軌跡が障害物となってコストマップに現れる。
 
