@@ -1,5 +1,5 @@
-DWAPlannerROS:
-
+DWAPlannerROS: # SOPBIT_EDU, MINI
+# Ref : https://github.com/turtlebot/turtlebot_apps/blob/indigo/turtlebot_navigation/param/dwa_local_planner_params.yaml
 # Robot Configuration Parameters - Kobuki
   max_vel_x: 0.5  # 0.55
   min_vel_x: 0.0 
@@ -35,6 +35,12 @@ DWAPlannerROS:
   vtheta_samples: 20  # 20
 
 # Trajectory Scoring Parameters
+  # 各軌道のスコアリングに使用されるコスト関数の計算式
+  #cost =
+  #  path_distance_bias * (軌道の端点からパスまでの距離[m])
+  #  + goal_distance_bias * (軌道の終点からローカルゴールまでの距離[m])
+  #  + occdist_scale * (障害物コスト(0-254)の軌道に沿った最大障害物コスト)
+  #  + twirling_scale * (軌道の旋回速度の絶対値)
   path_distance_bias: 64.0      # 32.0   - weighting for how much it should stick to the global path plan
   goal_distance_bias: 24.0      # 24.0   - wighting for how much it should attempt to reach its goal
   occdist_scale: 0.5            # 0.01   - weighting for how much the controller should avoid obstacles
@@ -42,6 +48,8 @@ DWAPlannerROS:
   stop_time_buffer: 0.2         # 0.2    - amount of time a robot must stop in before colliding for a valid traj.
   scaling_speed: 0.25           # 0.25   - absolute velocity at which to start scaling the robot's footprint
   max_scaling_factor: 0.2       # 0.2    - how much to scale the robot's footprint when at speed.
+
+  use_dwa: true                 # (bool, default: true) - 経路計画の際にdwa（ダイナミックウィンドウアプローチ）という手法を使用するか。
 
 # Oscillation Prevention Parameters
   oscillation_reset_dist: 0.05  # 0.05   - how far to travel before resetting oscillation flags
