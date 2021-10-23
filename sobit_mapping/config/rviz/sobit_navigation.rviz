@@ -4,10 +4,12 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /TF1/Frames1
-        - /TF1/Tree1
+        - /TF1/Tree1/map1
+        - /TF1/Tree1/map1/odom1
+        - /TF1/Tree1/map1/odom1/base_footprint1
+        - /TF1/Tree1/map1/odom1/base_footprint1/base_link1
         - /Local Map1/Planner1
-      Splitter Ratio: 0.5
+      Splitter Ratio: 0.8333333134651184
     Tree Height: 808
   - Class: rviz/Selection
     Name: Selection
@@ -342,19 +344,226 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        arm_base_link:
+          Value: false
+        arm_flex_link:
+          Value: false
+        arm_roll_link:
+          Value: false
+        base_footprint:
+          Value: true
+        base_laser_link:
+          Value: false
+        base_link:
+          Value: false
+        base_pole_link:
+          Value: false
+        camera_depth_optical_frame:
+          Value: false
+        camera_link:
+          Value: false
+        camera_rgb_optical_frame:
+          Value: false
+        caster_back_link:
+          Value: false
+        caster_front_link:
+          Value: false
+        cliff_sensor_front_link:
+          Value: false
+        cliff_sensor_left_link:
+          Value: false
+        cliff_sensor_right_link:
+          Value: false
+        depth_link:
+          Value: false
+        elbow_flex_link:
+          Value: false
+        gyro_link:
+          Value: false
+        hand_motor_center_link:
+          Value: false
+        hand_motor_l_link:
+          Value: false
+        hand_motor_r_link:
+          Value: false
+        map:
+          Value: true
+        matrix:
+          Value: false
+        matrix_base_link:
+          Value: false
+        matrix_board_link:
+          Value: false
+        mic:
+          Value: false
+        mic_stand_link:
+          Value: false
+        odom:
+          Value: true
+        plate_bottom_link:
+          Value: false
+        plate_middle_link:
+          Value: false
+        plate_top_link:
+          Value: false
+        pole_bottom_0_link:
+          Value: false
+        pole_bottom_1_link:
+          Value: false
+        pole_bottom_2_link:
+          Value: false
+        pole_bottom_3_link:
+          Value: false
+        pole_bottom_4_link:
+          Value: false
+        pole_bottom_5_link:
+          Value: false
+        pole_middle_0_link:
+          Value: false
+        pole_middle_1_link:
+          Value: false
+        pole_middle_2_link:
+          Value: false
+        pole_middle_3_link:
+          Value: false
+        pole_middle_4_link:
+          Value: false
+        pole_middle_5_link:
+          Value: false
+        pole_middle_6_link:
+          Value: false
+        pole_middle_7_link:
+          Value: false
+        pole_top_0_link:
+          Value: false
+        pole_top_1_link:
+          Value: false
+        pole_top_2_link:
+          Value: false
+        pole_top_3_link:
+          Value: false
+        rgb_link:
+          Value: false
+        wheel_left_link:
+          Value: false
+        wheel_right_link:
+          Value: false
+        wrist_flex_dummy_link:
+          Value: false
+        wrist_flex_link:
+          Value: false
+        xtion_double_sided_tape_link:
+          Value: false
+        xtion_pan_link:
+          Value: false
+        xtion_tilt_link:
+          Value: false
       Marker Scale: 1
       Name: TF
-      Show Arrows: true
+      Show Arrows: false
       Show Axes: true
-      Show Names: false
+      Show Names: true
       Tree:
-        {}
+        map:
+          odom:
+            base_footprint:
+              base_link:
+                base_laser_link:
+                  {}
+                caster_back_link:
+                  {}
+                caster_front_link:
+                  {}
+                cliff_sensor_front_link:
+                  {}
+                cliff_sensor_left_link:
+                  {}
+                cliff_sensor_right_link:
+                  {}
+                gyro_link:
+                  {}
+                plate_bottom_link:
+                  {}
+                plate_middle_link:
+                  {}
+                plate_top_link:
+                  arm_base_link:
+                    arm_roll_link:
+                      arm_flex_link:
+                        elbow_flex_link:
+                          wrist_flex_dummy_link:
+                            wrist_flex_link:
+                              hand_motor_center_link:
+                                {}
+                              hand_motor_l_link:
+                                {}
+                              hand_motor_r_link:
+                                {}
+                  base_pole_link:
+                    matrix_base_link:
+                      matrix_board_link:
+                        matrix:
+                          {}
+                    mic_stand_link:
+                      mic:
+                        {}
+                    xtion_pan_link:
+                      xtion_tilt_link:
+                        xtion_double_sided_tape_link:
+                          rgb_link:
+                            camera_link:
+                              {}
+                            camera_rgb_optical_frame:
+                              {}
+                            depth_link:
+                              camera_depth_optical_frame:
+                                {}
+                pole_bottom_0_link:
+                  {}
+                pole_bottom_1_link:
+                  {}
+                pole_bottom_2_link:
+                  {}
+                pole_bottom_3_link:
+                  {}
+                pole_bottom_4_link:
+                  {}
+                pole_bottom_5_link:
+                  {}
+                pole_middle_0_link:
+                  {}
+                pole_middle_1_link:
+                  {}
+                pole_middle_2_link:
+                  {}
+                pole_middle_3_link:
+                  {}
+                pole_middle_4_link:
+                  {}
+                pole_middle_5_link:
+                  {}
+                pole_middle_6_link:
+                  {}
+                pole_middle_7_link:
+                  {}
+                pole_top_0_link:
+                  {}
+                pole_top_1_link:
+                  {}
+                pole_top_2_link:
+                  {}
+                pole_top_3_link:
+                  {}
+                wheel_left_link:
+                  {}
+                wheel_right_link:
+                  {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -512,7 +721,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 785
+          Max Intensity: 723.4000244140625
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: Cost Cloud
