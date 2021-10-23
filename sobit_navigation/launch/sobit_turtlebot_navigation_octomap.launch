@@ -8,7 +8,6 @@
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
-    <arg name="custom_param_file" default="$(find sobit_mapping)/param/sobit_turtlebot_octomap/octomap_costmap_common_params.yaml"/>
 
     <!-- Map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
@@ -22,7 +21,6 @@
 
     <!-- Move_Base -->
     <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot_octomap/sobit_turtlebot_move_base_octomap.launch.xml">
-        <arg name="custom_param_file" value="$(arg custom_param_file)"/>
     </include>
 
 </launch>
