@@ -95,11 +95,11 @@ cost =
     + twirling_scale * (軌道の旋回速度の絶対値)
 ``` 
 
-- path_distance_bias: 0.6 #(double, default: 0.6)
+- path_distance_bias: 32.0 #(double, default: 32.0)
     - コントローラーが与えられたパスにどれだけ近づけるかの重み
     - path_distance_biasを大きくするとよりグローバルパス近づく経路が生成される
 
-- goal_distance_bias: 0.8  #(double, default: 0.8)
+- goal_distance_bias: 24.0  #(double, default: 24.0)
     - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
     - goal_distance_biasを大きくするとよりローカルゴール（グローバルパスがローカルコストマップウィンドウの端から出て行く点）を目指す経路が生成される
 
