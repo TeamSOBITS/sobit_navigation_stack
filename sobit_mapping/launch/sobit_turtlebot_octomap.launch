@@ -36,7 +36,7 @@
     </node>
 
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation_octomap.rviz"/>
 
     <!-- keyboard -->
     <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
