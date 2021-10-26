@@ -17,9 +17,9 @@
             ground_filter/plane_distance : 0.10 -->
 
             pointcloud_min_z : 0.15
-            pointcloud_max_z : 1.0 
+            pointcloud_max_z : 2.0
             occupancy_min_z : 0.15
-            occupancy_max_z : 1.0
+            occupancy_max_z : 1.7
 
             <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
         </rosparam>
