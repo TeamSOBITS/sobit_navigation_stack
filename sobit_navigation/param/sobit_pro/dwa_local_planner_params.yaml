@@ -43,7 +43,7 @@ DWAPlannerROS: # SOBIT PRO
   #  + twirling_scale * (軌道の旋回速度の絶対値)
   path_distance_bias: 64.0      # (double, default: 32.0) - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
   goal_distance_bias: 24.0      # (double, default: 24.0) - コントローラーがどれだけ障害物をよけようとするかの重み
-  occdist_scale: 0.01           # (double, default: 0.01) -  ロボットの方向の変更にペナルティを課すための重み
+  occdist_scale: 0.3           # (double, default: 0.01) -  ロボットの方向の変更にペナルティを課すための重み
   twirling_scale: 0.0           # (double, default: 0.0) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
   forward_point_distance: 0.325 # (double, default: 0.325) - 軌道が有効とみなされるために、ロボットが衝突前に停止しなければならない時間を秒単位で表示する
   stop_time_buffer: 0.2         # (double, default: 0.2) - ロボットのフットプリントのスケーリングを開始する速度の絶対値(m/s)
