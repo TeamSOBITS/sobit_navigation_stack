@@ -4,6 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /TF1/Frames1
         - /Local Map1/Planner1
       Splitter Ratio: 0.6411764621734619
     Tree Height: 808
@@ -26,7 +27,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: octomap_obstacles
   - Class: rviz_plugin_tutorials/Teleop
     Name: Teleop
     Topic: ""
@@ -347,117 +348,117 @@ Visualization Manager:
         arm_base_link:
           Value: false
         arm_flex_link:
-          Value: true
+          Value: false
         arm_roll_link:
-          Value: true
+          Value: false
         base_footprint:
           Value: true
         base_laser_link:
-          Value: false
+          Value: true
         base_link:
           Value: false
         base_pole_link:
-          Value: true
+          Value: false
         camera_depth_optical_frame:
-          Value: true
+          Value: false
         camera_link:
           Value: true
         camera_rgb_optical_frame:
-          Value: true
+          Value: false
         caster_back_link:
-          Value: true
+          Value: false
         caster_front_link:
-          Value: true
+          Value: false
         cliff_sensor_front_link:
-          Value: true
+          Value: false
         cliff_sensor_left_link:
-          Value: true
+          Value: false
         cliff_sensor_right_link:
-          Value: true
+          Value: false
         depth_link:
-          Value: true
+          Value: false
         elbow_flex_link:
-          Value: true
+          Value: false
         gyro_link:
-          Value: true
+          Value: false
         hand_motor_center_link:
-          Value: true
+          Value: false
         hand_motor_l_link:
-          Value: true
+          Value: false
         hand_motor_r_link:
-          Value: true
+          Value: false
         map:
-          Value: true
+          Value: false
         matrix:
-          Value: true
+          Value: false
         matrix_base_link:
-          Value: true
+          Value: false
         matrix_board_link:
-          Value: true
+          Value: false
         mic:
-          Value: true
+          Value: false
         mic_stand_link:
-          Value: true
+          Value: false
         odom:
-          Value: true
+          Value: false
         plate_bottom_link:
-          Value: true
+          Value: false
         plate_middle_link:
-          Value: true
+          Value: false
         plate_top_link:
-          Value: true
+          Value: false
         pole_bottom_0_link:
-          Value: true
+          Value: false
         pole_bottom_1_link:
-          Value: true
+          Value: false
         pole_bottom_2_link:
-          Value: true
+          Value: false
         pole_bottom_3_link:
-          Value: true
+          Value: false
         pole_bottom_4_link:
-          Value: true
+          Value: false
         pole_bottom_5_link:
-          Value: true
+          Value: false
         pole_middle_0_link:
-          Value: true
+          Value: false
         pole_middle_1_link:
-          Value: true
+          Value: false
         pole_middle_2_link:
-          Value: true
+          Value: false
         pole_middle_3_link:
-          Value: true
+          Value: false
         pole_middle_4_link:
-          Value: true
+          Value: false
         pole_middle_5_link:
-          Value: true
+          Value: false
         pole_middle_6_link:
-          Value: true
+          Value: false
         pole_middle_7_link:
-          Value: true
+          Value: false
         pole_top_0_link:
-          Value: true
+          Value: false
         pole_top_1_link:
-          Value: true
+          Value: false
         pole_top_2_link:
-          Value: true
+          Value: false
         pole_top_3_link:
-          Value: true
+          Value: false
         rgb_link:
-          Value: true
+          Value: false
         wheel_left_link:
-          Value: true
+          Value: false
         wheel_right_link:
-          Value: true
+          Value: false
         wrist_flex_dummy_link:
-          Value: true
+          Value: false
         wrist_flex_link:
-          Value: true
+          Value: false
         xtion_double_sided_tape_link:
-          Value: true
+          Value: false
         xtion_pan_link:
-          Value: true
+          Value: false
         xtion_tilt_link:
-          Value: true
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: false
@@ -572,10 +573,12 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 0
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -587,7 +590,7 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -603,7 +606,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: Bumper Hit
       Position Transformer: XYZ
       Queue Size: 10
@@ -713,7 +718,9 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: Cost Cloud
           Position Transformer: XYZ
           Queue Size: 10
@@ -741,7 +748,9 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: Trajectory Cloud
           Position Transformer: XYZ
           Queue Size: 10
@@ -818,7 +827,9 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: cloud_ground
       Position Transformer: XYZ
       Queue Size: 10
@@ -846,7 +857,9 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: cloud_map
       Position Transformer: XYZ
       Queue Size: 10
@@ -874,7 +887,9 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: cloud_obstacles
       Position Transformer: XYZ
       Queue Size: 10
@@ -912,7 +927,9 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: octomap_ground
       Position Transformer: XYZ
       Queue Size: 10
@@ -940,7 +957,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: octomap_obstacles
       Position Transformer: XYZ
       Queue Size: 10
@@ -968,7 +987,9 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: octomap_occupied_space
       Position Transformer: XYZ
       Queue Size: 10
@@ -996,7 +1017,9 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: octomap_empty_space
       Position Transformer: XYZ
       Queue Size: 10
@@ -1009,42 +1032,6 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rtabmap_ros/MapCloud
-      Cloud decimation: 4
-      Cloud from scan: false
-      Cloud max depth (m): 4
-      Cloud min depth (m): 0
-      Cloud voxel size (m): 0.009999999776482582
-      Color: 255; 255; 255
-      Color Transformer: ""
-      Download graph: false
-      Download map: false
-      Enabled: true
-      Filter ceiling (m): 0
-      Filter floor (m): 0
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Min Color: 0; 0; 0
-      Name: MapCloud
-      Node filtering angle (degrees): 30
-      Node filtering radius (m): 0
-      Position Transformer: ""
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Points
-      Topic: ""
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: true
     - Class: rviz/Image
       Enabled: false
       Image Topic: /camera/rgb/image_raw
@@ -1084,7 +1071,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 12.543999671936035
+      Distance: 14.049280166625977
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1099,10 +1086,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.1247972920536995
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: ThirdPersonFollower (rviz)
-      Yaw: 2.4303953647613525
+      Yaw: 3.140399217605591
     Saved: ~
 Window Geometry:
   Displays:
@@ -1112,7 +1099,7 @@ Window Geometry:
   Hide Right Dock: false
   Image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd000000030000000000000156000003affc0200000008fb0000001200530065006c0065006300740069006f006e00000000390000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000039000003af000000c500fffffffb0000000c00540065006c0065006f00700000000338000000b00000004400fffffffb0000000a005600690065007700730000000312000000d60000009d00fffffffb0000000a0049006d006100670065000000031c000000cc0000001600ffffff000000010000010b000003affc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000039000003af0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a0000003d200fffffffb0000000800540069006d00650100000000000004500000000000000000000004e0000003af00000004000000040000000800000008fc000000030000000000000000000000020000000000000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000030000000000000156000003affc0200000008fb0000001200530065006c0065006300740069006f006e00000000390000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000039000003af000000c500fffffffb0000000c00540065006c0065006f00700000000338000000b00000004400fffffffb0000000a005600690065007700730000000312000000d60000009d00fffffffb0000000a0049006d006100670065000000031c000000cc0000001600ffffff000000010000010b000003affc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000039000003af0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a0000003d200fffffffb0000000800540069006d00650100000000000004500000000000000000000004de000003af00000004000000040000000800000008fc000000030000000000000000000000020000000000000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Teleop:
@@ -1123,6 +1110,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1869
-  X: 51
+  Width: 1867
+  X: 53
   Y: 27
