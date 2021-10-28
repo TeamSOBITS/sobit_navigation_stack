@@ -52,6 +52,7 @@
 				<param name="Grid/MaxGroundHeight"           type="string" value="0.2"/>
 				<param name="Grid/MaxObstacleHeight"         type="string" value="2"/>
 				<param name="Grid/NormalsSegmentation"       type="string" value="false"/>
+				<param name="Grid/Scan2dUnknownSpaceFilled"  type="string" value="true"/>
 				
 				<param name="Reg/Force3DoF"                  type="string" value="true"/> <!-- 2d slam -->
 				<param name="Reg/Strategy"                   type="string" value="1"/> <!-- 1=ICP -->
