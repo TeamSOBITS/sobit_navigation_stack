@@ -53,6 +53,7 @@
 				<param name="RGBD/AngularUpdate"             type="string" value="0.01"/>
 				<param name="RGBD/LinearUpdate"              type="string" value="0.01"/>
 				<param name="RGBD/OptimizeFromGraphEnd"      type="string" value="false"/>
+				<param name="Grid/Scan2dUnknownSpaceFilled"  type="string" value="true"/>
 				
 				<param name="Grid/FromDepth"                 type="string" value="true"/> <!-- occupancy grid from lidar・Need CLoud Mao : True -->
 				<param name="Grid/MaxGroundHeight"           type="string" value="0.2"/>
