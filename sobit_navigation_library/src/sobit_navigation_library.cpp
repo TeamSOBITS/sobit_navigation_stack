@@ -19,6 +19,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary() : nh_(), pnh_("~"),  act_clt_( 
 // 移動したい位置(geometry_msgs::Pose型)に移動する
 bool SOBITNavigationLibrary::move2Position( const geometry_msgs::Pose& target_position, const std::string& frame_id, const bool is_wait  ) {
     if ( is_output_ ) ROS_INFO( "[ %s ] Set a new Goal\n", ros::this_node::getName().c_str() );
+    
     return true;
 }
 
