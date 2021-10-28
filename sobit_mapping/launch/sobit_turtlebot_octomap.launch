@@ -4,7 +4,7 @@
 
 	<!-- octomap -->
 	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
-		<remap from="cloud_in" to="/cloud_map" />
+		<remap from="cloud_in" to="/rtabmap/cloud_map" />
         <rosparam>
             frame_id : map
             base_frame_id : base_footprint
@@ -17,9 +17,9 @@
             ground_filter/plane_distance : 0.10 -->
 
             pointcloud_min_z : 0.1
-            pointcloud_max_z : 1.0 
+            pointcloud_max_z : 2.0 
             occupancy_min_z : 0.1
-            occupancy_max_z : 1.0
+            occupancy_max_z : 1.7
 
             <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
         </rosparam>
@@ -36,7 +36,7 @@
     </node>
 
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation_octomap.rviz"/>
 
     <!-- keyboard -->
     <!-- turtlebot_teleop_key already has its own built in velocity smoother -->

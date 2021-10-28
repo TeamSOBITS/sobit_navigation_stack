@@ -16,10 +16,10 @@
             ground_filter/angle : 0.20
             ground_filter/plane_distance : 0.10 -->
 
-            pointcloud_min_z : 0.1
-            pointcloud_max_z : 1.0 
-            occupancy_min_z : 0.4
-            occupancy_max_z : 1.0
+            pointcloud_min_z : 0.15
+            pointcloud_max_z : 2.0
+            occupancy_min_z : 0.15
+            occupancy_max_z : 1.7
 
             <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
         </rosparam>
@@ -36,8 +36,8 @@
     </node>
 
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation_octomap.rviz"/>
 
     <!-- keyboard -->
-    <include file="$(find sobit_pro_bringup)/launch/sobit_pro_ps4_control.launch"/>
+    <include file="$(find sobit_pro_bringup)/launch/ps4_control.launch"/>
 </launch>

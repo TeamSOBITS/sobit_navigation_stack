@@ -12,5 +12,5 @@
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
 
     <!-- keyboard -->
-    <include file="$(find sobit_pro_bringup)/launch/sobit_pro_ps4_control.launch"/>
+    <include file="$(find sobit_pro_bringup)/launch/ps4_control.launch"/>
 </launch>
