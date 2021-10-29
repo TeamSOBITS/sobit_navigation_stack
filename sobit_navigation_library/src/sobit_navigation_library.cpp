@@ -110,7 +110,7 @@ bool SOBITNavigationLibrary::move2Position( const geometry_msgs::Pose& target_po
 }
 
 // 移動したい位置に移動する(Pybind用)
-bool SOBITNavigationLibrary:: move2Position(
+bool SOBITNavigationLibrary:: move2PositionPy(
     const double x,
     const double y,
     const double z,

@@ -9,6 +9,7 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <actionlib_msgs/GoalStatusArray.h>
+#include <pybind11/pybind11.h>
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
@@ -73,7 +74,7 @@ namespace SOBITNavigationStack {
                 const bool is_wait = false  );
             
             // 移動したい位置に移動する(Pybind用)
-            bool move2Position(
+            bool move2PositionPy(
                 const double x,
                 const double y,
                 const double z,
