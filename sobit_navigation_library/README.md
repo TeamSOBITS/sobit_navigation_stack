@@ -62,13 +62,13 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )
 ```cpp
 bool exist_goal_
 ```
-
 ### status_id_
 - MoveBaseの現在ステータス
 ```cpp
 int status_id_
 ```
 ## Functions
+
 ### move2Position
 - 移動したい位置に移動する(Pybind用)
 ```cpp
@@ -83,6 +83,19 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Position(
     const std::string& frame_id,    // 基準フレーム
     const bool is_wait = false      // 移動完了までプログラムを待機させるか
 )          
+```
+### move2Location
+- ロケーションファイルにある位置(std::string型)に移動する
+```cpp
+bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location( 
+    const std::string&  location_name,  // ロケーションファイルにある位置(std::string型)
+    const bool is_wait = false          // 移動完了までプログラムを待機させるか
+)            
+```
+### cancelMoving
+- 移動をキャンセルする(アクションサーバの処理を中断する)
+```cpp
+bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
 ```
 
 ## How to Use
