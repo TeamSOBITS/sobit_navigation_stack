@@ -13,6 +13,21 @@
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
+class ROSCommonNode
+{
+    public:
+        ROSCommonNode( const std::string &name ) {
+            char* cstr = new char[name.size() + 1];
+            std::strcpy(cstr, name.c_str()); 
+            char **argv = &cstr;
+            int argc = 0;
+            delete[] cstr;
+            ros::init( argc, argv, "sobit_turtlebot_controller_node");
+        }
+        ROSCommonNode( ) { }
+};
+
+
 namespace SOBITNavigationStack {
     class LocationPose {
         public :
@@ -20,7 +35,7 @@ namespace SOBITNavigationStack {
             geometry_msgs::Pose pose;
     };
 
-    class SOBITNavigationLibrary {
+    class SOBITNavigationLibrary : public ROSCommonNode {
         protected :
             ros::NodeHandle nh_;
             ros::NodeHandle pnh_;
@@ -66,24 +81,13 @@ namespace SOBITNavigationStack {
 
             // コンストラクタ
             SOBITNavigationLibrary();
+            SOBITNavigationLibrary( const std::string &name );
             
             // 移動したい位置(geometry_msgs::Pose型)に移動する
             bool move2Position(
                 const geometry_msgs::Pose& target_position,
                 const std::string& frame_id,
                 const bool is_wait = false  );
-            
-            // 移動したい位置に移動する(Pybind用)
-            bool move2PositionPy(
-                const double x,
-                const double y,
-                const double z,
-                const double qx,
-                const double qy,
-                const double qz,
-                const double qw,
-                const std::string& frame_id,
-                const bool is_wait = false );
 
             // ロケーションファイルの位置(std::string型)に移動する
             bool move2Location(

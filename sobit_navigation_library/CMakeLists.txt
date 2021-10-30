@@ -24,11 +24,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(${PROJECT_NAME} src/sobit_navigation_library.cpp)
+add_library(${PROJECT_NAME} src/sobit_navigation_library.cpp
+                            src/sobit_navigation_library_python.cpp)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
 pybind_add_module(sobit_navigation_module MODULE src/sobit_navigation_library.cpp
-                                                  src/sobit_navigation_pybind.cpp)
+                                                src/sobit_navigation_library_python.cpp
+                                                src/sobit_navigation_pybind.cpp)
 
 install(
   TARGETS ${PROJECT_NAME}

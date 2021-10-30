@@ -86,6 +86,16 @@ SOBITNavigationLibrary::SOBITNavigationLibrary() : nh_(), pnh_("~"),  act_clt_( 
     exist_goal_ = false;
     status_id_ = 0;
 }
+SOBITNavigationLibrary::SOBITNavigationLibrary( const std::string &name ) :  ROSCommonNode( name ), nh_(), pnh_("~"), act_clt_( "move_base", true ) {
+    is_output_ = pnh_.param<bool>( "is_output_terminal", true );
+    if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary ] Waiting For Server...\n" );
+    act_clt_.waitForServer();
+    if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary ] Connect to the action server\n" );
+    sub_status_ = nh_.subscribe<actionlib_msgs::GoalStatusArray>("/move_base/status", 10, &SOBITNavigationLibrary::statusCb, this);
+    loadLocationFile();
+    exist_goal_ = false;
+    status_id_ = 0;
+}
 
 // 移動したい位置(geometry_msgs::Pose型)に移動する
 bool SOBITNavigationLibrary::move2Position( const geometry_msgs::Pose& target_position, const std::string& frame_id, const bool is_wait  ) {
@@ -106,29 +116,6 @@ bool SOBITNavigationLibrary::move2Position( const geometry_msgs::Pose& target_po
     exist_goal_ = true;
     sendGoal( );
     if ( is_wait ) act_clt_.waitForResult();
-    return true;
-}
-
-// 移動したい位置に移動する(Pybind用)
-bool SOBITNavigationLibrary:: move2PositionPy(
-    const double x,
-    const double y,
-    const double z,
-    const double qx,
-    const double qy,
-    const double qz,
-    const double qw,
-    const std::string& frame_id,
-    const bool is_wait ) {
-    geometry_msgs::Pose target_position;
-    target_position.position.x = x;
-    target_position.position.y = y;
-    target_position.position.z = z;
-    target_position.orientation.x = qx; 
-    target_position.orientation.y = qy;
-    target_position.orientation.z = qz;
-    target_position.orientation.w = qw;
-    move2Position( target_position, frame_id, is_wait );
     return true;
 }
 
