@@ -41,28 +41,28 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 
 	//現在位置をファイルに出力する．
 	std::cout << std::endl;
-	std::cout << "transform.getOrigine().x(): "<<transform.getOrigin().x() << std::endl;
-	std::cout << "transform.getOrigine().y(): "<<transform.getOrigin().y() << std::endl;
-	std::cout << "transform.getOrigine().z(): "<<transform.getOrigin().z() << std::endl;
+	std::cout << "transform.getOrigine().x(): "<< fixed << std::setprecision(7) << transform.getOrigin().x() << std::endl;
+	std::cout << "transform.getOrigine().y(): "<< fixed << std::setprecision(7) << transform.getOrigin().y() << std::endl;
+	std::cout << "transform.getOrigine().z(): "<< fixed << std::setprecision(7) << transform.getOrigin().z() << std::endl;
 
-	std::cout << "transform.getRotation().x(): "<<transform.getRotation().x() << std::endl;
-	std::cout << "transform.getRotation().y(): "<<transform.getRotation().y() << std::endl;
-	std::cout << "transform.getRotation().z(): "<<transform.getRotation().z() << std::endl;
-	std::cout << "transform.getRotation().w(): "<<transform.getRotation().w() << std::endl;
+	std::cout << "transform.getRotation().x(): "<< fixed << std::setprecision(7) << transform.getRotation().x() << std::endl;
+	std::cout << "transform.getRotation().y(): "<< fixed << std::setprecision(7) << transform.getRotation().y() << std::endl;
+	std::cout << "transform.getRotation().z(): "<< fixed << std::setprecision(7) << transform.getRotation().z() << std::endl;
+	std::cout << "transform.getRotation().w(): "<< fixed << std::setprecision(7) << transform.getRotation().w() << std::endl;
 
 	ofstream ofs(file_name_, ios::app);
 	if(ofs) {
 		ofs << "    - {" <<std::endl;
 		ofs << "        location_name: \"" << location_name << "\","<<std::endl;
-		ofs << "        translation_x: " << transform.getOrigin().x() << "," << std::endl;
-		ofs << "        translation_y: " << transform.getOrigin().y() << "," << std::endl;
-		ofs << "        translation_z: " << transform.getOrigin().z() << "," << std::endl;
-		ofs << "        rotation_x: " << transform.getRotation().x() << "," << std::endl;
-		ofs << "        rotation_y: " << transform.getRotation().y() << "," << std::endl;
-		ofs << "        rotation_z: " << transform.getRotation().z() << "," << std::endl;
-		ofs << "        rotation_w: " << transform.getRotation().w() << "," << std::endl;
-		ofs << "    }" <<std::endl;
-		ofs << std::endl;
+		ofs << fixed << std::setprecision(7) << "        translation_x: " << transform.getOrigin().x() << "," << std::endl;
+		ofs << fixed << std::setprecision(7) << "        translation_y: " << transform.getOrigin().y() << "," << std::endl;
+		ofs << fixed << std::setprecision(7) << "        translation_z: " << transform.getOrigin().z() << "," << std::endl;
+		ofs << fixed << std::setprecision(7) << "        rotation_x: " << transform.getRotation().x() << "," << std::endl;
+		ofs << fixed << std::setprecision(7) << "        rotation_y: " << transform.getRotation().y() << "," << std::endl;
+		ofs << fixed << std::setprecision(7) << "        rotation_z: " << transform.getRotation().z() << "," << std::endl;
+		ofs << fixed << std::setprecision(7) << "        rotation_w: " << transform.getRotation().w() << "," << std::endl;
+		ofs << fixed << std::setprecision(7) << "    }" <<std::endl;
+		ofs << fixed << std::setprecision(7) << std::endl;
 		ofs.close();
 		if(first_flag_ == true)
 			std::cout <<  "「" << file_name_ << "　」として保存完了。"  << std::endl;
