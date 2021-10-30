@@ -22,7 +22,7 @@ class ROSCommonNode
             char **argv = &cstr;
             int argc = 0;
             delete[] cstr;
-            ros::init( argc, argv, "sobit_turtlebot_controller_node");
+            ros::init( argc, argv, "sobit_navigation_library_node");
         }
         ROSCommonNode( ) { }
 };
