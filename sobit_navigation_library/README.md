@@ -181,6 +181,14 @@ if __name__ == '__main__':
 
 ```
 
+※以下のエラーが出力された場合：「#!/usr/bin/env python3」→「#!/usr/bin/env python」
+```bash
+Traceback (most recent call last):
+  File "/home/sobits/catkin_ws/src/nav_test/script/test.py", line 3, in <module>
+    from sobit_navigation_module import SOBITNavigationLibraryPython
+ImportError: dynamic module does not define module export function (PyInit_sobit_navigation_module)
+```
+
 ---
 
 - [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
