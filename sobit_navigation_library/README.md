@@ -1,7 +1,7 @@
 # About SOBIT Navigation Library
 ナビゲーションをプログラム上で実行できるライブラリ
 
-# SOBIT Navigation Library([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [src](sobit_navigation_library/src/sobit_navigation_library.cpp))
+# SOBIT Navigation Library([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library.cpp))
 ## Member variables
 ### location_poses_
 - ロケーションポーズ配列
@@ -55,7 +55,7 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
 ```
 
-# SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [src](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
+# SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
 ## Member variables
 ### exist_goal_
 - ゴールが設定されているか
