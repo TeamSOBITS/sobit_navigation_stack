@@ -1,0 +1,37 @@
+location_pose:
+    - {
+        location_name: "init",
+        frame_id: "map",
+        translation_x: 0.0156542,
+        translation_y: 0.0055516,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.0103762,
+        rotation_w: 0.9999462,
+    }
+
+    - {
+        location_name: "table_1",
+        frame_id: "map",
+        translation_x: 3.6928163,
+        translation_y: -1.5762514,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.0391715,
+        rotation_w: 0.9992325,
+    }
+
+    - {
+        location_name: "table_2",
+        frame_id: "map",
+        translation_x: 3.1211915,
+        translation_y: -3.0382592,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.7153761,
+        rotation_w: 0.6987396,
+    }
+

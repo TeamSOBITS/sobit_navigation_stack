@@ -21,6 +21,18 @@ namespace SOBITNavigationStack {
                 const double qw,
                 const std::string& frame_id,
                 const bool is_wait = false );
+
+            // ロケーションポジションの追加(Pybind用)
+            void addLocationPosePy(
+                const std::string& name,
+                const std::string& frame_id,
+                const double x,
+                const double y,
+                const double z,
+                const double qx,
+                const double qy,
+                const double qz,
+                const double qw );
     };
 }
 

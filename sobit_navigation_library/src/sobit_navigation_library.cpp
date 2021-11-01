@@ -12,12 +12,12 @@ void SOBITNavigationLibrary::loadLocationFile() {
     }
 
     nh_.getParam("/location_pose", pose_val);
-    ROS_ASSERT(pose_val.getType() == XmlRpc::XmlRpcValue::TypeArray);
     int pose_num = pose_val.size();
     location_poses_.clear();
     for ( int i = 0; i < pose_num; i++ ) {
         LocationPose pose;
         pose.name = static_cast<std::string>(pose_val[i]["location_name"]); 
+        pose.frame_id = static_cast<std::string>(pose_val[i]["frame_id"]); 
         pose.pose.position.x = static_cast<double>(pose_val[i]["translation_x"]); 
         pose.pose.position.y = static_cast<double>(pose_val[i]["translation_y"]); 
         pose.pose.position.z = static_cast<double>(pose_val[i]["translation_z"]); 
@@ -122,17 +122,19 @@ bool SOBITNavigationLibrary::move2Position( const geometry_msgs::Pose& target_po
 // ロケーションファイルの位置(std::string型)に移動する
 bool SOBITNavigationLibrary::move2Location( const std::string&  location_name, const bool is_wait  ) {
     geometry_msgs::Pose target_position;
+    std::string frame_id;
     bool exist_target = false;
     for ( const auto pose : location_poses_ ) {
         if ( location_name != pose.name ) continue;
         target_position = pose.pose;
+        frame_id = pose.frame_id;
         exist_target = true;
     }
     if ( !exist_target ) {
         ROS_ERROR( "[ SOBITNavigationLibrary::move2Location ] \"%s\" does not exist.\n", location_name.c_str() );
         return false;
     }
-    move2Position( target_position, "map", is_wait );
+    move2Position( target_position, frame_id, is_wait );
     return true;
 }
 
@@ -145,4 +147,13 @@ void SOBITNavigationLibrary::cancelMoving( ) {
 }
 
 
-
+// ロケーションポジションの追加
+void SOBITNavigationLibrary::addLocationPose( const std::string& name, const std::string& frame_id, const geometry_msgs::Pose& target_position ) {
+    if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary::addLocationPose ] Add a location position\n" );
+    LocationPose pose;
+    pose.name = name;
+    pose.frame_id = frame_id;
+    pose.pose = target_position;
+    location_poses_.push_back( pose );
+    return;
+}

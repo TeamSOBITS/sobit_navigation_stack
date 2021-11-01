@@ -16,5 +16,7 @@ PYBIND11_MODULE( sobit_navigation_module, m) {
     py::class_<SOBITNavigationLibraryPython, SOBITNavigationLibrary>(m, "SOBITNavigationLibraryPython")
         .def( py::init< const std::string& >() )
         .def( "move2PositionPy", &SOBITNavigationLibraryPython::move2PositionPy, "move to Position", 
-            py::arg("x"), py::arg("y"), py::arg("z"), py::arg("qx"), py::arg("qy"), py::arg("qz"), py::arg("qw"), py::arg("frame_id"), py::arg("is_wait") = false );
+            py::arg("x"), py::arg("y"), py::arg("z"), py::arg("qx"), py::arg("qy"), py::arg("qz"), py::arg("qw"), py::arg("frame_id"), py::arg("is_wait") = false )
+        .def( "addLocationPosePy", &SOBITNavigationLibraryPython::addLocationPosePy, "add Location Pose", 
+            py::arg("name"), py::arg("frame_id"), py::arg("x"), py::arg("y"), py::arg("z"), py::arg("qx"), py::arg("qy"), py::arg("qz"), py::arg("qw") );
 }

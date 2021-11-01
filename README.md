@@ -21,6 +21,7 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 - [projected_map(立体的な障害物を押しつぶした2次元地図)を用いたナビゲーションをする方法](doc/readme/projected_map_navigation.md)
 - [dwa_local_plannerのパラメータについて](doc/readme/dwa_params.md)
 - [amclのパラメータについて](doc/readme/amcl_params.md)
+- [recovery_behaviorsについて](doc/readme/recovery_behaviors.md)
 
 ---
 

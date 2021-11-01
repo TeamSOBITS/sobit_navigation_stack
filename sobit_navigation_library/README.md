@@ -1,7 +1,7 @@
 # About SOBIT Navigation Library
 ナビゲーションをプログラム上で実行できるライブラリ
 
-# SOBIT Navigation Library
+# SOBIT Navigation Library([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library.cpp))
 ## Member variables
 ### location_poses_
 - ロケーションポーズ配列
@@ -55,7 +55,17 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
 ```
 
-# SOBIT Navigation Library Python
+### addLocationPose
+- ロケーションポジションの追加
+```cpp
+void addLocationPose( 
+    const std::string& name, 
+    const std::string& frame_id, 
+    const geometry_msgs::Pose& target_position 
+)
+```
+
+# SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
 ## Member variables
 ### exist_goal_
 - ゴールが設定されているか
@@ -72,7 +82,7 @@ int status_id_
 ### move2Position
 - 移動したい位置に移動する(Pybind用)
 ```cpp
-bool SOBITNavigationStack::SOBITNavigationLibrary::move2Position( 
+bool SOBITNavigationStack::SOBITNavigationLibrary::move2PositionPy( 
     const float64 x,                // 位置
     const float64 y,                // 位置 
     const float64 z,                // 位置
@@ -96,6 +106,22 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 - 移動をキャンセルする(アクションサーバの処理を中断する)
 ```cpp
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
+```
+
+### addLocationPosePy
+- ロケーションポジションの追加(Pybind用)
+```cpp
+void addLocationPosePy( 
+    const std::string& name, 
+    const std::string& frame_id, 
+    const float64 x,                // 位置
+    const float64 y,                // 位置 
+    const float64 z,                // 位置
+    const float64 qx,               // 姿勢
+    const float64 qy,               // 姿勢 
+    const float64 qz,               // 姿勢 
+    const float64 qw,               // 姿勢 
+)
 ```
 
 ## How to Use
@@ -154,3 +180,15 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException: pass
 
 ```
+
+※以下のエラーが出力された場合：「#!/usr/bin/env python3」→「#!/usr/bin/env python」
+```bash
+Traceback (most recent call last):
+  File "/home/sobits/catkin_ws/src/nav_test/script/test.py", line 3, in <module>
+    from sobit_navigation_module import SOBITNavigationLibraryPython
+ImportError: dynamic module does not define module export function (PyInit_sobit_navigation_module)
+```
+
+---
+
+- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
