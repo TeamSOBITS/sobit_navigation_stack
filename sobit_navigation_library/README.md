@@ -55,6 +55,16 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
 ```
 
+### addLocationPose
+- ロケーションポジションの追加
+```cpp
+void addLocationPose( 
+    const std::string& name, 
+    const std::string& frame_id, 
+    const geometry_msgs::Pose& target_position 
+)
+```
+
 # SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
 ## Member variables
 ### exist_goal_
@@ -96,6 +106,22 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 - 移動をキャンセルする(アクションサーバの処理を中断する)
 ```cpp
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
+```
+
+### addLocationPosePy
+- ロケーションポジションの追加(Pybind用)
+```cpp
+void addLocationPosePy( 
+    const std::string& name, 
+    const std::string& frame_id, 
+    const float64 x,                // 位置
+    const float64 y,                // 位置 
+    const float64 z,                // 位置
+    const float64 qx,               // 姿勢
+    const float64 qy,               // 姿勢 
+    const float64 qz,               // 姿勢 
+    const float64 qw,               // 姿勢 
+)
 ```
 
 ## How to Use

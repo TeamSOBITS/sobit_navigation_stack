@@ -32,6 +32,7 @@ namespace SOBITNavigationStack {
     class LocationPose {
         public :
             std::string name;
+            std::string frame_id;
             geometry_msgs::Pose pose;
     };
 
@@ -96,6 +97,9 @@ namespace SOBITNavigationStack {
 
             // 移動をキャンセルする(アクションサーバの処理を中断する)
             void cancelMoving();
+
+            // ロケーションポジションの追加
+            void addLocationPose( const std::string& name, const std::string& frame_id, const geometry_msgs::Pose& target_position );
     };
 }
 

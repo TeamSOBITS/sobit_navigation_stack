@@ -54,6 +54,7 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 	if(ofs) {
 		ofs << "    - {" <<std::endl;
 		ofs << "        location_name: \"" << location_name << "\","<<std::endl;
+		ofs << "        frame_id: \"map\","<<std::endl;
 		ofs << fixed << std::setprecision(7) << "        translation_x: " << transform.getOrigin().x() << "," << std::endl;
 		ofs << fixed << std::setprecision(7) << "        translation_y: " << transform.getOrigin().y() << "," << std::endl;
 		ofs << fixed << std::setprecision(7) << "        translation_z: " << transform.getOrigin().z() << "," << std::endl;
