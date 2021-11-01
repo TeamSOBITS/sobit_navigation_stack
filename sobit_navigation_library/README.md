@@ -1,7 +1,7 @@
 # About SOBIT Navigation Library
 ナビゲーションをプログラム上で実行できるライブラリ
 
-# SOBIT Navigation Library
+# SOBIT Navigation Library([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [src](sobit_navigation_library/src/sobit_navigation_library.cpp))
 ## Member variables
 ### location_poses_
 - ロケーションポーズ配列
@@ -55,7 +55,7 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
 ```
 
-# SOBIT Navigation Library Python
+# SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [src](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
 ## Member variables
 ### exist_goal_
 - ゴールが設定されているか
@@ -72,7 +72,7 @@ int status_id_
 ### move2Position
 - 移動したい位置に移動する(Pybind用)
 ```cpp
-bool SOBITNavigationStack::SOBITNavigationLibrary::move2Position( 
+bool SOBITNavigationStack::SOBITNavigationLibrary::move2PositionPy( 
     const float64 x,                // 位置
     const float64 y,                // 位置 
     const float64 z,                // 位置
@@ -154,3 +154,7 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException: pass
 
 ```
+
+---
+
+- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)

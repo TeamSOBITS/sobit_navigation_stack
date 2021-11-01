@@ -1,9 +1,10 @@
 # recovery_behaviors
 動作がスタックしたときに発動されるのが Recovery 機能
+- [例：move_base_params.yaml](sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
-## move_slow_and_clear
+## [move_slow_and_clear](http://wiki.ros.org/move_slow_and_clear)
 - 障害物の近くでの速度を制限して移動し、移動できた場所の周りの障害物を地図から除去します
-    ```
+    ```cpp
     1. ~<name> / clearing_distance（double、デフォルト：0.5）
         - 障害物を除去するためのロボットからの距離をメートル単位で指定します。
 
@@ -19,16 +20,16 @@
     5. ~<name> / planner_namespace（文字列、デフォルト："DWAPlannerROS"）
         - パラメータを再設定するプランナーの名前です。具体的にはmax_trans_velとmax_rot_velのパラメータはこの名前空間内で再設定される。
     ```
-## clear_costmap_recovery 
-- 自分の周り半径 X m 以内の local costmap をクリアします
-    ```
+## [clear_costmap_recovery](http://wiki.ros.org/clear_costmap_recovery) 
+- 自分の周り半径 X[m]より外側のlocal costmap をクリアします
+    ```cpp
     1. 〜<name> / reset_distance（double、デフォルト：3.0）
         - ロボットのポーズを中心とする正方形の辺の長さ。その外側では、障害物が静的マップに戻されたときにコストマップから削除されます。 
     ```
 
-## rotate_recovery
+## [rotate_recovery](http://wiki.ros.org/rotate_recovery)
 - その場で360度回転することで、 local costmap を更新します
-    ```
+    ```cpp
     1. TrajectoryPlannerROS/yaw_goal_tolerance（ダブル、デフォルト：0.05）
         - 目標を達成したときのコントローラのヨー/ローテーションのラジアン単位の許容値
 
