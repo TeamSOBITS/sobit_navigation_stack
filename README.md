@@ -22,6 +22,7 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 - [dwa_local_plannerのパラメータについて](doc/readme/dwa_params.md)
 - [amclのパラメータについて](doc/readme/amcl_params.md)
 - [recovery_behaviorsについて](doc/readme/recovery_behaviors.md)
+- [rtabmapについて](doc/readme/rtabmap.md)
 
 ---
 

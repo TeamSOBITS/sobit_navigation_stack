@@ -4,7 +4,7 @@
 
 	<!-- octomap -->
 	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
-		<remap from="cloud_in" to="/cloud_map" />
+		<remap from="cloud_in" to="/rtabmap/cloud_map" />
         <rosparam>
             frame_id : map
             base_frame_id : base_footprint
