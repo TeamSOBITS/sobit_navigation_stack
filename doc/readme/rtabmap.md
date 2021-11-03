@@ -1,4 +1,4 @@
-# [RTABMAP]
+# RTABMAP
 
 ## [rtabmap_ros](http://wiki.ros.org/rtabmap_ros)
 - RTAB-Mapは、リアルタイム制約のあるRGB-D SLAMアプローチ
