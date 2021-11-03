@@ -16,7 +16,7 @@
 ## SOBIT PRO
 - [sobit_pro_rtabmap.launch.xml](sobit_mapping/launch/include/sobit_pro_rtabmap.launch.xml)
 - [rtabmap.launch.xml](sobit_mapping/launch/include/rtabmap.launch.xml)
-    - SOBIT PROは、Azure_Kinect_ROS_Driverの「[slam_rtabmap.launch](https://github.com/microsoft/Azure_Kinect_ROS_Driver/blob/melodic/launch/slam_rtabmap.launch)」をモデルに作成
+    - SOBIT PROは、Azure_Kinect_ROS_Driverの「[slam_rtabmap.launch](https://github.com/microsoft/Azure_Kinect_ROS_Driver/blob/melodic/launch/slam_rtabmap.launch)」とrtabmap_rosの「[rtabmap.launch](https://github.com/introlab/rtabmap_ros/blob/master/launch/rtabmap.launch)」をモデルに作成
 
 ## SOBIT EDU / MINI
 - [sobit_turtlebot_rtabmap.launch.xml](sobit_mapping/launch/include/sobit_turtlebot_rtabmap.launch.xml)
