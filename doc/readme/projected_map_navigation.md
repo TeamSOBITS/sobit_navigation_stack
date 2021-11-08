@@ -40,10 +40,13 @@
     rgbd_sensor : {sensor_frame: /camera_depth_optical_frame, data_type: PointCloud2, topic: /camera/depth/points, marking: true, clearing: true}
     ```
 2.  orizin_zを変更
-    デフォルト値の「0.0」のままだと，RGB-Dセンサのセンサデータがコストマップに反映されません
+    グリッドの高さ(z_resolution * z_voxels)をmax_obstacle_heightと同じにする
      - [例1：octomap_costmap_common_params.yaml](sobit_navigation/param/sobit_pro_octomap/octomap_costmap_common_params.yaml)
      ```xml
-     origin_z: 1.5
+    max_obstacle_height: 2.0
+    origin_z:             0.0
+    z_resolution:         0.2
+    z_voxels:             10
      ```
      <div align="center">
     <img src="doc/img/fix_costmap.png">
