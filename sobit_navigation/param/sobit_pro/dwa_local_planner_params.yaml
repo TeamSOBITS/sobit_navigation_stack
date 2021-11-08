@@ -40,15 +40,15 @@ DWAPlannerROS: # SOBIT PRO
   #  path_distance_bias * (軌道の端点からパスまでの距離[m])
   #  + goal_distance_bias * (軌道の終点からローカルゴールまでの距離[m])
   #  + occdist_scale * (障害物コスト(0-254)の軌道に沿った最大障害物コスト)
-  #  + twirling_scale * (軌道の旋回速度の絶対値)
-  path_distance_bias: 64.0      # (double, default: 32.0) - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
-  goal_distance_bias: 24.0      # (double, default: 24.0) - コントローラーがどれだけ障害物をよけようとするかの重み
-  occdist_scale: 0.3           # (double, default: 0.01) -  ロボットの方向の変更にペナルティを課すための重み
-  twirling_scale: 0.0           # (double, default: 0.0) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
-  forward_point_distance: 0.325 # (double, default: 0.325) - 軌道が有効とみなされるために、ロボットが衝突前に停止しなければならない時間を秒単位で表示する
-  stop_time_buffer: 0.2         # (double, default: 0.2) - ロボットのフットプリントのスケーリングを開始する速度の絶対値(m/s)
-  scaling_speed: 0.25           # (double, default: 0.25) - ロボットのフットプリントをスケーリングする最大係数
-  max_scaling_factor: 0.2       # (double, default: 0.2) - プランナーが計画時に使用するコストグリッドを公開するかどうか。
+  #  + twirling_scale * (軌道の旋回速度の絶対値) 
+  path_distance_bias: 64.0      # (double, default: 32.0) - コントローラーが与えられたパスにどれだけ近づけるかの重み
+  goal_distance_bias: 5.0      # (double, default: 24.0) - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
+  occdist_scale: 0.6            # (double, default: 0.01) -  コントローラーがどれだけ障害物をよけようとするかの重み
+  twirling_scale: 0.0           # (double, default: 0.0) - ロボットの方向の変更にペナルティを課すための重み
+  forward_point_distance: 0.325 # (double, default: 0.325) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
+  stop_time_buffer: 0.2         # (double, default: 0.2) - 軌道が有効とみなされるために、ロボットが衝突前に停止しなければならない時間を秒単位で表示する
+  scaling_speed: 0.25           # (double, default: 0.25) -  ロボットのフットプリントのスケーリングを開始する速度の絶対値(m/s)
+  max_scaling_factor: 0.2       # (double, default: 0.2) - ロボットのフットプリントをスケーリングする最大係数
 
   # 経路のコストを計算する際に距離をコストマップのセル数で計算する場合はこちら
   meter_scoreing: false          # (bool, default: false) - 経路のコストを計算する際に距離をコストマップのセル数で計算するか、距離で計算するか。
@@ -70,9 +70,9 @@ DWAPlannerROS: # SOBIT PRO
   oscillation_reset_dist: 0.05  # 0.05   - how far to travel before resetting oscillation flags
 
 # Debugging
-  publish_traj_pc : true
-  publish_cost_grid_pc: true
-  global_frame_id: odom
+  publish_traj_pc : true        # プランナーが計画時に使用するコストグリッドを公開するかどうか。
+  publish_cost_grid_pc: true    # 経路候補を配信するかどうか
+  global_frame_id: odom         # 経路候補を描画するフレーム
 
 # Differential-drive robot configuration - necessary?
   holonomic_robot: true
