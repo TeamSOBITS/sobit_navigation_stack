@@ -67,7 +67,7 @@ void addLocationPose(
 ### clearCostmaps
 - コストマップのクリア
 ```cpp
-void clearCostmaps()
+void SOBITNavigationStack::clearCostmaps()
 ```
 
 # SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
@@ -116,7 +116,7 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )
 ### clearCostmaps
 - コストマップのクリア
 ```cpp
-void clearCostmaps()
+void SOBITNavigationStack::clearCostmaps()
 ```
 
 ### addLocationPosePy
