@@ -9,6 +9,7 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <actionlib_msgs/GoalStatusArray.h>
+#include <std_srvs/Empty.h>
 #include <pybind11/pybind11.h>
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
@@ -41,8 +42,9 @@ namespace SOBITNavigationStack {
             ros::NodeHandle nh_;
             ros::NodeHandle pnh_;
             MoveBaseClient act_clt_;
+            ros::ServiceClient clt_clear_costmaps_;
             ros::Subscriber sub_status_;
-
+            
             bool is_output_;
             move_base_msgs::MoveBaseGoal goal_;
             std::vector<std::string> status_name_ = { 
@@ -100,6 +102,9 @@ namespace SOBITNavigationStack {
 
             // ロケーションポジションの追加
             void addLocationPose( const std::string& name, const std::string& frame_id, const geometry_msgs::Pose& target_position );
+
+            // コストマップのクリア
+            void clearCostmaps();
     };
 }
 

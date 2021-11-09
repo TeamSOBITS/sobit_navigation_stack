@@ -82,6 +82,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary() : nh_(), pnh_("~"),  act_clt_( 
     act_clt_.waitForServer();
     if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary ] Connect to the action server\n" );
     sub_status_ = nh_.subscribe<actionlib_msgs::GoalStatusArray>("/move_base/status", 10, &SOBITNavigationLibrary::statusCb, this);
+    clt_clear_costmaps_ = nh_.serviceClient<std_srvs::Empty>("/move_base/clear_costmaps");
     loadLocationFile();
     exist_goal_ = false;
     status_id_ = 0;
@@ -92,6 +93,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary( const std::string &name ) :  ROS
     act_clt_.waitForServer();
     if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary ] Connect to the action server\n" );
     sub_status_ = nh_.subscribe<actionlib_msgs::GoalStatusArray>("/move_base/status", 10, &SOBITNavigationLibrary::statusCb, this);
+    clt_clear_costmaps_ = nh_.serviceClient<std_srvs::Empty>("/move_base/clear_costmaps");
     loadLocationFile();
     exist_goal_ = false;
     status_id_ = 0;
@@ -155,5 +157,12 @@ void SOBITNavigationLibrary::addLocationPose( const std::string& name, const std
     pose.frame_id = frame_id;
     pose.pose = target_position;
     location_poses_.push_back( pose );
+    return;
+}
+
+// コストマップのクリア
+void SOBITNavigationLibrary::clearCostmaps() {
+    std_srvs::Empty srv;
+    clt_clear_costmaps_.call(srv);
     return;
 }

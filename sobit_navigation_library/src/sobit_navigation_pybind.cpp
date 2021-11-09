@@ -11,7 +11,8 @@ PYBIND11_MODULE( sobit_navigation_module, m) {
         .def_readwrite("status_id_", &SOBITNavigationLibrary::status_id_)
         .def( "move2Location", &SOBITNavigationLibrary::move2Location, "move to Location Pose", 
             py::arg("location_name"), py::arg("is_wait") = false )
-        .def( "cancelMoving", &SOBITNavigationLibrary::cancelMoving, "cancel Moving" );    
+        .def( "cancelMoving", &SOBITNavigationLibrary::cancelMoving, "cancel Moving" )
+        .def( "clearCostmaps", &SOBITNavigationLibrary::clearCostmaps, "clear Costmaps" );
 
     py::class_<SOBITNavigationLibraryPython, SOBITNavigationLibrary>(m, "SOBITNavigationLibraryPython")
         .def( py::init< const std::string& >() )
