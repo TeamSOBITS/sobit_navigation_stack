@@ -64,6 +64,11 @@ void addLocationPose(
     const geometry_msgs::Pose& target_position 
 )
 ```
+### clearCostmaps
+- コストマップのクリア
+```cpp
+void clearCostmaps()
+```
 
 # SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
 ## Member variables
@@ -106,6 +111,12 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 - 移動をキャンセルする(アクションサーバの処理を中断する)
 ```cpp
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
+```
+
+### clearCostmaps
+- コストマップのクリア
+```cpp
+void clearCostmaps()
 ```
 
 ### addLocationPosePy
