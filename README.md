@@ -24,7 +24,9 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 - [recovery_behaviorsについて](doc/readme/recovery_behaviors.md)
 - [rtabmapについて](doc/readme/rtabmap.md)
 
-# [ROS Navigation Stack ソフトウェア設計仕様（産業技術総合研究所・ロボットイノベーションセンター）](https://robo-marc.github.io/navigation_documents/)
+# [ROS Navigation Stack ソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)
+- 作成：産業技術総合研究所・ロボットイノベーションセンター
+
 - [はじめに](https://robo-marc.github.io/navigation_documents/introduction.html)
 - [Navigation Stack概要](https://robo-marc.github.io/navigation_documents/navigation_overview.html#)
     - [Navigation Stackとは](https://robo-marc.github.io/navigation_documents/navigation_overview.html#id1)
