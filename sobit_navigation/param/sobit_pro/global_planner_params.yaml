@@ -5,6 +5,15 @@ GlobalPlanner:                                  # Also see: http://wiki.ros.org/
   use_dijkstra: true                            # Use dijkstra's algorithm. Otherwise, A*, default true
   use_grid_path: false                          # Create a path that follows the grid boundaries. Otherwise, use a gradient descent method, default false
   
+  orientation_mode: 3 #(default: 0)
+  # None=0 （目標位置の向き以外の向きは追加されません）
+  # Forward=1 （目標位置の向きを除き、通過点での向きは経路に沿って正のx軸方向）
+  # Interpolate=2 （方向は開始姿勢と目標姿勢の線形混合です）
+  # ForwardThenInterpolate=3 （最後の直進まで順方向、その後目標姿勢まで線形混合）
+  # Backward=4 （目標位置の向きを除き、通過点での向きは経路に沿って負のx軸方向）
+  # Leftward=5 （目標位置の向きを除き、通過点での向きは経路に沿って正のy軸方向）
+  # Rightward=6 （目標位置の向きを除き、通過点での向きは経路に沿って負のy軸方向）
+
   allow_unknown: true                           # Allow planner to plan through unknown space, default true
                                                 #Needs to have track_unknown_space: true in the obstacle / voxel layer (in costmap_commons_param) to work
   planner_window_x: 0.0                         # default 0.0
