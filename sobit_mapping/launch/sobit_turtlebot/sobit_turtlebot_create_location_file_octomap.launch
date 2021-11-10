@@ -4,13 +4,7 @@
     <include file="$(find sobit_navigation)/launch/sobit_turtlebot_navigation_octomap.launch"/>
     
     <!-- keyboard -->
-    <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
-    <node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard" launch-prefix="xterm -font r16 -bg darkblue -e">
-        <param name="scale_linear" value="0.5" type="double"/>
-        <param name="scale_angular" value="1.5" type="double"/>
-        <remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel_mux/input/teleop"/>
-        <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/mobile_base/commands/velocity"/>
-    </node>
+    <include file="$(find sobit_navigation)/launch/sobit_turtlebot/sobit_turtlebot_teleop_keyboard.launch"/>
 
     <!-- create_location_file(ymal型ver) -->
     <arg name="location_folder_path" default="$(find sobit_mapping)/map"/>

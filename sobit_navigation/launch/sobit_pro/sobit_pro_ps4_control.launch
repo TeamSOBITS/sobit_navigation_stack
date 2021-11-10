@@ -1,0 +1,6 @@
+<launch>
+
+    <!-- keyboard -->
+    <include file="$(find sobit_pro_bringup)/launch/ps4_control.launch"/>
+
+</launch>
