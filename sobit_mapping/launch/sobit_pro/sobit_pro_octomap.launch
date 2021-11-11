@@ -41,6 +41,13 @@
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation_octomap.rviz"/>
 
+    <!--pro_pantilt_ctr -->
+    <node pkg="sobit_mapping" type="pro_pantilt_ctr.py" name="pro_pantilt_ctr">
+        <rosparam>
+            tilt_rad : -0.2
+        </rosparam>
+    </node>
+
     <!-- keyboard -->
     <include file="$(find sobit_pro_bringup)/launch/ps4_control.launch"/>
 </launch>
