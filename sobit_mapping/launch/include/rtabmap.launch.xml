@@ -387,7 +387,7 @@
         <param name="Grid/FromDepth"                 type="string" value="true"/> <!-- occupancy grid from lidar・Need CLoud Mao : True -->
         <param name="Grid/MaxGroundHeight"           type="string" value="0.2"/>
         <param name="Grid/MaxObstacleHeight"         type="string" value="2"/>
-        <param name="Grid/NormalsSegmentation"       type="string" value="false"/>
+        <param name="Grid/NormalsSegmentation"       type="string" value="true"/>
         <param name="Grid/Scan2dUnknownSpaceFilled"  type="string" value="true"/>
 
         <param name="Reg/Force3DoF"                  type="string" value="$(arg reg_force3dof)"/>
