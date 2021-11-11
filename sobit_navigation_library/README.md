@@ -1,6 +1,23 @@
 # About SOBIT Navigation Library
 ナビゲーションをプログラム上で実行できるライブラリ
 
+## How to use
+1. 以下のどれかのnavigationを起動
+```bash
+$ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
+$ roslaunch sobit_navigation sobit_turtlebot_navigation_octomap.launch
+$ roslaunch sobit_navigation sobit_pro_navigation.launch
+$ roslaunch sobit_navigation sobit_pro_navigation_octomap.launch
+```
+
+2. [load_location_file](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_mapping/launch/load_location_file.launch)を起動
+```bash
+roslaunch sobit_mapping load_location_file.launch 
+```
+※ location_fileのパス設定を間違えないよう注意
+
+3.　下記のライブラリが使用できる
+
 # SOBIT Navigation Library([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library.cpp))
 ## Member variables
 ### location_poses_
