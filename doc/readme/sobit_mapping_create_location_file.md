@@ -83,7 +83,8 @@ transform.getRotation().w(): 0.0307304
 
 ## 05. [location_file_viewer](sobit_mapping/launch/location_file_viewer.launch)
 - すでに作成しているロケーションを確認するプログラム
-- create_location_file同様にロケーションの追加も出来ます
+- rviz上の「2D Nav Goal」で選択した位置をロケーションとして追加出来ます
+
 - **使う前に**
     1. [location_file_viewer.launch](sobit_mapping/launch/location_file_viewer.launch)の「map_file」と「location_file」のファイルパスを記入
 
