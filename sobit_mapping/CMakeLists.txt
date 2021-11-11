@@ -62,3 +62,6 @@ target_link_libraries(display_location_marker  ${catkin_LIBRARIES})
 
 add_executable(projected_map_saver src/projected_map_saver.cpp)
 target_link_libraries(projected_map_saver  ${catkin_LIBRARIES})
+
+add_executable(location_file_viewer src/location_file_viewer.cpp)
+target_link_libraries(location_file_viewer  ${catkin_LIBRARIES})

@@ -81,6 +81,12 @@ transform.getRotation().w(): 0.0307304
     <img src="doc/img/sobit_turtlebot_create_location_file.png" width="640">
 </div> 
 
+## 05. [location_file_viewer](sobit_mapping/launch/location_file_viewer.launch)
+- すでに作成しているロケーションを確認するプログラム
+- create_location_file同様にロケーションの追加も出来ます
+- **使う前に**
+    1. [location_file_viewer.launch](sobit_mapping/launch/location_file_viewer.launch)の「map_file」と「location_file」のファイルパスを記入
+
 ---
 
 - [目次に戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/tree/main/sobit_mapping)

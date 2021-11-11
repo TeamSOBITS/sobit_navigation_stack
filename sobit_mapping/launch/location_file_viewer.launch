@@ -1,0 +1,19 @@
+<launch>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+
+    <arg name="map_file" default="$(find sobit_mapping)/map/projected_map_8_26_19_54.yaml"/>
+    <arg name="initial_pose_x" default="0.0"/>
+    <arg name="initial_pose_y" default="0.0"/>
+    <arg name="initial_pose_a" default="0.0"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+    <rosparam command="load" file="$(find sobit_mapping)/map/map_location_11_1_21_43.yaml"/>
+
+    <arg name="location_file_path" default="$(find sobit_mapping)/map/map_location_11_1_21_43.yaml"/>
+    
+    <group ns = "location_file_viewer">
+        <node pkg="sobit_mapping" type="location_file_viewer"  name="location_file_viewer" output="screen">
+            <param name="location_file_path" type="string" value="$(arg location_file_path)"/>
+        </node>
+    </group>
+</launch>
