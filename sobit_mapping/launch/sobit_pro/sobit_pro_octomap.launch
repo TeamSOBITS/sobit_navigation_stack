@@ -11,6 +11,9 @@
             latch : false
             resolution : 0.05
 
+            sensor_model :
+                max_range : 5.0
+
             filter_ground : false
             <!-- ground_filter/distance : 0.10
             ground_filter/angle : 0.20

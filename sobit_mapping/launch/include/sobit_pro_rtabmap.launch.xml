@@ -6,9 +6,9 @@
     <arg name="scan_topic"           value="/scan"/>
     <arg name="gen_scan"             value="true"/>
     
-    <arg name="visual_odometry"      value="true"/>
-    <arg name="icp_odometry"         value="true"/>
-    <arg name="odom_topic"           value="/odom"/> 
+    <arg name="visual_odometry"      value="false"/>
+    <arg name="icp_odometry"         value="false"/>
+    <arg name="odom_frame_id"           value="odom"/> 
 
     <arg name="reg_force3dof"        value="true"/>
     <arg name="reg_strategy"         value="1"/>
@@ -16,9 +16,9 @@
 
     <arg name="wait_for_transform"   value="0.05"/>
 
-    <arg name="rtabmapviz"           value="true" /> 
+    <arg name="rtabmapviz"           value="false" /> 
 
-    <arg name="min_depth"      value="0.3"/>
+    <arg name="min_depth"      value="0.5"/>
     <arg name="max_depth"      value="10.0"/>
 
     <arg name="rgb_topic"          value="/k4a/rgb_to_depth/image_rect" />
