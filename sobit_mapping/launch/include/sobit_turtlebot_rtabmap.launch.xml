@@ -39,6 +39,8 @@
 				<param name="approx_sync"  type="bool" value="true"/> 
 
 				<param name="queue_size" type="int" value="10"/>
+				<arg name="min_depth"      value="0.3"/>
+				<arg name="max_depth"      value="10.0"/>
 				
 				<!-- RTAB-Map's parameters -->
 				<param name="RGBD/ProximityPathMaxNeighbors" type="string" value="10"/>

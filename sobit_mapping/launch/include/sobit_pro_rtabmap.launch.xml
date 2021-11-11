@@ -18,6 +18,9 @@
 
     <arg name="rtabmapviz"           value="true" /> 
 
+    <arg name="min_depth"      value="0.3"/>
+    <arg name="max_depth"      value="10.0"/>
+
     <arg name="rgb_topic"          value="/k4a/rgb_to_depth/image_rect" />
     <arg name="depth_topic"        value="/k4a/depth/image_rect" />
     <arg name="camera_info_topic"  value="/k4a/depth/camera_info" />
