@@ -87,6 +87,12 @@ void addLocationPose(
 void SOBITNavigationStack::clearCostmaps()
 ```
 
+### estimatePoseFromLocation
+- 現在地を指定したロケーションポーズの位置にする
+```cpp
+void SOBITNavigationLibrary::estimatePoseFromLocation( const std::string&  location_name )
+```
+
 # SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
 ## Member variables
 ### exist_goal_
@@ -130,12 +136,6 @@ bool SOBITNavigationStack::SOBITNavigationLibrary::move2Location(
 bool SOBITNavigationStack::SOBITNavigationLibrary::cancelMoving( )            
 ```
 
-### clearCostmaps
-- コストマップのクリア
-```cpp
-void SOBITNavigationStack::clearCostmaps()
-```
-
 ### addLocationPosePy
 - ロケーションポジションの追加(Pybind用)
 ```cpp
@@ -150,6 +150,18 @@ void addLocationPosePy(
     const float64 qz,               // 姿勢 
     const float64 qw,               // 姿勢 
 )
+```
+
+### clearCostmaps
+- コストマップのクリア
+```cpp
+void SOBITNavigationStack::clearCostmaps()
+```
+
+### estimatePoseFromLocation
+- 現在地を指定したロケーションポーズの位置にする
+```cpp
+void SOBITNavigationLibrary::estimatePoseFromLocation( const std::string&  location_name )
 ```
 
 ## How to Use
