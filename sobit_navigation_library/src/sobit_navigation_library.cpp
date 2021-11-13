@@ -83,6 +83,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary() : nh_(), pnh_("~"),  act_clt_( 
     if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary ] Connect to the action server\n" );
     sub_status_ = nh_.subscribe<actionlib_msgs::GoalStatusArray>("/move_base/status", 10, &SOBITNavigationLibrary::statusCb, this);
     clt_clear_costmaps_ = nh_.serviceClient<std_srvs::Empty>("/move_base/clear_costmaps");
+    pub_pose_estimate_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1);
     loadLocationFile();
     exist_goal_ = false;
     status_id_ = 0;
@@ -94,6 +95,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary( const std::string &name ) :  ROS
     if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary ] Connect to the action server\n" );
     sub_status_ = nh_.subscribe<actionlib_msgs::GoalStatusArray>("/move_base/status", 10, &SOBITNavigationLibrary::statusCb, this);
     clt_clear_costmaps_ = nh_.serviceClient<std_srvs::Empty>("/move_base/clear_costmaps");
+    pub_pose_estimate_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1);
     loadLocationFile();
     exist_goal_ = false;
     status_id_ = 0;
@@ -165,4 +167,23 @@ void SOBITNavigationLibrary::clearCostmaps() {
     std_srvs::Empty srv;
     clt_clear_costmaps_.call(srv);
     return;
+}
+
+// 現在地を指定したロケーションポーズの位置にする
+void SOBITNavigationLibrary::estimatePoseFromLocation( const std::string&  location_name ) {
+    geometry_msgs::PoseWithCovarianceStamped target_position;
+    std::string frame_id;
+    bool exist_target = false;
+    for ( const auto pose : location_poses_ ) {
+        if ( location_name != pose.name ) continue;
+        target_position.pose.pose = pose.pose;
+        target_position.header.frame_id = pose.frame_id;
+        target_position.header.stamp = ros::Time::now();
+        exist_target = true;
+    }
+    if ( !exist_target ) {
+        ROS_ERROR( "[ SOBITNavigationLibrary::move2Location ] \"%s\" does not exist.\n", location_name.c_str() );
+        return;
+    }    
+    pub_pose_estimate_.publish(target_position);
 }

@@ -1,7 +1,7 @@
 <!-- sobit_turtlebot_create_location_file.launch -->
 <launch>
     <!-- Navigation -->
-    <include file="$(find sobit_navigation)/launch/sobit_pro_navigation_multi_sensor.launch"/>
+    <include file="$(find sobit_navigation)/launch/sobit_pro/sobit_pro_navigation_multi_sensor.launch"/>
     
     <!-- keyboard -->
     <include file="$(find sobit_pro_bringup)/launch/ps4_control.launch"/>

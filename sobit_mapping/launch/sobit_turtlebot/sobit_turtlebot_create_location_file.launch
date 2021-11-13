@@ -1,7 +1,7 @@
 <!-- sobit_turtlebot_create_location_file.launch -->
 <launch>
     <!-- Navigation -->
-    <include file="$(find sobit_navigation)/launch/sobit_turtlebot_navigation.launch"/>
+    <include file="$(find sobit_navigation)/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch"/>
     
     <!-- keyboard -->
     <include file="$(find sobit_navigation)/launch/sobit_turtlebot/sobit_turtlebot_teleop_keyboard.launch"/>
