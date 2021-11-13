@@ -13,8 +13,8 @@
     <arg name="laser_topic" default="scan" />
     <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_turtlebot/dummy.yaml"/>
     <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -bg darkblue -e">
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_multi_sensor/octomap_costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_multi_sensor/octomap_costmap_common_params.yaml" command="load" ns="local_costmap" />   
+        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_multi_sensor/multi_sensor_costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_multi_sensor/multi_sensor_costmap_common_params.yaml" command="load" ns="local_costmap" />   
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/local_costmap_params.yaml" command="load" />   
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/global_costmap_params.yaml" command="load" />
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/dwa_local_planner_params.yaml" command="load" />
