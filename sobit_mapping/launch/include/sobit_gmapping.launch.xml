@@ -3,11 +3,16 @@
     <arg name="scan_topic"  default="scan" />
     <arg name="base_frame"  default="base_footprint"/>
     <arg name="odom_frame"  default="odom"/>
+    <arg name="occ_thresh"  default="0.25"/>
+    <arg name="map_update_interval"  default="5.0"/>
+    <arg name="throttle_scans"  default="1"/>
 
-        <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
         <param name="base_frame" value="$(arg base_frame)"/>
         <param name="odom_frame" value="$(arg odom_frame)"/>
-        <param name="map_update_interval" value="5.0"/>
+        <param name="map_update_interval" value="$(arg map_update_interval)"/>
+        <param name="throttle_scans" value="$(arg throttle_scans)"/>
+        <param name="transform_publish_period" value="0.05"/>
         <param name="maxUrange" value="6.0"/>
         <param name="maxRange" value="8.0"/>
         <param name="sigma" value="0.05"/>
@@ -18,7 +23,7 @@
         <param name="lsigma" value="0.075"/>
         <param name="ogain" value="3.0"/>
         <param name="lskip" value="0"/>
-        <param name="minimumScore" value="200"/>
+        <param name="minimumScore" value="260"/>
         <param name="srr" value="0.01"/>
         <param name="srt" value="0.02"/>
         <param name="str" value="0.01"/>
@@ -41,6 +46,7 @@
         <param name="ymax" value="1.0"/>
 
         <param name="delta" value="0.05"/>
+        <param name="occ_thresh" value="$(arg occ_thresh)"/>
         <param name="llsamplerange" value="0.01"/>
         <param name="llsamplestep" value="0.01"/>
         <param name="lasamplerange" value="0.005"/>

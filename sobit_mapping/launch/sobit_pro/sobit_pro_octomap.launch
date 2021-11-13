@@ -1,6 +1,6 @@
 <launch>
     <!-- rtabmap -->
-	<include file="$(find sobit_mapping)/launch/include/sobit_pro_rtabmap.launch.xml" />
+	<include file="$(find sobit_mapping)/launch/sobit_pro_rtabmap.launch" />
 
 	<!-- octomap -->
 	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">

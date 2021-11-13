@@ -7,9 +7,9 @@
     <arg name="initial_pose_a" default="0.0"/>
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
-    <rosparam command="load" file="$(find sobit_mapping)/map/map_location_11_1_21_43.yaml"/>
+    <rosparam command="load" file="$(find sobit_mapping)/map/example/gmapping_multi_merger.yaml"/>
 
-    <arg name="location_file_path" default="$(find sobit_mapping)/map/map_location_11_1_21_43.yaml"/>
+    <arg name="location_file_path" default="$(find sobit_mapping)/map/example/location_projected_map.yaml"/>
     
     <group ns = "location_file_viewer">
         <node pkg="sobit_mapping" type="location_file_viewer"  name="location_file_viewer" output="screen">

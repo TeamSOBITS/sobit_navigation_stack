@@ -82,3 +82,9 @@ sudo apt-get install ros-melodic-rtabmap -y
 
 echo -e "\e[34m\nInstall ros-melodic-rtabmap-ros\e[m"
 sudo apt install ros-melodic-rtabmap-ros -y
+
+echo -e "\e[34m\nInstall ros-melodic-pointcloud-to-laserscan\e[m"
+sudo apt install ros-melodic-pointcloud-to-laserscan -y
+
+echo -e "\e[34m\nInstall ros-melodic-ira-laser-tools\e[m"
+sudo apt install ros-melodic-ira-laser-tools -y
