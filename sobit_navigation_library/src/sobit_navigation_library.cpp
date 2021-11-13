@@ -36,6 +36,7 @@ void SOBITNavigationLibrary::sendGoal( void  ) {
         boost::bind( &SOBITNavigationLibrary::doneCb, this, _1, _2 ),
         boost::bind( &SOBITNavigationLibrary::activeCb, this ),
         boost::bind( &SOBITNavigationLibrary::feedbackCb, this, _1 ) );
+    sub_status_ = nh_.subscribe<actionlib_msgs::GoalStatusArray>("/move_base/status", 10, &SOBITNavigationLibrary::statusCb, this);
     return;
 }
 // アクションサービス完了後の結果を返すコールバック関数
@@ -45,11 +46,13 @@ void SOBITNavigationLibrary::doneCb( const actionlib::SimpleClientGoalState& sta
         else ROS_ERROR( "[ SOBITNavigationLibrary::doneCb ] Goal failed!!\n" );
     }
     exist_goal_ = false;
+    ros::spinOnce();
     return;
 }
 // アクションサーバーが動作しているかを返すコールバック関数
 void SOBITNavigationLibrary::activeCb( void ) {
     if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary::activeCb ] Goal just went active...\n" );
+    ros::spinOnce();
     return;
 }
 // アクションサーバーのフィードバックを返すコールバック関数
@@ -62,6 +65,7 @@ void SOBITNavigationLibrary::feedbackCb( const move_base_msgs::MoveBaseFeedbackC
             << "\nTarget distance : " << std::hypotf( goal_.target_pose.pose.position.x - feedback->base_position.pose.position.x, goal_.target_pose.pose.position.y - feedback->base_position.pose.position.y )
             << "\n" << std::endl;
     }
+    ros::spinOnce();
     return;
 }
 // アクションサーバーのステータスを返すコールバック関数
@@ -73,6 +77,7 @@ void SOBITNavigationLibrary::statusCb(const actionlib_msgs::GoalStatusArray::Con
         }
         status_id_ = goalStatus.status;
     }
+    ros::spinOnce();
 }
 
 // コンストラクタ
@@ -88,6 +93,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary() : nh_(), pnh_("~"),  act_clt_( 
     exist_goal_ = false;
     status_id_ = 0;
 }
+
 SOBITNavigationLibrary::SOBITNavigationLibrary( const std::string &name ) :  ROSCommonNode( name ), nh_(), pnh_("~"), act_clt_( "move_base", true ) {
     is_output_ = pnh_.param<bool>( "is_output_terminal", true );
     if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary ] Waiting For Server...\n" );
