@@ -9,7 +9,8 @@
     <arg name="odom_topic" default="odom" />
     <arg name="laser_topic" default="scan" />
     <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_pro/dummy.yaml"/>
-    <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -bg darkblue -e">
+    <!-- launch-prefix="xterm -font r16 -bg darkblue -e" -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" >
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/costmap_common_params.yaml" command="load" ns="local_costmap" />   
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/local_costmap_params.yaml" command="load" />   
