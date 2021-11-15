@@ -38,14 +38,13 @@ obstacle_layer:
   rgbd:
     data_type: PointCloud2
     sensor_frame : base_footprint
-    topic: noise_removal_pointcloud_publisher/cloud_noise_removal
+    topic: cloud_noise_removal
     marking: true
     clearing: true
     inf_is_valid: false
     observation_persistence: 0.0
     min_obstacle_height: 0.0
     max_obstacle_height: 1.6
-    expected_update_rate: 0.5
     obstacle_range: 2.5
     raytrace_range: 3.0
   # rgbd:

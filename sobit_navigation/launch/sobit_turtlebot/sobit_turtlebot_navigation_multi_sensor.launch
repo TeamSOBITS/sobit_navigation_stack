@@ -23,4 +23,8 @@
     <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot_multi_sensor/sobit_turtlebot_move_base_multi_sensor.launch.xml">
     </include>
 
+    <node name="noise_removal_pointcloud_publisher" pkg="sobit_navigation" type="noise_removal_pointcloud_publisher">
+        <param name="topic_name" type="str" value="/camera/depth/points"/>
+    </node>
+
 </launch>

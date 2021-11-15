@@ -11,6 +11,7 @@ class PointcloudSsubscriber {
         ros::Subscriber sub_points_;
         ros::Publisher pub_cloud_;
         sobit_navigation::PointCloudProcessor pcp_;
+        std::string target_frame_;
 
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
             PointCloud::Ptr cloud (new PointCloud());
@@ -23,7 +24,8 @@ class PointcloudSsubscriber {
             pcp_.passThrough( cloud, cloud );
             pcp_.voxelGrid( cloud, cloud );
             pcp_.radiusOutlierRemoval ( cloud, cloud );
-            pcl_conversions::toPCL(ros::Time::now(), cloud->header.stamp);
+            pcl_conversions::toPCL(cloud_msg->header.stamp, cloud->header.stamp);
+            //pcl_conversions::toPCL(ros::Time::now(), cloud->header.stamp);
             pub_cloud_.publish(cloud);
             ROS_INFO("cloud points size = %zu\n", cloud->points.size());
         }
@@ -31,6 +33,7 @@ class PointcloudSsubscriber {
     public:
         PointcloudSsubscriber(): nh_(), pnh_("~") {
             std::string topic_name = pnh_.param<std::string>( "topic_name", "/k4a/points2" );
+            target_frame_ = pnh_.param<std::string>( "target_frame", "base_footprint" );
 
             ROS_INFO("topic_name = '%s'", topic_name.c_str());
             pcp_.setVoxelGridParameter( 0.02 );
