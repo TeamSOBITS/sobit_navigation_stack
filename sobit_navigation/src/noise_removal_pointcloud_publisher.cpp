@@ -16,11 +16,11 @@ class PointcloudSsubscriber {
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
             PointCloud::Ptr cloud (new PointCloud());
             pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud );
-            pcp_.setPassThroughParameters( "x", 0.5, 8.0 );
+            pcp_.setPassThroughParameters( "x", 0.4, 8.0 );
             pcp_.passThrough( cloud, cloud );
             pcp_.setPassThroughParameters( "y", -4.0, 4.0 );
             pcp_.passThrough( cloud, cloud );
-            pcp_.setPassThroughParameters( "z", 0.05, 2.0 );
+            pcp_.setPassThroughParameters( "z", 0.05, 1.5 );
             pcp_.passThrough( cloud, cloud );
             pcp_.voxelGrid( cloud, cloud );
             pcp_.radiusOutlierRemoval ( cloud, cloud );
@@ -33,11 +33,14 @@ class PointcloudSsubscriber {
     public:
         PointcloudSsubscriber(): nh_(), pnh_("~") {
             std::string topic_name = pnh_.param<std::string>( "topic_name", "/k4a/points2" );
+            double voxel_size = pnh_.param<double>( "voxel_size", 0.025 );
+            double radius = pnh_.param<double>( "radius", 0.05 );
+            int min_pt = pnh_.param<int>( "min_pt", 5 );
             target_frame_ = pnh_.param<std::string>( "target_frame", "base_footprint" );
 
             ROS_INFO("topic_name = '%s'", topic_name.c_str());
-            pcp_.setVoxelGridParameter( 0.02 );
-            pcp_.setRadiusOutlierRemovalParameters ( 0.05, 2, false );
+            pcp_.setVoxelGridParameter( 0.025 );
+            pcp_.setRadiusOutlierRemovalParameters ( radius, min_pt, false );
 
             pub_cloud_ = nh_.advertise<PointCloud>("cloud_noise_removal", 1);
             sub_points_ = nh_.subscribe(topic_name, 5, &PointcloudSsubscriber::cbPoints, this);
