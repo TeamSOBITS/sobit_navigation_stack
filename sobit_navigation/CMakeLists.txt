@@ -18,6 +18,9 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   actionlib
   visualization_msgs
+  pcl_ros
+  pcl_conversions
+
 )
 
 ## Generate messages in the 'msg' folder
@@ -48,13 +51,17 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES sobit_navigation
 #  CATKIN_DEPENDS geometry_msgs move_base_msgs roscpp rospy sensor_msgs std_msgs tf tf2_ros actionlib visualization_msgs
 #  DEPENDS system_lib
 )
 
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
+
+add_executable(noise_removal_pointcloud_publisher src/noise_removal_pointcloud_publisher.cpp
+                                                    src/point_cloud_processor.cpp)
+target_link_libraries(noise_removal_pointcloud_publisher  ${catkin_LIBRARIES})
