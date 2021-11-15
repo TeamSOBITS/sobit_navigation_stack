@@ -42,11 +42,11 @@ DWAPlannerROS: # SOBIT PRO
 # + path_distance_bias * (グローバルパスへの向きのコスト(m))
 # + goal_distance_bias * (ローカルゴールへの向きのコスト(m))
 # + twirling_scale * (スピンコスト(rad/s))
-  path_distance_bias: 32.0      # (double, default: 32.0) - コントローラーが与えられたパスにどれだけ近づけるかの重み
+  path_distance_bias: 64.0      # (double, default: 32.0) - コントローラーが与えられたパスにどれだけ近づけるかの重み
   goal_distance_bias: 15.0      # (double, default: 24.0) - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
   occdist_scale: 0.6            # (double, default: 0.01) -  コントローラーがどれだけ障害物をよけようとするかの重み
   twirling_scale: 0.0           # (double, default: 0.0) - ロボットの方向の変更にペナルティを課すための重み
-  forward_point_distance: 0.80 # (double, default: 0.325) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
+  forward_point_distance: 0.325 # (double, default: 0.325) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
   stop_time_buffer: 0.2         # (double, default: 0.2) - 軌道が有効とみなされるために、ロボットが衝突前に停止しなければならない時間を秒単位で表示する
   scaling_speed: 0.25           # (double, default: 0.25) -  ロボットのフットプリントのスケーリングを開始する速度の絶対値(m/s)
   max_scaling_factor: 0.2       # (double, default: 0.2) - ロボットのフットプリントをスケーリングする最大係数
