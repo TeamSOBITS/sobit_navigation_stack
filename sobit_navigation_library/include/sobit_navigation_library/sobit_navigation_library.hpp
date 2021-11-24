@@ -83,6 +83,7 @@ namespace SOBITNavigationStack {
             // フラグ
             bool exist_goal_;
             int status_id_;
+            bool result_;
 
             // コンストラクタ
             SOBITNavigationLibrary();

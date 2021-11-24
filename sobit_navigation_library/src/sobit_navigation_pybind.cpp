@@ -9,6 +9,7 @@ PYBIND11_MODULE( sobit_navigation_module, m) {
         .def( py::init< const std::string& >() )
         .def_readwrite("exist_goal_", &SOBITNavigationLibrary::exist_goal_)
         .def_readwrite("status_id_", &SOBITNavigationLibrary::status_id_)
+        .def_readwrite("result_", &SOBITNavigationLibrary::result_)
         .def( "move2Location", &SOBITNavigationLibrary::move2Location, "move to Location Pose", 
             py::arg("location_name"), py::arg("is_wait") = false )
         .def( "cancelMoving", &SOBITNavigationLibrary::cancelMoving, "cancel Moving" )

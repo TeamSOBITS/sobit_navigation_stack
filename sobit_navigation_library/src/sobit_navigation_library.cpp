@@ -42,8 +42,13 @@ void SOBITNavigationLibrary::sendGoal( void  ) {
 // アクションサービス完了後の結果を返すコールバック関数
 void SOBITNavigationLibrary::doneCb( const actionlib::SimpleClientGoalState& state, const move_base_msgs::MoveBaseResultConstPtr& result ) {
     if ( is_output_ ) {
-        if(state == actionlib::SimpleClientGoalState::SUCCEEDED) ROS_INFO( "[ SOBITNavigationLibrary::doneCb ] Goal reached!!\n" );
-        else ROS_ERROR( "[ SOBITNavigationLibrary::doneCb ] Goal failed!!\n" );
+        if(state == actionlib::SimpleClientGoalState::SUCCEEDED) {
+            ROS_INFO( "[ SOBITNavigationLibrary::doneCb ] Goal reached!!\n" );
+            result_ = true;
+        } else {
+            ROS_ERROR( "[ SOBITNavigationLibrary::doneCb ] Goal failed!!\n" );
+            result_ = false;
+        }
     }
     exist_goal_ = false;
     ros::spinOnce();
@@ -91,6 +96,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary() : nh_(), pnh_("~"),  act_clt_( 
     pub_pose_estimate_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1);
     loadLocationFile();
     exist_goal_ = false;
+    result_ = false;
     status_id_ = 0;
 }
 
@@ -104,6 +110,7 @@ SOBITNavigationLibrary::SOBITNavigationLibrary( const std::string &name ) :  ROS
     pub_pose_estimate_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1);
     loadLocationFile();
     exist_goal_ = false;
+    result_ = false;
     status_id_ = 0;
 }
 
@@ -153,6 +160,7 @@ void SOBITNavigationLibrary::cancelMoving( ) {
     if ( is_output_ ) ROS_INFO( "[ SOBITNavigationLibrary::cancelMoving ] Cancel the move\n" );
     act_clt_.cancelGoal();
     exist_goal_ = false;
+    result_ = false;
     return;
 }
 
