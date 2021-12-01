@@ -1,6 +1,6 @@
 <launch>
     <!-- rtabmap -->
-	<include file="$(find sobit_mapping)/launch/sobit_turtlebot/sobit_turtlebot_rtabmap.launch" />
+	<include file="$(find sobit_mapping)/launch/sobit_pro/sobit_pro_rtabmap.launch" />
 
 	<!-- octomap -->
 	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
