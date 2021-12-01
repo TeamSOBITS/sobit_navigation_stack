@@ -46,6 +46,12 @@ bool exist_goal_
 int status_id_
 ```
 
+### result_
+- 直近のナビゲーションの結果
+```cpp
+bool result_
+```
+
 ## Functions
 ### move2Position
 - 移動したい位置(geometry_msgs::Pose型)に移動する
@@ -104,6 +110,11 @@ bool exist_goal_
 - MoveBaseの現在ステータス
 ```cpp
 int status_id_
+```
+### result_
+- 直近のナビゲーションの結果
+```cpp
+bool result_
 ```
 ## Functions
 
