@@ -66,6 +66,9 @@ sudo apt-get install ros-melodic-navigation -y
 echo -e "\e[34m\nInstall ros-melodic-interactive-markers\e[m"
 sudo apt-get install ros-melodic-interactive-markers -y
 
+echo -e "\e[34m\nInstall ros-melodic-yocs-velocity-smoother\e[m"
+sudo apt-get install ros-melodic-yocs-velocity-smoother
+
 # Install rtabmap, octomap etc.
 # Ref : https://qiita.com/ryu_software/items/d13a70aacfc6a71cacdb#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB
 echo -e "\e[34m\nInstall os-melodic-octomap\e[m"
