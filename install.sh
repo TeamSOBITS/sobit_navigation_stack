@@ -6,7 +6,7 @@
 echo "╔══╣ Install: Sobit Navigation Stack (STARTING) ╠══╗"
 
 
-sudo apt-get update 
+sudo apt-get update
 
 # Install gmapping, amcl, move_base etc.
 sudo apt-get install -y \
@@ -30,8 +30,7 @@ sudo apt-get install -y \
     ros-${ROS_DISTRO}-rqt-image-view \
     ros-${ROS_DISTRO}-gmapping \
     ros-${ROS_DISTRO}-navigation \
-    ros-${ROS_DISTRO}-interactive-markers \
-    ros-${ROS_DISTRO}-yocs-velocity-smoother
+    ros-${ROS_DISTRO}-interactive-markers
 
 # Install rtabmap, octomap etc.
 sudo apt-get install -y \
