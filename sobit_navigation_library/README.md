@@ -1,6 +1,24 @@
 # About SOBIT Navigation Library
 ナビゲーションをプログラム上で実行できるライブラリ
 
+# Setup
+これライブラリなので，基本的に他のROSパッケージから利用します．
+なので，ライブラリを使用したいパッケージでSOBIT Navigation Libraryインクルードする必要があります．
+
+まず，CMakeLists.txt （ライブラリを使用したいパッケージのもの）の中に、以下を追加してください
+```
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  sobit_navigation_library
+)
+```
+
+そして、package.xmlの中に```<depend>sobit_navigation_library</depend>```タグを追加してください。
+
+こうすることで、依存関係を適切に設定することができます。
+
+これで、catkin_makeでコンパイルすれば完了です．
+
 ## How to use
 1. 以下のどれかのnavigationを起動
 ```bash
@@ -19,6 +37,9 @@ roslaunch sobit_mapping load_location_file.launch
 3.　下記のライブラリが使用できる
 
 # SOBIT Navigation Library([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library.cpp))
+
+<details><summary>Member variables</summary>
+
 ## Member variables
 ### location_poses_
 - ロケーションポーズ配列
@@ -51,6 +72,10 @@ int status_id_
 ```cpp
 bool result_
 ```
+
+</details>
+
+<details><summary>Functions</summary>
 
 ## Functions
 ### move2Position
@@ -99,7 +124,12 @@ void SOBITNavigationStack::clearCostmaps()
 void SOBITNavigationLibrary::estimatePoseFromLocation( const std::string&  location_name )
 ```
 
+</details>
+
 # SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
+
+<details><summary>Member variables</summary>
+
 ## Member variables
 ### exist_goal_
 - ゴールが設定されているか
@@ -116,6 +146,11 @@ int status_id_
 ```cpp
 bool result_
 ```
+
+</details>
+
+<details><summary>Functions</summary>
+
 ## Functions
 
 ### move2Position
@@ -175,8 +210,12 @@ void SOBITNavigationStack::clearCostmaps()
 void SOBITNavigationLibrary::estimatePoseFromLocation( const std::string&  location_name )
 ```
 
-## How to Use
-### C++
+</details>
+
+# Example Code
+<details><summary>C++</summary>
+
+## C++
 ```cpp
 #include <ros/ros.h>
 #include <sobit_navigation_library/sobit_navigation_library.hpp>
@@ -204,7 +243,12 @@ int main(int argc, char **argv)
     ros::spin();
 }
 ```
-### Python
+</details>
+
+<details><summary>Python</summary>
+
+## Python
+
 ```py
 #!/usr/bin/env python3
 import rospy
@@ -239,6 +283,8 @@ Traceback (most recent call last):
     from sobit_navigation_module import SOBITNavigationLibraryPython
 ImportError: dynamic module does not define module export function (PyInit_sobit_navigation_module)
 ```
+
+</details>
 
 ---
 

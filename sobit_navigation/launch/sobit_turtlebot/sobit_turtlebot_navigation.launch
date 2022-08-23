@@ -20,7 +20,6 @@
     </include>
 
     <!-- Move_Base -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml">
-    </include>
+    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml"/>
 
 </launch>

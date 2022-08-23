@@ -9,7 +9,7 @@ SOBIT EDU, MINI用の地点登録(Gmapping)
     1. [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMapのファイルパスを記入
     2. Gazeboを使う場合
         - [sobit_turtlebot_move_base.launch.xml](sobit_navigation/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml)の「cmd_vel」を設定を「navigation_velocity_smoother/raw_cmd_vel」から「mobile_base/commands/velocity」に変更（GazeboではTopicに「cmd_vel_mux/input/navi」がないため）
-        
+
     ```bash
     $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
     ```
@@ -56,9 +56,9 @@ SOBIT PRO用の地点登録(Octomap)
     [ 1 ] : a
     [ 2 ] : b
 
-[ ロボットの現在地点を登録 ] 
+[ ロボットの現在地点を登録 ]
 場所名を入力してください。「q」で終了。
-Location Name : c              
+Location Name : c
 
 現在地点を「c」で保存します。
 
@@ -79,7 +79,7 @@ transform.getRotation().w(): 0.0307304
 
 <div align="center">
     <img src="doc/img/sobit_turtlebot_create_location_file.png" width="640">
-</div> 
+</div>
 
 ## 05. [location_file_viewer](sobit_mapping/launch/location_file_viewer.launch)
 - ロボットを使用せずに、作成したロケーションファイルを確認するプログラム

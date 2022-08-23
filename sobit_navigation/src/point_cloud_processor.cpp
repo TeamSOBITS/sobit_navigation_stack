@@ -101,6 +101,7 @@ bool PointCloudProcessor::sacSegmentation( const PointCloud::Ptr input_cloud, pc
     try{ 
         seg_.setInputCloud (input_cloud);
         seg_.segment (*inliers, *coefficients);
+        return true;
     } catch ( std::exception& ex ) {
         ROS_ERROR("%s", ex.what());
         return false;
