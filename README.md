@@ -7,6 +7,7 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 ```
 
 # Manual
+- [Tutorial](doc/readme/tutorial.md)
 - [SOBIT Mappingの使い方](sobit_mapping)
     1. [2次元地図生成(gmapping)](doc/readme/sobit_mapping_gmapping.md)
     2. 3次元地図生成
