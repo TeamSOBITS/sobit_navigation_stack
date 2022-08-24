@@ -3,7 +3,7 @@
 	<include file="$(find sobit_mapping)/launch/sobit_turtlebot/sobit_turtlebot_rtabmap.launch" />
 
 	<!-- octomap -->
-	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
+	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
 		<remap from="cloud_in" to="/rtabmap/cloud_map" />
         <rosparam>
             frame_id : map
@@ -27,11 +27,11 @@
 
     <!--save_3dmap_command.py--><!--This is not node -->
     <arg name="map_path" default="$(find sobit_mapping)/map/" />
-	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" launch-prefix="xterm -font r16 -bg darkblue -e">
+	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <param name="map_save_path" type="str" value="$(arg map_path)"/>
     </node>
     <!--projected_map_saver--><!--This is not node -->
-	<node name="projected_map_saver" pkg="sobit_mapping" type="projected_map_saver" launch-prefix="xterm -font r16 -bg darkblue -e">
+	<node name="projected_map_saver" pkg="sobit_mapping" type="projected_map_saver" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <param name="map_save_path" type="str" value="$(arg map_path)"/>
     </node>
 

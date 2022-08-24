@@ -12,8 +12,8 @@
     <arg name="odom_topic" default="odom" />
     <arg name="laser_topic" default="scan" />
     <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_turtlebot/dummy.yaml"/>
-    <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -bg darkblue -e">
-    <!-- <node pkg="move_base" type="move_base" respawn="false" name="move_base"> -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
+    <!-- <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen"> -->
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/costmap_common_params.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/local_costmap_params.yaml" command="load" />
@@ -33,7 +33,7 @@
         <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
 
         <!-- 実機を使うなら -->
-        <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/> 
+        <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/>
         <!-- Gazeboを使うなら -->
         <!-- <remap from="cmd_vel" to="mobile_base/commands/velocity"/> -->
 

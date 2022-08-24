@@ -8,7 +8,7 @@
 		<!-- Here is a general example using a standalone nodelet, 
 			but it is recommended to attach this nodelet to nodelet 
 			manager of the camera to avoid topic serialization -->
-		<node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" launch-prefix="xterm -font r16 -bg darkblue -e">
+		<node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
 			<remap from="rgb/image"       to="/camera/rgb/image_raw"/>
 			<remap from="depth/image"     to="/camera/depth/image_raw"/>
 			<remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
@@ -18,7 +18,7 @@
 			<param name="approx_sync"       value="true"/> 
 		</node>
 
-		<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" launch-prefix="xterm -font r16 -bg darkblue -e" args="--delete_db_on_start">	
+		<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e" args="--delete_db_on_start">	
 				<param name="databse_path" type="string" value="$(arg database_path)" />
 				<param name="frame_id" type="string" value="base_footprint"/>  
 
@@ -65,7 +65,7 @@
 		</node>
 
 		<!-- RTAB Visualizer -->
-		<!-- <node pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" launch-prefix="xterm -font r16 -bg darkblue -e">
+		<!-- <node pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
 				<param name="subscribe_depth"           type="bool" value="false" />
 				<param name="subscribe_rgb"             type="bool" value="false" />
 				<param name="subscribe_rgbd"            type="bool" value="true" />

@@ -52,7 +52,7 @@
     </include>
 
 	<!--save_map_command.py--><!--This is not node -->
-	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" output="screen" launch-prefix="xterm -font r16 -bg darkblue -e">
+	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" output="screen" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
     </node>
     
