@@ -10,7 +10,7 @@
 <br>このパラメータがlocalコストマップ，globalコストマップそれぞれに適用されます．
 
 
-> 例：[costmap_common_params.yaml](sobit_navigation\param\sobit_turtlebot\costmap_common_params.yaml)
+> 例：[costmap_common_params.yaml](sobit_navigation/param/sobit_turtlebot/costmap_common_params.yaml)
 > ```
 > #cost_scaling_factor and inflation_radius were now moved to the inflation_layer ns
 > inflation_layer:
