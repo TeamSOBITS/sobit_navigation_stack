@@ -81,7 +81,7 @@ gmappingを起動すると，Rvizと2つの端末(背景青)が起動します�
 </div>
 </details>
 
-<details><summary>turtlebot_teleop</summary>
+<details><summary>turtlebot_teleop(xterm端末)</summary>
 
 ロボットをキーボード操作し，地図を拡大することができます．
 ```bash
@@ -105,7 +105,7 @@ currently:      speed 0.2       turn 1
 
 </details>
 
-<details><summary>save_map_command</summary>
+<details><summary>save_map_command(xterm端末)</summary>
 
 生成した地図をファイル形式に保存することができます．  
 この端末上でEnter keyを押すことで地図を保存します．  
@@ -220,10 +220,43 @@ rviz上の「2D Nav Goal」を使うことで目的位置を与えることが�
 
 <details><summary>rviz</summary>
 
-生成した地図を可視化することができます．
+生成した地図や自己位置推定、ナビゲーションを可視化することができます．
 <div align="center">
     <img src="doc/img/navigation_rviz.png" width="1080">
 </div>
+</details>
+
+<details><summary>move_base(xterm端末)</summary>
+
+```bash
+[ INFO] [1661330610.382809644, 232.777000000]: global_costmap: Using plugin "static_layer"
+[ INFO] [1661330610.388077331, 232.777000000]: Requesting the map...
+[ INFO] [1661330610.582065826, 232.977000000]: Resizing costmap to 640 X 544 at 0.050000 m/pix
+[ INFO] [1661330610.681121262, 233.077000000]: Received a 640 X 544 map at 0.050000 m/pix
+[ INFO] [1661330610.683396674, 233.077000000]: global_costmap: Using plugin "obstacle_layer"
+[ INFO] [1661330610.685693889, 233.077000000]:     Subscribed to Topics: scan bump
+[ INFO] [1661330610.711716746, 233.107000000]: global_costmap: Using plugin "inflation_layer"
+[ INFO] [1661330610.753926942, 233.147000000]: local_costmap: Using plugin "obstacle_layer"
+[ INFO] [1661330610.756230563, 233.147000000]:     Subscribed to Topics: scan bump
+[ INFO] [1661330610.785943128, 233.177000000]: local_costmap: Using plugin "inflation_layer"
+[ INFO] [1661330610.815726845, 233.207000000]: Created local_planner dwa_local_planner/DWAPlannerROS
+[ INFO] [1661330610.818887272, 233.207000000]: Sim period is set to 0.20
+[ INFO] [1661330611.818819035, 234.207000000]: Recovery behavior will clear layer 'obstacle_layer'
+[ INFO] [1661330611.820430353, 234.207000000]: Recovery behavior will clear layer 'obstacle_layer'
+[ INFO] [1661330611.821990068, 234.207000000]: Recovery behavior will clear layer 'obstacle_layer'
+[ INFO] [1661330611.826308800, 234.217000000]: Recovery behavior will clear layer 'obstacle_layer'
+[ INFO] [1661330611.828127239, 234.217000000]: Recovery behavior will clear layer 'obstacle_layer'
+[ INFO] [1661330611.829663739, 234.217000000]: Recovery behavior will clear layer 'obstacle_layer'
+[ INFO] [1661330611.862336691, 234.247000000]: odom received!
+[ INFO] [1661330616.925214506, 239.317000000]: Got new plan
+[ INFO] [1661330617.923257379, 240.317000000]: Got new plan
+[ INFO] [1661330618.921831119, 241.317000000]: Got new plan
+[ INFO] [1661330619.921545958, 242.317000000]: Got new plan
+[ INFO] [1661330620.924790276, 243.317000000]: Got new plan
+                ・
+                ・
+                ・
+```
 </details>
 
 ## Parameter Turning
