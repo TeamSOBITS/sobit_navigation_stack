@@ -260,7 +260,7 @@ rviz上の「2D Nav Goal」を使うことで目的位置を与えることが�
 
 ## Parameter Turning
 今回使用したGazebo環境では，目の前のコストマップが大きく部屋の中に入ることができません．  
-また，SOBIT EDUの速度が早く倒れてしまうことがあります  
+また，SOBIT EDUの速度が大きく倒れてしまうことがあります  
 そこで必要なのが，Parameter Turningです．  
 以下のリンクを参照して，適切なパラメータをrqt_reconfigureを使用して，調整してみてください．
 
