@@ -206,9 +206,8 @@ sobit_navigationパッケージを用いてナビゲーションをします．
 
 sobit_turtlebot_navigationを起動
 ```bash
-$ roslaunch sobit_navigation sobit_turtlebot_navigation.launch 
-# rqt_reconfigureによるパラメータ調整
-$ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=true 
+# velocity_smootherなし & rqt_reconfigureによるパラメータ調整
+$ roslaunch sobit_navigation sobit_turtlebot_navigation.launch use_smoother:=false rqt_reconfigure:=true 
 ```
 ※sobit_education_gazebo.launchも起動してください  
 ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  

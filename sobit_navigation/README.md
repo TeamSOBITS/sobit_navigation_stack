@@ -12,6 +12,8 @@
     $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rviz:=false
     # rqt_reconfigureによるパラメータ調整
     $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=true
+    # velocity_smootherなし
+    $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch use_smoother:=false
     ```
     ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
     ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
@@ -27,6 +29,8 @@
     $ roslaunch sobit_navigation sobit_turtlebot_navigation_multi_sensor.launch rviz:=false
     # rqt_reconfigureによるパラメータ調整
     $ roslaunch sobit_navigation sobit_turtlebot_navigation_multi_sensor.launch rqt_reconfigure:=true
+    # velocity_smootherなし
+    $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch use_smoother:=false
     ```
     ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
     ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
