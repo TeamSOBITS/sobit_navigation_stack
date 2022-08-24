@@ -185,7 +185,7 @@ transform.getRotation().w(): 0.0307304
 
 ## location_file_viewer
 - ロボットを使用せずに、作成したロケーションファイルを確認するプログラム
-- rviz上の「2D Nav Goal」で選択した位置をロケーションとして追加出来ます
+- rviz上の「2D Nav Goal」で選択した位置をロケーションとして追加できます
 
 地点登録を行う前に，次のことを行ってください．
 1. [location_file_viewer.launch](sobit_mapping/launch/location_file_viewer.launch)の「map_file(yaml)」と「location_file(yaml)」のファイルパスを記入
@@ -214,7 +214,8 @@ $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=
 ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
 ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
 
-navigationを起動すると，Rvizと1つの端末(背景青)が起動します．
+navigationを起動すると，Rvizと1つの端末(背景青)が起動します．  
+rviz上の「2D Nav Goal」を使うことで目的位置を与えることができます．  
 詳細は，それぞれをクリックすると見ることができます．
 
 <details><summary>rviz</summary>
@@ -224,6 +225,17 @@ navigationを起動すると，Rvizと1つの端末(背景青)が起動します
     <img src="doc/img/navigation_rviz.png" width="1080">
 </div>
 </details>
+
+## Parameter Turning
+今回使用したGazebo環境では，目の前のコストマップが大きく部屋の中に入ることができません．  
+また，SOBIT EDUの速度が早く倒れてしまうことがあります  
+そこで必要なのが，Parameter Turningです．  
+以下のリンクを参照して，適切なパラメータをrqt_reconfigureを使用して，調整してみてください．
+
+- [dwa_local_plannerのパラメータについて](doc/readme/dwa_params.md)
+- [amclのパラメータについて](doc/readme/amcl_params.md)
+- [recovery_behaviorsについて](doc/readme/recovery_behaviors.md)
+- [コストマップに付与されるコストを変える](doc/readme/costmap_parameter_turning.md)
 
 # SOBIT Navigation Library
 - actionlibを用いてソースコード上でナビゲーションを行えるライブラリです．  
