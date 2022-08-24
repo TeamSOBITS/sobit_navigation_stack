@@ -7,7 +7,7 @@ Panels:
         - /TF1/Frames1
         - /Local Map1/Planner1
       Splitter Ratio: 0.6411764621734619
-    Tree Height: 808
+    Tree Height: 792
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -206,96 +206,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        pole_bottom_0_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_bottom_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_bottom_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_bottom_3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_bottom_4_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_bottom_5_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_0_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_4_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_5_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_6_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_middle_7_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_top_0_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_top_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_top_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pole_top_3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         rgb_link:
           Alpha: 1
           Show Axes: false
@@ -407,42 +317,6 @@ Visualization Manager:
           Value: false
         plate_top_link:
           Value: false
-        pole_bottom_0_link:
-          Value: false
-        pole_bottom_1_link:
-          Value: false
-        pole_bottom_2_link:
-          Value: false
-        pole_bottom_3_link:
-          Value: false
-        pole_bottom_4_link:
-          Value: false
-        pole_bottom_5_link:
-          Value: false
-        pole_middle_0_link:
-          Value: false
-        pole_middle_1_link:
-          Value: false
-        pole_middle_2_link:
-          Value: false
-        pole_middle_3_link:
-          Value: false
-        pole_middle_4_link:
-          Value: false
-        pole_middle_5_link:
-          Value: false
-        pole_middle_6_link:
-          Value: false
-        pole_middle_7_link:
-          Value: false
-        pole_top_0_link:
-          Value: false
-        pole_top_1_link:
-          Value: false
-        pole_top_2_link:
-          Value: false
-        pole_top_3_link:
-          Value: false
         rgb_link:
           Value: false
         wheel_left_link:
@@ -459,6 +333,7 @@ Visualization Manager:
           Value: false
         xtion_tilt_link:
           Value: false
+      Marker Alpha: 1
       Marker Scale: 1
       Name: TF
       Show Arrows: false
@@ -519,42 +394,6 @@ Visualization Manager:
                             depth_link:
                               camera_depth_optical_frame:
                                 {}
-                pole_bottom_0_link:
-                  {}
-                pole_bottom_1_link:
-                  {}
-                pole_bottom_2_link:
-                  {}
-                pole_bottom_3_link:
-                  {}
-                pole_bottom_4_link:
-                  {}
-                pole_bottom_5_link:
-                  {}
-                pole_middle_0_link:
-                  {}
-                pole_middle_1_link:
-                  {}
-                pole_middle_2_link:
-                  {}
-                pole_middle_3_link:
-                  {}
-                pole_middle_4_link:
-                  {}
-                pole_middle_5_link:
-                  {}
-                pole_middle_6_link:
-                  {}
-                pole_middle_7_link:
-                  {}
-                pole_top_0_link:
-                  {}
-                pole_top_1_link:
-                  {}
-                pole_top_2_link:
-                  {}
-                pole_top_3_link:
-                  {}
                 wheel_left_link:
                   {}
                 wheel_right_link:
@@ -576,9 +415,7 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -606,9 +443,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: Bumper Hit
       Position Transformer: XYZ
       Queue Size: 10
@@ -660,6 +495,7 @@ Visualization Manager:
             Z: 0
           Pose Color: 255; 85; 255
           Pose Style: None
+          Queue Size: 10
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
@@ -697,6 +533,7 @@ Visualization Manager:
             Z: 0
           Pose Color: 255; 85; 255
           Pose Style: None
+          Queue Size: 10
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
@@ -718,9 +555,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 4096
           Min Color: 0; 0; 0
-          Min Intensity: 0
           Name: Cost Cloud
           Position Transformer: XYZ
           Queue Size: 10
@@ -748,9 +583,7 @@ Visualization Manager:
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
-          Max Intensity: 4096
           Min Color: 0; 0; 0
-          Min Intensity: 0
           Name: Trajectory Cloud
           Position Transformer: XYZ
           Queue Size: 10
@@ -775,6 +608,7 @@ Visualization Manager:
       Head Length: 0.07000000029802322
       Head Radius: 0.029999999329447746
       Name: Amcl Particle Swarm
+      Queue Size: 10
       Shaft Length: 0.23000000417232513
       Shaft Radius: 0.009999999776482582
       Shape: Arrow (Flat)
@@ -798,6 +632,7 @@ Visualization Manager:
         Z: 0
       Pose Color: 255; 85; 255
       Pose Style: None
+      Queue Size: 10
       Radius: 0.029999999329447746
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
@@ -827,9 +662,7 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: cloud_ground
       Position Transformer: XYZ
       Queue Size: 10
@@ -857,9 +690,7 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: cloud_map
       Position Transformer: XYZ
       Queue Size: 10
@@ -887,9 +718,7 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: cloud_obstacles
       Position Transformer: XYZ
       Queue Size: 10
@@ -927,9 +756,7 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: octomap_ground
       Position Transformer: XYZ
       Queue Size: 10
@@ -957,9 +784,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: octomap_obstacles
       Position Transformer: XYZ
       Queue Size: 10
@@ -987,9 +812,7 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: octomap_occupied_space
       Position Transformer: XYZ
       Queue Size: 10
@@ -1017,9 +840,7 @@ Visualization Manager:
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 4096
       Min Color: 0; 0; 0
-      Min Intensity: 0
       Name: octomap_empty_space
       Position Transformer: XYZ
       Queue Size: 10
@@ -1077,6 +898,7 @@ Visualization Manager:
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Field of View: 0.7853981852531433
       Focal Point:
         X: 0
         Y: 0
@@ -1088,18 +910,17 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
-      Value: ThirdPersonFollower (rviz)
       Yaw: 3.140399217605591
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1025
+  Height: 1009
   Hide Left Dock: false
-  Hide Right Dock: false
+  Hide Right Dock: true
   Image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd000000030000000000000156000003affc0200000008fb0000001200530065006c0065006300740069006f006e00000000390000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000039000003af000000c500fffffffb0000000c00540065006c0065006f00700000000338000000b00000004400fffffffb0000000a005600690065007700730000000312000000d60000009d00fffffffb0000000a0049006d006100670065000000031c000000cc0000001600ffffff000000010000010b000003affc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000039000003af0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a0000003d200fffffffb0000000800540069006d00650100000000000004500000000000000000000004de000003af00000004000000040000000800000008fc000000030000000000000000000000020000000000000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000300000000000001560000039ffc0200000008fb0000001200530065006c0065006300740069006f006e00000000390000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000390000039f000000c500fffffffb0000000c00540065006c0065006f00700000000338000000b00000004400fffffffb0000000a005600690065007700730000000312000000d60000009d00fffffffb0000000a0049006d006100670065000000031c000000cc0000001600ffffff000000010000010b0000039ffc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000390000039f0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b2000000000000000000000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a0000003d200fffffffb0000000800540069006d00650100000000000004500000000000000000000006240000039f00000004000000040000000800000008fc000000030000000000000000000000020000000000000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Teleop:
@@ -1109,7 +930,7 @@ Window Geometry:
   Tool Properties:
     collapsed: false
   Views:
-    collapsed: false
-  Width: 1867
-  X: 53
-  Y: 27
+    collapsed: true
+  Width: 1920
+  X: 1920
+  Y: 23

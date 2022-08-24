@@ -12,7 +12,7 @@ DWAPlannerROS: # SOBIT PRO
   trans_stopped_vel: 0.1
 
   # Warning!
-  #   do not set min_trans_vel to 0.0 otherwise dwa will always think translational velocities
+  #   do not set min_vel_trans to 0.0 otherwise dwa will always think translational velocities
   #   are non-negligible and small in place rotational velocities will be created.
 
   max_vel_theta: 0.8  # choose slightly less than the base's capability

@@ -6,25 +6,25 @@ gmappingはRBPF(Rao-Blackwellized ParticleFilter)-SLAMの代表例
 ## 01. [sobit_turtlebot_gmapping.launch](/sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_gmapping.launch)
 SOBIT EDU, MINI用の2次元地図生成(gmapping)
 ```bash
-$ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch 
+$ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch
 ```
 
 ## 02. [sobit_pro_gmapping.launch](/sobit_mapping/launch/sobit_pro/sobit_pro_gmapping.launch)
 SOBIT PRO用の2次元地図生成(gmapping)
 ```bash
-$ roslaunch sobit_mapping sobit_pro_gmapping.launch 
+$ roslaunch sobit_mapping sobit_pro_gmapping.launch
 ```
 
 ## 03. [sobit_turtlebot_gmapping_multi_merger.launch](/sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_gmapping_multi_merger.launch)
 SOBIT EDU, MINI用の2次元地図生成(gmapping)にRGB-Dセンサのデータが加わります
 ```bash
-$ roslaunch sobit_mapping sobit_turtlebot_gmapping_multi_merger.launch 
+$ roslaunch sobit_mapping sobit_turtlebot_gmapping_multi_merger.launch
 ```
 
 ## 04. [sobit_pro_gmapping_multi_merger.launch](/sobit_mapping/launch/sobit_pro/sobit_pro_gmapping_multi_merger.launch)
 SOBIT PRO用の2次元地図生成(gmapping)にRGB-Dセンサのデータが加わります
 ```bash
-$ roslaunch sobit_mapping sobit_pro_gmapping_multi_merger.launch 
+$ roslaunch sobit_mapping sobit_pro_gmapping_multi_merger.launch
 ```
 
 # 参考サイト

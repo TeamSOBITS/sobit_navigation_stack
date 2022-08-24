@@ -5,7 +5,7 @@ robot_radius: 0.20  # distance a circular robot should be clear of the obstacle 
 # footprint: [[x0, y0], [x1, y1], ... [xn, yn]]  # if the robot is not circular
 footprint: [[0, 0.25],[0.2, 0],[0, -0.2],[-0.2, 0]]
 
-map_type: voxel
+# map_type: voxel
 
 obstacle_layer:
   enabled:              true
@@ -20,7 +20,7 @@ obstacle_layer:
   obstacle_range: 2.5
   raytrace_range: 3.0
   publish_voxel_map: false
-  observation_sources:  scan bump #obstacle 
+  observation_sources:  scan bump #obstacle
   scan:
     sensor_frame: base_laser_link
     data_type: LaserScan
@@ -54,5 +54,3 @@ inflation_layer:
 
 static_layer:
   enabled:              true
-  
-

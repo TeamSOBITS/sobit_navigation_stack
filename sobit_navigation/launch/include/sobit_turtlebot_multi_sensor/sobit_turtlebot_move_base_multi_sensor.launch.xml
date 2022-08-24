@@ -14,8 +14,8 @@
     <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_turtlebot/dummy.yaml"/>
     <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_multi_sensor/multi_sensor_costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_multi_sensor/multi_sensor_costmap_common_params.yaml" command="load" ns="local_costmap" />   
-        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/local_costmap_params.yaml" command="load" />   
+        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot_multi_sensor/multi_sensor_costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/global_costmap_params.yaml" command="load" />
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/dwa_local_planner_params.yaml" command="load" />
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/move_base_params.yaml" command="load" />
@@ -23,7 +23,7 @@
         <rosparam file="$(find sobit_navigation)/param/sobit_turtlebot/navfn_global_planner_params.yaml" command="load" />
         <!-- external params file that could be loaded into the move_base namespace -->
         <rosparam file="$(arg custom_param_file)" command="load" />
-        
+
         <!-- reset frame_id parameters using user input data -->
         <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
         <param name="global_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
@@ -31,11 +31,8 @@
         <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
         <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
 
-        <!-- 実機を使うなら -->
-        <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/> 
-        <!-- Gazeboを使うなら -->
-        <!-- <remap from="cmd_vel" to="mobile_base/commands/velocity"/> -->
-        
+        <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/>
+
         <remap from="odom" to="$(arg odom_topic)"/>
         <remap from="scan" to="$(arg laser_topic)"/>
     </node>
