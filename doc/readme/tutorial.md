@@ -210,7 +210,7 @@ $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
 # rqt_reconfigureによるパラメータ調整
 $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=true 
 ```
-※sobit_education_gazebo.launchも起動してください
+※sobit_education_gazebo.launchも起動してください  
 ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
 ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
 
