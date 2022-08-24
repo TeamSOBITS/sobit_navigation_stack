@@ -2,7 +2,7 @@
 <launch>
     <!-- Navigation -->
     <include file="$(find sobit_navigation)/launch/sobit_turtlebot/sobit_turtlebot_navigation_multi_sensor.launch"/>
-    
+
     <!-- keyboard -->
     <include file="$(find sobit_navigation)/launch/sobit_turtlebot/sobit_turtlebot_teleop_keyboard.launch"/>
 

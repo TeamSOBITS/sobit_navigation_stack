@@ -18,7 +18,7 @@
     - 速度制限が解除されるまでにロボットが移動しなければならない距離をメートル単位で指定します。
 
     5. ~<name> / planner_namespace（文字列、デフォルト："DWAPlannerROS"）
-        - パラメータを再設定するプランナーの名前です。具体的にはmax_trans_velとmax_rot_velのパラメータはこの名前空間内で再設定される。
+        - パラメータを再設定するプランナーの名前です。具体的にはmax_vel_transとmax_vel_thetaのパラメータはこの名前空間内で再設定される。
     ```
 ## [clear_costmap_recovery](http://wiki.ros.org/clear_costmap_recovery) 
 - 自分の周り半径 X[m]より外側のlocal costmap をクリアします

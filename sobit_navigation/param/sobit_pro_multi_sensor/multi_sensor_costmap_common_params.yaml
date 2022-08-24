@@ -10,7 +10,7 @@ footprint: [
             [-0.158, 0.158] # Back left
           ]
 
-map_type: voxel
+# map_type: voxel
 
 obstacle_layer:
   enabled:              true

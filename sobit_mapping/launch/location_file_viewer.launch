@@ -1,5 +1,7 @@
 <launch>
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+	<arg name="rviz"                    default="true"/>
+    <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
 
     <arg name="map_file" default="$(find sobit_mapping)/map/projected_map_8_26_19_54.yaml"/>
     <arg name="initial_pose_x" default="0.0"/>
@@ -10,7 +12,7 @@
     <rosparam command="load" file="$(find sobit_mapping)/map/example/gmapping_multi_merger.yaml"/>
 
     <arg name="location_file_path" default="$(find sobit_mapping)/map/example/location_projected_map.yaml"/>
-    
+
     <group ns = "location_file_viewer">
         <node pkg="sobit_mapping" type="location_file_viewer"  name="location_file_viewer" output="screen">
             <param name="location_file_path" type="string" value="$(arg location_file_path)"/>

@@ -131,10 +131,8 @@ rviz上の「2D Nav Goal」で選択した位置をロケーションとして�
 個人的には，地図の原点が分かっている場合，登録地点の座標位置をyamlファイルに手打ちするのが楽でオススメです．
 
 ## create_location_file
-地点登録を行う前に，次の2つを行ってください．
+地点登録を行う前に，次のことを行ってください．
 1. [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
-2. [sobit_turtlebot_move_base.launch.xml](sobit_navigation/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml)の「cmd_vel」を設定を「navigation_velocity_smoother/raw_cmd_vel」から「mobile_base/commands/velocity」に変更（GazeboではTopicに「cmd_vel_mux/input/navi」がないため）  
-※逆に，SOBIT EDU & MINIを使う場合は，「cmd_vel」を設定を「navigation_velocity_smoother/raw_cmd_vel」に戻すこと．
 
 create_location_fileを起動
 ```bash
@@ -203,16 +201,18 @@ $ roslaunch sobit_mapping location_file_viewer.launch
 sobit_navigationパッケージを用いてナビゲーションをします．  
 今回は，SOBIT EDU Gazeboを使って，2次元地図を用いてをナビゲーションを行います．
 
-地点登録を行う前に，次の2つを行ってください．
+地点登録を行う前に，次のことを行ってください．
 1. [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
-2. [sobit_turtlebot_move_base.launch.xml](sobit_navigation/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml)の「cmd_vel」を設定を「navigation_velocity_smoother/raw_cmd_vel」から「mobile_base/commands/velocity」に変更（GazeboではTopicに「cmd_vel_mux/input/navi」がないため）  
-※逆に，SOBIT EDU & MINIを使う場合は，「cmd_vel」を設定を「navigation_velocity_smoother/raw_cmd_vel」に戻すこと．
 
 sobit_turtlebot_navigationを起動
 ```bash
 $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch 
+# rqt_reconfigureによるパラメータ調整
+$ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=true 
 ```
 ※sobit_education_gazebo.launchも起動してください
+※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
+※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
 
 navigationを起動すると，Rvizと1つの端末(背景青)が起動します．
 詳細は，それぞれをクリックすると見ることができます．
