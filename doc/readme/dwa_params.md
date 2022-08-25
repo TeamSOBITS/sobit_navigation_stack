@@ -100,6 +100,10 @@ base_local_planner と dwa_local_planner パッケージは両方とも DWAを�
 ---
 
 # 参考サイト
+- [dwa_local_planner(産総研)](https://robo-marc.github.io/navigation_documents/dwa_local_planner.html)
+- [base_local_planner(産総研)](https://robo-marc.github.io/navigation_documents/base_local_planner.html)
+- [dwa_local_planner(ROS Wiki)](http://wiki.ros.org/dwa_local_planner)
+- [base_local_planner(ROS Wiki)](http://wiki.ros.org/base_local_planner)
 - [ROSのナビゲーションmove_baseについて理解を深めてみる](https://sy-base.com/myrobotics/ros/ros-move_base/?amp)
 - [DWA Plannerの設定可能パラメータ一覧](https://qiita.com/np_hsgw/items/ab3d4e34f4c1c160871d)
 - [経路探索のパラメータの設定](http://dailyrobottechnology.blogspot.com/2014/12/812.html)
