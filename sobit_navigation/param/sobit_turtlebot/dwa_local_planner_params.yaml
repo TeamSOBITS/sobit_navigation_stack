@@ -1,38 +1,36 @@
 DWAPlannerROS: # SOPBIT_EDU, MINI
 # Ref : https://github.com/turtlebot/turtlebot_apps/blob/indigo/turtlebot_navigation/param/dwa_local_planner_params.yaml
 # Robot Configuration Parameters - Kobuki
-  max_vel_x: 0.5  # 0.55
-  min_vel_x: 0.0
-
-  max_vel_y: 0.0  # diff drive robot
-  min_vel_y: 0.0  # diff drive robot
+  acc_lim_x: 1.0      # maximum is theoretically 2.0, but we
+  acc_lim_y: 0.0      # diff drive robot
+  acc_lim_theta: 2.0
 
   max_vel_trans: 0.5 # choose slightly less than the base's capability
   min_vel_trans: 0.1  # this is the min trans velocity when there is negligible rotational velocity
-  trans_stopped_vel: 0.1
-
+  max_vel_x: 0.5  # 0.55
+  min_vel_x: 0.0
+  max_vel_y: 0.0  # diff drive robot
+  min_vel_y: 0.0  # diff drive robot
+  max_vel_theta: 5.0  # choose slightly less than the base's capability
+  min_vel_theta: 0.4  # this is the min angular velocity when there is negligible translational velocity
   # Warning!
   #   do not set min_vel_trans to 0.0 otherwise dwa will always think translational velocities
   #   are non-negligible and small in place rotational velocities will be created.
-
-  max_vel_theta: 5.0  # choose slightly less than the base's capability
-  min_vel_theta: 0.4  # this is the min angular velocity when there is negligible translational velocity
-  theta_stopped_vel: 0.4
-
-  acc_lim_x: 1.0 # maximum is theoretically 2.0, but we 
-  acc_lim_theta: 2.0
-  acc_lim_y: 0.0      # diff drive robot
 
 # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.3  # 0.05
   xy_goal_tolerance: 0.15  # 0.10
   # latch_xy_goal_tolerance: false
+  theta_stopped_vel: 0.4
+  trans_stopped_vel: 0.1
 
 # Forward Simulation Parameters
-  sim_time: 1.0       # 1.7
-  vx_samples: 6       # 3
-  vy_samples: 1       # diff drive robot, there is only one sample
-  vtheta_samples: 20  # 20
+  sim_time: 1.0                   # 1.7
+  sim_granularity: 0.025          # 0.025
+  angular_sim_granularity: 0.10   # 0.10
+  vx_samples: 6                   # 3
+  vy_samples: 1                   # diff drive robot, there is only one sample
+  vtheta_samples: 20              # 20
 
 # Trajectory Scoring Parameters
   # 各軌道のスコアリングに使用されるコスト関数の計算式
@@ -48,33 +46,16 @@ DWAPlannerROS: # SOPBIT_EDU, MINI
   occdist_scale: 0.5            # (double, default: 0.01) -  コントローラーがどれだけ障害物をよけようとするかの重み
   twirling_scale: 0.0           # (double, default: 0.0) - ロボットの方向の変更にペナルティを課すための重み
   forward_point_distance: 0.325 # (double, default: 0.325) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
-  stop_time_buffer: 0.2         # (double, default: 0.2) - 軌道が有効とみなされるために、ロボットが衝突前に停止しなければならない時間を秒単位で表示する
-  scaling_speed: 0.25           # (double, default: 0.25) -  ロボットのフットプリントのスケーリングを開始する速度の絶対値(m/s)
-  max_scaling_factor: 0.2       # (double, default: 0.2) - ロボットのフットプリントをスケーリングする最大係数
-
-  # 経路のコストを計算する際に距離をコストマップのセル数で計算する場合はこちら
-  meter_scoreing: false          # (bool, default: false) - 経路のコストを計算する際に距離をコストマップのセル数で計算するか、距離で計算するか。
-  # # # ローカルパスのコスト
-  # p_dist_scale: 0.6             # (double, default 0.6) - p_distを大きくするとよりグローバルパス近づく経路が生成される
-  # g_dist_scale: 0.8             # (double, default 0.8) - d_distを大きくするとよりローカルゴール（グローバルパスがローカルコストマップウィンドウの端から出て行く点）を目指す経路が生成される
-  # occdist_scale: 0.01           # (double, default 0.01) - occdist_scaleを大きくすると、障害物をより大きく回避するようなパスが生成される
-
-  # heading_lookahead: 0.60       # (double [m], default: 0.325) - その場回転を評価するとき、どのくらい先をみるか。
-  #                               # ロボットが前進できない時、その場回転を選択することがある。その時、どれくらい先を見てコストを評価するか。
-  #                               # ロボットの少し先をスコアリングポイントとすることで、ロボットの向きを合わせることができる。
-  # heading_scoring: true         # (bool, default: false) - コストを評価するとき、ロボットの向きも考慮に入れるかどうか。
-
-  # heading_scoring_timestep: 0.8 # (double [s], default: 0.8) - 何秒先を見るか。heading_scoringをtrueにした時に使用される。
-
-  # use_dwa: true                 # (bool, default: true) - 経路計画の際にdwa（ダイナミックウィンドウアプローチ）という手法を使用するか。
+  use_dwa: true
 
 # Oscillation Prevention Parameters
   oscillation_reset_dist: 0.05  # 0.05   - how far to travel before resetting oscillation flags
+  oscillation_rest_angle: 0.20
+
+# global plan parameter
+  prune_plan: true
 
 # Debugging
-  publish_traj_pc : true
-  publish_cost_grid_pc: true
-  global_frame_id: odom
-
-# Differential-drive robot configuration - necessary?
-#  holonomic_robot: false
+  publish_traj_pc : true        # プランナーが計画時に使用するコストグリッドを公開するかどうか
+  publish_cost_grid_pc: true    # 経路候補をを公開するかどうか
+  global_frame_id: odom         # 経路候補を描画するフレーム
