@@ -43,7 +43,7 @@ DWAPlannerROS: # SOBIT PRO
 # + twirling_scale * (スピンコスト(rad/s))
   path_distance_bias: 64.0      # (double, default: 32.0) - コントローラーが与えられたパスにどれだけ近づけるかの重み
   goal_distance_bias: 24.0      # (double, default: 24.0) - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
-  occdist_scale: 0.6            # (double, default: 0.01) -  コントローラーがどれだけ障害物をよけようとするかの重み
+  occdist_scale: 0.7            # (double, default: 0.01) -  コントローラーがどれだけ障害物をよけようとするかの重み
   twirling_scale: 0.0           # (double, default: 0.0) - ロボットの方向の変更にペナルティを課すための重み
   forward_point_distance: 0.325 # (double, default: 0.325) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
   use_dwa: true                   # (bool, default: true) - 経路計画の際にdwa（ダイナミックウィンドウアプローチ）という手法を使用するか。

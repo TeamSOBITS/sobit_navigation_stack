@@ -4,10 +4,10 @@ max_obstacle_height: 1.6  # assume something like an arm is mounted on top of th
 robot_radius: 0.20  # distance a circular robot should be clear of the obstacle (kobuki: 0.18)
 # footprint: [[x0, y0], [x1, y1], ... [xn, yn]]  # if the robot is not circular
 footprint: [
-            [0.158, 0.158], # Front side left
-            [0.158, -0.158], # Front side right
-            [-0.158, -0.158], # Back right
-            [-0.158, 0.158] # Back left
+            [0.2, 0.2], # Front side left
+            [0.2, -0.2], # Front side right
+            [-0.2, -0.2], # Back right
+            [-0.2, 0.2] # Back left
           ]
 
 # map_type: voxel
