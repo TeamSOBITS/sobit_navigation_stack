@@ -70,7 +70,7 @@ amclノードの構成に使用できるROS パラメーターには，フィル
 |odom_alpha5|double|0.2|-|ホロノミック体の場合の直線（y軸）誤差<br>（モデルがomniの場合にのみ使用）よほどスリップするような環境でなければ，直線方向の誤差は出にくいです|
 |laser_model_type|string|odom|-|オドメトリ原点座標のフレーム名|
 |odom_frame_id|string|base_link|-|ロボットベース原点座標のフレーム名|
-|global_frame_id|string|map|-|	地図原点座標のフレーム名|
+|global_frame_id|string|map|-|地図原点座標のフレーム名|
 |tf_broadcast|bool|true|-|TF情報をpublishするか否か|
 
 ---

@@ -12,22 +12,22 @@ class PointcloudSsubscriber {
         ros::Publisher pub_cloud_;
         sobit_navigation::PointCloudProcessor pcp_;
         std::string target_frame_;
+        PointCloud::Ptr cloud_;
 
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
-            PointCloud::Ptr cloud (new PointCloud());
-            pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud );
+            pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud_ );
             pcp_.setPassThroughParameters( "x", 0.4, 8.0 );
-            pcp_.passThrough( cloud, cloud );
+            pcp_.passThrough( cloud_, cloud_ );
             pcp_.setPassThroughParameters( "y", -4.0, 4.0 );
-            pcp_.passThrough( cloud, cloud );
+            pcp_.passThrough( cloud_, cloud_ );
             pcp_.setPassThroughParameters( "z", 0.05, 1.5 );
-            pcp_.passThrough( cloud, cloud );
-            pcp_.voxelGrid( cloud, cloud );
-            pcp_.radiusOutlierRemoval ( cloud, cloud );
-            pcl_conversions::toPCL(cloud_msg->header.stamp, cloud->header.stamp);
+            pcp_.passThrough( cloud_, cloud_ );
+            pcp_.voxelGrid( cloud_, cloud_ );
+            pcp_.radiusOutlierRemoval ( cloud_, cloud_ );
+            pcl_conversions::toPCL(cloud_msg->header.stamp, cloud_->header.stamp);
             //pcl_conversions::toPCL(ros::Time::now(), cloud->header.stamp);
-            pub_cloud_.publish(cloud);
-            ROS_INFO("cloud points size = %zu\n", cloud->points.size());
+            pub_cloud_.publish(cloud_);
+            // ROS_INFO("cloud points size = %zu\n", cloud_->points.size());
         }
 
     public:
@@ -44,6 +44,7 @@ class PointcloudSsubscriber {
 
             pub_cloud_ = nh_.advertise<PointCloud>("cloud_noise_removal", 1);
             sub_points_ = nh_.subscribe(topic_name, 5, &PointcloudSsubscriber::cbPoints, this);
+            cloud_.reset(new PointCloud());
         }
 };
 
