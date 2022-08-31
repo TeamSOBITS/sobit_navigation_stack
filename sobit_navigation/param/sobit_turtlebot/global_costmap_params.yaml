@@ -11,3 +11,8 @@ global_costmap:
     - {name: obstacle_layer,          type: "costmap_2d::VoxelLayer"}
     - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
 
+  #cost_scaling_factor and inflation_radius were now moved to the inflation_layer ns
+  inflation_layer:
+    enabled:              true
+    cost_scaling_factor:  10.0  # exponential rate at which the obstacle cost drops off (default: 10)
+    inflation_radius:     0.75  # max. distance from an obstacle at which costs are incurred for planning paths.
