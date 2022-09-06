@@ -9,6 +9,10 @@
 
     <arg name="use_smoother"          default="false" />
 
+    <arg name="use_pantilt_controll"    default="false" />
+    <arg name="pan_angle_deg"           default="0.0"/>
+    <arg name="tilt_angle_deg"          default="0.0"/>
+
     <!--  ファイル名を指定するなら下記のargを変更すること -->
     <arg name="map_file" default="$(find sobit_mapping)/map/e301_gmapping_multi_sensor_gimp.yaml"/>
     <arg name="initial_pose_x" default="0.0"/>
@@ -30,11 +34,15 @@
         <arg name="use_smoother" value="$(arg use_smoother)"/>
     </include>
 
-    <node name="noise_removal_pointcloud_publisher" pkg="sobit_navigation" type="noise_removal_pointcloud_publisher">
+    <node pkg="sobit_navigation" type="noise_removal_pointcloud_publisher" name="noise_removal_pointcloud_publisher" >
         <param name="topic_name" type="str" value="/k4a/points2"/>
         <param name="voxel_size" type="double" value="0.025"/>
         <param name="radius" type="double" value="0.05"/>
         <param name="min_pt" type="int" value="10"/>
     </node>
 
+    <node if="$(arg use_pantilt_controll)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
+        <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
+        <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
+    </node>
 </launch>

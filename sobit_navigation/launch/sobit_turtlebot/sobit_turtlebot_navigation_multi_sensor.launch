@@ -9,6 +9,11 @@
 
     <arg name="use_smoother"          default="true" />
 
+    <arg name="use_pantilt_controll"    default="false" />
+    <arg name="use_sobit_mini"          default="false" />
+    <arg name="pan_angle_deg"           default="0.0"/>
+    <arg name="tilt_angle_deg"          default="0.0"/>
+
     <!--  ファイル名を指定するなら下記のargを変更すること -->
     <arg name="map_file" default="$(find sobit_mapping)/map/example/gmapping_multi_merger.yaml"/>
     <arg name="initial_pose_x" default="0.0"/>
@@ -33,5 +38,16 @@
     <node name="noise_removal_pointcloud_publisher" pkg="sobit_navigation" type="noise_removal_pointcloud_publisher">
         <param name="topic_name" type="str" value="/camera/depth/points"/>
     </node>
+
+    <group if="$(arg use_pantilt_controll)">
+        <node if="$(arg use_sobit_mini)" pkg="sobit_navigation" type="sobit_mini_pantilt_controll.py" name="sobit_mini_pantilt_controll" output="screen">
+            <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
+            <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
+        </node>
+        <node unless="$(arg use_sobit_mini)" pkg="sobit_navigation" type="sobit_edu_pantilt_controll.py" name="sobit_edu_pantilt_controll" output="screen">
+            <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
+            <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
+        </node>
+    </group>
 
 </launch>
