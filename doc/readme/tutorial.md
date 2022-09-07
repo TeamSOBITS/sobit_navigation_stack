@@ -25,7 +25,7 @@
 実際のロボットを用意することなくTutorialを進めるため，SOBIT EDU Gazeboを追加します．
 ```bash
 $ cd ~/catkin_ws/src
-$ git clone https://gitlab.com/TeamSOBITS/sobit_education_gazebo.git
+$ git clone https://github.com/TeamSOBITS/sobit_education_gazebo.git
 $ cd ~/catkin_ws/src/sobit_education_gazebo/
 $ bash install.sh
 ```

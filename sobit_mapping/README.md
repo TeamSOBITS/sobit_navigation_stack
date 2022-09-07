@@ -7,4 +7,4 @@
 
 ---
 
-- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
+- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)

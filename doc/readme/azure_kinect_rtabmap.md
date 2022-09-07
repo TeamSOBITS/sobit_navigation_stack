@@ -35,4 +35,4 @@ data: "<array type: uint8, length: 3686400>"
 
 ---
 
-- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
+- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)

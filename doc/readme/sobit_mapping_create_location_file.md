@@ -1,7 +1,7 @@
 # 地点登録
 OctoMapは，3次元占有グリッドマップを生成します
 
-- [目次に戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/tree/main/sobit_mapping)
+- [目次に戻る](sobit_mapping)
 
 ## 01. [sobit_turtlebot_create_location_file.launch](sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_create_location_file.launch)
 SOBIT EDU, MINI用の地点登録(Gmapping)
@@ -89,9 +89,9 @@ transform.getRotation().w(): 0.0307304
 
 ---
 
-- [目次に戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/tree/main/sobit_mapping)
+- [目次に戻る](sobit_mapping)
 
 ---
 
-- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
+- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)
 

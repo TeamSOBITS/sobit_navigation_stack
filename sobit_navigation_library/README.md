@@ -28,7 +28,7 @@ $ roslaunch sobit_navigation sobit_pro_navigation.launch
 $ roslaunch sobit_navigation sobit_pro_navigation_octomap.launch
 ```
 
-2. [load_location_file](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_mapping/launch/load_location_file.launch)を起動
+2. [load_location_file](sobit_mapping/launch/load_location_file.launch)を起動
 ```bash
 roslaunch sobit_mapping load_location_file.launch 
 ```
@@ -288,4 +288,4 @@ ImportError: dynamic module does not define module export function (PyInit_sobit
 
 ---
 
-- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
+- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)

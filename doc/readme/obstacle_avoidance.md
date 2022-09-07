@@ -25,8 +25,8 @@
 障害物回避で重要になるのが周辺環境から経路を生成するローカルパスプランになります．
 
 詳しくはこちら
-- [Dynamic Window Approach Tutorial(DWA)についてはこちら](https://gitlab.com/TeamSOBITS/path_planning_tutorial/-/tree/master/dwa_tutorial)
-- [base_local_plannerのパラメータについてはこちら](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/doc/readme/dwa_params.md)
+- [Dynamic Window Approach Tutorial(DWA)についてはこちら](https://github.com/TeamSOBITS/path_planning_tutorial/blob/master/local_path_planning_tutorial/doc/DynamicWindowApproach.md)
+- [base_local_plannerのパラメータについてはこちら](doc/readme/dwa_params.md)
 
 ### 動的障害物の回避
 - shutdown_costmaps   (bool, default false)
@@ -54,11 +54,11 @@
 
 - max_planning_retries   (int32_t, default -1)
     - base_local_plannerで有効なパスが見つからなかった時に何度までパスの計算をリトライできるか？リトライの後にrecovery behaviorsに入る。-1に設定すると上限を設けない。
-    - 例：[move_base_params.yaml](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
+    - 例：[move_base_params.yaml](sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
 - planner_frequency   (double [Hz], default 0.0)
     - global plannerがグローバルパスを計算する頻度。0.0に設定すると、最初にゴールが設定された時のみにグローバルパスが計算される。
-    - 例：[move_base_params.yaml](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/blob/main/sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
+    - 例：[move_base_params.yaml](sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
 詳しくはこちら
 - [move_base でRecovery 行動に遷移する条件を調べてみた](https://qiita.com/MoriKen/items/1f1f2d1e6ef0046ec12a)
@@ -76,4 +76,4 @@
 
 ---
 
-- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
+- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)

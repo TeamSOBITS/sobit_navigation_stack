@@ -1,7 +1,7 @@
 # gmapping
 gmappingはRBPF(Rao-Blackwellized ParticleFilter)-SLAMの代表例
 
-- [目次に戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/tree/main/sobit_mapping)
+- [目次に戻る](sobit_mapping)
 
 ## 01. [sobit_turtlebot_gmapping.launch](/sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_gmapping.launch)
 SOBIT EDU, MINI用の2次元地図生成(gmapping)
@@ -35,9 +35,9 @@ $ roslaunch sobit_mapping sobit_pro_gmapping_multi_merger.launch
 - [laserscan_multi_mergerで複数のスキャントピックを1つにマージする](https://rb-station.com/blogs/article/ros-laserscan_multi_merger)
 ---
 
-- [目次に戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack/-/tree/main/sobit_mapping)
+- [目次に戻る](sobit_mapping)
 
 ---
 
-- [Topに戻る](https://gitlab.com/TeamSOBITS/sobit_navigation_stack#sobit-navigation-stack)
+- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)
 
