@@ -18,6 +18,7 @@ $ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh
 - [SOBIT Navigation Libraryの使い方](sobit_navigation_library)
 
 # Tips
+- [Tutorial](doc/readme/tutorial.md)
 - [AzureKinectでRTABMapを実行するための注意点](doc/readme/azure_kinect_rtabmap.md)
 - [障害物回避のためのパラメータ調整](doc/readme/obstacle_avoidance.md)
 - [全方向移動するためのパラメータ設定](doc/readme/omni_directional_mobile.md)
