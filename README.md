@@ -3,7 +3,10 @@ SOBIT EDU, MININ, PROのための自律移動パッケージ
 
 ## Before Use
 ```bash
-$ bash ~/catkin_ws/src/sobit_navigation_stack/install.sh 
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/TeamSOBITS/sobit_navigation_stack.git
+$ cd sobit_navigation_stack
+$ bash install.sh
 ```
 
 # Manual
