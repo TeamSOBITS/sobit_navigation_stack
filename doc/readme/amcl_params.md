@@ -78,7 +78,7 @@ amclノードの構成に使用できるROS パラメーターには，フィル
 # 参考サイト
 - [ROSのナビゲーションamclについて理解を深めてみる](https://sy-base.com/myrobotics/ros/ros-amcl/)
 - [amclパラメーター](http://rosrosrosrosros.blogspot.com/2013/09/amcl.html)
-- [amcl](https://robo-marc.github.io/navigation_documents/amcl.html)
+- [amcl](https://robo-marc.github.io/navigation_/documents/amcl.html)
 
 ---
 

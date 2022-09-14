@@ -61,7 +61,7 @@
 |goal_distance_bias|double|24.0|1/m|コントローラーがローカルの目標にどれだけ近づこうとするかの重み<br>このパラメーターは速度も制御します．<br>goal_distance_biasを大きくするとよりローカルゴール（グローバルパスがローカルコストマップウィンドウの端から出て行く点）を目指す経路が生成される．|
 |occdist_scale|double|0.01|-|コントローラーが障害物をどれだけ回避しようとするかの重み<br>occdist_scaleを大きくすると，障害物をより大きく回避するようなパスが生成される．|
 |twirling_scale|double|0.00|s/rad|ロボットの方向の変更にペナルティを課すための重み|
-|forward_point_distance|double|0.325|m|追加のスコアリングポイントを配置するためのロボット中心点からの距離<br>ロボットの向きの評価で使用します．<br>base_local_plannerの[heading_lookahead](https://robo-marc.github.io/navigation_documents/base_local_planner.html#trajectory-scoring-parameters-baselocalplanner)に相当します．|
+|forward_point_distance|double|0.325|m|追加のスコアリングポイントを配置するためのロボット中心点からの距離<br>ロボットの向きの評価で使用します．<br>base_local_plannerの[heading_lookahead](https://robo-marc.github.io/navigation_/documents/base_local_planner.html#trajectory-scoring-parameters-baselocalplanner)に相当します．|
 |stop_time_buffer|double|0.20|s|軌道が有効と見なされるために，衝突前にロボットが停止しなければならない時間<br>現状のソースコードでは無効|
 |scaling_speed|double|0.25|m/s|ロボットのfootprintのスケーリングを開始する速度の絶対値<br>現状のソースコードではスケーリングは行っていないため無効|
 |max_scaling_factor|double|0.20|-|ロボットのfootprintをスケーリングする最大係数<br>現状のソースコードではスケーリングは行っていないため無効|
@@ -100,8 +100,8 @@ base_local_planner と dwa_local_planner パッケージは両方とも DWAを�
 ---
 
 # 参考サイト
-- [dwa_local_planner(産総研)](https://robo-marc.github.io/navigation_documents/dwa_local_planner.html)
-- [base_local_planner(産総研)](https://robo-marc.github.io/navigation_documents/base_local_planner.html)
+- [dwa_local_planner(産総研)](https://robo-marc.github.io/navigation_/documents/dwa_local_planner.html)
+- [base_local_planner(産総研)](https://robo-marc.github.io/navigation_/documents/base_local_planner.html)
 - [dwa_local_planner(ROS Wiki)](http://wiki.ros.org/dwa_local_planner)
 - [base_local_planner(ROS Wiki)](http://wiki.ros.org/base_local_planner)
 - [ROSのナビゲーションmove_baseについて理解を深めてみる](https://sy-base.com/myrobotics/ros/ros-move_base/?amp)

@@ -38,25 +38,25 @@ $ roslaunch sobit_education_gazebo sobit_education_gazebo.launch world_name:=rob
 <details><summary>sobit_education_gazebo</summary>
 
 <div align="center">
-    <img src="doc/img/sobit_edu_gazebo.png" width="640">
+    <img src="/doc/img/sobit_edu_gazebo.png" width="640">
 </div>
 
 </details>
 
 # SOBIT Navigation Stack
 SOBIT Navigation Stackには，次の3つのパッケージで構成されています．
-1. [sobit_mapping](sobit_mapping)
+1. [sobit_mapping](../../sobit_mapping)
     - SOBIT EDU, SOBIT MINI, SOBIT PROで地図生成をするためのLaunchファイルとパラメータファイルをまとまたパッケージ
-2. [sobit_navigation](sobit_navigation)
+2. [sobit_navigation](../../sobit_navigation)
     - SOBIT EDU, SOBIT MINI, SOBIT PROでナビゲーションをするためのLaunchファイルとパラメータファイルをまとまたパッケージ
-3. [sobit_navigation_library](sobit_navigation_library)
+3. [sobit_navigation_library](../../sobit_navigation_library)
     - actionlibを用いてソースコード上でナビゲーションを行えるライブラリ
 
 # Mapping
 sobit_mappingパッケージを用いて地図生成をします．  
 sobit_mappingパッケージでは，
-- [2次元地図生成(gmapping)](doc/readme/sobit_mapping_gmapping.md)
-- [3次元地図生成(octomap)](doc/readme/sobit_mapping_octomap.md)
+- [2次元地図生成(gmapping)](sobit_mapping_gmapping.md)
+- [3次元地図生成(octomap)](sobit_mapping_octomap.md)
 
 の2種類の地図をSOBIT EDU, SOBIT MINI, SOBIT PROで生成することができます．
 それぞれの地図の詳細は，上のリンクを参照してみてください．
@@ -77,7 +77,7 @@ gmappingを起動すると，Rvizと2つの端末(背景青)が起動します�
 
 生成した地図を可視化することができます．
 <div align="center">
-    <img src="doc/img/mapping_rviz.png" width="1080">
+    <img src="/doc/img/mapping_rviz.png" width="1080">
 </div>
 </details>
 
@@ -119,7 +119,7 @@ When you save this map, press the 'Enter' key! :
 # Location Registration
 生成した地図に対して，地点登録をします．  
 登録した地点は，yamlファイルに記録されます．  
-地点登録のLaunchファイルは，[こちら](doc/readme/sobit_mapping_create_location_file.md)を参照してください．  
+地点登録のLaunchファイルは，[こちら](sobit_mapping_create_location_file.md)を参照してください．  
 今回は，SOBIT EDU Gazeboを使って，2次元地図に地点登録を行います．
 
 地点登録には，「**create_location_file**」と「**location_file_viewer**」の2つの方法があります．  
@@ -132,8 +132,7 @@ rviz上の「2D Nav Goal」で選択した位置をロケーションとして�
 
 ## create_location_file
 地点登録を行う前に，次のことを行ってください．
-1. [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
-
+1. [sobit_turtlebot_navigation.launch](../../sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
 create_location_fileを起動
 ```bash
 $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
@@ -178,7 +177,7 @@ transform.getRotation().w(): 0.0307304
     - launch起動直後、端末に多くの情報が流れるため、「Location Name :」という表記が流されてしまうかもしれませんが、 気にせずに場所名を入力すれば地点登録されます
 
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_create_location_file.png" width="640">
+    <img src="/doc/img/sobit_turtlebot_create_location_file.png" width="640">
 </div>
 
 </details>
@@ -188,7 +187,7 @@ transform.getRotation().w(): 0.0307304
 - rviz上の「2D Nav Goal」で選択した位置をロケーションとして追加できます
 
 地点登録を行う前に，次のことを行ってください．
-1. [location_file_viewer.launch](sobit_mapping/launch/location_file_viewer.launch)の「map_file(yaml)」と「location_file(yaml)」のファイルパスを記入
+1. [location_file_viewer.launch](../../sobit_mapping/launch/location_file_viewer.launch)の「map_file(yaml)」と「location_file(yaml)」のファイルパスを記入
 
 location_file_viewerを起動
 ```bash
@@ -202,7 +201,7 @@ sobit_navigationパッケージを用いてナビゲーションをします．
 今回は，SOBIT EDU Gazeboを使って，2次元地図を用いてをナビゲーションを行います．
 
 地点登録を行う前に，次のことを行ってください．
-1. [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
+1. [sobit_turtlebot_navigation.launch](../../sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
 
 sobit_turtlebot_navigationを起動
 ```bash
@@ -221,7 +220,7 @@ rviz上の「2D Nav Goal」を使うことで目的位置を与えることが�
 
 生成した地図や自己位置推定、ナビゲーションを可視化することができます．
 <div align="center">
-    <img src="doc/img/navigation_rviz.png" width="1080">
+    <img src="/doc/img/navigation_rviz.png" width="1080">
 </div>
 </details>
 
@@ -264,12 +263,12 @@ rviz上の「2D Nav Goal」を使うことで目的位置を与えることが�
 そこで必要なのが，Parameter Turningです．  
 以下のリンクを参照して，適切なパラメータをrqt_reconfigureを使用して，調整してみてください．
 
-- [dwa_local_plannerのパラメータについて](doc/readme/dwa_params.md)
-- [amclのパラメータについて](doc/readme/amcl_params.md)
-- [recovery_behaviorsについて](doc/readme/recovery_behaviors.md)
-- [コストマップに付与されるコストを変える](doc/readme/costmap_parameter_turning.md)
+- [dwa_local_plannerのパラメータについて](dwa_params.md)
+- [amclのパラメータについて](amcl_params.md)
+- [recovery_behaviorsについて](recovery_behaviors.md)
+- [コストマップに付与されるコストを変える](costmap_parameter_turning.md)
 
 # SOBIT Navigation Library
 - actionlibを用いてソースコード上でナビゲーションを行えるライブラリです．  
 - 基本的には，ロケーションファイルで登録した位置にナビゲーションするときに使用します．  
-- 詳細は[こちら](sobit_navigation_library)
+- 詳細は[こちら](../../README.md)

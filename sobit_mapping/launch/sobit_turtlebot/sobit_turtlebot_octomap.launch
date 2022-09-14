@@ -21,7 +21,7 @@
             occupancy_min_z : 0.4
             occupancy_max_z : 1.7
 
-            <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
+            <!-- Ref : https://jsk-/docs.readthe/docs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
         </rosparam>
 	</node>
 

@@ -26,12 +26,12 @@ $ roslaunch sobit_mapping sobit_pro_octomap.launch rqt_reconfigure:=true
 ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
 
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_octomap.jpg" width="640">
+    <img src="/doc/img/sobit_turtlebot_octomap.jpg" width="640">
 </div> 
 
 ### 各端末について
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_octomap_terminal.png" width="640">
+    <img src="/doc/img/sobit_turtlebot_octomap_terminal.png" width="640">
 </div> 
 
 1. rtabmap
@@ -47,7 +47,7 @@ $ roslaunch sobit_mapping sobit_pro_octomap.launch rqt_reconfigure:=true
     - 立体的な障害物を押しつぶした2次元地図を保存する
     - projected_map_saverの端末上で「sキー」を入力すると保存
 <div align="center">
-    <img src="doc/img/nomal_map_and_projected_map.jpg" width="640">
+    <img src="/doc/img/nomal_map_and_projected_map.jpg" width="640">
 </div> 
 
 # 参考サイト

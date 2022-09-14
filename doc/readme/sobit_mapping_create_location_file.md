@@ -74,7 +74,7 @@ transform.getRotation().w(): 0.0307304
     - launch起動直後、端末に多くの情報が流れるため、「Location Name :」という表記が流されてしまうかもしれませんが、 気にせずに場所名を入力すれば地点登録されます
 
 <div align="center">
-    <img src="doc/img/sobit_turtlebot_create_location_file.png" width="640">
+    <img src="/doc/img/sobit_turtlebot_create_location_file.png" width="640">
 </div>
 
 ## 05. [location_file_viewer](sobit_mapping/launch/location_file_viewer.launch)

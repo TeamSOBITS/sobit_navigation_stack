@@ -96,7 +96,7 @@ bool PointCloudProcessor::radiusOutlierRemoval ( const PointCloud::Ptr input_clo
         return false;
     }
 }
-// Random Sample Consensus model(https://pcl.readthedocs.io/projects/tutorials/en/latest/random_sample_consensus.html)
+// Random Sample Consensus model(https://pcl.readthe/docs.io/projects/tutorials/en/latest/random_sample_consensus.html)
 bool PointCloudProcessor::sacSegmentation( const PointCloud::Ptr input_cloud, pcl::PointIndices::Ptr inliers, pcl::ModelCoefficients::Ptr coefficients ) {
     try{ 
         seg_.setInputCloud (input_cloud);

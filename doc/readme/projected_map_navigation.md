@@ -43,7 +43,7 @@
     z_voxels:            10
      ```
      <div align="center">
-    <img src="doc/img/fix_costmap.png">
+    <img src="/doc/img/fix_costmap.png">
     </div> 
 
 ---

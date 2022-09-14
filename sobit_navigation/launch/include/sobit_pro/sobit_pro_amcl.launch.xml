@@ -1,5 +1,5 @@
 <!-- sobit_pro_amcl.launch.xml -->
-<!-- REF : https://robo-marc.github.io/navigation_documents/amcl.html -->
+<!-- REF : https://robo-marc.github.io/navigation_/documents/amcl.html -->
 <!-- REF : https://github.com/ros-planning/navigation/blob/noetic-devel/amcl/examples/amcl_omni.launch -->
 <launch>
     <arg name="use_map_topic"   default="false"/>

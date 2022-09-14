@@ -12,7 +12,7 @@
 そこで，3次元地図を用いて，より多くの障害物を捉えられるようにします．
 
 詳しくはこちら
-- [projected_map(立体的な障害物を押しつぶした2次元地図)を用いたナビゲーションをする方法](doc/readme/projected_map_navigation.md)
+- [projected_map(立体的な障害物を押しつぶした2次元地図)を用いたナビゲーションをする方法](/doc/readme/projected_map_navigation.md)
 
 ### DWA Plannerのパラメータ
 ナビゲーションでは，グローバルコストマップと目標位置を使って経路生成をするグローバルパスプランと
@@ -26,7 +26,7 @@
 
 詳しくはこちら
 - [Dynamic Window Approach Tutorial(DWA)についてはこちら](https://github.com/TeamSOBITS/path_planning_tutorial/blob/master/local_path_planning_tutorial/doc/DynamicWindowApproach.md)
-- [base_local_plannerのパラメータについてはこちら](doc/readme/dwa_params.md)
+- [base_local_plannerのパラメータについてはこちら](/doc/readme/dwa_params.md)
 
 ### 動的障害物の回避
 - shutdown_costmaps   (bool, default false)
