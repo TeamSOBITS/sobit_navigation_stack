@@ -33,7 +33,7 @@ SOBIT PRO用の地点登録(Gmapping)
 ## 04. [sobit_pro_create_location_file_multi_sensor.launch](../../sobit_mapping/launch/sobit_pro/sobit_pro_create_location_file_multi_sensor.launch)
 SOBIT PRO用の地点登録(Octomap)
 - **使う前に**
-    - [sobit_pro_navigation_multi_sensor.launch](sobit_navigation/launch/sobit_pro/sobit_pro_navigation_multi_sensor.launch)の「map_file」に地点登録するMapのファイルパスを記入
+    - [sobit_pro_navigation_multi_sensor.launch](../../sobit_navigation/launch/sobit_pro/sobit_pro_navigation_multi_sensor.launch)の「map_file」に地点登録するMapのファイルパスを記入
 
     ```bash
     $ roslaunch sobit_mapping sobit_pro_create_location_file_multi_sensor.launch 
