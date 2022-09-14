@@ -2,7 +2,7 @@
 基本的には，通常の2次元地図でのナビゲーションと同じで，以下の2つのを行う
 
 ## 01. map_fileにprojected_mapを指定する
-- [例:sobit_turtlebot_navigation_octomap.launch](sobit_navigation/launch/sobit_turtlebot_navigation_octomap.launch)
+- [例:sobit_turtlebot_navigation_octomap.launch](../../sobit_navigation/launch/sobit_turtlebot_navigation_octomap.launch)
 ```xml
 <!--  ファイル名を指定するなら下記のargを変更すること -->
 <arg name="map_file" default="$(find sobit_mapping)/map/projected_map_8_26_19_54.yaml"/>
@@ -13,7 +13,7 @@
 
 ## 02. コストマップのパラメータを変更
 1. observation_sourcesにLRFとRGB-Dセンサのデータを追加する
-    - [例1：octomap_costmap_common_params.yaml](sobit_navigation/param/sobit_pro_octomap/octomap_costmap_common_params.yaml)
+    - [例1：octomap_costmap_common_params.yaml](../../sobit_navigation/param/sobit_pro_octomap/octomap_costmap_common_params.yaml)
     ```xml
     observation_sources:  scan rgbd
     scan:
@@ -35,7 +35,7 @@
 
 2.  orizin_zを変更
     グリッドの高さ(z_resolution * z_voxels)をmax_obstacle_heightと同じにする
-     - [例1：octomap_costmap_common_params.yaml](sobit_navigation/param/sobit_pro_octomap/octomap_costmap_common_params.yaml)
+     - [例1：octomap_costmap_common_params.yaml](../../sobit_navigation/param/sobit_pro_octomap/octomap_costmap_common_params.yaml)
     ```xml
     max_obstacle_height: 2.0
     origin_z:            0.0

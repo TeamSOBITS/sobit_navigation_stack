@@ -1,9 +1,9 @@
 # Octomap
 OctoMapは，3次元占有グリッドマップを生成します
 
-- [目次に戻る](sobit_mapping)
+- [目次に戻る](../../sobit_mapping)
 
-## 01. [sobit_turtlebot_octomap.launch](/sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_octomap.launch)
+## 01. [sobit_turtlebot_octomap.launch](../../sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_octomap.launch)
 SOBIT EDU, MINI用の3次元地図生成(octomap)
 
 ```bash
@@ -14,7 +14,7 @@ $ roslaunch sobit_mapping sobit_turtlebot_octomap.launch rqt_reconfigure:=true
 ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
 ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
 
-## 02. [sobit_pro_octomap.launch](/sobit_mapping/launch/sobit_pro/sobit_pro_octomap.launch)
+## 02. [sobit_pro_octomap.launch](../../sobit_mapping/launch/sobit_pro/sobit_pro_octomap.launch)
 SOBIT PRO用の3次元地図生成(octomap)
 
 ```bash

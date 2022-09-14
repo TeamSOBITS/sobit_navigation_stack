@@ -14,12 +14,12 @@
 
 # Example
 ## SOBIT PRO
-- [sobit_pro_rtabmap.launch](sobit_mapping/launch/sobit_pro/sobit_pro_rtabmap.launch)
-- [rtabmap.launch.xml](sobit_mapping/launch/include/rtabmap.launch.xml)
+- [sobit_pro_rtabmap.launch](../../sobit_mapping/launch/sobit_pro/sobit_pro_rtabmap.launch)
+- [rtabmap.launch.xml](../../sobit_mapping/launch/include/rtabmap.launch.xml)
     - SOBIT PROは、Azure_Kinect_ROS_Driverの「[slam_rtabmap.launch](https://github.com/microsoft/Azure_Kinect_ROS_Driver/blob/melodic/launch/slam_rtabmap.launch)」とrtabmap_rosの「[rtabmap.launch](https://github.com/introlab/rtabmap_ros/blob/master/launch/rtabmap.launch)」をモデルに作成
 
 ## SOBIT EDU / MINI
-- [sobit_turtlebot_rtabmap.launch](sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_rtabmap.launch)
+- [sobit_turtlebot_rtabmap.launch](../../sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_rtabmap.launch)
     - SOBIT EDU / MINIは，ROS WikiのSetupOnYourRobot「[2.1 Kinect + Odometry + 2D laser](http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot#Kinect_.2B-_Odometry_.2B-_2D_laser)」をモデルに作成
 
 

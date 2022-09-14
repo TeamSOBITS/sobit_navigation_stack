@@ -1,6 +1,6 @@
 # recovery_behaviors
 動作がスタックしたときに発動されるのが Recovery 機能
-- [例：move_base_params.yaml](sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
+- [例：move_base_params.yaml](../../sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
 ## [move_slow_and_clear](http://wiki.ros.org/move_slow_and_clear)
 - 障害物の近くでの速度を制限して移動し、移動できた場所の周りの障害物を地図から除去します

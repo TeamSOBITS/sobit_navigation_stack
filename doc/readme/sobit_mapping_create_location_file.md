@@ -1,18 +1,18 @@
 # 地点登録
 OctoMapは，3次元占有グリッドマップを生成します
 
-- [目次に戻る](sobit_mapping)
+- [目次に戻る](../../sobit_mapping)
 
-## 01. [sobit_turtlebot_create_location_file.launch](sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_create_location_file.launch)
+## 01. [sobit_turtlebot_create_location_file.launch](../../sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_create_location_file.launch)
 SOBIT EDU, MINI用の地点登録(Gmapping)
 - **使う前に**
-    - [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMapのファイルパスを記入
+    - [sobit_turtlebot_navigation.launch](../../sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMapのファイルパスを記入
 
     ```bash
     $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
     ```
 
-## 02. [sobit_turtlebot_create_location_file_multi_sensor.launch](sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_create_location_file_multi_sensor.launch)
+## 02. [sobit_turtlebot_create_location_file_multi_sensor.launch](../../sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_create_location_file_multi_sensor.launch)
 SOBIT EDU, MINI用の地点登録(Octomap)
 - **使う前に**
     - [sobit_turtlebot_navigation_multi_sensor.launch](sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation_multi_sensor.launch)の「map_file」に地点登録するMapのファイルパスを記入
@@ -21,16 +21,16 @@ SOBIT EDU, MINI用の地点登録(Octomap)
     $ roslaunch sobit_mapping sobit_turtlebot_create_location_file_multi_sensor.launch 
     ```
 
-## 03. [sobit_pro_create_location_file.launch](sobit_mapping/launch/sobit_pro/sobit_pro_create_location_file_multi_sensor.launch)
+## 03. [sobit_pro_create_location_file.launch](../../sobit_mapping/launch/sobit_pro/sobit_pro_create_location_file_multi_sensor.launch)
 SOBIT PRO用の地点登録(Gmapping)
 - **使う前に**
-    - [sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)の「map_file」に地点登録するMapのファイルパスを記入
+    - [sobit_pro_navigation.launch](../../sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)の「map_file」に地点登録するMapのファイルパスを記入
 
     ```bash
     $ roslaunch sobit_mapping sobit_pro_create_location_file.launch 
     ```
 
-## 04. [sobit_pro_create_location_file_multi_sensor.launch](sobit_mapping/launch/sobit_pro/sobit_pro_create_location_file_multi_sensor.launch)
+## 04. [sobit_pro_create_location_file_multi_sensor.launch](../../sobit_mapping/launch/sobit_pro/sobit_pro_create_location_file_multi_sensor.launch)
 SOBIT PRO用の地点登録(Octomap)
 - **使う前に**
     - [sobit_pro_navigation_multi_sensor.launch](sobit_navigation/launch/sobit_pro/sobit_pro_navigation_multi_sensor.launch)の「map_file」に地点登録するMapのファイルパスを記入
@@ -77,20 +77,17 @@ transform.getRotation().w(): 0.0307304
     <img src="/doc/img/sobit_turtlebot_create_location_file.png" width="640">
 </div>
 
-## 05. [location_file_viewer](sobit_mapping/launch/location_file_viewer.launch)
+## 05. [location_file_viewer](../../sobit_mapping/launch/location_file_viewer.launch)
 - ロボットを使用せずに、作成したロケーションファイルを確認するプログラム
 - rviz上の「2D Nav Goal」で選択した位置をロケーションとして追加出来ます
 
 - **使う前に**
-    - [location_file_viewer.launch](sobit_mapping/launch/location_file_viewer.launch)の「map_file」と「location_file」のファイルパスを記入
+    - [location_file_viewer.launch](../../sobit_mapping/launch/location_file_viewer.launch)の「map_file」と「location_file」のファイルパスを記入
     ```bash
     $ roslaunch sobit_mapping location_file_viewer.launch 
     ```
-
 ---
-
-- [目次に戻る](sobit_mapping)
-
+- [目次に戻る](../../sobit_mapping)
 ---
 
 - [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)

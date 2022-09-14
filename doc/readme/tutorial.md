@@ -271,4 +271,4 @@ rviz上の「2D Nav Goal」を使うことで目的位置を与えることが�
 # SOBIT Navigation Library
 - actionlibを用いてソースコード上でナビゲーションを行えるライブラリです．  
 - 基本的には，ロケーションファイルで登録した位置にナビゲーションするときに使用します．  
-- 詳細は[こちら](../../README.md)
+- 詳細は[こちら](../../sobit_navigation_library/README.md)

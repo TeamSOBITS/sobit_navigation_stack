@@ -12,7 +12,7 @@
 そこで，3次元地図を用いて，より多くの障害物を捉えられるようにします．
 
 詳しくはこちら
-- [projected_map(立体的な障害物を押しつぶした2次元地図)を用いたナビゲーションをする方法](/doc/readme/projected_map_navigation.md)
+- [projected_map(立体的な障害物を押しつぶした2次元地図)を用いたナビゲーションをする方法](projected_map_navigation.md)
 
 ### DWA Plannerのパラメータ
 ナビゲーションでは，グローバルコストマップと目標位置を使って経路生成をするグローバルパスプランと
@@ -26,7 +26,7 @@
 
 詳しくはこちら
 - [Dynamic Window Approach Tutorial(DWA)についてはこちら](https://github.com/TeamSOBITS/path_planning_tutorial/blob/master/local_path_planning_tutorial/doc/DynamicWindowApproach.md)
-- [base_local_plannerのパラメータについてはこちら](/doc/readme/dwa_params.md)
+- [base_local_plannerのパラメータについてはこちら](dwa_params.md)
 
 ### 動的障害物の回避
 - shutdown_costmaps   (bool, default false)
@@ -54,11 +54,11 @@
 
 - max_planning_retries   (int32_t, default -1)
     - base_local_plannerで有効なパスが見つからなかった時に何度までパスの計算をリトライできるか？リトライの後にrecovery behaviorsに入る。-1に設定すると上限を設けない。
-    - 例：[move_base_params.yaml](sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
+    - 例：[move_base_params.yaml](../../sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
 - planner_frequency   (double [Hz], default 0.0)
     - global plannerがグローバルパスを計算する頻度。0.0に設定すると、最初にゴールが設定された時のみにグローバルパスが計算される。
-    - 例：[move_base_params.yaml](sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
+    - 例：[move_base_params.yaml](../../sobit_navigation/param/sobit_turtlebot/move_base_params.yaml)
 
 詳しくはこちら
 - [move_base でRecovery 行動に遷移する条件を調べてみた](https://qiita.com/MoriKen/items/1f1f2d1e6ef0046ec12a)
