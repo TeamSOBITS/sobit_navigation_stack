@@ -84,7 +84,7 @@ gmappingを起動すると，Rvizと2つの端末(背景青)が起動します�
 <details><summary>turtlebot_teleop(xterm端末)</summary>
 
 ロボットをキーボード操作し，地図を拡大することができます．
-```bash
+```python
 Control Your Turtlebot!
 ---------------------------
 Moving around:
@@ -149,7 +149,7 @@ $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch
 
 <details><summary>端末の操作方法</summary>
 
-```bash
+```python
 ========================================
 [ 登録地点一覧 ]
     [ 1 ] : a
@@ -226,7 +226,7 @@ rviz上の「2D Nav Goal」を使うことで目的位置を与えることが�
 
 <details><summary>move_base(xterm端末)</summary>
 
-```bash
+```python
 [ INFO] [1661330610.382809644, 232.777000000]: global_costmap: Using plugin "static_layer"
 [ INFO] [1661330610.388077331, 232.777000000]: Requesting the map...
 [ INFO] [1661330610.582065826, 232.977000000]: Resizing costmap to 640 X 544 at 0.050000 m/pix
@@ -272,3 +272,8 @@ rviz上の「2D Nav Goal」を使うことで目的位置を与えることが�
 - actionlibを用いてソースコード上でナビゲーションを行えるライブラリです．  
 - 基本的には，ロケーションファイルで登録した位置にナビゲーションするときに使用します．  
 - 詳細は[こちら](../../sobit_navigation_library/README.md)
+
+---
+
+- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)
+

@@ -2,11 +2,11 @@
 ナビゲーションをプログラム上で実行できるライブラリ
 
 # Setup
-これライブラリなので，基本的に他のROSパッケージから利用します．
-なので，ライブラリを使用したいパッケージでSOBIT Navigation Libraryインクルードする必要があります．
+これはライブラリなので，基本的に他のROSパッケージから利用します．  
+そこでライブラリを使用したいパッケージでSOBIT Navigation Libraryインクルードする必要があります．  
+まず，CMakeLists.txt （ライブラリを使用したいパッケージのもの）の中に、以下を追加してください．  
 
-まず，CMakeLists.txt （ライブラリを使用したいパッケージのもの）の中に、以下を追加してください
-```
+```python
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   sobit_navigation_library
@@ -21,7 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## How to use
 1. 以下のどれかのnavigationを起動
-```bash
+```python
 $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
 $ roslaunch sobit_navigation sobit_turtlebot_navigation_octomap.launch
 $ roslaunch sobit_navigation sobit_pro_navigation.launch
