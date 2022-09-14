@@ -36,7 +36,82 @@ roslaunch sobit_mapping load_location_file.launch
 
 3.　下記のライブラリが使用できる
 
-# SOBIT Navigation Library([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library.cpp))
+# Example Code
+<details><summary>C++</summary>
+
+## C++
+```cpp
+#include <ros/ros.h>
+#include <sobit_navigation_library/sobit_navigation_library.hpp>
+
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "test_include_library");
+    ros::NodeHandle nh;
+    SOBITNavigationStack::SOBITNavigationLibrary nav_lib;
+    nav_lib.move2Location( "table_1", false );
+
+    double start_time = ros::Time::now().toSec();
+    ros::Rate loop_rate(10);
+    while (ros::ok()) {
+        double curt_time = ros::Time::now().toSec();
+        double elapsed_time = curt_time - start_time;
+        if( elapsed_time > 10.0 ) {
+            nav_lib.cancelMoving();
+            nav_lib.move2Location( "init", false );
+            break;
+        }
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+    ros::spin();
+}
+```
+</details>
+
+<details><summary>Python</summary>
+
+## Python
+
+```py
+#!/usr/bin/env python3
+import rospy
+from sobit_navigation_module import SOBITNavigationLibraryPython
+import sys
+
+def test():
+    rospy.init_node('test')
+    r = rospy.Rate(1) # 10hz
+    ang = 0.8
+    args = sys.argv
+    nav_lib = SOBITNavigationLibraryPython(args[0]) # args[0] : C++上でros::init()を行うための引数
+
+    nav_lib.move2Location( "table_1", False )
+    r = rospy.Rate(10) # 10hz
+    while not rospy.is_shutdown():
+        rospy.loginfo("move2Location")
+        r.sleep()
+
+
+if __name__ == '__main__':
+    try:
+        test()
+    except rospy.ROSInterruptException: pass
+
+```
+
+※以下のエラーが出力された場合：「#!/usr/bin/env python3」→「#!/usr/bin/env python」
+```bash
+Traceback (most recent call last):
+  File "/home/sobits/catkin_ws/src/nav_test/script/test.py", line 3, in <module>
+    from sobit_navigation_module import SOBITNavigationLibraryPython
+ImportError: dynamic module does not define module export function (PyInit_sobit_navigation_module)
+```
+
+</details>
+
+# SOBIT Navigation Library([.hpp](../sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library.hpp), [.cpp](../sobit_navigation_library/src/sobit_navigation_library.cpp))
+- C++でナビゲーションの命令を送ることができるライブラリ
 
 <details><summary>Member variables</summary>
 
@@ -126,7 +201,8 @@ void SOBITNavigationLibrary::estimatePoseFromLocation( const std::string&  locat
 
 </details>
 
-# SOBIT Navigation Library Python ([.hpp](sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](sobit_navigation_library/src/sobit_navigation_library_python.cpp))
+# SOBIT Navigation Library Python ([.hpp](../sobit_navigation_library/include/sobit_navigation_library/sobit_navigation_library_python.hpp), [.cpp](../sobit_navigation_library/src/sobit_navigation_library_python.cpp))
+- Pythonでナビゲーションの命令を送ることができるライブラリ
 
 <details><summary>Member variables</summary>
 
@@ -208,80 +284,6 @@ void SOBITNavigationStack::clearCostmaps()
 - 現在地を指定したロケーションポーズの位置にする
 ```cpp
 void SOBITNavigationLibrary::estimatePoseFromLocation( const std::string&  location_name )
-```
-
-</details>
-
-# Example Code
-<details><summary>C++</summary>
-
-## C++
-```cpp
-#include <ros/ros.h>
-#include <sobit_navigation_library/sobit_navigation_library.hpp>
-
-int main(int argc, char **argv)
-{
-    ros::init(argc, argv, "test_include_library");
-    ros::NodeHandle nh;
-    SOBITNavigationStack::SOBITNavigationLibrary nav_lib;
-    nav_lib.move2Location( "table_1", false );
-
-    double start_time = ros::Time::now().toSec();
-    ros::Rate loop_rate(10);
-    while (ros::ok()) {
-        double curt_time = ros::Time::now().toSec();
-        double elapsed_time = curt_time - start_time;
-        if( elapsed_time > 10.0 ) {
-            nav_lib.cancelMoving();
-            nav_lib.move2Location( "init", false );
-            break;
-        }
-        ros::spinOnce();
-        loop_rate.sleep();
-    }
-    ros::spin();
-}
-```
-</details>
-
-<details><summary>Python</summary>
-
-## Python
-
-```py
-#!/usr/bin/env python3
-import rospy
-from sobit_navigation_module import SOBITNavigationLibraryPython
-import sys
-
-def test():
-    rospy.init_node('test')
-    r = rospy.Rate(1) # 10hz
-    ang = 0.8
-    args = sys.argv
-    nav_lib = SOBITNavigationLibraryPython(args[0]) # args[0] : C++上でros::init()を行うための引数
-
-    nav_lib.move2Location( "table_1", False )
-    r = rospy.Rate(10) # 10hz
-    while not rospy.is_shutdown():
-        rospy.loginfo("move2Location")
-        r.sleep()
-
-
-if __name__ == '__main__':
-    try:
-        test()
-    except rospy.ROSInterruptException: pass
-
-```
-
-※以下のエラーが出力された場合：「#!/usr/bin/env python3」→「#!/usr/bin/env python」
-```bash
-Traceback (most recent call last):
-  File "/home/sobits/catkin_ws/src/nav_test/script/test.py", line 3, in <module>
-    from sobit_navigation_module import SOBITNavigationLibraryPython
-ImportError: dynamic module does not define module export function (PyInit_sobit_navigation_module)
 ```
 
 </details>
