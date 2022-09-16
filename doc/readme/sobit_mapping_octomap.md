@@ -10,6 +10,11 @@ SOBIT EDU, MINI用の3次元地図生成(octomap)
 roslaunch sobit_mapping sobit_turtlebot_octomap.launch
 # rqt_reconfigureによるパラメータ調整
 $ roslaunch sobit_mapping sobit_turtlebot_octomap.launch rqt_reconfigure:=true
+
+# 引数
+# rviz : Rvizを起動するか(bool)
+# rqt_reconfigure : rqt_reconfigureを起動するか(bool)
+# use_keyboard : キーボード操作をするか(bool)
 ```
 ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
 ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
@@ -21,6 +26,11 @@ SOBIT PRO用の3次元地図生成(octomap)
 roslaunch sobit_mapping sobit_pro_octomap.launch
 # rqt_reconfigureによるパラメータ調整
 $ roslaunch sobit_mapping sobit_pro_octomap.launch rqt_reconfigure:=true
+
+# 引数
+# rviz : Rvizを起動するか(bool)
+# rqt_reconfigure : rqt_reconfigureを起動するか(bool)
+# use_keyboard : キーボード操作をするか(bool)
 ```
 ※rqt_reconfigureはパラメータを動的に変更できるが，パラメータファイルは上書きされません。  
 ※rqt_reconfigureでパラメータを調整後、パラメータファイルを手打ちで変更してください。  
