@@ -2,7 +2,7 @@
 SOBIT EDU, MININ, PROのための自律移動パッケージ  
 
 ## Before Use
-```bash
+```python
 $ cd ~/catkin_ws/src
 $ git clone https://github.com/TeamSOBITS/sobit_navigation_stack.git
 $ cd sobit_navigation_stack

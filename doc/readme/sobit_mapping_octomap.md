@@ -6,7 +6,7 @@ OctoMapは，3次元占有グリッドマップを生成します
 ## 01. [sobit_turtlebot_octomap.launch](../../sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_octomap.launch)
 SOBIT EDU, MINI用の3次元地図生成(octomap)
 
-```bash
+```python
 roslaunch sobit_mapping sobit_turtlebot_octomap.launch
 # rqt_reconfigureによるパラメータ調整
 $ roslaunch sobit_mapping sobit_turtlebot_octomap.launch rqt_reconfigure:=true
@@ -22,7 +22,7 @@ $ roslaunch sobit_mapping sobit_turtlebot_octomap.launch rqt_reconfigure:=true
 ## 02. [sobit_pro_octomap.launch](../../sobit_mapping/launch/sobit_pro/sobit_pro_octomap.launch)
 SOBIT PRO用の3次元地図生成(octomap)
 
-```bash
+```python
 roslaunch sobit_mapping sobit_pro_octomap.launch
 # rqt_reconfigureによるパラメータ調整
 $ roslaunch sobit_mapping sobit_pro_octomap.launch rqt_reconfigure:=true

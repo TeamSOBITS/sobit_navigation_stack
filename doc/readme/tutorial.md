@@ -23,7 +23,7 @@
 
 # Before Tutorial
 実際のロボットを用意することなくTutorialを進めるため，SOBIT EDU Gazeboを追加します．
-```bash
+```python
 $ cd ~/catkin_ws/src
 $ git clone https://github.com/TeamSOBITS/sobit_education_gazebo.git
 $ cd ~/catkin_ws/src/sobit_education_gazebo/
@@ -31,7 +31,7 @@ $ bash install.sh
 ```
 install.shが完了したら，試しに起動してみましょう．(初回の起動には数分間程度の時間がかかります．)  
 下の図のように，Gazeboが起動出来たら成功です．
-```bash
+```python
 # robocup_choi.world
 $ roslaunch sobit_education_gazebo sobit_education_gazebo.launch world_name:=robocup_choi.world
 ```
@@ -63,11 +63,11 @@ sobit_mappingパッケージでは，
 
 今回は，SOBIT EDU Gazeboを使って，2次元地図を生成していきましょう．  
 まず，Gazeboを起動します
-```bash
+```python
 $ roslaunch sobit_education_gazebo sobit_education_gazebo.launch world_name:=robocup_choi.world
 ```
 次に，gmappingを起動します．
-```bash
+```python
 $ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch 
 ```
 gmappingを起動すると，Rvizと2つの端末(背景青)が起動します．
@@ -111,7 +111,7 @@ currently:      speed 0.2       turn 1
 この端末上でEnter keyを押すことで地図を保存します．  
 保存した地図は，「sobit_mapping/map/」に，pgmとして保存され，地図の原点やサイズ情報がyamlとして保存されます．  
 ファイル名は，保存した日時となります．
-```bash
+```python
 When you save this map, press the 'Enter' key! : 
 ```
 </details>
@@ -134,7 +134,7 @@ rviz上の「2D Nav Goal」で選択した位置をロケーションとして�
 地点登録を行う前に，次のことを行ってください．
 1. [sobit_turtlebot_navigation.launch](../../sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
 create_location_fileを起動
-```bash
+```python
 $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
 ```
 ※sobit_education_gazebo.launchも起動してください
@@ -190,7 +190,7 @@ transform.getRotation().w(): 0.0307304
 1. [location_file_viewer.launch](../../sobit_mapping/launch/location_file_viewer.launch)の「map_file(yaml)」と「location_file(yaml)」のファイルパスを記入
 
 location_file_viewerを起動
-```bash
+```python
 $ roslaunch sobit_mapping location_file_viewer.launch 
 ```
 ※sobit_education_gazebo.launchも起動してください
@@ -204,7 +204,7 @@ sobit_navigationパッケージを用いてナビゲーションをします．
 1. [sobit_turtlebot_navigation.launch](../../sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMap(yaml)のファイルパスを記入
 
 sobit_turtlebot_navigationを起動
-```bash
+```python
 # velocity_smootherなし & rqt_reconfigureによるパラメータ調整
 $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch use_smoother:=false rqt_reconfigure:=true 
 ```

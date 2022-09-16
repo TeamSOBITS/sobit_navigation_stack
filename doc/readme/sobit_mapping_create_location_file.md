@@ -8,7 +8,7 @@ SOBIT EDU, MINI用の地点登録(Gmapping)
 - **使う前に**
     - [sobit_turtlebot_navigation.launch](../../sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)の「map_file」に地点登録するMapのファイルパスを記入
 
-    ```bash
+    ```python
     $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch 
     ```
 
@@ -17,7 +17,7 @@ SOBIT EDU, MINI用の地点登録(Octomap)
 - **使う前に**
     - [sobit_turtlebot_navigation_multi_sensor.launch](sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation_multi_sensor.launch)の「map_file」に地点登録するMapのファイルパスを記入
 
-    ```bash
+    ```python
     $ roslaunch sobit_mapping sobit_turtlebot_create_location_file_multi_sensor.launch 
     ```
 
@@ -26,7 +26,7 @@ SOBIT PRO用の地点登録(Gmapping)
 - **使う前に**
     - [sobit_pro_navigation.launch](../../sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)の「map_file」に地点登録するMapのファイルパスを記入
 
-    ```bash
+    ```python
     $ roslaunch sobit_mapping sobit_pro_create_location_file.launch 
     ```
 
@@ -35,7 +35,7 @@ SOBIT PRO用の地点登録(Octomap)
 - **使う前に**
     - [sobit_pro_navigation_multi_sensor.launch](../../sobit_navigation/launch/sobit_pro/sobit_pro_navigation_multi_sensor.launch)の「map_file」に地点登録するMapのファイルパスを記入
 
-    ```bash
+    ```python
     $ roslaunch sobit_mapping sobit_pro_create_location_file_multi_sensor.launch 
     ```
 
@@ -46,7 +46,7 @@ SOBIT PRO用の地点登録(Octomap)
 - ロボットの移動は「キーボード」or rviz上の「2D Nav Goal」
 
 ### 端末の表示例
-```bash
+```python
 ========================================
 [ 登録地点一覧 ]
     [ 1 ] : a
@@ -83,7 +83,7 @@ transform.getRotation().w(): 0.0307304
 
 - **使う前に**
     - [location_file_viewer.launch](../../sobit_mapping/launch/location_file_viewer.launch)の「map_file」と「location_file」のファイルパスを記入
-    ```bash
+    ```python
     $ roslaunch sobit_mapping location_file_viewer.launch 
     ```
 ---

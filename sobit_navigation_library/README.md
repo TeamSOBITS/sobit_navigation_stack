@@ -29,7 +29,7 @@ $ roslaunch sobit_navigation sobit_pro_navigation_octomap.launch
 ```
 
 2. [load_location_file](sobit_mapping/launch/load_location_file.launch)を起動
-```bash
+```python
 roslaunch sobit_mapping load_location_file.launch 
 ```
 ※ location_fileのパス設定を間違えないよう注意
@@ -101,7 +101,7 @@ if __name__ == '__main__':
 ```
 
 ※以下のエラーが出力された場合：「#!/usr/bin/env python3」→「#!/usr/bin/env python」
-```bash
+```python
 Traceback (most recent call last):
   File "/home/sobits/catkin_ws/src/nav_test/script/test.py", line 3, in <module>
     from sobit_navigation_module import SOBITNavigationLibraryPython

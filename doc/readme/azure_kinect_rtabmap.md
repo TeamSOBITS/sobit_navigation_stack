@@ -2,7 +2,7 @@
 - 入力するRGB画像と距離画像の縦横サイズを一致させること
 - 「/rgb/image_raw」 と「/depth_to_rgb/image_raw」がheight: 720、width: 1280で一致
 
-```bash
+```python
 ros_melodic_sobit_gpu sobits@:~$ rostopic echo /rgb/image_raw --noarr -n 1
 header: 
   seq: 0
