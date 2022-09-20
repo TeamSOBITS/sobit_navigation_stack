@@ -578,7 +578,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: LaserScan_Multi
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -606,7 +606,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: LaserScan_Camera
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -634,7 +634,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: LaserScan
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -662,7 +662,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: Bumper Hit
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.07999999821186066
@@ -772,7 +772,7 @@ Visualization Manager:
           Min Color: 0; 0; 0
           Name: Cost Cloud
           Position Transformer: XYZ
-          Queue Size: 10
+          Queue Size: 1
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.03999999910593033
@@ -800,7 +800,7 @@ Visualization Manager:
           Min Color: 0; 0; 0
           Name: Trajectory Cloud
           Position Transformer: XYZ
-          Queue Size: 10
+          Queue Size: 1
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.03999999910593033
@@ -857,7 +857,7 @@ Visualization Manager:
       Name: LocationPoseMarker
       Namespaces:
         {}
-      Queue Size: 100
+      Queue Size: 1
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -877,7 +877,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: cloud_ground
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -905,7 +905,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: cloud_map
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -933,7 +933,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: cloud_obstacles
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -961,7 +961,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: octomap_empty_space
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -989,7 +989,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: octomap_global_frontier_space
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -1027,7 +1027,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: octomap_ground
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.05000000074505806
@@ -1055,7 +1055,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: octomap_obstacles
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.05000000074505806
@@ -1083,7 +1083,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: octomap_occupied_space
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.05000000074505806
@@ -1111,7 +1111,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Name: octomap_point_cloud_centers
       Position Transformer: ""
-      Queue Size: 10
+      Queue Size: 1
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.05000000074505806
@@ -1127,7 +1127,7 @@ Visualization Manager:
       Name: occupied_cells_vis_array
       Namespaces:
         {}
-      Queue Size: 100
+      Queue Size: 1
       Value: false
   Enabled: true
   Global Options:
