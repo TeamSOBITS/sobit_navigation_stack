@@ -210,12 +210,12 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        wheel_left_link:
+        wheel_l_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        wheel_right_link:
+        wheel_r_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -319,9 +319,9 @@ Visualization Manager:
           Value: false
         rgb_link:
           Value: false
-        wheel_left_link:
+        wheel_l_link:
           Value: false
-        wheel_right_link:
+        wheel_r_link:
           Value: false
         wrist_flex_dummy_link:
           Value: false
@@ -394,9 +394,9 @@ Visualization Manager:
                             depth_link:
                               camera_depth_optical_frame:
                                 {}
-                wheel_left_link:
+                wheel_l_link:
                   {}
-                wheel_right_link:
+                wheel_r_link:
                   {}
       Update Interval: 0
       Value: true
