@@ -3,7 +3,7 @@
     <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
 
-    <arg name="map_file" default="$(find sobit_mapping)/map/projected_map_8_26_19_54.yaml"/>
+    <arg name="map_file" default="$(find sobit_mapping)/map/example/projected_map.yaml"/>
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
