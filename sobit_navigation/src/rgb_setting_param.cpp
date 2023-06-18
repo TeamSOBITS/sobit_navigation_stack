@@ -3,6 +3,8 @@
 #include <cmath>
 #include <cstring>
 #include <algorithm>
+#include <ros/package.h>
+#include <yaml-cpp/yaml.h>
 #include <sobit_navigation/point_cloud_processor.hpp>
 
 
@@ -11,41 +13,34 @@ struct RGB {
 };
 
 
-class COLOR_POINT_PUBLISHER {
+class FLOR_COLOR_PUBLISHER {
     private:
         ros::NodeHandle nh_;
         ros::NodeHandle pnh_;
         ros::Subscriber sub_points_;
-        ros::Publisher pub_cloud_;
+        ros::Publisher pub_rgb_;
         sobit_navigation::PointCloudProcessor pcp_;
         std::string target_frame_;
         PointCloud::Ptr cloud_;
-        RGB rgb, flor_rgb, flor_rgb_noise;
-        bool frag = true;
+        RGB rgb, flor_rgb;
+        bool getter_flag;
         std::vector<uint> r;
         std::vector<uint> g;
         std::vector<uint> b;
-
+        std::string file_path = ros::package::getPath("sobit_navigation") + "/param/sobit_pro_multi_sensor/rgb_base.yaml";
+        YAML::Node yaml_data;
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
             // pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud_ );
             pcp_.transformFramePointCloud( "azure_rgb_camera_link", cloud_msg, cloud_ );
             r.clear();
             g.clear();
             b.clear();
-            for (int i=0; i<cloud_msg.size()/32; i++)
+            for (int i=0; i<cloud_msg->data.size()/32; i++)
             {
-                rgb.r = cloud->data[i*32 + 18];
-                rgb.g = cloud->data[i*32 + 17];
-                rgb.b = cloud->data[i*32 + 16];
-                unsigned char bytes[4];
-                // bytes[0] = cloud_->;
-                // bytes[1] = cloud_;
-                // bytes[2] = cloud_;
-                // bytes[3] = cloud_;
-                // バイト配列をfloatに変換
-                float value;
-                std::memcpy(&value, bytes, sizeof(float));
-                if (((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)) && ())
+                rgb.r = cloud_msg->data[i*32 + 18];
+                rgb.g = cloud_msg->data[i*32 + 17];
+                rgb.b = cloud_msg->data[i*32 + 16];
+                if (((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)) && (cloud_->points[i].z < 0.04))
                 {
                     r.push_back(rgb.r);
                     g.push_back(rgb.g);
@@ -55,6 +50,21 @@ class COLOR_POINT_PUBLISHER {
             std::sort(r.begin(), r.end());
             std::sort(g.begin(), g.end());
             std::sort(b.begin(), b.end());
+            flor_rgb.r = r[r.size()/2];
+            flor_rgb.g = g[g.size()/2];
+            flor_rgb.b = b[b.size()/2];
+            // yaml_data["R"] = flor_rgb.r;
+            // yaml_data["G"] = flor_rgb.g;
+            // yaml_data["B"] = flor_rgb.b;
+            // if (file.is_open())
+            // {
+            //     file << yaml_data;  // YAMLデータをファイルに書き込む
+            //     file.close();
+            // }
+            // else
+            // {
+            //     ROS_ERROR_STREAM("Failed to open file: " << file_path);
+            // }
             // pcp_.setPassThroughParameters( "x", 0.4, 8.0 );
             // pcp_.passThrough( cloud_, cloud_ );
             // pcp_.setPassThroughParameters( "y", -4.0, 4.0 );
@@ -66,17 +76,42 @@ class COLOR_POINT_PUBLISHER {
             // pcp_.colorRemoval ( cloud_, cloud_ );
             // pcl_conversions::toPCL(cloud_msg->header.stamp, cloud_->header.stamp);
             // pub_cloud_.publish(cloud_);
+            getter_flag = true;
         }
-
+        void save_rgb()
+        {
+            getter_flag = false;
+            while (ros::ok())
+            {
+                ros::spinOnce();
+                if (getter_flag)
+                {
+                    break;
+                }
+            }
+            ros::spinOnce();
+            yaml_data["R"] = flor_rgb.r;
+            yaml_data["G"] = flor_rgb.g;
+            yaml_data["B"] = flor_rgb.b;
+            std::ofstream file(file_path);
+            if (file.is_open())
+            {
+                file << yaml_data;  // YAMLデータをファイルに書き込む
+                file.close();
+            }
+            else
+            {
+                ROS_ERROR_STREAM("Failed to open file: " << file_path);
+                return;
+            }
+            // FILE* pipe = std::popen("rosrun sobit_navigation output.py", "r");
+        }
     public:
-        COLOR_POINT_PUBLISHER(): nh_(), pnh_("~") {
+        FLOR_COLOR_PUBLISHER(): nh_(), pnh_("~") {
+            flor_rgb.r = 200;
+            flor_rgb.g = 200;
+            flor_rgb.b = 200;
             std::string topic_name = pnh_.param<std::string>( "topic_name", "/points2" );
-            flor_rgb.r = pnh_.param<int>( "RGB_R", 50 );
-            flor_rgb.g = pnh_.param<int>( "RGB_G", 50 );
-            flor_rgb.b = pnh_.param<int>( "RGB_B", 50 );
-            flor_rgb_noise.r = pnh_.param<int>( "RGB_R_NOISE", 5 );
-            flor_rgb_noise.g = pnh_.param<int>( "RGB_G_NOISE", 5 );
-            flor_rgb_noise.b = pnh_.param<int>( "RGB_B_NOISE", 5 );
             double voxel_size = pnh_.param<double>( "voxel_size", 0.025 );
             double radius = pnh_.param<double>( "radius", 0.05 );
             int min_pt = pnh_.param<int>( "min_pt", 5 );
@@ -86,15 +121,49 @@ class COLOR_POINT_PUBLISHER {
             pcp_.setVoxelGridParameter( 0.025 );
             pcp_.setRadiusOutlierRemovalParameters ( radius, min_pt, false );
 
-            pub_cloud_ = nh_.advertise<PointCloud>("/cloud_color_point", 1);
-            sub_points_ = nh_.subscribe(topic_name, 5, &COLOR_POINT_PUBLISHER::cbPoints, this);
+            pub_rgb_ = nh_.advertise<PointCloud>("/flor_color", 1);
+            sub_points_ = nh_.subscribe(topic_name, 5, &FLOR_COLOR_PUBLISHER::cbPoints, this);
             cloud_.reset(new PointCloud());
+            save_rgb();
         }
 };
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "color_point_publisher");
-    // COLOR_POINT_PUBLISHER color_point_publisher;
+    ros::init(argc, argv, "flor_color_publisher");
+    // FLOR_COLOR_PUBLISHER flor_color_publisher;
     // ros::spin();
+
+
+
+
+
+
+    FILE* pipe = popen("rosrun sobit_navigation test.py", "r");
+    ros::spin();
+
+
+
+
+
+    // ros::NodeHandle nh_;
+    // YAML::Node yaml_data;
+    // yaml_data["R"] = 200;
+    // yaml_data["G"] = 126;
+    // yaml_data["B"] = 166;
+
+
+    // // std::string file_path;
+    // std::string file_path = ros::package::getPath("sobit_navigation") + "/param/sobit_pro_multi_sensor/rgb_base.yaml";
+    // std::ofstream file(file_path);
+    // if (file.is_open()) {
+    // file << yaml_data;  // YAMLデータをファイルに書き込む
+    // file.close();
+    // ROS_INFO_STREAM("YAML file saved: " << file_path);
+    // } else {
+    // ROS_ERROR_STREAM("Failed to open file: " << file_path);
+    // }
+
+
+
     return 0;
 }

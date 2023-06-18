@@ -69,3 +69,8 @@ target_link_libraries(noise_removal_pointcloud_publisher  ${catkin_LIBRARIES})
 add_executable(color_point_publisher src/color_point_publisher.cpp
                                                     src/point_cloud_processor.cpp)
 target_link_libraries(color_point_publisher  ${catkin_LIBRARIES})
+
+add_executable(rgb_setting_param src/rgb_setting_param.cpp
+                                                    src/point_cloud_processor.cpp)
+target_link_libraries(rgb_setting_param  ${catkin_LIBRARIES}
+                                                    yaml-cpp)
