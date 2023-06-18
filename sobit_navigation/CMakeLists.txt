@@ -65,3 +65,7 @@ include_directories(
 add_executable(noise_removal_pointcloud_publisher src/noise_removal_pointcloud_publisher.cpp
                                                     src/point_cloud_processor.cpp)
 target_link_libraries(noise_removal_pointcloud_publisher  ${catkin_LIBRARIES})
+
+add_executable(color_point_publisher src/color_point_publisher.cpp
+                                                    src/point_cloud_processor.cpp)
+target_link_libraries(color_point_publisher  ${catkin_LIBRARIES})

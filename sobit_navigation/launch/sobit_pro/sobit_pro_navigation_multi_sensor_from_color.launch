@@ -1,0 +1,55 @@
+<!-- sobit_pro_navigation_multi_sensor.launch -->
+<launch>
+    <arg name="rviz"                    default="true"/>
+    <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
+
+    <arg name="rqt_reconfigure"         default="false"/>
+    <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
+
+    <!-- <arg name="use_smoother"          default="false" /> -->
+
+    <arg name="use_pantilt_controll"    default="false" />
+    <arg name="pan_angle_deg"           default="0.0"/>
+    <arg name="tilt_angle_deg"          default="-0.5"/>
+
+    <!--  ファイル名を指定するなら下記のargを変更すること -->
+    <arg name="map_file" default="$(find sobit_mapping)/map/e301_gmapping_multi_sensor_gimp.yaml"/>
+    <arg name="initial_pose_x" default="0.0"/>
+    <arg name="initial_pose_y" default="0.0"/>
+    <arg name="initial_pose_a" default="0.0"/>
+
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+    <!-- AMCL -->
+    <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_amcl.launch.xml">
+        <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+        <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+        <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+    </include>
+
+    <!-- Move_Base -->
+    <include file="$(find sobit_navigation)/launch/include/sobit_pro_multi_sensor/sobit_pro_move_base_multi_sensor.launch.xml">
+        <!-- <arg name="use_smoother" value="$(arg use_smoother)"/> -->
+    </include>
+
+    
+    <node pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" output="screen" >
+        <param name="topic_name" value="points2"/>
+        <param name="voxel_size" type="double" value="0.025"/>
+        <param name="radius" type="double" value="0.05"/>
+        <param name="min_pt" type="int" value="10"/>
+        <param name="RGB_R" type="int" value="150"/>
+        <param name="RGB_G" type="int" value="150"/>
+        <param name="RGB_B" type="int" value="160"/>
+        <param name="RGB_R_NOISE" type="int" value="80"/>
+        <param name="RGB_G_NOISE" type="int" value="80"/>
+        <param name="RGB_B_NOISE" type="int" value="80"/>
+    </node>
+
+    <node if="$(arg use_pantilt_controll)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
+        <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
+        <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
+    </node>
+</launch>
