@@ -1,4 +1,6 @@
 #include <ros/ros.h>
+// #include <time.h>
+#include <unistd.h>
 #include <iostream>
 #include <cmath>
 #include <cstring>
@@ -78,8 +80,7 @@ class FLOR_COLOR_PUBLISHER {
             // pub_cloud_.publish(cloud_);
             getter_flag = true;
         }
-        void save_rgb()
-        {
+        bool save_rgb() {
             getter_flag = false;
             while (ros::ok())
             {
@@ -102,9 +103,25 @@ class FLOR_COLOR_PUBLISHER {
             else
             {
                 ROS_ERROR_STREAM("Failed to open file: " << file_path);
-                return;
+                return false;
             }
-            // FILE* pipe = std::popen("rosrun sobit_navigation output.py", "r");
+            sleep(1);
+            popen("roslaunch sobit_navigation sobit_pro_color_base_checker.launch", "r");
+            sleep(4);
+            popen("rosnode kill rgb_checker", "r");
+            int check;
+            ROS_INFO("This color will be setting base color.");
+            ROS_INFO("Is it okay?");
+            ROS_INFO("YES->1 NO->2 : ");
+            scanf("%d",&check);
+            if (check == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     public:
         FLOR_COLOR_PUBLISHER(): nh_(), pnh_("~") {
@@ -124,22 +141,42 @@ class FLOR_COLOR_PUBLISHER {
             pub_rgb_ = nh_.advertise<PointCloud>("/flor_color", 1);
             sub_points_ = nh_.subscribe(topic_name, 5, &FLOR_COLOR_PUBLISHER::cbPoints, this);
             cloud_.reset(new PointCloud());
-            save_rgb();
+            while (ros::ok())
+            {
+                ros::spinOnce();
+                bool end_flag = save_rgb();
+                if (end_flag)
+                {
+                    ROS_INFO("SAVE RGB_BASE COLOR");
+                    break;
+                }
+                else
+                {
+                    ROS_ERROR_STREAM("PLEASE RE-TRY...");
+                    ROS_ERROR_STREAM("FOR EXAMPLE \'MOVE ROBOT\', \'ROTATE ROBOT\'");
+                }
+            }
         }
 };
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "flor_color_publisher");
-    // FLOR_COLOR_PUBLISHER flor_color_publisher;
-    // ros::spin();
-
-
-
-
-
-
-    FILE* pipe = popen("rosrun sobit_navigation test.py", "r");
+    FLOR_COLOR_PUBLISHER flor_color_publisher;
     ros::spin();
+
+
+
+
+
+
+    // popen("roslaunch sobit_navigation sobit_pro_color_base_checker.launch", "r");
+    // sleep(4);
+    // popen("rosnode kill rgb_checker", "r");
+    // int check;
+    // printf("This color will be setting base color\nIs it okay? : ");
+    // scanf("%d",&check);
+    // printf("\n%d\n",check);
+    // ros::spin();
 
 
 

@@ -50,9 +50,9 @@ class COLOR_POINT_PUBLISHER {
     public:
         COLOR_POINT_PUBLISHER(): nh_(), pnh_("~") {
             std::string topic_name = pnh_.param<std::string>( "topic_name", "/points2" );
-            flor_rgb.r = pnh_.param<int>( "RGB_R", 200 );
-            flor_rgb.g = pnh_.param<int>( "RGB_G", 200 );
-            flor_rgb.b = pnh_.param<int>( "RGB_B", 200 );
+            flor_rgb.r = nh_.param<int>( "color_point_publisher/rgb/R", 200 );
+            flor_rgb.g = nh_.param<int>( "color_point_publisher/rgb/G", 200 );
+            flor_rgb.b = nh_.param<int>( "color_point_publisher/rgb/B", 200 );
             flor_rgb_noise.r = pnh_.param<int>( "RGB_R_NOISE", 60 );
             flor_rgb_noise.g = pnh_.param<int>( "RGB_G_NOISE", 60 );
             flor_rgb_noise.b = pnh_.param<int>( "RGB_B_NOISE", 60 );
@@ -61,6 +61,9 @@ class COLOR_POINT_PUBLISHER {
             int min_pt = pnh_.param<int>( "min_pt", 5 );
             target_frame_ = pnh_.param<std::string>( "target_frame", "base_footprint" );
 
+            ROS_INFO("R = %d", flor_rgb.r);
+            ROS_INFO("G = %d", flor_rgb.g);
+            ROS_INFO("B = %d", flor_rgb.b);
             ROS_INFO("topic_name = '%s'", topic_name.c_str());
             pcp_.setVoxelGridParameter( 0.025 );
             pcp_.setRadiusOutlierRemovalParameters ( radius, min_pt, false );

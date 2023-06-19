@@ -36,13 +36,13 @@
 
     
     <node pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" output="screen" >
+        <rosparam file="$(find sobit_navigation)/param/sobit_pro_multi_sensor/rgb_base.yaml" command="load" ns="rgb"/>
         <param name="topic_name" value="points2"/>
         <param name="voxel_size" type="double" value="0.025"/>
         <param name="radius" type="double" value="0.05"/>
+        <!-- ↓ここワンちゃん変える説あるかも↓ -->
         <param name="min_pt" type="int" value="10"/>
-        <param name="RGB_R" type="int" value="150"/>
-        <param name="RGB_G" type="int" value="150"/>
-        <param name="RGB_B" type="int" value="160"/>
+        <!-- ↓色の許容範囲↓ -->
         <param name="RGB_R_NOISE" type="int" value="80"/>
         <param name="RGB_G_NOISE" type="int" value="80"/>
         <param name="RGB_B_NOISE" type="int" value="80"/>
