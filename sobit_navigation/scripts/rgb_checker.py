@@ -21,8 +21,8 @@ def checker(R, G, B):
         for j in range(500):
             rgb_array[i][j] = [R, G, B] #########
     out_put = Image.fromarray(rgb_array.astype(np.uint8))
-    out_put.save(package_path + "/param/rgb_base.jpg")  #####
-    image = cv2.imread(package_path + "/param/rgb_base.jpg")#####
+    out_put.save(package_path + "/param/sobit_pro_multi_sensor/rgb_base.jpg")  #####
+    image = cv2.imread(package_path + "/param/sobit_pro_multi_sensor/rgb_base.jpg")#####
     cv2.imshow("rgb_base", image)
     cv2.waitKey(0)
     return
