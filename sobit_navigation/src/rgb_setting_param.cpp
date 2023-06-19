@@ -55,29 +55,6 @@ class FLOR_COLOR_PUBLISHER {
             flor_rgb.r = r[r.size()/2];
             flor_rgb.g = g[g.size()/2];
             flor_rgb.b = b[b.size()/2];
-            // yaml_data["R"] = flor_rgb.r;
-            // yaml_data["G"] = flor_rgb.g;
-            // yaml_data["B"] = flor_rgb.b;
-            // if (file.is_open())
-            // {
-            //     file << yaml_data;  // YAMLデータをファイルに書き込む
-            //     file.close();
-            // }
-            // else
-            // {
-            //     ROS_ERROR_STREAM("Failed to open file: " << file_path);
-            // }
-            // pcp_.setPassThroughParameters( "x", 0.4, 8.0 );
-            // pcp_.passThrough( cloud_, cloud_ );
-            // pcp_.setPassThroughParameters( "y", -4.0, 4.0 );
-            // pcp_.passThrough( cloud_, cloud_ );
-            // pcp_.setPassThroughParameters( "z", 0.05, 1.5 );
-            // pcp_.passThrough( cloud_, cloud_ );
-            // pcp_.voxelGrid( cloud_, cloud_ );
-            // pcp_.radiusOutlierRemoval ( cloud_, cloud_ );
-            // pcp_.colorRemoval ( cloud_, cloud_ );
-            // pcl_conversions::toPCL(cloud_msg->header.stamp, cloud_->header.stamp);
-            // pub_cloud_.publish(cloud_);
             getter_flag = true;
         }
         bool save_rgb() {
@@ -163,44 +140,5 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "flor_color_publisher");
     FLOR_COLOR_PUBLISHER flor_color_publisher;
     ros::spin();
-
-
-
-
-
-
-    // popen("roslaunch sobit_navigation sobit_pro_color_base_checker.launch", "r");
-    // sleep(4);
-    // popen("rosnode kill rgb_checker", "r");
-    // int check;
-    // printf("This color will be setting base color\nIs it okay? : ");
-    // scanf("%d",&check);
-    // printf("\n%d\n",check);
-    // ros::spin();
-
-
-
-
-
-    // ros::NodeHandle nh_;
-    // YAML::Node yaml_data;
-    // yaml_data["R"] = 200;
-    // yaml_data["G"] = 126;
-    // yaml_data["B"] = 166;
-
-
-    // // std::string file_path;
-    // std::string file_path = ros::package::getPath("sobit_navigation") + "/param/sobit_pro_multi_sensor/rgb_base.yaml";
-    // std::ofstream file(file_path);
-    // if (file.is_open()) {
-    // file << yaml_data;  // YAMLデータをファイルに書き込む
-    // file.close();
-    // ROS_INFO_STREAM("YAML file saved: " << file_path);
-    // } else {
-    // ROS_ERROR_STREAM("Failed to open file: " << file_path);
-    // }
-
-
-
     return 0;
 }
