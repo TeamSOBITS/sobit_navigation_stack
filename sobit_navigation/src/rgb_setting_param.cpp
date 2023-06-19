@@ -32,8 +32,7 @@ class FLOR_COLOR_PUBLISHER {
         std::string file_path = ros::package::getPath("sobit_navigation") + "/param/sobit_pro_multi_sensor/rgb_base.yaml";
         YAML::Node yaml_data;
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
-            // pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud_ );
-            pcp_.transformFramePointCloud( "azure_rgb_camera_link", cloud_msg, cloud_ );
+            pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud_ );
             r.clear();
             g.clear();
             b.clear();

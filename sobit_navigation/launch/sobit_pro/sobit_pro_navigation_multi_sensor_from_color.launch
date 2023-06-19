@@ -43,9 +43,9 @@
         <!-- ↓ここワンちゃん変える説あるかも↓ -->
         <param name="min_pt" type="int" value="10"/>
         <!-- ↓色の許容範囲↓ -->
-        <param name="RGB_R_NOISE" type="int" value="80"/>
-        <param name="RGB_G_NOISE" type="int" value="80"/>
-        <param name="RGB_B_NOISE" type="int" value="80"/>
+        <param name="RGB_R_NOISE" type="int" value="60"/>
+        <param name="RGB_G_NOISE" type="int" value="60"/>
+        <param name="RGB_B_NOISE" type="int" value="60"/>
     </node>
 
     <node if="$(arg use_pantilt_controll)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
