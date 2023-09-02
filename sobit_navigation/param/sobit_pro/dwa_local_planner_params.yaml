@@ -1,18 +1,18 @@
 DWAPlannerROS: # SOBIT PRO
 
 # Robot Configuration Parameters - SOBIT PRO
-  acc_lim_x: 1.0      # maximum is theoretically 2.0, but we
-  acc_lim_y: 0.0      # 4 wheel steering mobile robot
+  acc_lim_x: 0.7      # maximum is theoretically 2.0, but we
+  acc_lim_y: 0.7      # 4 wheel steering mobile robot
   acc_lim_theta: 2.0
 
   max_vel_trans: 0.55 # choose slightly less than the base's capability
   min_vel_trans: 0.01  # this is the min trans velocity when there is negligible rotational velocity
-  max_vel_x: 0.55  # 0.55
+  max_vel_x: 0.65  # 0.55
   min_vel_x: 0.01
-  max_vel_y: 0.0  # 4 wheel steering mobile robot
-  min_vel_y: 0.0  # 4 wheel steering mobile robot
+  max_vel_y: 0.15  # 4 wheel steering mobile robot
+  min_vel_y: -0.15  # 4 wheel steering mobile robot
   max_vel_theta: 3.0  # choose slightly less than the base's capability
-  min_vel_theta: 0.05  # this is the min angular velocity when there is negligible translational velocity
+  min_vel_theta: 0.07  # this is the min angular velocity when there is negligible translational velocity
   # Warning!
   #   do not set min_vel_trans to 0.0 otherwise dwa will always think translational velocities
   #   are non-negligible and small in place rotational velocities will be created.
@@ -28,8 +28,8 @@ DWAPlannerROS: # SOBIT PRO
   sim_time: 1.0                   # 1.7
   sim_granularity: 0.025          # 0.025
   angular_sim_granularity: 0.10   # 0.10
-  vx_samples: 6                   # 3
-  vy_samples: 1                   # 10  Omnidirectional mobile robot
+  vx_samples: 3                   # 3
+  vy_samples: 10                   # 10  Omnidirectional mobile robot
   vtheta_samples: 20              # 20
 
 # Trajectory Scoring Parameters
