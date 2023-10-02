@@ -1,0 +1,8 @@
+<launch>    
+    <node pkg="sobit_navigation" type="rgb_setting_param" name="rgb_setting_param" output="screen" >
+        <param name="topic_name" value="points2"/>
+        <param name="voxel_size" type="double" value="0.025"/>
+        <param name="radius" type="double" value="0.05"/>
+        <param name="min_pt" type="int" value="10"/>
+    </node>
+</launch>
