@@ -82,22 +82,21 @@ class FLOR_COLOR_PUBLISHER {
                 return false;
             }
             sleep(1);
-            popen("roslaunch sobit_navigation sobit_pro_color_base_checker.launch", "r");
+            FILE *fopen = popen("roslaunch sobit_navigation sobit_pro_color_base_checker.launch", "r");
             sleep(4);
-            popen("rosnode kill rgb_checker", "r");
+            FILE *fkill = popen("rosnode kill rgb_checker", "r");
             int check;
             ROS_INFO("This color will be setting base color.");
             ROS_INFO("Is it okay?");
             ROS_INFO("YES->1 NO->2 : ");
-            scanf("%d",&check);
-            if (check == 1)
+            if (scanf("%d",&check))
             {
-                return true;
+                if (check == 1)
+                {
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     public:
         FLOR_COLOR_PUBLISHER(): nh_(), pnh_("~") {
