@@ -18,12 +18,16 @@
     <!-- Map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
 
-    <!-- AMCL -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_amcl.launch.xml">
+    <!-- MCL node -->
+    <include file="$(find als_ros)/launch/mcl2.launch">
+        <!-- ポーズ トラッキングとグローバル ローカリゼーションの融合を使用する-->
+        <!-- <arg name="use_gl_pose_sampler" value="true"/> -->
+        <!-- 位置ずれ認識で定位失敗確率の推定を使用する -->
+        <!-- <arg name="use_mrf_failure_detector" value="true"/> -->
         <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
         <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
-        <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
-    </include>
+        <arg name="initial_pose_yaw" value="$(arg initial_pose_a)"/>
+    </include> 
 
     <!-- Move_Base -->
     <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_move_base.launch.xml">
