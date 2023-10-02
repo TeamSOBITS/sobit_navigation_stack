@@ -1,0 +1,33 @@
+<!-- sobit_turtlebot_navigation.launch -->
+<launch>
+    <arg name="rviz"                    default="true"/>
+    <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
+
+    <arg name="rqt_reconfigure"         default="false"/>
+    <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
+
+    <arg name="use_smoother"          default="true" />
+
+    <!--  ファイル名を指定するなら下記のargを変更すること -->
+    <arg name="map_file" default="$(find sobit_mapping)/map/example/gmapping_multi_merger.yaml"/>
+    <arg name="initial_pose_x" default="0.0"/>
+    <arg name="initial_pose_y" default="0.0"/>
+    <arg name="initial_pose_a" default="0.0"/>
+
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+    <!-- AMCL -->
+    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_amcl.launch.xml">
+        <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+        <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+        <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+    </include>
+
+    <!-- Move_Base -->
+    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml">
+        <arg name="use_smoother" value="$(arg use_smoother)"/>
+    </include>
+
+</launch>
