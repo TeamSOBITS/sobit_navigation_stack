@@ -10,20 +10,29 @@
     <arg name="use_smoother"          default="false" />
 
     <!--  ファイル名を指定するなら下記のargを変更すること -->
-    <arg name="map_file" default="$(find sobit_mapping)/map/map_10_5_19_55.yaml"/>
+    <arg name="map_file" default="$(find sobit_mapping)/map/e301.yaml"/>
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
 
+    <arg name="use_als_ros" default="false">
+
     <!-- Map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
 
+    <!-- Localization -->
     <!-- AMCL -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_amcl.launch.xml">
+    <include if="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_amcl.launch.xml">
         <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
         <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
         <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
     </include>
+    <!-- MCL node -->
+    <include unless="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_als_ros.launch.xml">
+        <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+        <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+        <arg name="initial_pose_yaw" value="$(arg initial_pose_a)"/>
+    </include> 
 
     <!-- Move_Base -->
     <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_move_base.launch.xml">
