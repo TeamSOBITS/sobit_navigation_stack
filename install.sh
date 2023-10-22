@@ -50,6 +50,8 @@ echo "╔══╣ Install: Sobit Navigation Stack (STARTING) ╠══╗"
 
 sudo apt-get update
 
+cd ~/catkin_ws/src/sobit_navigation_stack/
+mkdir sobit_navigation_packages
 cd ~/catkin_ws/src/sobit_navigation_stack/sobit_navigation_packages/
 if [ "clone_mode" == $1 ]; then
     git clone https://github.com/ros-perception/slam_gmapping.git
@@ -99,6 +101,7 @@ sudo apt-get install -y \
     ros-${ROS_DISTRO}-urdf \
     ros-${ROS_DISTRO}-xacro \
     ros-${ROS_DISTRO}-rqt-image-view \
+    ros-${ROS_DISTRO}-explore-lite
 
 # Install rtabmap, octomap etc.
 sudo apt-get install -y \

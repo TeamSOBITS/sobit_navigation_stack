@@ -1,14 +1,14 @@
 DWAPlannerROS: # SOBIT PRO
 
 # Robot Configuration Parameters - SOBIT PRO
-  acc_lim_x: 1.2      # maximum is theoretically 2.0, but we
+  acc_lim_x: 1.5      # maximum is theoretically 2.0, but we
   acc_lim_y: 0.0      # 4 wheel steering mobile robot
   acc_lim_theta: 2.0
 
   max_vel_trans: 0.60 # choose slightly less than the base's capability
   min_vel_trans: 0.01  # this is the min trans velocity when there is negligible rotational velocity
   max_vel_x: 0.65  # 0.55
-  min_vel_x: 0.01
+  min_vel_x: -0.03
   max_vel_y: 0.00  # 4 wheel steering mobile robot
   min_vel_y: -0.00  # 4 wheel steering mobile robot
   max_vel_theta: 3.0  # choose slightly less than the base's capability
@@ -19,7 +19,7 @@ DWAPlannerROS: # SOBIT PRO
 
 # Goal Tolerance Parameters
   yaw_goal_tolerance: 0.05  # 0.05
-  xy_goal_tolerance: 0.15  # 0.10
+  xy_goal_tolerance: 0.10  # 0.10
   # latch_xy_goal_tolerance: false
   theta_stopped_vel: 0.4
   trans_stopped_vel: 0.1

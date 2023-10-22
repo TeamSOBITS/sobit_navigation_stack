@@ -29,7 +29,7 @@ $ bash install.sh
 - [amclのパラメータについて](/doc/readme/amcl_params.md)
 - [recovery_behaviorsについて](/doc/readme/recovery_behaviors.md)
 - [コストマップに付与されるコストを変える](/doc/readme/costmap_parameter_turning.md)
-- [rtabmapについて](/doc/readme/rtabmap.md)
+<!-- - [rtabmapについて](/doc/readme/rtabmap.md) -->
 
 # [ROS Navigation Stack ソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)
 - 作成：産業技術総合研究所・ロボットイノベーションセンター
@@ -84,6 +84,6 @@ ROSナビゲーションスタックは、移動ロボットが場所から場�
 
 この記事は、ナビゲーションパラメータの微調整のプロセスを通じて読者を導くことを意図しています。どのように」「なぜ」調整するのかを知るための参考資料です。主要なパラメータの値を設定する際に このガイドでは、読者が以下を完了していることを想定しています。すでにナビゲーションスタックをセットアップし、最適化する準備ができています。これはまた、以下の要約でもあります。ROSナビゲーションスタックに関する私の研究の成果です。
 
----
+<!-- --- -->
 
-- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)
+<!-- - [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack) -->

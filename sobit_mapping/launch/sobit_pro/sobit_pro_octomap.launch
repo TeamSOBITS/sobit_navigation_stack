@@ -53,6 +53,6 @@
     </node>
 
     <!-- keyboard -->
-    <arg name="use_keyboard"            default="true" />
+    <arg name="use_keyboard"            default="false" />
     <include if="$(arg use_keyboard)" file="$(find sobit_pro_bringup)/launch/ps4_control.launch"/>
 </launch>
