@@ -30,19 +30,16 @@
     </include>
 
     <!-- Move_Base -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_pro_multi_sensor/sobit_pro_move_base_multi_sensor.launch.xml">
-        <!-- <arg name="use_smoother" value="$(arg use_smoother)"/> -->
-    </include>
+    <include file="$(find sobit_navigation)/launch/include/sobit_pro_multi_sensor/sobit_pro_move_base_multi_sensor.launch.xml"/>
 
     
     <node pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" output="screen" >
-        <rosparam file="$(find sobit_navigation)/param/sobit_pro_multi_sensor/rgb_base.yaml" command="load" ns="rgb"/>
+        <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
         <param name="topic_name" value="points2"/>
         <param name="voxel_size" type="double" value="0.025"/>
         <param name="radius" type="double" value="0.05"/>
-        <!-- ↓ここワンちゃん変える説あるかも↓ -->
-        <param name="min_pt" type="int" value="10"/>
-        <!-- ↓色の許容範囲↓ -->
+        <param name="min_pt" type="int" value="5"/>
+        <!-- ↓セットした床の色からどれくらいの範囲は同じ色とするかの許容範囲↓ -->
         <param name="RGB_R_NOISE" type="int" value="60"/>
         <param name="RGB_G_NOISE" type="int" value="60"/>
         <param name="RGB_B_NOISE" type="int" value="60"/>

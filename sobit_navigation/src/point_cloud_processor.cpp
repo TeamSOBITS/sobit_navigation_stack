@@ -53,35 +53,6 @@ bool PointCloudProcessor::voxelGrid ( const PointCloud::Ptr input_cloud, PointCl
         return false;
     }
 }
-// clustering extraction :
-bool PointCloudProcessor::euclideanClusterExtraction ( const PointCloud::Ptr input_cloud, std::vector<pcl::PointIndices>* output_indices ) {
-    try {
-        tree_->setInputCloud( input_cloud );
-        ec_.setInputCloud( input_cloud );
-        ec_.extract( *output_indices );
-        return true;
-    } catch ( std::exception& ex ) {
-        ROS_ERROR("%s", ex.what());
-        return false;
-    }
-}
-// Extract specified Indices from point cloud :
-bool PointCloudProcessor::extractIndices( const PointCloud::Ptr input_cloud, PointCloud::Ptr output_cloud, const pcl::PointIndices::Ptr indices, bool negative ) {
-    try {
-        PointCloud::Ptr tmp ( new PointCloud() );
-        extract_.setInputCloud( input_cloud );
-        extract_.setIndices( indices );
-        extract_.setNegative( negative );
-        extract_.filter( *tmp );
-        *output_cloud = *tmp;
-        output_cloud->header.frame_id = input_cloud->header.frame_id;
-        return true;
-    } catch ( std::exception& ex ) {
-        ROS_ERROR("%s", ex.what());
-        return false;
-    }
-}
-
 // Removing outliers using a RadiusOutlier removal :
 bool PointCloudProcessor::radiusOutlierRemoval ( const PointCloud::Ptr input_cloud, PointCloud::Ptr output_cloud ) {
     try {
@@ -90,17 +61,6 @@ bool PointCloudProcessor::radiusOutlierRemoval ( const PointCloud::Ptr input_clo
         outrem_.filter (*tmp);
         *output_cloud = *tmp;
         output_cloud->header.frame_id = input_cloud->header.frame_id;
-        return true;
-    } catch ( std::exception& ex ) {
-        ROS_ERROR("%s", ex.what());
-        return false;
-    }
-}
-// Random Sample Consensus model(https://pcl.readthe/docs.io/projects/tutorials/en/latest/random_sample_consensus.html)
-bool PointCloudProcessor::sacSegmentation( const PointCloud::Ptr input_cloud, pcl::PointIndices::Ptr inliers, pcl::ModelCoefficients::Ptr coefficients ) {
-    try{ 
-        seg_.setInputCloud (input_cloud);
-        seg_.segment (*inliers, *coefficients);
         return true;
     } catch ( std::exception& ex ) {
         ROS_ERROR("%s", ex.what());

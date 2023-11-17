@@ -1,6 +1,0 @@
-<!-- RGB CHECKERで、床の色をYAML経由で確認するためのlaunchファイル -->
-<launch>
-    <node pkg="sobit_navigation" type="rgb_checker.py" name="rgb_checker" output="screen">
-        <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
-    </node>
-</launch>

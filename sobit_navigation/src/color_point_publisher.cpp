@@ -24,7 +24,6 @@ class COLOR_POINT_PUBLISHER {
 
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
             pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud_ );
-            // pcp_.transformFramePointCloud( "azure_camera_base", cloud_msg, cloud_ );
             for (int i=0; i<cloud_msg->data.size()/32; i++)
             {
                 rgb.r = cloud_msg->data[i*32+18];
@@ -60,14 +59,8 @@ class COLOR_POINT_PUBLISHER {
             double radius = pnh_.param<double>( "radius", 0.05 );
             int min_pt = pnh_.param<int>( "min_pt", 5 );
             target_frame_ = pnh_.param<std::string>( "target_frame", "base_footprint" );
-
-            ROS_INFO("R = %d", flor_rgb.r);
-            ROS_INFO("G = %d", flor_rgb.g);
-            ROS_INFO("B = %d", flor_rgb.b);
-            ROS_INFO("topic_name = '%s'", topic_name.c_str());
-            pcp_.setVoxelGridParameter( 0.025 );
+            pcp_.setVoxelGridParameter( voxel_size );
             pcp_.setRadiusOutlierRemovalParameters ( radius, min_pt, false );
-
             pub_cloud_ = nh_.advertise<PointCloud>("/cloud_color_point", 1);
             sub_points_ = nh_.subscribe(topic_name, 5, &COLOR_POINT_PUBLISHER::cbPoints, this);
             cloud_.reset(new PointCloud());

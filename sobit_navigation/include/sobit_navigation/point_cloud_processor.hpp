@@ -43,16 +43,11 @@ namespace sobit_navigation {
             void setClusteringParameters ( const float tolerance, const int min_size, const int max_size );
             void setRadiusOutlierRemovalParameters ( const double radius, const int min_pts, const bool keep_organized );
             void setSACSegmentationParameter( const int model,  const int method, const double threshold, const double probability );
-            void setSACPlaneParameter( const std::string &axis, const double eps_angle_degree );
 
             bool transformFramePointCloud ( const std::string target_frame, const sensor_msgs::PointCloud2ConstPtr &input_cloud, PointCloud::Ptr output_cloud );
             bool passThrough ( const PointCloud::Ptr input_cloud, PointCloud::Ptr output_cloud );
             bool voxelGrid ( const PointCloud::Ptr input_cloud, PointCloud::Ptr output_cloud );
-            bool euclideanClusterExtraction ( const PointCloud::Ptr input_cloud, std::vector<pcl::PointIndices>* output_indices );
-            bool extractIndices( const PointCloud::Ptr input_cloud, PointCloud::Ptr output_cloud, const pcl::PointIndices::Ptr indices, bool negative );
-            bool statisticalRemoval ( const PointCloud::Ptr input_cloud, PointCloud::Ptr output_cloud, const int nr_k, const double stddev_mult );
             bool radiusOutlierRemoval ( const PointCloud::Ptr input_cloud, PointCloud::Ptr output_cloud );
-            bool sacSegmentation( const PointCloud::Ptr input_cloud, pcl::PointIndices::Ptr inliers, pcl::ModelCoefficients::Ptr coefficients );
     };
     
     inline void PointCloudProcessor::setPassThroughParameters( const std::string &axis, const float &limit_min, const float &limit_max ) {
@@ -80,15 +75,6 @@ namespace sobit_navigation {
         seg_.setDistanceThreshold (threshold);
         seg_.setProbability(probability);  
         seg_.setMaxIterations(1000);
-    }
-    inline void PointCloudProcessor::setSACPlaneParameter( const std::string &axis, const double eps_angle_degree ) {
-        Eigen::Vector3f axis_vec;
-        if ( axis == "x" ) axis_vec = Eigen::Vector3f(1.0,0.0,0.0); //y axis
-        else if ( axis == "y" ) axis_vec = Eigen::Vector3f(0.0,1.0,0.0); //y axis
-        else if ( axis == "z" ) axis_vec = Eigen::Vector3f(0.0,0.0,1.0); //y axis
-        else return;
-        seg_.setAxis(axis_vec);
-        seg_.setEpsAngle( eps_angle_degree * (M_PI/180.0f) ); // plane can be within eps_angle_degree degrees of plane
     }
 }
 

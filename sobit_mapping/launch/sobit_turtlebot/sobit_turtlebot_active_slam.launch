@@ -9,22 +9,11 @@
 
     <arg name="use_smoother"          default="true" />
 
+    <!-- Gmapping -->
     <include file="$(find sobit_mapping)/launch/sobit_turtlebot/sobit_turtlebot_gmapping.launch">
         <arg name="rviz"            value="false"/>
         <arg name="use_keyboard"    value="false"/>
-        <arg name="save_map"        value="false"/>
-    </include>
-
-    <arg name="initial_pose_x" default="0.0"/>
-    <arg name="initial_pose_y" default="0.0"/>
-    <arg name="initial_pose_a" default="0.0"/>
-
-    <!-- AMCL -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_amcl.launch.xml">
-        <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
-        <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
-        <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
-        <arg name="use_map_topic"  value="true"/>
+        <arg name="save_map"        value="true"/>
     </include>
 
     <!-- Move_Base -->
@@ -38,11 +27,4 @@
         <param name="costmap_topic" value="map"/>
         <param name="visualize" value="true"/>
     </node>
-    <!-- <group ns="/dtw_robot1">
-        <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
-            <param name="robot_base_frame" value="dtw_robot1/base_link"/>
-            <param name="costmap_topic" value="map"/>
-            <param name="visualize" value="true"/>
-        </node>
-    </group> -->
 </launch>
