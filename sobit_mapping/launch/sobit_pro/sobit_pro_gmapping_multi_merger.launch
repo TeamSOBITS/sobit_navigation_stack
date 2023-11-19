@@ -8,7 +8,7 @@
         <rosparam>
             target_frame: base_footprint
             transform_tolerance: 0.01
-            min_height: 0.0
+            min_height: 0.3
             max_height: 2.0
 
             angle_min: -1.5708
@@ -57,10 +57,10 @@
         <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
     </node>
 
-    <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_gmapping_multi.rviz"/>
+    <arg name="rviz"                    default="true"/>
+    <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_gmapping_multi.rviz"/>
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
 
-    <!-- keyboard -->
-    <arg name="use_keyboard"            default="true" />
-    <include if="$(arg use_keyboard)" file="$(find sobit_pro_bringup)/launch/sobit_turtlebot/sobit_turtlebot_teleop_keyboard.launch"/>
+    <arg name="rqt_reconfigure"         default="false"/>
+    <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
 </launch>

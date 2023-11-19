@@ -10,8 +10,9 @@
     <!-- <arg name="use_smoother"          default="false" /> -->
 
     <arg name="use_pantilt_controll"    default="false" />
+    <arg name="use_sobit_mini"          default="false" />
     <arg name="pan_angle_deg"           default="0.0"/>
-    <arg name="tilt_angle_deg"          default="-0.5"/>
+    <arg name="tilt_angle_deg"          default="0.0"/>
 
     <!--  ファイル名を指定するなら下記のargを変更すること -->
     <arg name="map_file" default="$(find sobit_mapping)/map/e301.yaml"/>
@@ -23,33 +24,35 @@
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- AMCL -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_amcl.launch.xml">
+    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_amcl.launch.xml">
         <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
         <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
         <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
     </include>
 
     <!-- Move_Base -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_pro_multi_sensor/sobit_pro_move_base_multi_sensor.launch.xml">
-        <!-- <arg name="use_smoother" value="$(arg use_smoother)"/> -->
-    </include>
-
+    <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot_multi_sensor/sobit_turtlebot_move_base_multi_sensor.launch.xml"/>
     
     <node pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" output="screen" >
-        <rosparam file="$(find sobit_navigation)/param/sobit_pro_multi_sensor/rgb_base.yaml" command="load" ns="rgb"/>
+        <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
         <param name="topic_name" value="/head_camera/depth_registered/points"/>
         <param name="voxel_size" type="double" value="0.025"/>
         <param name="radius" type="double" value="0.05"/>
-        <!-- ↓ここワンちゃん変える説あるかも↓ -->
-        <param name="min_pt" type="int" value="10"/>
-        <!-- ↓色の許容範囲↓ -->
+        <param name="min_pt" type="int" value="5"/>
+        <!-- ↓セットした床の色からどれくらいの範囲は同じ色とするかの許容範囲↓ -->
         <param name="RGB_R_NOISE" type="int" value="60"/>
         <param name="RGB_G_NOISE" type="int" value="60"/>
         <param name="RGB_B_NOISE" type="int" value="60"/>
     </node>
 
-    <node if="$(arg use_pantilt_controll)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
-        <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
-        <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
-    </node>
+    <group if="$(arg use_pantilt_controll)">
+        <node if="$(arg use_sobit_mini)" pkg="sobit_navigation" type="sobit_mini_pantilt_controll.py" name="sobit_mini_pantilt_controll" output="screen">
+            <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
+            <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
+        </node>
+        <node unless="$(arg use_sobit_mini)" pkg="sobit_navigation" type="sobit_edu_pantilt_controll.py" name="sobit_edu_pantilt_controll" output="screen">
+            <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
+            <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
+        </node>
+    </group>
 </launch>

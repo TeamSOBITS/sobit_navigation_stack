@@ -31,11 +31,10 @@
 
     <!-- Move_Base -->
     <include file="$(find sobit_navigation)/launch/include/sobit_pro_multi_sensor/sobit_pro_move_base_multi_sensor.launch.xml"/>
-
     
     <node pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" output="screen" >
         <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
-        <param name="topic_name" value="points2"/>
+        <param name="topic_name" value="/points2"/>
         <param name="voxel_size" type="double" value="0.025"/>
         <param name="radius" type="double" value="0.05"/>
         <param name="min_pt" type="int" value="5"/>

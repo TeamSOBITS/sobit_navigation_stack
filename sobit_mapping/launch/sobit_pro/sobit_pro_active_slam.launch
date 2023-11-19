@@ -1,4 +1,4 @@
-<!-- sobit_pro_navigation.launch -->
+<!-- sobit_pro_active_slam.launch -->
 <launch>
     <arg name="rviz"                    default="true"/>
     <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
@@ -12,7 +12,6 @@
     <!-- Gmapping -->
     <include file="$(find sobit_mapping)/launch/sobit_pro/sobit_pro_gmapping.launch">
         <arg name="rviz"            value="false"/>
-        <arg name="use_keyboard"    value="false"/>
         <arg name="save_map"        value="true"/>
     </include>
 

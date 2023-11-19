@@ -15,20 +15,20 @@
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
 
-    <arg name="use_als_ros" default="false">
+    <arg name="use_als_ros" default="false"/>
 
     <!-- Map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- Localization -->
     <!-- AMCL -->
-    <include if="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_amcl.launch.xml">
+    <include unless="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_amcl.launch.xml">
         <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
         <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
         <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
     </include>
     <!-- MCL node -->
-    <include unless="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_als_ros.launch.xml">
+    <include if="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_als_ros.launch.xml">
         <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
         <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
         <arg name="initial_pose_yaw" value="$(arg initial_pose_a)"/>

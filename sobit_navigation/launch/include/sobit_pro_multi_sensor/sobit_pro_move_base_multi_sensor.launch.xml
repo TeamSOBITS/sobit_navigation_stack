@@ -1,4 +1,4 @@
-<!-- sobit_pro_move_base.launch.xml -->
+<!-- sobit_pro_move_base_multi_sensor.launch.xml -->
 <!-- 
     ROS navigation stack with velocity smoother and safety (reactive) controller
 -->
