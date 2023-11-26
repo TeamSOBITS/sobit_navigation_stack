@@ -111,78 +111,78 @@ Navigationを使う上での基本的な流れ
 
 ### 地図生成
 - ロボットを人間が操作して地図生成
-1. ロボットを起動する
-    ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
-2. 地図生成を起動
-    - SOBIT PROで地図生成
-        ```sh
-        $ roslaunch sobit_mapping sobit_pro_gmapping.launch
-        ```
-    - SOBIT EDU，SOBIT MINIで地図生成
-        ```sh
-        $ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch
-        ```
-3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動
-    ```sh
-    $ roslaunch sobit_mapping teleop.launch
-    ```
-4. ロボットを操作して，Navigationしたい環境の地図を保存
-    起動したターミナルで操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
-    地図ができたら，savecomaandのターミナルでEnterボタンを押して地図を保存する．\
-    保存された地図画像と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
-- 自律地図生成
-オープンソース[explore_lite](http://wiki.ros.org/explore_lite)を使って，ロボットが自律的に地図生成を行う．
-1. ロボットを起動する
-    ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
-2. 自律地図生成を起動する
-    - SOBIT PROで自律地図生成[sobit_pro_active_slam.launch](/sobit_mapping/launch/sobit_pro/sobit_pro_active_slam.launch)を起動
-        ```sh
-        $ roslaunch sobit_mapping sobit_pro_active_slam.launch
-        ```
-    - SOBIT EDU，SOBIT MINIで自律地図生成[sobit_turtlebot_active_slam.launch](/sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_active_slam.launch)を起動
-        ```sh
-        $ roslaunch sobit_mapping sobit_turtlebot_active_slam.launch
-        ```
-3. Navigationしたい環境の地図を保存
-    Rvizの地図を見て，ほしい地図ができていたらsavecomaandのターミナルでEnterボタンを押して地図を保存する．\
-    保存された地図画像と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
-### 地点登録
-- ロボットを使って地点登録
-1. 生成した地図のパスをNavigationに登録する
-    - SOBIT PRO用
-        [sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを書き換える
-    - SOBIT EDU，SOBIT MINI用
-        [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを書き換える
-    [example.pgm](/sobit_mapping/map/example.pgm)という，事前にこちらで用意したマップを例に以下に示す．
-    ```xml
-        <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
-    ```
-2. ロボットを起動する
-3. 地点登録を起動する
-    - SOBIT PRO用
-        ```sh
-        $ roslaunch sobit_mapping sobit_pro_create_location_file.launch
-        ```
-    - SOBIT EDU，SOBIT MINI用
-        ```sh
-        $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch
-        ```
-4. 登録したい地点にロボットを移動する
-    - [teleop.launch](/sobit_mapping/launch/teleop.launch)を用いてロボットを移動 
+    1. ロボットを起動する
+        ロボット本体と，2D-LiDARを起動させる．\
+        詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
+    2. 地図生成を起動
+        - SOBIT PROで地図生成
+            ```sh
+            $ roslaunch sobit_mapping sobit_pro_gmapping.launch
+            ```
+        - SOBIT EDU，SOBIT MINIで地図生成
+            ```sh
+            $ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch
+            ```
+    3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動
         ```sh
         $ roslaunch sobit_mapping teleop.launch
         ```
-    - Rvizの2D Nav Goalを用いてロボットを移動
-5. 移動後，ロボットの現在地点を登録する
-    - 3で起動した地点登録の端末に，地点名を入力
-    - Enterを押して登録完了
-    - 全ての登録したい地点を登録するまで4と5を繰り返す
-6. Rvizに表示された地点登録情報(矢印)を保存
-    - 地点登録が終わったら，端末で「q」と入力して保存
-    - 地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時+"_location"のファイル名で保存される．
-- ロボットを使わずに地点登録
+    4. ロボットを操作して，Navigationしたい環境の地図を保存
+        起動したターミナルで操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
+        地図ができたら，savecomaandのターミナルでEnterボタンを押して地図を保存する．\
+        保存された地図画像と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
+- 自律地図生成
+    オープンソース[explore_lite](http://wiki.ros.org/explore_lite)を使って，ロボットが自律的に地図生成を行う．
+    1. ロボットを起動する
+        ロボット本体と，2D-LiDARを起動させる．\
+        詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
+    2. 自律地図生成を起動する
+        - SOBIT PROで自律地図生成[sobit_pro_active_slam.launch](/sobit_mapping/launch/sobit_pro/sobit_pro_active_slam.launch)を起動
+            ```sh
+            $ roslaunch sobit_mapping sobit_pro_active_slam.launch
+            ```
+        - SOBIT EDU，SOBIT MINIで自律地図生成[sobit_turtlebot_active_slam.launch](/sobit_mapping/launch/sobit_turtlebot/sobit_turtlebot_active_slam.launch)を起動
+            ```sh
+            $ roslaunch sobit_mapping sobit_turtlebot_active_slam.launch
+            ```
+    3. Navigationしたい環境の地図を保存
+        Rvizの地図を見て，ほしい地図ができていたらsavecomaandのターミナルでEnterボタンを押して地図を保存する．\
+        保存された地図画像と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
+### 地点登録
+- ロボットを使って地点登録
+    1. 生成した地図のパスをNavigationに登録する
+        - SOBIT PRO用
+            [sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを書き換える
+        - SOBIT EDU，SOBIT MINI用
+            [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを書き換える
+        [example.pgm](/sobit_mapping/map/example.pgm)という，事前にこちらで用意したマップを例に以下に示す．
+        ```xml
+            <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
+        ```
+    2. ロボットを起動する
+    3. 地点登録を起動する
+        - SOBIT PRO用
+            ```sh
+            $ roslaunch sobit_mapping sobit_pro_create_location_file.launch
+            ```
+        - SOBIT EDU，SOBIT MINI用
+            ```sh
+            $ roslaunch sobit_mapping sobit_turtlebot_create_location_file.launch
+            ```
+    4. 登録したい地点にロボットを移動する
+        - [teleop.launch](/sobit_mapping/launch/teleop.launch)を用いてロボットを移動 
+            ```sh
+            $ roslaunch sobit_mapping teleop.launch
+            ```
+        - Rvizの2D Nav Goalを用いてロボットを移動
+    5. 移動後，ロボットの現在地点を登録する
+        - 3で起動した地点登録の端末に，地点名を入力
+        - Enterを押して登録完了
+        - 全ての登録したい地点を登録するまで4と5を繰り返す
+    6. Rvizに表示された地点登録情報(矢印)を保存
+        - 地点登録が終わったら，端末で「q」と入力して保存
+        - 地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時+"_location"のファイル名で保存される．
+    - ロボットを使わずに地点登録
 #### SOBIT EDU，SOBIT MINIで地図生成
 1. ロボットを起動する．
 <!-- デモの実行方法やスクリーンショットがあるとわかりやすくなるでしょう -->
