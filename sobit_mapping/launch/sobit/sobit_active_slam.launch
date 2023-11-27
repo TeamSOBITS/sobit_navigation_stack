@@ -1,4 +1,4 @@
-<!-- sobit_pro_active_slam.launch -->
+<!-- sobit_active_slam.launch -->
 <launch>
     <arg name="rviz"                    default="true"/>
     <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
