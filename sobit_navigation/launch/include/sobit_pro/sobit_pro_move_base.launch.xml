@@ -12,10 +12,8 @@
     <arg name="use_smoother"        default="false" />
 
     <include if="$(arg use_smoother)" file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_velocity_smoother.launch.xml"/>
-    <!-- <include if="$(arg use_smoother)" file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_velocity_smoother.launch.xml"/> -->
 
-    <!-- <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e"> -->
-    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/costmap_common_params.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/local_costmap_params.yaml" command="load" />

@@ -7,14 +7,10 @@
     <arg name="rqt_reconfigure"         default="false"/>
     <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
 
-    <!-- <arg name="use_smoother"          default="false" /> -->
-
-    <arg name="use_pantilt_controll"    default="false" />
-    <arg name="pan_angle_deg"           default="0.0"/>
-    <arg name="tilt_angle_deg"          default="-0.5"/>
+    <arg name="use_smoother"          default="false" />
 
     <!--  ファイル名を指定するなら下記のargを変更すること -->
-    <arg name="map_file" default="$(find sobit_mapping)/map/e301_gmapping_multi_sensor_gimp.yaml"/>
+    <arg name="map_file" default="$(find sobit_mapping)/map/map_11_19_15_25.yaml"/>
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
@@ -30,8 +26,10 @@
     </include>
 
     <!-- Move_Base -->
-    <include file="$(find sobit_navigation)/launch/include/sobit_pro_multi_sensor/sobit_pro_move_base_multi_sensor.launch.xml"/>
-    
+    <include file="$(find sobit_navigation)/launch/include/sobit_pro_multi_sensor/sobit_pro_move_base_multi_sensor.launch.xml">
+        <arg name="use_smoother" value="$(arg use_smoother)"/>
+    </include>
+
     <node pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" output="screen" >
         <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
         <param name="topic_name" value="/points2"/>
@@ -43,6 +41,10 @@
         <param name="RGB_G_NOISE" type="int" value="60"/>
         <param name="RGB_B_NOISE" type="int" value="60"/>
     </node>
+
+    <arg name="use_pantilt_controll"    default="false" />
+    <arg name="pan_angle_deg"           default="0.0"/>
+    <arg name="tilt_angle_deg"          default="-0.5"/>
 
     <node if="$(arg use_pantilt_controll)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
         <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>

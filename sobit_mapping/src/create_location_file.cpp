@@ -9,6 +9,8 @@
 #include <stdlib.h>
 
 #include <tf2_msgs/TFMessage.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf/transform_listener.h>
 #include <geometry_msgs/PoseStamped.h>
 
@@ -19,7 +21,9 @@ class CreateLocationFile {
 		ros::NodeHandle nh_;
 		ros::NodeHandle pnh_;
 		ros::Publisher pub_pose_;
-		tf::TransformListener tf_listener_;
+		tf::TransformListener tf_listener__;
+		tf2_ros::Buffer tfBuffer_;
+		tf2_ros::TransformListener tf_listener_;
 		bool first_flag_;
 		std::string file_name_;
 		bool saveLocation( const std::string location_name );
@@ -33,11 +37,11 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 	try{ 
 	//tfで変換
 	tf::StampedTransform transform;
-	if(!tf_listener_.waitForTransform("/map","base_footprint",ros::Time(0),ros::Duration(3.0)) ) {
+	if(!tf_listener__.waitForTransform("/map","base_footprint",ros::Time(0),ros::Duration(3.0)) ) {
 		std::cout << "位置取得失敗。	tfは出てますか？　/mapと/base_footprintのフレームは繋がっていますか？" << std::endl;
 		while(1){ros::Duration(2).sleep();}
 	}
-	tf_listener_.lookupTransform("/map","base_footprint",ros::Time(0),transform);			
+	tf_listener__.lookupTransform("/map","base_footprint",ros::Time(0),transform);			
 
 	//現在位置をファイルに出力する．
 	std::cout << std::endl;
@@ -48,7 +52,14 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
 	std::cout << "transform.getRotation().x(): "<< fixed << std::setprecision(7) << transform.getRotation().x() << std::endl;
 	std::cout << "transform.getRotation().y(): "<< fixed << std::setprecision(7) << transform.getRotation().y() << std::endl;
 	std::cout << "transform.getRotation().z(): "<< fixed << std::setprecision(7) << transform.getRotation().z() << std::endl;
-	std::cout << "transform.getRotation().w(): "<< fixed << std::setprecision(7) << transform.getRotation().w() << std::endl;
+	std::cout << "transform.getRotation().w(): "<< fixed << std::setprecision(7) << transform.getRotation().w() << std::endl << std::endl;
+	// std::cout << "px: "<<  << std::endl;
+	// std::cout << "py: "<<  << std::endl;
+	// std::cout << "pz: "<<  << std::endl;
+	// std::cout << "rw: "<<  << std::endl;
+	// std::cout << "rx: "<<  << std::endl;
+	// std::cout << "ry: "<<  << std::endl;
+	// std::cout << "rz: "<<  << std::endl;
 
 	ofstream ofs(file_name_, ios::app);
 	if(ofs) {
@@ -93,7 +104,7 @@ bool CreateLocationFile::saveLocation( const std::string location_name ) {
     }
 }
 
-CreateLocationFile::CreateLocationFile( ) : nh_(), pnh_("~") {
+CreateLocationFile::CreateLocationFile( ) : nh_(), pnh_("~"), tfBuffer_(), tf_listener_(tfBuffer_) {
     pub_pose_ = nh_.advertise<geometry_msgs::PoseStamped>("/location_pose", 1);
 }
 

@@ -16,7 +16,6 @@
   <depend>geometry_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>visualization_msgs</depend>
-  <depend>tf</depend>
   <depend>tf2_ros</depend>
   <depend>actionlib</depend>
   <depend>move_base_msgs</depend>

@@ -2,7 +2,7 @@
 
 using namespace sobit_navigation;
 
-PointCloudProcessor::PointCloudProcessor() {
+PointCloudProcessor::PointCloudProcessor() : tfBuffer_(), tf_listener_(tfBuffer_) {
     setPassThroughParameters( "z", 0.1, 1.0);
     setVoxelGridParameter( 0.01 );
     setClusteringParameters( 0.05, 1, 1000 );
@@ -15,10 +15,16 @@ bool PointCloudProcessor::transformFramePointCloud ( const std::string target_fr
     pcl::fromROSMsg<PointT>( *input_cloud, cloud_src );
     if (target_frame.empty() == false ){
         try {
-            tf_listener_.waitForTransform(target_frame, cloud_src.header.frame_id, ros::Time(0), ros::Duration(1.0));
-            pcl_ros::transformPointCloud(target_frame, ros::Time(0), cloud_src, cloud_src.header.frame_id,  *output_cloud, tf_listener_);
+            while (ros::ok()) {
+                if (tfBuffer_.canTransform(target_frame, cloud_src.header.frame_id, ros::Time(0), ros::Duration(1.0))) {
+                    break;
+                } else {
+                    ros::Duration(1.0).sleep();
+                }
+            }
+            pcl_ros::transformPointCloud(target_frame, ros::Time(0), cloud_src, cloud_src.header.frame_id,  *output_cloud, tfBuffer_);
             output_cloud->header.frame_id = target_frame;
-        } catch (tf::TransformException ex) {
+        } catch (tf2::TransformException ex) {
             ROS_ERROR("%s", ex.what());
             return false;
         }
