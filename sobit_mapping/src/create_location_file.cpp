@@ -11,8 +11,9 @@
 #include <tf2_msgs/TFMessage.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-#include <tf/transform_listener.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <geometry_msgs/Transform.h>
 
 using namespace std;
 
@@ -21,10 +22,8 @@ class CreateLocationFile {
 		ros::NodeHandle nh_;
 		ros::NodeHandle pnh_;
 		ros::Publisher pub_pose_;
-		tf::TransformListener tf_listener__;
 		tf2_ros::Buffer tfBuffer_;
 		tf2_ros::TransformListener tf_listener_;
-		bool first_flag_;
 		std::string file_name_;
 		bool saveLocation( const std::string location_name );
 
@@ -34,74 +33,58 @@ class CreateLocationFile {
 };
 
 bool CreateLocationFile::saveLocation( const std::string location_name ) {
-	try{ 
-	//tfで変換
-	tf::StampedTransform transform;
-	if(!tf_listener__.waitForTransform("/map","base_footprint",ros::Time(0),ros::Duration(3.0)) ) {
-		std::cout << "位置取得失敗。	tfは出てますか？　/mapと/base_footprintのフレームは繋がっていますか？" << std::endl;
-		while(1){ros::Duration(2).sleep();}
-	}
-	tf_listener__.lookupTransform("/map","base_footprint",ros::Time(0),transform);			
+	try{
+		geometry_msgs::TransformStamped transformStamped;
+		tfBuffer_.canTransform("map","base_footprint", ros::Time(0), ros::Duration(0.5));
+		transformStamped = tfBuffer_.lookupTransform ("map","base_footprint", ros::Time(0));
 
-	//現在位置をファイルに出力する．
-	std::cout << std::endl;
-	std::cout << "transform.getOrigine().x(): "<< fixed << std::setprecision(7) << transform.getOrigin().x() << std::endl;
-	std::cout << "transform.getOrigine().y(): "<< fixed << std::setprecision(7) << transform.getOrigin().y() << std::endl;
-	std::cout << "transform.getOrigine().z(): "<< fixed << std::setprecision(7) << transform.getOrigin().z() << std::endl;
+		geometry_msgs::Transform transform = transformStamped.transform;
+		std::cout << std::endl;
+		std::cout << "point_x   : " << fixed << std::setprecision(7) << transform.translation.x << std::endl;
+		std::cout << "point_y   : " << fixed << std::setprecision(7) << transform.translation.y << std::endl;
+		std::cout << "point_z   : " << fixed << std::setprecision(7) << transform.translation.z << std::endl;
+		std::cout << "rotation_x: " << fixed << std::setprecision(7) << transform.rotation.x << std::endl;
+		std::cout << "rotation_y: " << fixed << std::setprecision(7) << transform.rotation.y << std::endl;
+		std::cout << "rotation_z: " << fixed << std::setprecision(7) << transform.rotation.z << std::endl;
+		std::cout << "rotation_w: " << fixed << std::setprecision(7) << transform.rotation.w << std::endl;
 
-	std::cout << "transform.getRotation().x(): "<< fixed << std::setprecision(7) << transform.getRotation().x() << std::endl;
-	std::cout << "transform.getRotation().y(): "<< fixed << std::setprecision(7) << transform.getRotation().y() << std::endl;
-	std::cout << "transform.getRotation().z(): "<< fixed << std::setprecision(7) << transform.getRotation().z() << std::endl;
-	std::cout << "transform.getRotation().w(): "<< fixed << std::setprecision(7) << transform.getRotation().w() << std::endl << std::endl;
-	// std::cout << "px: "<<  << std::endl;
-	// std::cout << "py: "<<  << std::endl;
-	// std::cout << "pz: "<<  << std::endl;
-	// std::cout << "rw: "<<  << std::endl;
-	// std::cout << "rx: "<<  << std::endl;
-	// std::cout << "ry: "<<  << std::endl;
-	// std::cout << "rz: "<<  << std::endl;
-
-	ofstream ofs(file_name_, ios::app);
-	if(ofs) {
-		ofs << "    - {" <<std::endl;
-		ofs << "        location_name: \"" << location_name << "\","<<std::endl;
-		ofs << "        frame_id: \"map\","<<std::endl;
-		ofs << fixed << std::setprecision(7) << "        translation_x: " << transform.getOrigin().x() << "," << std::endl;
-		ofs << fixed << std::setprecision(7) << "        translation_y: " << transform.getOrigin().y() << "," << std::endl;
-		ofs << fixed << std::setprecision(7) << "        translation_z: " << transform.getOrigin().z() << "," << std::endl;
-		ofs << fixed << std::setprecision(7) << "        rotation_x: " << transform.getRotation().x() << "," << std::endl;
-		ofs << fixed << std::setprecision(7) << "        rotation_y: " << transform.getRotation().y() << "," << std::endl;
-		ofs << fixed << std::setprecision(7) << "        rotation_z: " << transform.getRotation().z() << "," << std::endl;
-		ofs << fixed << std::setprecision(7) << "        rotation_w: " << transform.getRotation().w() << "," << std::endl;
-		ofs << fixed << std::setprecision(7) << "    }" <<std::endl;
-		ofs << fixed << std::setprecision(7) << std::endl;
-		ofs.close();
-		if(first_flag_ == true)
+		ofstream ofs(file_name_, ios::app);
+		if(ofs) {
+			ofs << "    - {" <<std::endl;
+			ofs << "        location_name: \"" << location_name << "\","<<std::endl;
+			ofs << "        frame_id: \"map\","<<std::endl;
+			ofs << "        translation_x: " << fixed << std::setprecision(7) << transform.translation.x << "," << std::endl;
+			ofs << "        translation_y: " << fixed << std::setprecision(7) << transform.translation.y << "," << std::endl;
+			ofs << "        translation_z: " << fixed << std::setprecision(7) << transform.translation.z << "," << std::endl;
+			ofs << "        rotation_x: " << fixed << std::setprecision(7) << transform.rotation.x << "," << std::endl;
+			ofs << "        rotation_y: " << fixed << std::setprecision(7) << transform.rotation.y << "," << std::endl;
+			ofs << "        rotation_z: " << fixed << std::setprecision(7) << transform.rotation.z << "," << std::endl;
+			ofs << "        rotation_w: " << fixed << std::setprecision(7) << transform.rotation.w << "," << std::endl;
+			ofs << "    }" <<std::endl;
+			ofs << std::endl;
+			ofs.close();
 			std::cout <<  "「" << file_name_ << "　」として保存完了。"  << std::endl;
-		else
-			std::cout <<  "「" << file_name_ << "　」に追記完了。"  << std::endl;
 
-		geometry_msgs::PoseStamped pose;
-		pose.pose.position.x = transform.getOrigin().x();
-		pose.pose.position.y = transform.getOrigin().y();
-		pose.pose.position.z = transform.getOrigin().z();
-		pose.pose.orientation.x = transform.getRotation().x();
-		pose.pose.orientation.y = transform.getRotation().y();
-		pose.pose.orientation.z = transform.getRotation().z();
-		pose.pose.orientation.w = transform.getRotation().w();
-		pose.header.frame_id = location_name;
-		pub_pose_.publish(pose);
-	} else {
-		ofs.close();
-		std::cout <<  file_name_ << "　は作成できませんでした。ｍ(_ _;)ｍ"  << std::endl;
-		std::cout << "ファイルのパスを確認して下さい。" << std::endl;
-	}	
-	first_flag_ = false;
-	return true;
-    } catch ( std::exception& ex ) {
-        ROS_ERROR("%s", ex.what());
-        return false;
-    }
+			geometry_msgs::PoseStamped pose;
+			pose.pose.position.x = transform.translation.x;
+			pose.pose.position.y = transform.translation.y;
+			pose.pose.position.z = transform.translation.z;
+			pose.pose.orientation.x = transform.rotation.x;
+			pose.pose.orientation.y = transform.rotation.y;
+			pose.pose.orientation.z = transform.rotation.z;
+			pose.pose.orientation.w = transform.rotation.w;
+			pose.header.frame_id = location_name;
+			pub_pose_.publish(pose);
+		} else {
+			ofs.close();
+			std::cout <<  file_name_ << "　は作成できませんでした。ｍ(_ _;)ｍ"  << std::endl;
+			std::cout << "ファイルのパスを確認して下さい。" << std::endl;
+		}	
+		return true;
+    } catch( tf2::TransformException &ex ){
+		ROS_ERROR("%s", ex.what());
+		return false;
+	}
 }
 
 CreateLocationFile::CreateLocationFile( ) : nh_(), pnh_("~"), tfBuffer_(), tf_listener_(tfBuffer_) {
@@ -109,7 +92,6 @@ CreateLocationFile::CreateLocationFile( ) : nh_(), pnh_("~"), tfBuffer_(), tf_li
 }
 
 void CreateLocationFile::createLocationFile() {
-	first_flag_ = true;
 	std::string save_location_folder_path = pnh_.param<std::string>("save_location_folder_path", "/map");
 	time_t now = time(NULL);
 	struct tm *pnow = localtime(&now);
@@ -131,8 +113,8 @@ void CreateLocationFile::createLocationFile() {
 		ofs.close();
 		std::cout <<  file_name_ << "　は作成できませんでした。ｍ(_ _;)ｍ"  << std::endl;
 		std::cout << "ファイルのパスを確認して下さい。" << std::endl;
-	}	
-	while(true) {
+	}
+	while(ros::ok()) {
 		std::cout <<"========================================" << std::endl;
 		std::cout <<"[ 登録地点一覧 ]" << std::endl;
 		int i = 1;
