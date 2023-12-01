@@ -1,8 +1,7 @@
 <!-- sobit_turtlebot_navigation.launch -->
 <launch>
     <arg name="rviz"                    default="true"/>
-    <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
-    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
 
     <arg name="rqt_reconfigure"         default="false"/>
     <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>

@@ -56,7 +56,9 @@ void LocationFileViewer::loadLocationFile() {
 
     nh_.getParam("/location_pose", pose_val);
     int pose_num = pose_val.size();
+    marker_id_ = 2 * pose_num;
     location_poses_.clear();
+    marker_array_.markers.clear();
     for ( int i = 0; i < pose_num; i++ ) {
         LocationPose pose;
         pose.name = static_cast<std::string>(pose_val[i]["location_name"]); 
@@ -115,10 +117,10 @@ void LocationFileViewer::callbackMessage( const geometry_msgs::PoseStampedConstP
 		ofs << fixed << std::setprecision(7) << std::endl;
 		ofs.close();
 	
-        std::cout <<  "「" << file_name_ << "　」に追記完了。"  << std::endl;
+        std::cout <<  "「" << file_name_ << "」に追記完了。"  << std::endl;
 	} else {
 		ofs.close();
-		std::cout <<  file_name_ << "　は作成できませんでした。ｍ(_ _;)ｍ"  << std::endl;
+		std::cout <<  file_name_ << "は作成できませんでした。"  << std::endl;
 		std::cout << "ファイルのパスを確認して下さい。" << std::endl;
 	}	
     LocationPose pose;
@@ -204,7 +206,6 @@ LocationFileViewer::LocationFileViewer() : nh_(), pnh_("~") {
     sub_msg_ = nh_.subscribe( "/move_base_simple/goal", 1, &LocationFileViewer::callbackMessage, this );
     pub_location_marker_ = nh_.advertise<visualization_msgs::MarkerArray>("/location_pose_marker", 1);
     file_name_ = pnh_.param<std::string>("location_file_path", "/map");
-    marker_id_ = 0;
 }
 
 void LocationFileViewer::viewer() {
@@ -213,7 +214,7 @@ void LocationFileViewer::viewer() {
     std::cout <<"[ 登録地点一覧 ]" << std::endl;
     int i = 1;
     for ( const auto& pose : location_poses_ ) std::cout << "    [ " << i++ << " ] : " << pose.name << std::endl; 
-    while(true) {
+    while(ros::ok()) {
         ros::spinOnce();
 		loop_rate.sleep();
         pub_location_marker_.publish(marker_array_);

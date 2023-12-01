@@ -1,10 +1,8 @@
-<!-- sobit_turtlebot_create_location_file.launch -->
+<!-- create_location_file.launch -->
 <launch>
-    <!-- Navigation -->
-    <include file="$(find sobit_navigation)/launch/sobit_pro/sobit_pro_navigation.launch"/>
-
     <!-- create_location_file -->
     <arg name="use_robot" default="true"/>
+    <arg name="map_file" default="$(find sobit_mapping)/map/map_11_19_15_25.yaml"/>
     <arg name="location_folder_path" default="$(find sobit_mapping)/map"/>
     <group ns = "create_location_file">
         <node pkg="sobit_mapping" type="create_location_file"  name="create_location_file" output="screen">
@@ -14,5 +12,9 @@
         <node pkg="sobit_mapping" type="display_location_marker"  name="display_location_marker">
         </node>
     </group>
+
+    <!-- Map server -->
+    <node unless="$(arg use_robot)" name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+    <node unless="$(arg use_robot)" pkg="rviz" type="rviz" name="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
 
 </launch>
