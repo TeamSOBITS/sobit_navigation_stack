@@ -26,17 +26,18 @@ class CreateLocationFile {
         ros::Subscriber sub_msg_;
 		tf2_ros::Buffer tfBuffer_;
 		tf2_ros::TransformListener tf_listener_;
+		std::vector<std::string> location_names;
 		std::string file_name_;
 		bool use_robot_;
 		geometry_msgs::Pose nav_goal_msg_;
-		void saveLocation( const std::string location_name );
+		bool saveLocation( const std::string location_name );
 		void callbackMessage( const geometry_msgs::PoseStampedConstPtr &msg );
 	public : 
 		CreateLocationFile();
 		void createLocationFile();
 };
 
-void CreateLocationFile::saveLocation( const std::string location_name ) {
+bool CreateLocationFile::saveLocation( const std::string location_name ) {
 	geometry_msgs::Transform transform;
 	try{
 		if (use_robot_) {
@@ -55,7 +56,9 @@ void CreateLocationFile::saveLocation( const std::string location_name ) {
 		}
 	} catch( tf2::TransformException &ex ) {
 		ROS_ERROR("%s", ex.what());
-		return;
+		std::cout << "位置取得失敗。tfは出てますか？mapとbase_footprintのフレームが繋がっていません。" << std::endl;
+		std::cout << "しっかりとロボットを接続してからやり直してください。" << std::endl;
+		return false;
 	}
 	std::cout << std::endl;
 	std::cout << "point_x   : " << fixed << std::setprecision(7) << transform.translation.x << std::endl;
@@ -97,23 +100,34 @@ void CreateLocationFile::saveLocation( const std::string location_name ) {
 		ofs.close();
 		std::cout <<  file_name_ << "は作成できませんでした。"  << std::endl;
 		std::cout << "ファイルのパスを確認して下さい。" << std::endl;
+		return false;
 	}
-	return;
+	return true;
 }
 
 void CreateLocationFile::callbackMessage( const geometry_msgs::PoseStampedConstPtr &msg ) {
 	nav_goal_msg_ = msg->pose;
+	std::cout <<"========================================" << std::endl;
+	std::cout <<"[ 登録地点一覧 ]" << std::endl;
+	int i = 1;
+	for ( const auto& name : location_names ) std::cout << "    [ " << i++ << " ] : " << name << std::endl;
+	std::cout <<  "\n[ クリックした地点を登録 ] \n場所名を入力してください。「q」で終了。\nLocation Name : ";
+
+	std::string location_name;
+	std::getline(std::cin, location_name);
+	if(location_name =="q") {
+		std::cout <<  "\nOK,I'll end...."  << std::endl;					
+		ros::Duration(2).sleep();
+		exit(EXIT_SUCCESS);
+	}else {
+		std::cout << "\nクリックした地点を「" << location_name << "」で保存します。" << std::endl;
+		if (saveLocation( location_name )) location_names.push_back(location_name);
+	}
+	std::cout << "地点登録したいところを、2D Nav Goalでクリックしてください。" << std::endl;
 }
 
 CreateLocationFile::CreateLocationFile( ) : nh_(), pnh_("~"), tfBuffer_(), tf_listener_(tfBuffer_) {
-	nh_.getParam("/use_robot", use_robot_);
-	if (!use_robot_) {
-		sub_msg_ = nh_.subscribe( "/move_base_simple/goal", 1, &CreateLocationFile::callbackMessage, this );
-	}
     pub_pose_ = nh_.advertise<geometry_msgs::PoseStamped>("/location_pose", 1);
-}
-
-void CreateLocationFile::createLocationFile() {
 	std::string save_location_folder_path = pnh_.param<std::string>("save_location_folder_path", "/map");
 	time_t now = time(NULL);
 	struct tm *pnow = localtime(&now);
@@ -125,9 +139,6 @@ void CreateLocationFile::createLocationFile() {
 				+ "_" + std::to_string(pnow->tm_min) 
 				+ ".yaml";
 	std::cout << "Location File Path : " << file_name_ << std::endl;
-	bool is_saved = false;
-	std::string location_name;
-	std::vector<std::string> location_names;
 	ofstream ofs(file_name_, ios::app);
 	if(ofs) {
 		ofs << "location_pose:" <<std::endl;
@@ -136,28 +147,33 @@ void CreateLocationFile::createLocationFile() {
 		std::cout <<  file_name_ << "は作成できませんでした。"  << std::endl;
 		std::cout << "ファイルのパスを確認して下さい。" << std::endl;
 	}
+	use_robot_ = pnh_.param<bool>("use_robot", true);
+	if (use_robot_) {
+		createLocationFile();
+	}
+	else {
+		sub_msg_ = nh_.subscribe( "/move_base_simple/goal", 1, &CreateLocationFile::callbackMessage, this );
+		std::cout << "地点登録したいところを、2D Nav Goalでクリックしてください。" << std::endl;
+	}
+}
+
+void CreateLocationFile::createLocationFile() {
 	while(ros::ok()) {
 		std::cout <<"========================================" << std::endl;
 		std::cout <<"[ 登録地点一覧 ]" << std::endl;
 		int i = 1;
 		for ( const auto& name : location_names ) std::cout << "    [ " << i++ << " ] : " << name << std::endl;
-		if (use_robot_) {
-			std::cout <<  "\n[ ロボットの現在地点を登録 ] \n場所名を入力してください。「q」で終了。\nLocation Name : ";
-		}
-		else {
-			std::cout <<  "\n[ クリックした地点を登録 ] \n場所名を入力してください。「q」で終了。\nLocation Name : ";
-		}
+		std::cout <<  "\n[ ロボットの現在地点を登録 ] \n場所名を入力してください。「q」で終了。\nLocation Name : ";
 
+		std::string location_name;
 		std::getline(std::cin, location_name);
 		if(location_name =="q") {
 			std::cout <<  "\nOK,I'll end...."  << std::endl;					
 			ros::Duration(2).sleep();
 			exit(EXIT_SUCCESS);
 		}else {
-			if (use_robot_) std::cout << "\n現在地点を「" << location_name << "」で保存します。" << std::endl;
-			else    std::cout << "\nクリックした地点を「" << location_name << "」で保存します。" << std::endl;
-			saveLocation( location_name );
-			location_names.push_back(location_name);
+			std::cout << "\n現在地点を「" << location_name << "」で保存します。" << std::endl;
+			if (saveLocation( location_name )) location_names.push_back(location_name);
 		}
 	}
 	return;
@@ -168,7 +184,6 @@ int main(int argc, char **argv) {
 	ros::init(argc, argv, "create_location_file");
 	std::cout << "場所名を入力すると位置座標を保存" << std::endl;
 	CreateLocationFile clf;
-	clf.createLocationFile();
 	ros::spin();
 	return 0;
 }
