@@ -35,21 +35,6 @@ class FLOOR_COLOR_PUBLISHER {
             r.clear();
             g.clear();
             b.clear();
-            // ROS_INFO("S:%ld",cloud_msg->data.size()/32);
-            // for (long i=0; i<cloud_msg->data.size()/32; i++)
-            // {
-            //     // ROS_INFO("S:%ld",i);
-            //     rgb.r = cloud_msg->data[i*32 + 18];
-            //     rgb.g = cloud_msg->data[i*32 + 17];
-            //     rgb.b = cloud_msg->data[i*32 + 16];
-            //     if (((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)) && (cloud_->points[i].z < 0.04))
-            //     {
-            //         r.push_back(rgb.r);
-            //         g.push_back(rgb.g);
-            //         b.push_back(rgb.b);
-            //     }
-            //     // ROS_INFO("E:%ld\n",i);
-            // }
             for (long i=0; i<cloud_->points.size(); i++) {
                 rgb.r = cloud_->points[i].r;
                 rgb.g = cloud_->points[i].g;
@@ -82,7 +67,7 @@ class FLOOR_COLOR_PUBLISHER {
             yaml_data["B"] = floor_rgb.b;
             std::ofstream file(file_path);
             if (file.is_open()) {
-                file << yaml_data;  // YAMLデータをファイルに書き込む
+                file << yaml_data;
                 file.close();
             } else {
                 ROS_ERROR_STREAM("Failed to open file: " << file_path);

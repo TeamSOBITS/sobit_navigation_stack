@@ -3,7 +3,6 @@
 
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
-// #include <tf/transform_listener.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl_ros/transforms.h>
@@ -31,7 +30,6 @@ namespace sobit_navigation {
         protected:
             tf2_ros::Buffer tfBuffer_;
             tf2_ros::TransformListener tf_listener_;
-            // tf::TransformListener tf_listener_;
             pcl::PassThrough<PointT> pass_;
             pcl::VoxelGrid<PointT> voxel_;
             pcl::search::KdTree<PointT>::Ptr tree_;

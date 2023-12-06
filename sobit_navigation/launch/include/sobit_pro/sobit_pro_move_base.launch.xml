@@ -8,7 +8,7 @@
     <arg name="global_frame_id" default="map"/>
     <arg name="odom_topic" default="odom" />
     <arg name="laser_topic" default="scan" />
-    <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_pro/dummy.yaml"/>
+    <!-- <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_pro/dummy.yaml"/> -->
     <arg name="use_smoother"        default="false" />
 
     <include if="$(arg use_smoother)" file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_velocity_smoother.launch.xml"/>
@@ -23,7 +23,7 @@
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/global_planner_params.yaml" command="load" />
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/navfn_global_planner_params.yaml" command="load" />
         <!-- external params file that could be loaded into the move_base namespace -->
-        <rosparam file="$(arg custom_param_file)" command="load" />
+        <!-- <rosparam file="$(arg custom_param_file)" command="load" /> -->
 
         <!-- reset frame_id parameters using user input data -->
         <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>

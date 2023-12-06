@@ -1,25 +1,25 @@
 DWAPlannerROS: # SOPBIT_EDU, MINI
 # Ref : https://github.com/turtlebot/turtlebot_apps/blob/indigo/turtlebot_navigation/param/dwa_local_planner_params.yaml
 # Robot Configuration Parameters - Kobuki
-  acc_lim_x: 1.0      # maximum is theoretically 2.0, but we
+  acc_lim_x: 1.5      # maximum is theoretically 2.0, but we
   acc_lim_y: 0.0      # diff drive robot
   acc_lim_theta: 2.0
 
-  max_vel_trans: 0.5 # choose slightly less than the base's capability
-  min_vel_trans: 0.1  # this is the min trans velocity when there is negligible rotational velocity
-  max_vel_x: 0.5  # 0.55
-  min_vel_x: 0.0
-  max_vel_y: 0.0  # diff drive robot
-  min_vel_y: 0.0  # diff drive robot
-  max_vel_theta: 5.0  # choose slightly less than the base's capability
-  min_vel_theta: 0.4  # this is the min angular velocity when there is negligible translational velocity
+  max_vel_trans: 0.60 # choose slightly less than the base's capability
+  min_vel_trans: 0.01  # this is the min trans velocity when there is negligible rotational velocity
+  max_vel_x: 0.65  # 0.55
+  min_vel_x: -0.03
+  max_vel_y: 0.00  # diff drive robot
+  min_vel_y: -0.00  # diff drive robot
+  max_vel_theta: 3.0  # choose slightly less than the base's capability
+  min_vel_theta: 0.07  # this is the min angular velocity when there is negligible translational velocity
   # Warning!
   #   do not set min_vel_trans to 0.0 otherwise dwa will always think translational velocities
   #   are non-negligible and small in place rotational velocities will be created.
 
 # Goal Tolerance Parameters
-  yaw_goal_tolerance: 0.3  # 0.05
-  xy_goal_tolerance: 0.15  # 0.10
+  yaw_goal_tolerance: 0.005  # 0.05
+  xy_goal_tolerance: 0.10  # 0.10
   # latch_xy_goal_tolerance: false
   theta_stopped_vel: 0.4
   trans_stopped_vel: 0.1
@@ -28,8 +28,8 @@ DWAPlannerROS: # SOPBIT_EDU, MINI
   sim_time: 1.0                   # 1.7
   sim_granularity: 0.025          # 0.025
   angular_sim_granularity: 0.10   # 0.10
-  vx_samples: 6                   # 3
-  vy_samples: 1                   # diff drive robot, there is only one sample
+  vx_samples: 5                   # 3
+  vy_samples: 0                   # diff drive robot, there is only one sample
   vtheta_samples: 20              # 20
 
 # Trajectory Scoring Parameters
@@ -41,9 +41,9 @@ DWAPlannerROS: # SOPBIT_EDU, MINI
 # + path_distance_bias * (グローバルパスへの向きのコスト(m))
 # + goal_distance_bias * (ローカルゴールへの向きのコスト(m))
 # + twirling_scale * (スピンコスト(rad/s))
-  path_distance_bias: 64.0      # (double, default: 32.0) - コントローラーが与えられたパスにどれだけ近づけるかの重み
+  path_distance_bias: 30.0      # (double, default: 32.0) - コントローラーが与えられたパスにどれだけ近づけるかの重み
   goal_distance_bias: 24.0      # (double, default: 24.0) - コントローラーがローカル目標を達成するためにどれだけの試行を行うべきかの重みづけ,また速度も制御する
-  occdist_scale: 0.5            # (double, default: 0.01) -  コントローラーがどれだけ障害物をよけようとするかの重み
+  occdist_scale: 0.06            # (double, default: 0.01) -  コントローラーがどれだけ障害物をよけようとするかの重み
   twirling_scale: 0.0           # (double, default: 0.0) - ロボットの方向の変更にペナルティを課すための重み
   forward_point_distance: 0.325 # (double, default: 0.325) - ロボットの中心点から追加のスコアリングポイントを配置するまでの距離(m)
   use_dwa: true

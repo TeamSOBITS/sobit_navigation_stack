@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 #include <cstring>
+// #include <sensor_msgs/PointCloud.h>
+// #include <geometry_msgs/Point32.h>
 #include <sobit_navigation/point_cloud_processor.hpp>
 
 
@@ -18,32 +20,40 @@ class COLOR_POINT_PUBLISHER {
         ros::Publisher pub_cloud_;
         sobit_navigation::PointCloudProcessor pcp_;
         std::string target_frame_;
-        PointCloud::Ptr cloud_;
+        PointCloud::Ptr cloud_, cost_cloud_;
         RGB rgb, flor_rgb, flor_rgb_noise;
         bool frag = true;
-
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
             pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud_ );
-            for (int i=0; i<cloud_msg->data.size()/32; i++)
-            {
-                rgb.r = cloud_msg->data[i*32+18];
-                rgb.g = cloud_msg->data[i*32+17];
-                rgb.b = cloud_msg->data[i*32+16];
+            // cost_cloud_.header.stamp = ros::Time::now();
+            // cost_cloud_.header.frame_id = "base_footprint";
+            // cost_cloud_.points.clear();
+            for (long i=0; i<cloud_->points.size(); i++) {
+                rgb.r = cloud_->points[i].r;
+                rgb.g = cloud_->points[i].g;
+                rgb.b = cloud_->points[i].b;
                 if ((((rgb.r < (flor_rgb.r - flor_rgb_noise.r)) || ((flor_rgb.r + flor_rgb_noise.r) < rgb.r)) || ((rgb.g < (flor_rgb.g - flor_rgb_noise.g)) || ((flor_rgb.g + flor_rgb_noise.g) < rgb.g)) || ((rgb.b < (flor_rgb.b - flor_rgb_noise.b)) || ((flor_rgb.b + flor_rgb_noise.b) < rgb.b))) && ((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)))
                 {
+                    // geometry_msgs::Point32 pt;
+                    PointT pt;
+                    pt.x = cloud_->points[i].x;
+                    pt.y = cloud_->points[i].y;
+                    pt.z = 0.25;
                     cloud_->points[i].z = 0.25;
+                    cost_cloud_->points.push_back(pt);
                 }
             }
-            pcp_.setPassThroughParameters( "x", 0.2, 4.0 );
-            pcp_.passThrough( cloud_, cloud_ );
-            pcp_.setPassThroughParameters( "y", -4.0, 4.0 );
-            pcp_.passThrough( cloud_, cloud_ );
-            pcp_.setPassThroughParameters( "z", 0.05, 1.5 );
-            pcp_.passThrough( cloud_, cloud_ );
-            pcp_.voxelGrid( cloud_, cloud_ );
-            pcp_.radiusOutlierRemoval ( cloud_, cloud_ );
-            pcl_conversions::toPCL(cloud_msg->header.stamp, cloud_->header.stamp);
-            pub_cloud_.publish(cloud_);
+            // pcp_.setPassThroughParameters( "x", 0.2, 4.0 );
+            // pcp_.passThrough( cloud_, cloud_ );
+            // pcp_.setPassThroughParameters( "y", -4.0, 4.0 );
+            // pcp_.passThrough( cloud_, cloud_ );
+            // pcp_.setPassThroughParameters( "z", 0.05, 1.5 );
+            // pcp_.passThrough( cloud_, cloud_ );
+            // pcp_.voxelGrid( cloud_, cloud_ );
+            // pcp_.radiusOutlierRemoval ( cloud_, cloud_ );
+            // pcl_conversions::toPCL(cloud_msg->header.stamp, cloud_->header.stamp);
+            // pub_cloud_.publish(cloud_);
+            pub_cloud_.publish(cost_cloud_);
         }
 
     public:
