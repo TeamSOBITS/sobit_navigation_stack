@@ -14,7 +14,7 @@ struct RGB {
 };
 
 
-class FLOR_COLOR_PUBLISHER {
+class FLOOR_COLOR_PUBLISHER {
     private:
         ros::NodeHandle nh_;
         ros::NodeHandle pnh_;
@@ -22,8 +22,9 @@ class FLOR_COLOR_PUBLISHER {
         sobit_navigation::PointCloudProcessor pcp_;
         std::string target_frame_;
         PointCloud::Ptr cloud_;
-        RGB rgb, flor_rgb;
+        RGB rgb, floor_rgb;
         bool getter_flag;
+        double max_floor_z;
         std::vector<uint> r;
         std::vector<uint> g;
         std::vector<uint> b;
@@ -34,36 +35,51 @@ class FLOR_COLOR_PUBLISHER {
             r.clear();
             g.clear();
             b.clear();
-            for (int i=0; i<cloud_msg->data.size()/32; i++)
-            {
-                rgb.r = cloud_msg->data[i*32 + 18];
-                rgb.g = cloud_msg->data[i*32 + 17];
-                rgb.b = cloud_msg->data[i*32 + 16];
-                if (((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)) && (cloud_->points[i].z < 0.04))
-                {
+            // ROS_INFO("S:%ld",cloud_msg->data.size()/32);
+            // for (long i=0; i<cloud_msg->data.size()/32; i++)
+            // {
+            //     // ROS_INFO("S:%ld",i);
+            //     rgb.r = cloud_msg->data[i*32 + 18];
+            //     rgb.g = cloud_msg->data[i*32 + 17];
+            //     rgb.b = cloud_msg->data[i*32 + 16];
+            //     if (((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)) && (cloud_->points[i].z < 0.04))
+            //     {
+            //         r.push_back(rgb.r);
+            //         g.push_back(rgb.g);
+            //         b.push_back(rgb.b);
+            //     }
+            //     // ROS_INFO("E:%ld\n",i);
+            // }
+            for (long i=0; i<cloud_->points.size(); i++) {
+                rgb.r = cloud_->points[i].r;
+                rgb.g = cloud_->points[i].g;
+                rgb.b = cloud_->points[i].b;
+                if (((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)) && (cloud_->points[i].z <= max_floor_z)) {
                     r.push_back(rgb.r);
                     g.push_back(rgb.g);
                     b.push_back(rgb.b);
                 }
             }
-            std::sort(r.begin(), r.end());
-            std::sort(g.begin(), g.end());
-            std::sort(b.begin(), b.end());
-            flor_rgb.r = r[r.size()/2];
-            flor_rgb.g = g[g.size()/2];
-            flor_rgb.b = b[b.size()/2];
-            getter_flag = true;
+            if ((r.size() != 0) && (g.size() != 0) && (b.size() != 0)) {
+                std::sort(r.begin(), r.end());
+                std::sort(g.begin(), g.end());
+                std::sort(b.begin(), b.end());
+                floor_rgb.r = r[r.size()/2];
+                floor_rgb.g = g[g.size()/2];
+                floor_rgb.b = b[b.size()/2];
+                getter_flag = true;
+            }
         }
         bool save_rgb() {
             getter_flag = false;
             while (ros::ok()) {
                 ros::spinOnce();
-                if (getter_flag) {break;}
+                if (getter_flag) break;
             }
             ros::spinOnce();
-            yaml_data["R"] = flor_rgb.r;
-            yaml_data["G"] = flor_rgb.g;
-            yaml_data["B"] = flor_rgb.b;
+            yaml_data["R"] = floor_rgb.r;
+            yaml_data["G"] = floor_rgb.g;
+            yaml_data["B"] = floor_rgb.b;
             std::ofstream file(file_path);
             if (file.is_open()) {
                 file << yaml_data;  // YAMLデータをファイルに書き込む
@@ -81,20 +97,21 @@ class FLOR_COLOR_PUBLISHER {
             ROS_INFO("Is it okay?");
             ROS_INFO("YES->1 NO->2 : ");
             if (scanf("%d",&check)) {
-                if (check == 1) {return true;}
+                if (check == 1) return true;
             }
             return false;
         }
     public:
-        FLOR_COLOR_PUBLISHER(): nh_(), pnh_("~") {
+        FLOOR_COLOR_PUBLISHER(): nh_(), pnh_("~") {
             std::string topic_name = pnh_.param<std::string>( "topic_name", "/points2" );
             double voxel_size = pnh_.param<double>( "voxel_size", 0.025 );
             double radius = pnh_.param<double>( "radius", 0.05 );
+            max_floor_z = pnh_.param<double>( "max_floor_z", 0.04 );
             int min_pt = pnh_.param<int>( "min_pt", 5 );
             target_frame_ = pnh_.param<std::string>( "target_frame", "base_footprint" );
             pcp_.setVoxelGridParameter( voxel_size );
             pcp_.setRadiusOutlierRemovalParameters ( radius, min_pt, false );
-            sub_points_ = nh_.subscribe(topic_name, 5, &FLOR_COLOR_PUBLISHER::cbPoints, this);
+            sub_points_ = nh_.subscribe(topic_name, 5, &FLOOR_COLOR_PUBLISHER::cbPoints, this);
             cloud_.reset(new PointCloud());
             while (ros::ok()) {
                 ros::spinOnce();
@@ -111,8 +128,8 @@ class FLOR_COLOR_PUBLISHER {
 };
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "flor_color_publisher");
-    FLOR_COLOR_PUBLISHER flor_color_publisher;
+    ros::init(argc, argv, "floor_color_setting");
+    FLOOR_COLOR_PUBLISHER floor_color_publisher;
     ros::spin();
     return 0;
 }

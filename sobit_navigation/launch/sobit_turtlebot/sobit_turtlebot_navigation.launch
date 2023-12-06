@@ -2,24 +2,22 @@
 <launch>
     <arg name="rviz"                    default="true"/>
     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
-
     <arg name="rqt_reconfigure"         default="false"/>
     <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
 
-    <arg name="use_smoother"          default="true" />
 
+    <!-- Map server -->
     <!--  ファイル名を指定するなら下記のargを変更すること -->
-    <arg name="map_file" default="$(find sobit_mapping)/map/e301.yaml"/>
+    <arg name="map_file" default="$(find sobit_mapping)/map/map_11_19_15_25.yaml"/>
+    <!-- <arg name="map_file" default="$(find sobit_mapping)/map/e301.yaml"/> -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+
+    <!-- Localization -->
+    <arg name="use_als_ros" default="false"/>
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
-
-    <arg name="use_als_ros" default="false"/>
-
-    <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
-
-    <!-- Localization -->
     <!-- AMCL -->
     <include unless="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_amcl.launch.xml">
         <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
@@ -33,9 +31,49 @@
         <arg name="initial_pose_yaw" value="$(arg initial_pose_a)"/>
     </include> 
 
+
     <!-- Move_Base -->
+    <arg name="use_smoother"          default="true" />
     <include file="$(find sobit_navigation)/launch/include/sobit_turtlebot/sobit_turtlebot_move_base.launch.xml">
         <arg name="use_smoother" value="$(arg use_smoother)"/>
     </include>
 
+
+
+    <!-- use_3D_camera_navigation -->
+    <arg name="use_3d_camera"    default="true"/>
+    <arg name="use_sobit_"       default="mini"  />   <!-- edu or mini -->
+    <arg name="pan_angle_deg"    default="0.0"  />
+    <arg name="tilt_angle_deg"   default="-30.0"  />
+    <arg name="cloud_topic_name" default="/head_camera/depth_registered/points"/>
+    <!-- obstacle_layer -->
+    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="noise_removal_pointcloud_publisher" name="noise_removal_pointcloud_publisher" >
+        <param name="topic_name" type="str" value="$(arg cloud_topic_name)"/>
+        <param name="voxel_size" type="double" value="0.025"/>
+        <param name="radius" type="double" value="0.05"/>
+        <param name="min_pt" type="int" value="10"/>
+    </node>
+    <!-- noise_color_layer -->
+    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" >
+        <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
+        <param name="topic_name" value="$(arg cloud_topic_name)"/>
+        <param name="voxel_size" type="double" value="0.025"/>
+        <param name="radius" type="double" value="0.05"/>
+        <param name="min_pt" type="int" value="5"/>
+        <!-- ↓セットした床の色からどれくらいの範囲は同じ色とするかの許容範囲↓ -->
+        <param name="RGB_R_NOISE" type="int" value="80"/>
+        <param name="RGB_G_NOISE" type="int" value="80"/>
+        <param name="RGB_B_NOISE" type="int" value="80"/>
+    </node>
+    <!-- move_camera_node -->
+    <group if="$(arg use_3d_camera)">
+        <node if="$(eval use_sobit_=='edu')"  pkg="sobit_navigation" type="sobit_edu_pantilt_controll.py"  name="sobit_edu_pantilt_controll" output="screen">
+            <param name="pan_angle_deg"      type="double"   value="$(arg pan_angle_deg)"/>
+            <param name="tilt_angle_deg"     type="double"   value="$(arg tilt_angle_deg)"/>
+        </node>
+        <node if="$(eval use_sobit_=='mini')" pkg="sobit_navigation" type="sobit_mini_pantilt_controll.py" name="sobit_mini_pantilt_controll" output="screen">
+            <param name="pan_angle_deg"      type="double"   value="$(arg pan_angle_deg)"/>
+            <param name="tilt_angle_deg"     type="double"   value="$(arg tilt_angle_deg)"/>
+        </node>
+    </group>
 </launch>

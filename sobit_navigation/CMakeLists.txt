@@ -69,7 +69,7 @@ add_executable(color_point_publisher src/color_point_publisher.cpp
                                                     src/point_cloud_processor.cpp)
 target_link_libraries(color_point_publisher  ${catkin_LIBRARIES})
 
-add_executable(flor_color_setting src/flor_color_setting.cpp
+add_executable(floor_color_setting src/floor_color_setting.cpp
                                                     src/point_cloud_processor.cpp)
-target_link_libraries(flor_color_setting  ${catkin_LIBRARIES}
+target_link_libraries(floor_color_setting  ${catkin_LIBRARIES}
                                                     yaml-cpp)

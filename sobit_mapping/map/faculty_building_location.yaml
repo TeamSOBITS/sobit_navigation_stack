@@ -1,0 +1,218 @@
+location_pose:
+    - {
+        location_name: "3f_e_right_in_elevator",
+        frame_id: "map",
+        translation_x: 0.2204361,
+        translation_y: 2.7404823,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.1074364,
+        rotation_w: 0.9942120,
+    }
+
+    - {
+        location_name: "3f_e_left_in_elevator",
+        frame_id: "map",
+        translation_x: -0.0880914,
+        translation_y: 0.0477379,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.0766859,
+        rotation_w: 0.9970553,
+    }
+
+    - {
+        location_name: "y",
+        frame_id: "map",
+        translation_x: 2.1883769,
+        translation_y: 2.3071084,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.9947984,
+        rotation_w: 0.1018631,
+    }
+
+    - {
+        location_name: "3f_e_center_elevator",
+        frame_id: "map",
+        translation_x: 2.0444856,
+        translation_y: 0.9400328,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.9954314,
+        rotation_w: 0.0954794,
+    }
+
+    - {
+        location_name: "3f_e_right_flont_elevator",
+        frame_id: "map",
+        translation_x: 1.8776882,
+        translation_y: 2.3275723,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.9923116,
+        rotation_w: 0.1237648,
+    }
+
+    - {
+        location_name: "3f_e_left_flont_elevator",
+        frame_id: "map",
+        translation_x: 1.5896403,
+        translation_y: -0.0751951,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.9989673,
+        rotation_w: 0.0454342,
+    }
+
+    - {
+        location_name: "e301_gate_in",
+        frame_id: "map",
+        translation_x: 18.9024067,
+        translation_y: -2.2404368,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.0170579,
+        rotation_w: 0.9998545,
+    }
+
+    - {
+        location_name: "e301_gate_out",
+        frame_id: "map",
+        translation_x: 19.3532810,
+        translation_y: -2.1990881,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.9999207,
+        rotation_w: 0.0125900,
+    }
+
+    - {
+        location_name: "4f_f_in_elevator",
+        frame_id: "map",
+        translation_x: -0.0192339,
+        translation_y: -0.0799288,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.0003983,
+        rotation_w: 0.9999999,
+    }
+
+    - {
+        location_name: "4f_f_flont_elevator",
+        frame_id: "map",
+        translation_x: 1.4788857,
+        translation_y: -0.0025567,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.9999127,
+        rotation_w: 0.0132155,
+    }
+
+    - {
+        location_name: "4f_e_center_elevator",
+        frame_id: "map",
+        translation_x: 14.5706654,
+        translation_y: -53.1404572,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.5216228,
+        rotation_w: 0.8531762,
+    }
+
+    - {
+        location_name: "4f_e_left_flont_elevator",
+        frame_id: "map",
+        translation_x: 15.8001347,
+        translation_y: -53.1980209,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.5354831,
+        rotation_w: 0.8445459,
+    }
+
+    - {
+        location_name: "4f_e_right_flont_elevator",
+        frame_id: "map",
+        translation_x: 13.4299049,
+        translation_y: -54.2049179,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.5180386,
+        rotation_w: 0.8553572,
+    }
+
+    - {
+        location_name: "4f_e_left_in_elevator",
+        frame_id: "map",
+        translation_x: 16.4356060,
+        translation_y: -54.7586899,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.8408187,
+        rotation_w: 0.5413168,
+    }
+
+    - {
+        location_name: "4f_e_in_elevator",
+        frame_id: "map",
+        translation_x: 14.1628628,
+        translation_y: -55.6581764,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.8459596,
+        rotation_w: 0.5332471,
+    }
+
+    - {
+        location_name: "7f_choilabo",
+        frame_id: "map",
+        translation_x: 0.2094843,
+        translation_y: -0.3082826,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.0048624,
+        rotation_w: 0.9999882,
+    }
+
+    - {
+        location_name: "7f_f_flont_elevator",
+        frame_id: "map",
+        translation_x: 4.2893944,
+        translation_y: -0.4573898,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.0022898,
+        rotation_w: 0.9999974,
+    }
+
+    - {
+        location_name: "7f_f_in_elevator",
+        frame_id: "map",
+        translation_x: 5.9229422,
+        translation_y: -0.3799099,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.9999843,
+        rotation_w: 0.0056063,
+    }
+
+

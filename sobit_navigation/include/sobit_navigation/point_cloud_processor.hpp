@@ -22,7 +22,7 @@
 #include <pcl/segmentation/sac_segmentation.h>
 
 
-typedef pcl::PointXYZ PointT;
+typedef pcl::PointXYZRGB PointT;
 typedef pcl::PointCloud<PointT> PointCloud;
 
 
