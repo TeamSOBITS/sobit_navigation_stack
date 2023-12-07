@@ -100,12 +100,12 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
 ## Navigationの主な使い方
 
 Navigationを使う上での基本的な流れ
-1. 地図生成 \
+1. 地図生成 
     - 目的地まで，障害物を回避した経路を生成するため，ロボットが事前に地図を知る必要がある
     - 地図の障害物のデータと，現在ロボットが取得しているデータから，ロボットが現在どこにいるのかを推測する
-2. 地点登録 \
+2. 地点登録 
     - 生成した地図の，どの位置からどの位置までの経路を生成するかのポイントとなる位置を登録する
-3. actionlibによって呼び出す \
+3. actionlibによって呼び出す 
     - ロボットの現在の地点から登録した地点まで，地図上の障害物がない安全なエリアに地図生成をする
     - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるactionlib通信を用いる
 
@@ -116,18 +116,10 @@ Navigationを使う上での基本的な流れ
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
 2. 地図生成を起動 \
-    以下のコマンドで起動． \
+    以下のコマンドで起動． 
     ```sh
     $ roslaunch sobit_mapping gmapping.launch
     ```
-    <!-- - SOBIT PROで地図生成
-    ```sh
-        $ roslaunch sobit_mapping sobit_pro_gmapping.launch
-    ```
-    - SOBIT EDU，SOBIT MINIで地図生成
-    ```sh
-        $ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch
-    ``` -->
 3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動 \
     以下のコマンドで起動する．
     ```sh
@@ -167,13 +159,13 @@ Navigationを使う上での基本的な流れ
     map_fileを自分で生成した地図に書き換える．\
     例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
     ```xml
-        <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
+    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
     ```
 2. ロボットを起動する
 3. 地点登録を起動する \
-    以下のコマンドで起動する．
+    以下のコマンドで起動する． \
         ```sh
-            $ roslaunch sobit_mapping create_location_file.launch
+        $ roslaunch sobit_mapping create_location_file.launch
         ```
 4. 地点を登録する
     - ロボットを使わずに地点登録 \
@@ -182,16 +174,15 @@ Navigationを使う上での基本的な流れ
     - ロボットを使って地点登録 \
         ロボットのいる位置が登録される．\
         ロボットの移動のさせ方は以下2通りがあるので好きな方を選ぶ．
-        - Navigationを用いる
-            起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する．\
-            そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
+        - Navigationを用いる \
+            起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する． 
         - Mappingしたときのように人間が操作 \
             [teleop.launch](/sobit_mapping/launch/teleop.launch)を用いてロボットを移動． \
-            以下のコマンドで起動する． \
+            以下のコマンドで起動する． 
             ```sh
-                $ roslaunch sobit_mapping teleop.launch
+            $ roslaunch sobit_mapping teleop.launch
             ```
-            そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
+        そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
 5. Rvizに表示された地点登録情報(矢印)を保存 \
     この手順で全ての地点を登録する．\
     地点登録が終わったら，端末で「q」と入力して保存する．\
@@ -212,13 +203,13 @@ Navigationを使う上での基本的な流れ
     ```xml
     <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
     ```
-    書き換えたら，以下のコマンドでrosparamに登録する \
+    書き換えたら，以下のコマンドでrosparamに登録する． 
     ```sh
     $ roslaunch sobit_mapping load_location_file.launch
     ```
 3. ロボットを起動する
 4. Navigationを起動する \
-    以下のコマンドでNavigationを起動する． \
+    以下のコマンドでNavigationを起動する． 
     - SOBIT PROでナビゲーション
         ```sh
         $ roslaunch sobit_navigation sobit_pro_navigation.launch
@@ -232,9 +223,9 @@ Navigationを使う上での基本的な流れ
     地点登録した地点名ならどこにでも移動することが可能．\
     移動する例として，[move_location_example.py](/sobit_navigation_library/example/move_location_example.py)を起動．\
     このexampleコードでは，"table"という地点名の位置まで移動する． \
-    以下のコマンドで実行． \
+    以下のコマンドで実行． 
     ```sh
-        $ rosrun sobit_navigation_library move_location_example.py
+    $ rosrun sobit_navigation_library move_location_example.py
     ```
 > [!NOTE]
 > この呼び出した[move_location_example.py](/sobit_navigation_library/example/move_location_example.py)や，C++での呼び出し方([move_location_example.cpp](/sobit_navigation_library/example/move_location_example.cpp))を使用したい場合，またいろいろなNavigationのツールについても，詳しくは[こちら](/sobit_navigation_library/README.md)をチェック．
