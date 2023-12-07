@@ -76,11 +76,11 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
    $ cd sobit_navigation_stack
    ```
 4. 依存パッケージをインストールします．
-   1. 通常のインストール方法
+    - 通常のインストール方法
         ```sh
         $ bash install.sh
         ```
-   2. Navigationを深く勉強したい人向け
+    - Navigationを深く勉強したい人向け
         ```sh
         $ bash install.sh clone_mode
         ```
@@ -100,25 +100,25 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
 ## Navigationの主な使い方
 
 Navigationを使う上での基本的な流れ
-1. 地図生成
+1. 地図生成 \
     - 目的地まで，障害物を回避した経路を生成するため，ロボットが事前に地図を知る必要がある
     - 地図の障害物のデータと，現在ロボットが取得しているデータから，ロボットが現在どこにいるのかを推測する
-2. 地点登録
+2. 地点登録 \
     - 生成した地図の，どの位置からどの位置までの経路を生成するかのポイントとなる位置を登録する
-3. actionlibによって呼び出す
+3. actionlibによって呼び出す \
     - ロボットの現在の地点から登録した地点まで，地図上の障害物がない安全なエリアに地図生成をする
     - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるactionlib通信を用いる
 
 
 
 ### 地図生成
-1. ロボットを起動する
+1. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
-2. 地図生成を起動
-    以下のコマンドで起動．
+2. 地図生成を起動 \
+    以下のコマンドで起動． \
     ```sh
-        $ roslaunch sobit_mapping gmapping.launch
+    $ roslaunch sobit_mapping gmapping.launch
     ```
     <!-- - SOBIT PROで地図生成
     ```sh
@@ -128,12 +128,12 @@ Navigationを使う上での基本的な流れ
     ```sh
         $ roslaunch sobit_mapping sobit_turtlebot_gmapping.launch
     ``` -->
-3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動
+3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動 \
     以下のコマンドで起動する．
     ```sh
-        $ roslaunch sobit_mapping teleop.launch
+    $ roslaunch sobit_mapping teleop.launch
     ```
-4. ロボットを操作して，Navigationしたい環境の地図を保存
+4. ロボットを操作して，Navigationしたい環境の地図を保存 \
     起動したターミナルで操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
     地図ができたら，save_map_comaandのターミナル(青いターミナル)でEnterボタンを押して地図を保存する．\
     保存された地図画像(pgmファイル)と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
@@ -148,21 +148,21 @@ Navigationを使う上での基本的な流れ
 
 ### 地点登録
 1. 生成した地図のパスをNavigationに登録する
-    - ロボットを使わずに地点登録
+    - ロボットを使わずに地点登録 \
         [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをfalseにし，さらにmap_fileを，下の例に従い書き換える．
-    - SOBIT PROで地点登録
-        [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする．
-        さらに[sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを，下の例に従い書き換える．
+    - SOBIT PROで地点登録 \
+        [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする． \
+        さらに[sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを，下の例に従い書き換える． \
         書き換えたら，以下のコマンドでNavigationを起動する．
         ```sh
-            $ roslaunch sobit_navigation sobit_pro_navigation.launch
+        $ roslaunch sobit_navigation sobit_pro_navigation.launch
         ```
-    - SOBIT EDU，SOBIT MINIで地点登録
-        [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする．
-        さらに[sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを，下の例に従い書き換える．
+    - SOBIT EDU，SOBIT MINIで地点登録 \
+        [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする． \
+        さらに[sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを，下の例に従い書き換える． \
         書き換えたら，以下のコマンドでNavigationを起動する．
         ```sh
-            $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
+        $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
         ```
     map_fileを自分で生成した地図に書き換える．\
     例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
@@ -170,29 +170,29 @@ Navigationを使う上での基本的な流れ
         <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
     ```
 2. ロボットを起動する
-3. 地点登録を起動する
+3. 地点登録を起動する \
     以下のコマンドで起動する．
         ```sh
             $ roslaunch sobit_mapping create_location_file.launch
         ```
 4. 地点を登録する
-    - ロボットを使わずに地点登録
+    - ロボットを使わずに地点登録 \
         2D Nav Goalをmapにクリックする．
-        その位置を
-    - ロボットを使って地点登録
+        そこで地点登録のターミナルに地点名を入力し，Enterを押してその位置を登録．
+    - ロボットを使って地点登録 \
         ロボットのいる位置が登録される．\
         ロボットの移動のさせ方は以下2通りがあるので好きな方を選ぶ．
         - Navigationを用いる
             起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する．\
             そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
-        - Mappingしたときのように人間が操作
-            [teleop.launch](/sobit_mapping/launch/teleop.launch)を用いてロボットを移動．
-            以下のコマンドで起動する．
+        - Mappingしたときのように人間が操作 \
+            [teleop.launch](/sobit_mapping/launch/teleop.launch)を用いてロボットを移動． \
+            以下のコマンドで起動する． \
             ```sh
                 $ roslaunch sobit_mapping teleop.launch
             ```
             そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
-5. Rvizに表示された地点登録情報(矢印)を保存
+5. Rvizに表示された地点登録情報(矢印)を保存 \
     この手順で全ての地点を登録する．\
     地点登録が終わったら，端末で「q」と入力して保存する．\
     地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，"map_location_"+"保存した日時"のファイル名で保存される．
@@ -206,33 +206,33 @@ Navigationを使う上での基本的な流れ
     - SOBIT EDU，SOBIT MINIでナビゲーション
         [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．\
         既に書き換えられている場合はそのままでOK．
-2. 地点登録した情報をrosparamに登録する
+2. 地点登録した情報をrosparamに登録する \
     [load_location_file.launch](/sobit_mapping/launch/load_location_file.launch)のrosparamのfileを，自分で生成した地点登録ファイルに書き換える．\
     例えば，[map_location_example.ymal](/sobit_mapping/map/map_location_example.ymal)という地点登録ファイルの場合は，以下のように指定する．
     ```xml
-        <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
+    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>  <!-- 拡張子に注意(.ymal) -->
     ```
-    書き換えたら，以下のコマンドでrosparamに登録する
+    書き換えたら，以下のコマンドでrosparamに登録する \
     ```sh
-        $ roslaunch sobit_mapping load_location_file.launch
+    $ roslaunch sobit_mapping load_location_file.launch
     ```
 3. ロボットを起動する
-4. Navigationを起動する
-    以下のコマンドでNavigationを起動する．
+4. Navigationを起動する \
+    以下のコマンドでNavigationを起動する． \
     - SOBIT PROでナビゲーション
         ```sh
-            $ roslaunch sobit_navigation sobit_pro_navigation.launch
+        $ roslaunch sobit_navigation sobit_pro_navigation.launch
         ```
     - SOBIT EDU，SOBIT MINIでナビゲーション
         ```sh
-            $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
+        $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
         ```
-5. アクションクライアントを起動する
+5. アクションクライアントを起動する \
     これは基本的にプログラムから起動する．\
     地点登録した地点名ならどこにでも移動することが可能．\
     移動する例として，[move_location_example.py](/sobit_navigation_library/example/move_location_example.py)を起動．\
-    このexampleコードでは，"table"という地点名の位置まで移動する．
-    以下のコマンドで実行．
+    このexampleコードでは，"table"という地点名の位置まで移動する． \
+    以下のコマンドで実行． \
     ```sh
         $ rosrun sobit_navigation_library move_location_example.py
     ```
