@@ -1,7 +1,6 @@
-image: /home/sobits/catkin_ws/src/sobit_navigation_stack/sobit_mapping/map/map_11_27_16_5.pgm
+image: /home/sobits/catkin_ws/src/sobit_navigation_stack/sobit_mapping/map/example.pgm
 resolution: 0.050000
 origin: [-12.200000, -13.800000, 0.000000]
 negate: 0
 occupied_thresh: 0.65
 free_thresh: 0.196
-

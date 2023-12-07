@@ -1,8 +1,8 @@
 <launch>
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
 
-    <arg name="map_file" default="$(find sobit_mapping)/map/map_11_27_16_5.yaml"/>
-    <arg name="location_file_path" default="$(find sobit_mapping)/map/map_location_11_19_15_37.yaml"/>
+    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
+    <arg name="location_file_path" default="$(find sobit_mapping)/map/map_location_example.yaml"/>
     
     <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 

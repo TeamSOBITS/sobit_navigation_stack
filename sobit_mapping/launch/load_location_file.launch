@@ -1,3 +1,3 @@
 <launch>
-    <rosparam command="load" file="$(find sobit_mapping)/map/map_location_12_1_13_54.yaml"/>
+    <rosparam command="load" file="$(find sobit_mapping)/map/map_location_example.yaml"/>
 </launch>

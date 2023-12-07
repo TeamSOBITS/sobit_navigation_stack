@@ -1,0 +1,133 @@
+location_pose:    
+    - {
+        location_name: "initial_point",
+        frame_id: "map",
+        translation_x: 0.0000000,
+        translation_y: 0.0000000,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.0000000,
+        rotation_w: 1.0000000,
+    }
+
+    - {
+        location_name: "entrance",
+        frame_id: "map",
+        translation_x: -1.0017172,
+        translation_y: 1.2464671,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.0130491,
+        rotation_w: 0.9999149,
+    }
+
+    - {
+        location_name: "bed_room#bed",
+        frame_id: "map",
+        translation_x: -2.0805697,
+        translation_y: -0.5869252,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.3798191,
+        rotation_w: 0.9250608,
+    }
+
+    - {
+        location_name: "living_room#table",
+        frame_id: "map",
+        translation_x: -4.9050670,
+        translation_y: 0.6615665,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.7287559,
+        rotation_w: 0.6847736,
+    }
+
+    - {
+        location_name: "living_room#chair",
+        frame_id: "map",
+        translation_x: -3.9540063,
+        translation_y: -0.8942351,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.9974640,
+        rotation_w: -0.0711729,
+    }
+
+    - {
+        location_name: "living_room#trash_box",
+        frame_id: "map",
+        translation_x: -3.8651860,
+        translation_y: -0.8726458,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.6947631,
+        rotation_w: 0.7192386,
+    }
+
+    - {
+        location_name: "kitchen#trash_box",
+        frame_id: "map",
+        translation_x: -5.6333231,
+        translation_y: 3.5474257,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.7470123,
+        rotation_w: 0.6648103,
+    }
+
+    - {
+        location_name: "kitchen#table",
+        frame_id: "map",
+        translation_x: -4.5114956,
+        translation_y: 3.5139771,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.6933600,
+        rotation_w: 0.7205913,
+    }
+
+    - {
+        location_name: "study_room#chair",
+        frame_id: "map",
+        translation_x: -1.4190740,
+        translation_y: 3.5384032,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.6833373,
+        rotation_w: 0.7301028,
+    }
+
+    - {
+        location_name: "study_room#table",
+        frame_id: "map",
+        translation_x: -0.9489844,
+        translation_y: 3.2529457,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.50000000,
+        rotation_w: 0.86602540,
+    }
+
+    - {
+        location_name: "study_room#shelf",
+        frame_id: "map",
+        translation_x: -1.5504416,
+        translation_y: 4.0079154,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: 0.0003983,
+        rotation_w: 0.9999999,
+    }
+
