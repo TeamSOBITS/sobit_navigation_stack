@@ -53,7 +53,7 @@
         <param name="min_pt" type="int" value="10"/>
     </node>
     <!-- noise_color_layer -->
-    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" >
+    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="noise_color_pointcloud_publisher" name="noise_color_pointcloud_publisher" >
         <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
         <param name="topic_name" value="$(arg cloud_topic_name)"/>
         <param name="voxel_size" type="double" value="0.025"/>

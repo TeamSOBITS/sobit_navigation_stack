@@ -65,9 +65,9 @@ add_executable(noise_removal_pointcloud_publisher src/noise_removal_pointcloud_p
                                                     src/point_cloud_processor.cpp)
 target_link_libraries(noise_removal_pointcloud_publisher  ${catkin_LIBRARIES})
 
-add_executable(color_point_publisher src/color_point_publisher.cpp
+add_executable(noise_color_pointcloud_publisher src/noise_color_pointcloud_publisher.cpp
                                                     src/point_cloud_processor.cpp)
-target_link_libraries(color_point_publisher  ${catkin_LIBRARIES})
+target_link_libraries(noise_color_pointcloud_publisher  ${catkin_LIBRARIES})
 
 add_executable(floor_color_setting src/floor_color_setting.cpp
                                                     src/point_cloud_processor.cpp)

@@ -1,7 +1,0 @@
-<launch>
-
-    <!-- keyboard -->
-    <arg name="use_keyboard"            default="true" />
-    <include if="$(arg use_keyboard)" file="$(find sobit_pro_bringup)/launch/ps4_control.launch"/>
-
-</launch>

@@ -52,7 +52,7 @@
         <param name="min_pt" type="int" value="10"/>
     </node>
     <!-- noise_color_layer -->
-    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="color_point_publisher" name="color_point_publisher" >
+    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="noise_color_pointcloud_publisher" name="noise_color_pointcloud_publisher" >
         <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
         <param name="topic_name" value="$(arg cloud_topic_name)"/>
         <param name="voxel_size" type="double" value="0.025"/>
@@ -63,6 +63,14 @@
         <param name="RGB_G_NOISE" type="int" value="80"/>
         <param name="RGB_B_NOISE" type="int" value="80"/>
     </node>
+    <!--  -->
+    <!-- <node pkg="sobit_navigation" type="yolo_pointcloud_publisher" name="yolo_pointcloud_publisher" output="screen" >
+        <param name="topic_name" value="points2"/>
+        <param name="voxel_size" type="double" value="0.025"/>
+        <param name="radius" type="double" value="0.05"/>
+        <param name="cost_range" type="double" value="0.25"/>
+        <param name="min_pt" type="int" value="10"/>
+    </node> -->
     <!-- move_camera_node -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
         <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>

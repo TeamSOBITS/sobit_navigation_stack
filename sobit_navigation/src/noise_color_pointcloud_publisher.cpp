@@ -12,7 +12,7 @@ struct RGB {
 };
 
 
-class COLOR_POINT_PUBLISHER {
+class NOISE_COLOR_POINTCLOUD_PUBLISHER {
     private:
         ros::NodeHandle nh_;
         ros::NodeHandle pnh_;
@@ -57,11 +57,11 @@ class COLOR_POINT_PUBLISHER {
         }
 
     public:
-        COLOR_POINT_PUBLISHER(): nh_(), pnh_("~") {
+        NOISE_COLOR_POINTCLOUD_PUBLISHER(): nh_(), pnh_("~") {
             std::string topic_name = pnh_.param<std::string>( "topic_name", "/points2" );
-            flor_rgb.r = nh_.param<int>( "color_point_publisher/rgb/R", 200 );
-            flor_rgb.g = nh_.param<int>( "color_point_publisher/rgb/G", 200 );
-            flor_rgb.b = nh_.param<int>( "color_point_publisher/rgb/B", 200 );
+            flor_rgb.r = nh_.param<int>( "noise_color_pointcloud_publisher/rgb/R", 200 );
+            flor_rgb.g = nh_.param<int>( "noise_color_pointcloud_publisher/rgb/G", 200 );
+            flor_rgb.b = nh_.param<int>( "noise_color_pointcloud_publisher/rgb/B", 200 );
             flor_rgb_noise.r = pnh_.param<int>( "RGB_R_NOISE", 60 );
             flor_rgb_noise.g = pnh_.param<int>( "RGB_G_NOISE", 60 );
             flor_rgb_noise.b = pnh_.param<int>( "RGB_B_NOISE", 60 );
@@ -72,13 +72,13 @@ class COLOR_POINT_PUBLISHER {
             pcp_.setVoxelGridParameter( voxel_size );
             pcp_.setRadiusOutlierRemovalParameters ( radius, min_pt, false );
             pub_cloud_ = nh_.advertise<PointCloud>("/cloud_color_point", 1);
-            sub_points_ = nh_.subscribe(topic_name, 5, &COLOR_POINT_PUBLISHER::cbPoints, this);
+            sub_points_ = nh_.subscribe(topic_name, 5, &NOISE_COLOR_POINTCLOUD_PUBLISHER::cbPoints, this);
             cloud_.reset(new PointCloud());
         }
 };
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "color_point_publisher");
-    COLOR_POINT_PUBLISHER color_point_publisher;
+    ros::init(argc, argv, "noise_color_pointcloud_publisher");
+    NOISE_COLOR_POINTCLOUD_PUBLISHER noise_color_pointcloud_publisher;
     ros::spin();
 }
