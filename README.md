@@ -193,54 +193,6 @@ Navigationを使う上での基本的な流れ
 
 > [!NOTE]
 > 地点登録結果を見たり，追加したい場合は[こちら](/sobit_mapping/README.md/#地点登録確認・追加)．
-<!-- 1. 生成した地図のパスをNavigationに登録する
-    - ロボットを使わずに地点登録 \
-        [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをfalseにし，さらにmap_fileを，下の例に従い書き換える．
-    - SOBIT PROで地点登録 \
-        [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする． \
-        さらに[sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを，下の例に従い書き換える． \
-        書き換えたら，以下のコマンドでNavigationを起動する．
-        ```sh
-        $ roslaunch sobit_navigation sobit_pro_navigation.launch
-        ```
-    - SOBIT EDU，SOBIT MINIで地点登録 \
-        [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする． \
-        さらに[sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを，下の例に従い書き換える． \
-        書き換えたら，以下のコマンドでNavigationを起動する．
-        ```sh
-        $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
-        ```
-    map_fileを自分で生成した地図に書き換える．\
-    例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
-    ```xml
-    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
-    ```
-2. ロボットを起動する
-3. 地点登録を起動する \
-    以下のコマンドで起動する． \
-        ```sh
-        $ roslaunch sobit_mapping create_location_file.launch
-        ```
-4. 地点を登録する
-    - ロボットを使わずに地点登録 \
-        2D Nav Goalをmapにクリックする．
-        そこで地点登録のターミナルに地点名を入力し，Enterを押してその位置を登録．
-    - ロボットを使って地点登録 \
-        ロボットのいる位置が登録される．\
-        ロボットの移動のさせ方は以下2通りがあるので好きな方を選ぶ．
-        - Navigationを用いる \
-            起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する． 
-        - Mappingしたときのように人間が操作 \
-            [teleop.launch](/sobit_mapping/launch/teleop.launch)を用いてロボットを移動． \
-            以下のコマンドで起動する． 
-            ```sh
-            $ roslaunch sobit_mapping teleop.launch
-            ```
-        そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
-5. Rvizに表示された地点登録情報(矢印)を保存 \
-    この手順で全ての地点を登録する．\
-    地点登録が終わったら，端末で「q」と入力して保存する．\
-    地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，"map_location_"+"保存した日時"のファイル名で保存される． -->
 
 
 ### actionlibによって呼び出す（実際にNavigationする）
