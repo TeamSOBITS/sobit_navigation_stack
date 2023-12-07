@@ -1,3 +1,20 @@
+# NavigationをActionlibによってプログラムから呼び出すためのパッケージ
+これはライブラリなので，基本的に他のROSパッケージから利用します．\
+普通に移動するなら，exampleコードの[move_location_example.py(python用)](/sobit_navigation_library/example/move_location_example.py)，[move_location_example.cpp(C++用)](/sobit_navigation_library/example/move_location_example.cpp)を使う．\
+以下に，詳しいツールについて紹介する．
+
+> [!NOTE]
+> 別のパッケージからC++で呼び出す場合は，そのパッケージのCMakeLists.txtと，package.xmlに依存を追加しなければならない．
+> CMakeLists.txtのfind_package()のカッコ内に"sobit_navigation_library"という行を追加．
+> package.xmlの内に```<depend>sobit_navigation_library</depend>```というタグの行を追加．
+
+## Navigationツール
+
+
+
+
+-----------------------------以下修正前のもの-----------------------------
+
 # About SOBIT Navigation Library
 ナビゲーションをプログラム上で実行できるライブラリ
 
@@ -23,9 +40,9 @@ find_package(catkin REQUIRED COMPONENTS
 1. 以下のどれかのnavigationを起動
 ```python
 $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
-$ roslaunch sobit_navigation sobit_turtlebot_navigation_octomap.launch
+# $ roslaunch sobit_navigation sobit_turtlebot_navigation_octomap.launch
 $ roslaunch sobit_navigation sobit_pro_navigation.launch
-$ roslaunch sobit_navigation sobit_pro_navigation_octomap.launch
+# $ roslaunch sobit_navigation sobit_pro_navigation_octomap.launch
 ```
 
 2. [load_location_file](sobit_mapping/launch/load_location_file.launch)を起動
@@ -98,14 +115,6 @@ if __name__ == '__main__':
         test()
     except rospy.ROSInterruptException: pass
 
-```
-
-※以下のエラーが出力された場合：「#!/usr/bin/env python3」→「#!/usr/bin/env python」
-```python
-Traceback (most recent call last):
-  File "/home/sobits/catkin_ws/src/nav_test/script/test.py", line 3, in <module>
-    from sobit_navigation_module import SOBITNavigationLibraryPython
-ImportError: dynamic module does not define module export function (PyInit_sobit_navigation_module)
 ```
 
 </details>

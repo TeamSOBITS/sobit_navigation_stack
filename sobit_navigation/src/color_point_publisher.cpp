@@ -24,7 +24,7 @@ class COLOR_POINT_PUBLISHER {
         RGB rgb, flor_rgb, flor_rgb_noise;
         bool frag = true;
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
-            pcp_.transformFramePointCloud( "base_footprint", cloud_msg, cloud_ );
+            pcp_.transformFramePointCloud( target_frame_, cloud_msg, cloud_ );
             // cost_cloud_.header.stamp = ros::Time::now();
             // cost_cloud_.header.frame_id = "base_footprint";
             // cost_cloud_.points.clear();

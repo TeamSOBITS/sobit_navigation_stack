@@ -1,10 +1,10 @@
-<!-- sobit_pro_gmapping.launch -->
+<!-- gmapping.launch -->
 <launch>
     <!-- gmapping -->
     <include file="$(find sobit_mapping)/launch/include/sobit_gmapping.launch.xml"/>
 
 	<!--save_map_command.py--><!--This is not node -->
-    <arg name="save_map"            default="true" />
+    <arg name="save_map" default="true" />
 	<node if="$(arg save_map)" name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
     </node>

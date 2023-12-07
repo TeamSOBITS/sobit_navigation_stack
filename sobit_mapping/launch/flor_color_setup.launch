@@ -1,6 +1,6 @@
 <launch>    
     <node pkg="sobit_navigation" type="flor_color_setting" name="flor_color_setting" output="screen" >
-        <param name="topic_name" value="/head_camera/depth_registered/points"/>     <!-- azure_kinect_camera = "/points2", realsense_camera="/head_camera/depth_registered/points" -->
+        <param name="topic_name" value="/points2"/>  <!-- azure_kinect="/points2", realsense="/head_camera/depth_registered/points" -->
         <param name="voxel_size" type="double" value="0.025"/>
         <param name="radius" type="double" value="0.05"/>
         <param name="max_floor_z" type="double" value="0.1"/>

@@ -1,16 +1,16 @@
-<!-- sobit_pro_gmapping_multi_merger.launch -->
+<!-- gmapping_multi_merger.launch -->
 
 <!-- pointcloud_to_laserscan -->
 <launch>
     <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
-        <remap from="cloud_in" to="/points2"/>
+        <remap from="cloud_in" to="/points2"/>  <!-- azure_kinect="/points2", realsense="/head_camera/depth_registered/points" -->
         <remap from="scan" to="/camera/scan" />
         <rosparam>
             target_frame: base_footprint
             transform_tolerance: 0.01
             min_height: 0.3
             max_height: 2.0
-
+            
             angle_min: -1.5708
             angle_max: 1.5708
             angle_increment: 0.0087
@@ -18,7 +18,7 @@
             range_min: 0.45
             range_max: 10.0
             use_inf: true
-
+            
             #concurrency_level affects number of pc queued for processing and the number of threadsused
             # 0: Detect number of cores
             # 1: Single threaded
