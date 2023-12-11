@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.10.2)
 project(sobit_mapping)
 
 ## Compile as C++11, supported in ROS Noetic and newer
@@ -10,7 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
-  tf
+  # tf
   tf2
   tf2_ros
   visualization_msgs
