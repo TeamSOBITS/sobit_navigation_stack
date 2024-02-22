@@ -45,7 +45,7 @@ obstacle_layer:
     obstacle_range: 1.3
     raytrace_range: 1.5
   noise_color:
-    data_type: PointCloud
+    data_type: PointCloud2
     sensor_frame : base_footprint
     topic: cloud_color_point
     marking: true

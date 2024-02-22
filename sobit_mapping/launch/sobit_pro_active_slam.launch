@@ -10,7 +10,7 @@
     <arg name="use_smoother"          default="true" />
 
     <!-- Gmapping -->
-    <include file="$(find sobit_mapping)/launch/sobit_pro/sobit_pro_gmapping.launch">
+    <include file="$(find sobit_mapping)/launch/gmapping.launch">
         <arg name="rviz"            value="false"/>
         <arg name="save_map"        value="true"/>
     </include>
