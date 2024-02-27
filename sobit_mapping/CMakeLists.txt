@@ -66,3 +66,6 @@ target_link_libraries(display_location_marker  ${catkin_LIBRARIES})
 
 add_executable(location_file_viewer src/location_file_viewer.cpp)
 target_link_libraries(location_file_viewer  ${catkin_LIBRARIES})
+
+add_executable(keyboard_teleop src/keyboard_teleop.cpp)
+target_link_libraries(keyboard_teleop  ${catkin_LIBRARIES})
