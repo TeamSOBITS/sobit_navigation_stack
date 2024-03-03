@@ -54,23 +54,17 @@
     <!-- noise_color_layer -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="noise_color_pointcloud_publisher" name="noise_color_pointcloud_publisher" >
         <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
-        <param name="topic_name" value="$(arg cloud_topic_name)"/>
-        <param name="voxel_size" type="double" value="0.025"/>
-        <param name="radius" type="double" value="0.05"/>
-        <param name="min_pt" type="int" value="5"/>
+        <param name="target_frame" value="base_footprint"/>
+        <param name="topic_name"   value="$(arg cloud_topic_name)"/>
         <!-- ↓セットした床の色からどれくらいの範囲は同じ色とするかの許容範囲↓ -->
         <param name="RGB_R_NOISE" type="int" value="80"/>
         <param name="RGB_G_NOISE" type="int" value="80"/>
         <param name="RGB_B_NOISE" type="int" value="80"/>
     </node>
     <!--  -->
-    <!-- <node pkg="sobit_navigation" type="yolo_pointcloud_publisher" name="yolo_pointcloud_publisher" output="screen" >
-        <param name="topic_name" value="points2"/>
-        <param name="voxel_size" type="double" value="0.025"/>
-        <param name="radius" type="double" value="0.05"/>
-        <param name="cost_range" type="double" value="0.25"/>
-        <param name="min_pt" type="int" value="10"/>
-    </node> -->
+    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="object_pointcloud_publisher" name="object_pointcloud_publisher" output="screen" >
+        <param name="object_point_cloud_topic_name" value="/yolov5_ros/object_poses"/>
+    </node>
     <!-- move_camera_node -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
         <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>

@@ -55,10 +55,8 @@
     <!-- noise_color_layer -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="noise_color_pointcloud_publisher" name="noise_color_pointcloud_publisher" >
         <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
-        <param name="topic_name" value="$(arg cloud_topic_name)"/>
-        <param name="voxel_size" type="double" value="0.025"/>
-        <param name="radius" type="double" value="0.05"/>
-        <param name="min_pt" type="int" value="5"/>
+        <param name="target_frame" value="base_footprint"/>
+        <param name="topic_name"   value="$(arg cloud_topic_name)"/>
         <!-- ↓セットした床の色からどれくらいの範囲は同じ色とするかの許容範囲↓ -->
         <param name="RGB_R_NOISE" type="int" value="80"/>
         <param name="RGB_G_NOISE" type="int" value="80"/>

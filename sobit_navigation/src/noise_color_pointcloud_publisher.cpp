@@ -2,8 +2,6 @@
 #include <iostream>
 #include <cmath>
 #include <cstring>
-// #include <sensor_msgs/PointCloud.h>
-// #include <geometry_msgs/Point32.h>
 #include <sobit_navigation/point_cloud_processor.hpp>
 
 
@@ -12,7 +10,7 @@ struct RGB {
 };
 
 
-class NOISE_COLOR_POINTCLOUD_PUBLISHER {
+class NoiseColorPointCloudPublisher {
     private:
         ros::NodeHandle nh_;
         ros::NodeHandle pnh_;
@@ -21,46 +19,43 @@ class NOISE_COLOR_POINTCLOUD_PUBLISHER {
         sobit_navigation::PointCloudProcessor pcp_;
         std::string target_frame_;
         PointCloud::Ptr cloud_, cost_cloud_;
-        RGB rgb, flor_rgb, flor_rgb_noise;
-        bool frag = true;
+        RGB flor_rgb, flor_rgb_noise;
         void cbPoints(const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
             pcp_.transformFramePointCloud( target_frame_, cloud_msg, cloud_ );
             cost_cloud_->header.frame_id = target_frame_;
             cost_cloud_->points.clear();
             for (long i=0; i<cloud_->points.size(); i++) {
-                if ((std::isnan(cloud_->points[i].x) || std::isnan(cloud_->points[i].y) || std::isnan(cloud_->points[i].z)) || (std::isinf(cloud_->points[i].x) || std::isinf(cloud_->points[i].y) || std::isinf(cloud_->points[i].z))) continue;
-                rgb.r = cloud_->points[i].r;
-                rgb.g = cloud_->points[i].g;
-                rgb.b = cloud_->points[i].b;
-                if ((((rgb.r < (flor_rgb.r - flor_rgb_noise.r)) || ((flor_rgb.r + flor_rgb_noise.r) < rgb.r)) || ((rgb.g < (flor_rgb.g - flor_rgb_noise.g)) || ((flor_rgb.g + flor_rgb_noise.g) < rgb.g)) || ((rgb.b < (flor_rgb.b - flor_rgb_noise.b)) || ((flor_rgb.b + flor_rgb_noise.b) < rgb.b))) && ((rgb.r != 0) || (rgb.g != 0) || (rgb.b != 0)))
-                {
-                    PointT pt;
-                    pt.x = cloud_->points[i].x;
-                    pt.y = cloud_->points[i].y;
-                    pt.z = 0.25;
-                    cost_cloud_->points.push_back(pt);
+                if (checkNanInf(cloud_->points[i])) {
+                    if (((cloud_->points[i].r < (flor_rgb.r - flor_rgb_noise.r)) || ((flor_rgb.r + flor_rgb_noise.r) < cloud_->points[i].r)) || 
+                        ((cloud_->points[i].g < (flor_rgb.g - flor_rgb_noise.g)) || ((flor_rgb.g + flor_rgb_noise.g) < cloud_->points[i].g)) || 
+                        ((cloud_->points[i].b < (flor_rgb.b - flor_rgb_noise.b)) || ((flor_rgb.b + flor_rgb_noise.b) < cloud_->points[i].b))) {
+                        PointT pt;
+                        pt.x = cloud_->points[i].x;
+                        pt.y = cloud_->points[i].y;
+                        pt.z = 0.25;
+                        cost_cloud_->points.push_back(pt);
+                    }
                 }
             }
             pub_cloud_.publish(cost_cloud_);
         }
-
+        bool checkNanInf(PointT pt) {
+            if (std::isnan(pt.x) || std::isnan(pt.y) || std::isnan(pt.z)) return false;
+            else if (std::isinf(pt.x) || std::isinf(pt.y) || std::isinf(pt.z)) return false;
+            return true;
+        }
     public:
-        NOISE_COLOR_POINTCLOUD_PUBLISHER(): nh_(), pnh_("~") {
+        NoiseColorPointCloudPublisher(): nh_(), pnh_("~") {
+            target_frame_ = pnh_.param<std::string>( "target_frame", "base_footprint" );
             std::string topic_name = pnh_.param<std::string>( "topic_name", "/points2" );
-            flor_rgb.r = nh_.param<int>( "noise_color_pointcloud_publisher/rgb/R", 200 );
-            flor_rgb.g = nh_.param<int>( "noise_color_pointcloud_publisher/rgb/G", 200 );
-            flor_rgb.b = nh_.param<int>( "noise_color_pointcloud_publisher/rgb/B", 200 );
+            flor_rgb.r = pnh_.param<int>( "rgb/R", 200 );
+            flor_rgb.g = pnh_.param<int>( "rgb/G", 200 );
+            flor_rgb.b = pnh_.param<int>( "rgb/B", 200 );
             flor_rgb_noise.r = pnh_.param<int>( "RGB_R_NOISE", 60 );
             flor_rgb_noise.g = pnh_.param<int>( "RGB_G_NOISE", 60 );
             flor_rgb_noise.b = pnh_.param<int>( "RGB_B_NOISE", 60 );
-            double voxel_size = pnh_.param<double>( "voxel_size", 0.025 );
-            double radius = pnh_.param<double>( "radius", 0.05 );
-            int min_pt = pnh_.param<int>( "min_pt", 5 );
-            target_frame_ = pnh_.param<std::string>( "target_frame", "base_footprint" );
-            pcp_.setVoxelGridParameter( voxel_size );
-            pcp_.setRadiusOutlierRemovalParameters ( radius, min_pt, false );
             pub_cloud_ = nh_.advertise<PointCloud>("cloud_color_point", 1);
-            sub_points_ = nh_.subscribe(topic_name, 5, &NOISE_COLOR_POINTCLOUD_PUBLISHER::cbPoints, this);
+            sub_points_ = nh_.subscribe(topic_name, 5, &NoiseColorPointCloudPublisher::cbPoints, this);
             cloud_.reset(new PointCloud());
             cost_cloud_.reset(new PointCloud());
         }
@@ -68,6 +63,6 @@ class NOISE_COLOR_POINTCLOUD_PUBLISHER {
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "noise_color_pointcloud_publisher");
-    NOISE_COLOR_POINTCLOUD_PUBLISHER noise_color_pointcloud_publisher;
+    NoiseColorPointCloudPublisher noise_color_pointcloud_publisher;
     ros::spin();
 }

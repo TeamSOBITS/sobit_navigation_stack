@@ -62,14 +62,17 @@ include_directories(
 )
 
 add_executable(noise_removal_pointcloud_publisher src/noise_removal_pointcloud_publisher.cpp
-                                                    src/point_cloud_processor.cpp)
+                                                  src/point_cloud_processor.cpp)
 target_link_libraries(noise_removal_pointcloud_publisher  ${catkin_LIBRARIES})
 
 add_executable(noise_color_pointcloud_publisher src/noise_color_pointcloud_publisher.cpp
-                                                    src/point_cloud_processor.cpp)
+                                                src/point_cloud_processor.cpp)
 target_link_libraries(noise_color_pointcloud_publisher  ${catkin_LIBRARIES})
 
+add_executable(object_pointcloud_publisher src/object_pointcloud_publisher.cpp
+                                           src/point_cloud_processor.cpp)
+target_link_libraries(object_pointcloud_publisher  ${catkin_LIBRARIES})
+
 add_executable(floor_color_setting src/floor_color_setting.cpp
-                                                    src/point_cloud_processor.cpp)
-target_link_libraries(floor_color_setting  ${catkin_LIBRARIES}
-                                                    yaml-cpp)
+                                   src/point_cloud_processor.cpp)
+target_link_libraries(floor_color_setting  ${catkin_LIBRARIES} yaml-cpp)
