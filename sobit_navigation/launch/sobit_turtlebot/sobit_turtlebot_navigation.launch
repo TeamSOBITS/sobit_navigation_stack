@@ -62,6 +62,10 @@
         <param name="RGB_G_NOISE" type="int" value="80"/>
         <param name="RGB_B_NOISE" type="int" value="80"/>
     </node>
+    <!--  -->
+    <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="object_pointcloud_publisher" name="object_pointcloud_publisher" output="screen" >
+        <param name="object_point_cloud_topic_name" value="/yolov5_ros/object_poses"/>
+    </node>
     <!-- move_camera_node -->
     <group if="$(arg use_3d_camera)">
         <node if="$(eval use_sobit_=='edu')"  pkg="sobit_navigation" type="sobit_edu_pantilt_controll.py"  name="sobit_edu_pantilt_controll" output="screen">
