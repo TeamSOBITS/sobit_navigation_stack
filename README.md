@@ -149,10 +149,10 @@ Navigationを使う上での基本的な流れ
     ```xml
     <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
     ```
-    ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する． \ 
-    また，[/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする． \
+    ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する． \
+    また，[/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする．
 2. ロボットを起動する \
-    ロボット本体と，2D-LiDARを起動させる． \ 
+    ロボット本体と，2D-LiDARを起動させる． \
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
 3. Navigationを起動する \
     ロボットによって，以下どちらかのコマンドでNavigationを起動する．
@@ -215,7 +215,7 @@ Navigationを使う上での基本的な流れ
     ```sh
     $ roslaunch sobit_mapping load_location_file.launch
     ```
-3. ロボットを起動する \ 
+3. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
 4. Navigationを起動する \
