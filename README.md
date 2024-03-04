@@ -237,8 +237,16 @@ Navigationを使う上での基本的な流れ
     ```sh
     $ rosrun sobit_navigation_library move_location_example.py
     ```
+
 > [!NOTE]
 > この呼び出した[move_location_example.py](/sobit_navigation_library/example/move_location_example.py)や，C++での呼び出し方([move_location_example.cpp](/sobit_navigation_library/example/move_location_example.cpp))を使用したい場合，またいろいろなNavigationのツールについても，詳しくは[こちら](/sobit_navigation_library/README.md)をチェック．
+
+
+> [!NOTE]
+> ここで紹介したNavigtionは，基本的な使い方とテスト動作について書いた．
+> ロボットに自律的に移動してもらうには，細かいシチュエーションごとに様々な課題があり，これまでSOBITSではいくつかの工夫が考えられてきた．
+> そこで様々な工夫がされたものについては，[こちら](/sobit_navigation/README.md)を参照して下さい．
+
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
