@@ -7,7 +7,6 @@
 
 --- -->
 
-- [Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)
 
 # 自律地図生成
 オープンソース[explore_lite](http://wiki.ros.org/explore_lite)を使って，ロボットが自律的に地図生成を行う． 
@@ -96,6 +95,9 @@
 3. 確認・追加 \
     起動したRvizをみて，赤い矢印が既に登録されている地点として確認する． \
     追加する場合は，Rvizの2D Nav Goalでクリックし，ターミナルで新たな地点名を登録する． \
-    Rviz上に追加された地点が青く表示されたら追加完了． \
+    Rviz上に追加された地点が青く表示されたら追加完了．
 4. 保存 \
     確認・追加が終わったら，端末で「q」と入力し，最後に適当に2D Nav Goalをクリックして終了する．
+
+
+[Topに戻る](https://github.com/TeamSOBITS/sobit_navigation_stack)
