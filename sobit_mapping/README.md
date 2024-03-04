@@ -93,7 +93,7 @@
     ```sh
     $ roslaunch sobit_mapping location_file_viewer.launch
     ```
-3. 確認・追加 \ 
+3. 確認・追加 \
     起動したRvizをみて，赤い矢印が既に登録されている地点として確認する． \ 
     追加する場合は，Rvizの2D Nav Goalでクリックし，ターミナルで新たな地点名を登録する． \ 
     Rviz上に追加された地点が青く表示されたら追加完了． \ 
