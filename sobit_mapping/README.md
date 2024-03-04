@@ -81,12 +81,12 @@
 
 # 地点登録確認・追加
 1. 生成した地図，参照・追加した地点登録ファイルのそれぞれのパスを登録する \
-    [location_file_viewer.launch](/sobit_mapping/launch/location_file_viewer.launch)のmap_file，location_file_pathをそれぞれ書き換える． \
-    map_fileは，自分で生成した地図を，location_file_pathは地点登録ファイルを指定する．\
+    [location_file_viewer.launch](/sobit_mapping/launch/location_file_viewer.launch)のmap_file，location_fileをそれぞれ書き換える． \
+    map_fileは，自分で生成した地図を，location_fileは地点登録ファイルを指定する．\
     例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップで，地点登録ファイルが[map_location_example.ymal](/sobit_mapping/map/map_location_example.ymal)という地点登録ファイルの場合は，以下のように指定する．
     ```xml
-    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
-    <arg name="location_file_path" default="$(find sobit_mapping)/map/map_location_example.yaml"/>
+    <arg name="map_file"      default="$(find sobit_mapping)/map/example.yaml"/>
+    <arg name="location_file" default="$(find sobit_mapping)/map/map_location_example.yaml"/>
     ```
 2. 地点登録・追加のノードを起動する \
     [location_file_viewer.launch](/sobit_mapping/launch/location_file_viewer.launch)を起動する．
