@@ -44,6 +44,7 @@
     <arg name="pan_angle_deg"    default="0.0"/>
     <arg name="tilt_angle_deg"   default="0.0"/>
     <arg name="cloud_topic_name" default="/points2"/>
+    <arg name="object_point_cloud_topic_name" default="/bbox_to_tf/object_cloud"/>  <!-- yolov8_ros="/yolo_to_tf/object_cloud" ssd_nodelet="ssd_to_tf/object_cloud" -->
     <!-- obstacle_layer -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="noise_removal_pointcloud_publisher" name="noise_removal_pointcloud_publisher" >
         <param name="topic_name" type="str" value="$(arg cloud_topic_name)"/>
@@ -61,9 +62,9 @@
         <param name="RGB_G_NOISE" type="int" value="80"/>
         <param name="RGB_B_NOISE" type="int" value="80"/>
     </node>
-    <!--  -->
+    <!-- objects_layer -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="object_pointcloud_publisher" name="object_pointcloud_publisher" output="screen" >
-        <param name="object_point_cloud_topic_name" value="/yolov5_ros/object_poses"/>
+        <param name="object_point_cloud_topic_name" value="$(arg object_point_cloud_topic_name)"/>
     </node>
     <!-- move_camera_node -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
