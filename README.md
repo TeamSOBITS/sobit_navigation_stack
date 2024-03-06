@@ -200,13 +200,13 @@ Navigationを使う上での基本的な流れ
 ### actionlibによって呼び出す（実際にNavigationする）
 1. map_fileを生成したマップに書き換える
     - SOBIT PROでナビゲーション
-    [sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．\
+    [/sobit_navigation/launch/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．\
     既に書き換えられている場合はそのままでOK．
     - SOBIT EDU，SOBIT MINIでナビゲーション
-    [sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．\
+    [/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．\
     既に書き換えられている場合はそのままでOK．
 2. 地点登録した情報をrosparamに登録する \
-    [load_location_file.launch](/sobit_mapping/launch/load_location_file.launch)のrosparamのfileを，自分で生成した地点登録ファイルに書き換える．\
+    [/sobit_mapping/launch/load_location_file.launch](/sobit_mapping/launch/load_location_file.launch)のrosparamのfileを，自分で生成した地点登録ファイルに書き換える．\
     例えば，[map_location_example.ymal](/sobit_mapping/map/map_location_example.ymal)という地点登録ファイルの場合は，以下のように指定する．
     ```xml
     <rosparam command="load" file="$(find sobit_mapping)/map/map_location_example.yaml"/>

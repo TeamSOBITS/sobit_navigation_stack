@@ -58,9 +58,7 @@
         <param name="target_frame" value="base_footprint"/>
         <param name="topic_name"   value="$(arg cloud_topic_name)"/>
         <!-- ↓セットした床の色からどれくらいの範囲は同じ色とするかの許容範囲↓ -->
-        <param name="RGB_R_NOISE" type="int" value="80"/>
-        <param name="RGB_G_NOISE" type="int" value="80"/>
-        <param name="RGB_B_NOISE" type="int" value="80"/>
+        <param name="color_noise" type="int" value="80"/>
     </node>
     <!-- objects_layer -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="object_pointcloud_publisher" name="object_pointcloud_publisher" output="screen" >
