@@ -7,10 +7,10 @@
   <summary>アプローチ一覧</summary>
   <ol>
     <li>
-      <a href="#障害物のレイヤーをカスタムする">概要</a>
+      <a href="#障害物のレイヤーをカスタムする">障害物のレイヤーをカスタムする</a>
     </li>
     <li>
-      <a href="#重みパラメータを変更する">概要</a>
+      <a href="#重みパラメータを変更する">重みパラメータを変更する</a>
     </li>
   </ol>
 </details>
@@ -25,8 +25,8 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
 また，そのレイヤーの使い方についても説明する．
 
 
-1. SOBITSが歴代で作ってきたレイヤー
-    - scanレイヤー
+1. SOBITSが歴代で作ってきたレイヤーを見る
+    - scanレイヤー\
     2D LiDARによって得られた比較的広範囲の障害物をコストとして捉えることができるレイヤー．
 
         | メリット  | デメリット |
@@ -34,7 +34,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         | 水平方向に広範囲 | 固定の高さしか検出できない |
         | 処理が早い | 薄い情報量 |
 
-    - bumperレイヤー
+    - bumperレイヤー\
     turtlebotの前方にあるバンパーが押されたときに停止するシステム．
 
         | メリット  | デメリット |
@@ -42,7 +42,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         | LiDARよりも低い物体を検知 | turtlebotにしかない |
         |  | 衝突しないと検出しない |
 
-    - obstacleレイヤー
+    - obstacleレイヤー\
     3D カメラから得られる全ての点群データから，床面を除去した凸部分をコストとする．
 
         | メリット  | デメリット |
@@ -50,7 +50,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         | LiDARよりも低い物体を検知 | 使用するカメラの点群の精度に依存する |
         | 立体的な物体を検出できる | 小さすぎる物体は床と判定されて回避できない |
 
-    - noise_colorレイヤー
+    - noise_colorレイヤー\
     全ての点群データから，床面と近い色を除去して，色が違う部分をコストとする．
 
         | メリット  | デメリット |
@@ -58,7 +58,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         | 物体の大きさに依存しない | 使用するカメラの点群の精度に依存する |
         | 床と色が違えば高さによらず検出できる | 床の色が単色のときにしか使えない |
 
-    - objectsレイヤー
+    - objectsレイヤー\
     画像から物体を検出し，その位置の点群をコストとする．\
     例えば，yoloで検出した物体を回避することで，物体の大きさに依存しない画像基準の検出での回避ができる．
 
@@ -72,9 +72,9 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
     上のレイヤーを組み合わせてNavigationをすることができる．\
     レイヤー設定のファイルのobservation_sourcesへ，設定したいレイヤーを指定する．
     - SOBIT PRO用のレイヤー設定のファイル \
-        [/sobit_navigation/param/sobit_pro/costmap_common_params.yaml](/sobit_navigation/param/sobit_pro/costmap_common_params.yaml)のobservation_sourcesを書き換える．
+        [sobit_navigation/param/sobit_pro/costmap_common_params.yaml](/sobit_navigation/param/sobit_pro/costmap_common_params.yaml)のobservation_sourcesを書き換える．
     - SOBIT EDU，SOBIT MINI用のレイヤー設定のファイル \
-        [/sobit_navigation/param/sobit_turtlebot/costmap_common_params.yaml](/sobit_navigation/param/sobit_turtlebot/costmap_common_params.yaml)のobservation_sourcesを書き換える．
+        [sobit_navigation/param/sobit_turtlebot/costmap_common_params.yaml](/sobit_navigation/param/sobit_turtlebot/costmap_common_params.yaml)のobservation_sourcesを書き換える．
     observation_sourcesは「#」で以降コメントアウトで，そのコメントアウトされているもの中から選んでコメントアウトを外すことでカスタムできる．\
     以下は，レイヤーのうちscanとnoise_colorのレイヤーを選んだ例．
     ```xml
@@ -85,7 +85,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
 3. 3D カメラの設定をする
     レイヤーが3D カメラに依存するものの場合は，カメラを設定する．
     - SOBIT PROでナビゲーション
-        [/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のuse_3d_camera，pan_angle_deg，tilt_angle_deg，cloud_topic_nameを書き換える．\
+        [sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のuse_3d_camera，pan_angle_deg，tilt_angle_deg，cloud_topic_nameを書き換える．\
         use_3d_cameraはtrueにする．\
         pan_angle_deg，tilt_angle_degはカメラをどれだけ回転させるかをパン・チルト回転で表記する．\
         cloud_topic_nameは使用する3D カメラの点群(sensor_msgs/PointCloud2)が格納されているものを指定する．
@@ -98,7 +98,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         <arg name="cloud_topic_name" default="/points2"/>
         ```
     - SOBIT EDU，SOBIT MINIでナビゲーション
-        [/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のuse_3d_camera，use_sobit_，pan_angle_deg，tilt_angle_deg，cloud_topic_nameを書き換える．\
+        [sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のuse_3d_camera，use_sobit_，pan_angle_deg，tilt_angle_deg，cloud_topic_nameを書き換える．\
         use_3d_cameraはtrueにする．\
         use_sobit_はSOBIT EDUを使う場合はedu，SOBIT MINIを使う場合はminiとする．\
         pan_angle_deg，tilt_angle_degはカメラをどれだけ回転させるかをパン・チルト回転で表記する．\
@@ -112,6 +112,10 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         <arg name="tilt_angle_deg"                default="-35.0"  />
         <arg name="cloud_topic_name"              default="/head_camera/depth_registered/points"/>  <!-- azure_kinect="/points2", realsense="/head_camera/depth_registered/points" -->
         ```
+> [!NOTE]
+> さらに，noise_colorレイヤーとobjectsレイヤーは別途セットアップが必要になる．
+> 詳しくはこちら[こちら](/)を確認．
+
 
 4. ロボットの起動とNavigationの起動
     ロボット本体と，2D-LiDARを起動させる．\
