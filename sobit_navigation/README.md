@@ -114,7 +114,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         ```
 > [!NOTE]
 > さらに，noise_colorレイヤーとobjectsレイヤーは別途セットアップが必要になる．
-> 詳しくはこちら[こちら](/)を確認．
+> 詳しくは[こちら](/sobit_navigation/SETUP_README.md)を確認．
 
 
 4. ロボットの起動とNavigationの起動
@@ -131,7 +131,44 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
     ```
 
 ## 重みパラメータを変更する
+### 直接値を代入する
+    1. パラメータの種類を見る
+        - SOBIT PROのパラメータ一覧
+            [sobit_navigation/param/sobit_pro/](/sobit_navigation/param/sobit_pro/)のフォルダにNavigation関連のパラメータがある．\
+            ここを適宜編集して使う．\
+            詳しくは，Navigationの[ソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)を確認．
 
+        - SOBIT EDU，SOBIT MINIのパラメータ一覧
+            [sobit_navigation/param/sobit_turtlebot/](/sobit_navigation/param/sobit_turtlebot/)のフォルダにNavigation関連のパラメータがある．\
+            ここを適宜編集して使う．\
+            詳しくは，Navigationの[ソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)を確認．
+
+    2. 変更した内容を反映させたNavigationを起動
+        ロボット本体と，2D-LiDARを起動させる．\
+        詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
+        以下のコマンドで通常通りNavigationを起動するだけで良い． 
+        - SOBIT PROでナビゲーション
+        ```sh
+        $ roslaunch sobit_navigation sobit_pro_navigation.launch
+        ```
+        - SOBIT EDU，SOBIT MINIでナビゲーション
+        ```sh
+        $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
+        ```
+
+### チューニングしながら調節する
+    rqt_reconfigureを立ち上げることで動的にパラメータを変更できる．\
+    そこで，rqt_reconfigureをtrueに指定してナビゲーションを起動する．
+    - SOBIT PROでナビゲーション
+    ```sh
+    $ roslaunch sobit_navigation sobit_pro_navigation.launch rqt_reconfigure:=true
+    ```
+    - SOBIT EDU，SOBIT MINIでナビゲーション
+    ```sh
+    $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=true
+    ```
+    出てきたGUIを元に数値を変えながら適切な値を探す．\
+    適切な値が決まったら，上の「<a href="#直接値を代入する">直接値を代入する</a>」のところに書き込むことで，その値がデフォルト値となる．
 
 <!-- -----------------------------以下修正前のもの----------------------------- -->
 
