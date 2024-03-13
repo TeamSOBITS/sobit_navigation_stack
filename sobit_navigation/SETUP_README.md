@@ -31,7 +31,21 @@
     床の色として適切ならばターミナルの指示に従って1を，適切でない場合は2を押してやり直すことができる．\
     これは，1を選択するまで，適切な色になるよう何度でもやり直すことができる．\
     床の色として正しくなれば1を押してその色のRGB値を[sobit_navigation/param/floor_color/rgb_base.yaml](/sobit_navigation/param/floor_color/rgb_base.yaml)に保存される．\
-    ここを参照してこの値から外れていればコストとしている．
+    ここを参照してこの値から外れていればコストとしている．\
+    以上でこのレイヤーのためのセットアップは完了となる．
 
 
 ## objectsレイヤーのセットアップ
+1. どのような物体を使うのか決める\
+    例えば，YOLOによって検出された物体を避ける，ssd_nodeletによって検出した物体を避けるetc...
+
+2. 物体の点群をコストに反映する\
+    object_point_cloud_topic_nameを物体にかかる点群(sensor_msgs/PointCloud2)が格納されているものへ書き換える．\
+    ※それぞれの物体検出のパッケージのREADMEなどを参照する．\
+   書き換える場所は以下の場所となる．
+    - SOBIT PRO用\
+        [sobit_navigation/launch/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro_navigation.launch)のobject_point_cloud_topic_nameを書き換える．
+    - SOBIT EDU，SOBIT MINI用\
+        [sobit_navigation/launch/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot_navigation.launch)のobject_point_cloud_topic_nameを書き換える．\
+    以上でこのレイヤーのためのセットアップは完了となる．
+
