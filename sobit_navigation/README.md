@@ -87,7 +87,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
     - SOBIT PROでナビゲーション
         [sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のuse_3d_camera，pan_angle_deg，tilt_angle_deg，cloud_topic_nameを書き換える．\
         use_3d_cameraはtrueにする．\
-        pan_angle_deg，tilt_angle_degはカメラをどれだけ回転させるかをパン・チルト回転で表記する．\
+        pan_angle_deg，tilt_angle_degはカメラをどれだけ回転させるかをパン・チルト回転で表記する．（単位はdegree）\
         cloud_topic_nameは使用する3D カメラの点群(sensor_msgs/PointCloud2)が格納されているものを指定する．
         例えばazure kinectならば，"/points2"である．\
         以下は，SOBIT PROの3D カメラ(azure kinect)を用いて，カメラを左右に0度，下に40度変えてNavigationする場合の例
@@ -101,7 +101,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         [sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のuse_3d_camera，use_sobit_，pan_angle_deg，tilt_angle_deg，cloud_topic_nameを書き換える．\
         use_3d_cameraはtrueにする．\
         use_sobit_はSOBIT EDUを使う場合はedu，SOBIT MINIを使う場合はminiとする．\
-        pan_angle_deg，tilt_angle_degはカメラをどれだけ回転させるかをパン・チルト回転で表記する．\
+        pan_angle_deg，tilt_angle_degはカメラをどれだけ回転させるかをパン・チルト回転で表記する．（単位はdegree）\
         cloud_topic_nameは使用する3D カメラの点群(sensor_msgs/PointCloud2)が格納されているものを指定する．
         例えばazure kinectならば，"/points2"である．\
         以下は，SOBIT MINIの3D カメラ(realsense)を用いて，カメラを左右に0度，下に35度変えてNavigationする場合の例
@@ -118,7 +118,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
 
 
 4. ロボットの起動とNavigationの起動
-    ロボット本体と，2D-LiDARを起動させる．\
+    ロボット本体，2D-LiDAR，必要であれば3D カメラを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     以下のコマンドで通常通りNavigationを起動する． 
     - SOBIT PROでナビゲーション
