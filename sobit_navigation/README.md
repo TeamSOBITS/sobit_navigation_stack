@@ -143,7 +143,7 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
         ここを適宜編集して使う．\
         詳しくは，Navigationの[ソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)を確認．
 
-2. 変更した内容を反映させたNavigationを起動
+2. 変更した内容を反映させたNavigationを起動\
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     以下のコマンドで通常通りNavigationを起動するだけで良い． 
@@ -157,18 +157,18 @@ Navigationでは，障害物の検出方法ごとに，レイヤーと呼ばれ�
     ```
 
 ### チューニングしながら調節する
-    rqt_reconfigureを立ち上げることで動的にパラメータを変更できる．\
-    そこで，rqt_reconfigureをtrueに指定してナビゲーションを起動する．
-    - SOBIT PROでナビゲーション
-    ```sh
-    $ roslaunch sobit_navigation sobit_pro_navigation.launch rqt_reconfigure:=true
-    ```
-    - SOBIT EDU，SOBIT MINIでナビゲーション
-    ```sh
-    $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=true
-    ```
-    出てきたGUIを元に数値を変えながら適切な値を探す．\
-    適切な値が決まったら，上の「<a href="#直接値を代入する">直接値を代入する</a>」のところに書き込むことで，その値がデフォルト値となる．
+rqt_reconfigureを立ち上げることで動的にパラメータを変更できる．\
+そこで，rqt_reconfigureをtrueに指定してナビゲーションを起動する．
+- SOBIT PROでナビゲーション
+```sh
+$ roslaunch sobit_navigation sobit_pro_navigation.launch rqt_reconfigure:=true
+```
+- SOBIT EDU，SOBIT MINIでナビゲーション
+```sh
+$ roslaunch sobit_navigation sobit_turtlebot_navigation.launch rqt_reconfigure:=true
+```
+出てきたGUIを元に数値を変えながら適切な値を探す．\
+適切な値が決まったら，上の「<a href="#直接値を代入する">直接値を代入する</a>」のところに書き込むことで，その値がデフォルト値となる．
 
 <!-- -----------------------------以下修正前のもの----------------------------- -->
 
