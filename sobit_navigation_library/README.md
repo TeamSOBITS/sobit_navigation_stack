@@ -10,6 +10,13 @@
 
 ## Navigationツール
 
+- 座標を直接指定したゴールの送り方
+    メインのREADMEでは地点登録をした位置に移動する方法について書い．\
+    しかし移動先の位置がどこなのか，地点登録によらない場合がある．\
+    例えば，未知環境でのレストランタスクでは，手をあげた人を見つけ，その位置まで移動する．\
+    その場合，当然事前に地点登録ができるわけがなく，「手を挙げた人の座標」にゴール送必要がある．
+    そこで，そのようなゴールを送ることのできプログラム[sobit_navigation_library/example/move_position_example.py](/sobit_navigation_library/example/move_position_example.py)を起動する．
+
 
 
 
