@@ -7,7 +7,7 @@
     <arg name="rqt_reconfigure"         default="false"/>
     <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
 
-    <arg name="use_smoother"          default="true" />
+    <arg name="use_smoother"          default="false" />
 
     <!-- Gmapping -->
     <include file="$(find sobit_mapping)/launch/gmapping.launch">
