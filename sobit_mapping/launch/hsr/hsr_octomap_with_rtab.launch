@@ -1,0 +1,57 @@
+<launch>
+    <!-- rtabmap -->
+	<include file="$(find hsr_mapping)/launch/include/sobit_hsr_rtabmap.launch.xml" />
+
+	<!-- octomap -->
+	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
+		<remap from="cloud_in" to="/cloud_map" />
+        <rosparam>
+            frame_id : map
+            base_frame_id : base_footprint
+            latch : false
+            resolution : 0.05
+
+            filter_ground : false
+            <!-- ground_filter/distance : 0.10
+            ground_filter/angle : 0.20
+            ground_filter/plane_distance : 0.10 -->
+
+            pointcloud_min_z : 0.15
+            pointcloud_max_z : 2.0
+            occupancy_min_z : 0.15
+            occupancy_max_z : 1.7
+
+            <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
+        </rosparam>
+	</node>
+
+    <!--save_3dmap_command.py--><!--This is not node -->
+    <arg name="map_path" default="$(find hsr_mapping)/map/" />
+	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" launch-prefix="xterm -font r16 -bg darkblue -e">
+        <param name="map_save_path" type="str" value="$(arg map_path)"/>
+    </node>
+    <!--projected_map_saver--><!--This is not node -->
+	<node name="projected_map_saver" pkg="sobit_mapping" type="projected_map_saver" launch-prefix="xterm -font r16 -bg darkblue -e">
+        <param name="map_save_path" type="str" value="$(arg map_path)"/>
+    </node>
+
+    <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation_octomap.rviz"/>
+
+    <arg name="sub_msg_to_robot_topic_name"       default="/handyman/message/to_robot" />
+	<arg name="pub_msg_to_moderator_topic_name"   default="/handyman/message/to_moderator" />
+	<arg name="sub_joint_state_topic_name"        default="/hsrb/joint_states" />
+	<arg name="pub_base_twist_topic_name"         default="/hsrb/command_velocity" />
+	<arg name="pub_arm_trajectory_topic_name"     default="/hsrb/arm_trajectory_controller/command" />
+	<arg name="pub_gripper_trajectory_topic_name" default="/hsrb/gripper_controller/command" />
+
+    <!-- keyboard -->
+	<node name="teleop_key_handyman" pkg="handyman" type="teleop_key_handyman" output="screen" launch-prefix="xterm -font r16 -bg darkblue -e">
+		<param name="sub_msg_to_robot_topic_name"       type="string" value="$(arg sub_msg_to_robot_topic_name)" />
+		<param name="pub_msg_to_moderator_topic_name"   type="string" value="$(arg pub_msg_to_moderator_topic_name)" />
+		<param name="sub_joint_state_topic_name"        type="string" value="$(arg sub_joint_state_topic_name)" />
+		<param name="pub_base_twist_topic_name"         type="string" value="$(arg pub_base_twist_topic_name)" />
+		<param name="pub_arm_trajectory_topic_name"     type="string" value="$(arg pub_arm_trajectory_topic_name)" />
+		<param name="pub_gripper_trajectory_topic_name" type="string" value="$(arg pub_gripper_trajectory_topic_name)" />
+	</node>
+</launch>

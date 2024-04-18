@@ -1,0 +1,62 @@
+<!-- sobit_pro_gmapping_multi_merger.launch -->
+
+<!-- pointcloud_to_laserscan -->
+<launch>
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+        <remap from="cloud_in" to="/points2"/>
+        <remap from="scan" to="/camera/scan" />
+        <rosparam>
+            target_frame: base_footprint
+            transform_tolerance: 0.01
+            min_height: 0.0
+            max_height: 2.0
+            
+            angle_min: -1.5708
+            angle_max: 1.5708
+            angle_increment: 0.0087
+            scan_time: 0.03333
+            range_min: 0.45
+            range_max: 10.0
+            use_inf: true
+            
+            #concurrency_level affects number of pc queued for processing and the number of threadsused
+            # 0: Detect number of cores
+            # 1: Single threaded
+            # 2: inf : Parallelism level
+            concurrency_level: 1
+        </rosparam>
+    </node>
+
+    <!-- laserscan_multi_merger -->
+    <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" launch-prefix="bash -c 'sleep 5.0; $0 $@' ">
+        <param name="destination_frame" value="base_footprint"/>
+		<param name="cloud_destination_topic" value="/merged_cloud"/>
+		<param name="scan_destination_topic" value="/scan_multi"/>
+        
+        <param name="laserscan_topics" value ="/scan /camera/scan" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+
+        <param name="angle_min" value="-2.3561"/>
+        <param name="angle_max" value="2.3561"/>
+        <param name="angle_increment" value="0.0058"/>
+        <param name="scan_time" value="0.0333333"/>
+        <param name="range_min" value="0.05"/>
+        <param name="range_max" value="10.0"/>
+	</node>
+
+    <!-- gmapping -->
+    <include file="$(find hsr_mapping)/launch/include/hsr_gmapping.launch.xml">
+        <arg name="scan_topic"           value="/scan_multi"/>
+        <arg name="occ_thresh"           value="0.05"/>
+        <arg name="map_update_interval"  value="5.0"/>
+        <arg name="throttle_scans"       value="1"/>
+    </include>
+
+	<!--save_map_command.py--><!--This is not node -->
+	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" output="screen" launch-prefix="xterm -font r16 -bg darkblue -e">
+        <param name="map_save_path" type="str" value="$(find hsr_mapping)/map/"/>
+    </node>
+    
+    <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_gmapping_multi.rviz"/>
+
+</launch>

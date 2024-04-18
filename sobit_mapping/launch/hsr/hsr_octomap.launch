@@ -1,0 +1,39 @@
+<launch>
+	<!-- octomap -->
+	<node name="octomap_server" pkg="octomap_server" type="octomap_server_node" launch-prefix="xterm -font r16 -bg darkblue -e">
+		<!-- data source to integrate (PointCloud2) -->
+        <remap from="cloud_in" to="/hsrb/head_rgbd_sensor/depth_registered/points" />
+        <rosparam>
+            frame_id : map
+            base_frame_id : base_footprint
+            latch : false
+            resolution : 0.05
+
+            filter_ground : false
+            <!-- ground_filter/distance : 0.10
+            ground_filter/angle : 0.20
+            ground_filter/plane_distance : 0.10 -->
+
+            pointcloud_min_z : 0.15
+            pointcloud_max_z : 2.0
+            occupancy_min_z : 0.15
+            occupancy_max_z : 1.7
+
+            sensor_model/max_range : 5.0
+
+            <!-- Ref : https://jsk-docs.readthedocs.io/projects/jsk_recognition/en/latest/jsk_pcl_ros/nodes/octomap_server_contact.html -->
+        </rosparam>
+	</node>
+
+    <!--save_3dmap_command.py--><!--This is not node -->
+    <arg name="map_path" default="$(find hsr_mapping)/map/" />
+	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" launch-prefix="xterm -font r16 -bg darkblue -e">
+        <param name="map_save_path" type="str" value="$(arg map_path)"/>
+    </node>
+    <!--projected_map_saver--><!--This is not node -->
+    <node name="projected_map_saver" pkg="sobit_mapping" type="projected_map_saver" launch-prefix="xterm -font r16 -bg darkblue -e">
+        <param name="map_save_path" type="str" value="$(arg map_path)"/>
+    </node>
+
+
+</launch>
