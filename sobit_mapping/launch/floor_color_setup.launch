@@ -1,6 +1,6 @@
 <launch>
     <arg name="cloud_topic_name"              default="/points2"/>  <!-- azure_kinect="/points2", realsense="/head_camera/depth_registered/points" -->
-    <node pkg="sobit_navigation" type="flor_color_setting" name="flor_color_setting" output="screen" >
+    <node pkg="sobit_navigation" type="floor_color_setting" name="floor_color_setting" output="screen" >
         <param name="topic_name" value="$(arg cloud_topic_name)"/>
         <param name="voxel_size" type="double" value="0.025"/>
         <param name="radius" type="double" value="0.05"/>

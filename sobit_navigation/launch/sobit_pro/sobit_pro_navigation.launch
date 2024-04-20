@@ -32,7 +32,7 @@
 
 
     <!-- Move_Base -->
-    <arg name="use_smoother"          default="true" />
+    <arg name="use_smoother"          default="false" />
     <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_move_base.launch.xml">
         <arg name="use_smoother" value="$(arg use_smoother)"/>
     </include>
