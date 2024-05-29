@@ -1,4 +1,4 @@
-<!-- sobit_pro_navigation_multi_sensor.launch -->
+<!-- sobit_pro_navigation.launch -->
 <launch>
     <arg name="rviz"                    default="true"/>
     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
@@ -40,10 +40,10 @@
 
 
     <!-- use_3D_camera_navigation -->
-    <arg name="use_3d_camera"    default="false" />
-    <arg name="pan_angle_deg"    default="0.0"/>
-    <arg name="tilt_angle_deg"   default="0.0"/>
-    <arg name="cloud_topic_name" default="/points2"/>
+    <arg name="use_3d_camera"                 default="false" />
+    <arg name="pan_angle_deg"                 default="0.0"/>
+    <arg name="tilt_angle_deg"                default="0.0"/>
+    <arg name="cloud_topic_name"              default="/points2"/>
     <arg name="object_point_cloud_topic_name" default="/bbox_to_tf/object_cloud"/>  <!-- yolov8_ros="/yolo_to_tf/object_cloud" ssd_nodelet="ssd_to_tf/object_cloud" -->
     <!-- obstacle_layer -->
     <node if="$(arg use_3d_camera)" pkg="sobit_navigation" type="noise_removal_pointcloud_publisher" name="noise_removal_pointcloud_publisher" >
