@@ -1,9 +1,9 @@
-<!-- sobit_pro_gmapping_multi_merger.launch -->
+<!-- hsr_gmapping_multi_merger.launch -->
 
 <!-- pointcloud_to_laserscan -->
 <launch>
     <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
-        <remap from="cloud_in" to="/points2"/>
+        <remap from="cloud_in" to="/hsrb/head_rgbd_sensor/depth/points"/>
         <remap from="scan" to="/camera/scan" />
         <rosparam>
             target_frame: base_footprint
@@ -33,7 +33,7 @@
 		<param name="cloud_destination_topic" value="/merged_cloud"/>
 		<param name="scan_destination_topic" value="/scan_multi"/>
         
-        <param name="laserscan_topics" value ="/scan /camera/scan" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+        <param name="laserscan_topics" value ="/hsrb/base_scan /camera/scan" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
 
         <param name="angle_min" value="-2.3561"/>
         <param name="angle_max" value="2.3561"/>
@@ -44,7 +44,7 @@
 	</node>
 
     <!-- gmapping -->
-    <include file="$(find hsr_mapping)/launch/include/hsr_gmapping.launch.xml">
+    <include file="$(find sobit_mapping)/launch/include/hsr_gmapping.launch.xml">
         <arg name="scan_topic"           value="/scan_multi"/>
         <arg name="occ_thresh"           value="0.05"/>
         <arg name="map_update_interval"  value="5.0"/>
@@ -53,7 +53,7 @@
 
 	<!--save_map_command.py--><!--This is not node -->
 	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" output="screen" launch-prefix="xterm -font r16 -bg darkblue -e">
-        <param name="map_save_path" type="str" value="$(find hsr_mapping)/map/"/>
+        <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
     </node>
     
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->

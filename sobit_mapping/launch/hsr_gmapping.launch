@@ -1,11 +1,12 @@
-<!-- sobit_pro_gmapping.launch -->
+<!-- hsr_gmapping.launch -->
 <launch>
     <!-- gmapping -->
-    <include file="$(find hsr_mapping)/launch/include/sobit_hsr_gmapping.launch.xml"/>
+    <include file="$(find sobit_mapping)/launch/include/hsr_gmapping.launch.xml"/>
 
 	<!--save_map_command.py--><!--This is not node -->
+	
 	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" launch-prefix="xterm -font r16 -bg darkblue -e">
-        <param name="map_save_path" type="str" value="$(find hsr_mapping)/map/"/>
+        <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
     </node>
 
     <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->

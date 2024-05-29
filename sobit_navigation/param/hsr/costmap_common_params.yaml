@@ -25,7 +25,7 @@ obstacle_layer:
   obstacle_range: 2.5
   raytrace_range: 3.0
   publish_voxel_map: false
-  observation_sources: scan rgbd #obstacle 
+  observation_sources: scan obstacle # scan obstacle 
   scan:
     data_type: LaserScan
     topic: /hsrb/base_scan
@@ -36,7 +36,7 @@ obstacle_layer:
     observation_persistence: 0.0
     min_obstacle_height: 0.00
     max_obstacle_height: 0.40
-  rgbd:
+  obstacle:
     data_type: PointCloud2
     sensor_frame : head_rgbd_sensor_rgb_frame
     topic:  /hsrb/head_rgbd_sensor/depth/points
@@ -49,23 +49,6 @@ obstacle_layer:
     max_obstacle_height: 1.6
     obstacle_range: 1.0
     raytrace_range: 1.0
-  # rgbd:
-  #   data_type: PointCloud2
-  #   topic: k4a/points2
-  #   marking: true
-  #   clearing: true
-  #   inf_is_valid: true
-  #   observation_persistence: 0.0
-  #   min_obstacle_height: 0.2
-  #   max_obstacle_height: 1.5
-  # obstacle:
-  #   data_type: PointCloud2
-  #   topic: point_cloud_object_detection/cloud_object
-  #   marking: true
-  #   clearing: false
-  #   min_obstacle_height: 0.0
-  #   max_obstacle_height: 1.0
-  # for debugging only, let's you see the entire voxel grid
 
 #cost_scaling_factor and inflation_radius were now moved to the inflation_layer ns
 inflation_layer:

@@ -1,0 +1,24 @@
+<!-- sobit_turtlebot_create_location_file.launch -->
+<launch>
+    <!-- create_location_file(ymal型ver) -->
+    <arg name="use_robot" default="true"/>
+    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
+    <arg name="location_folder_path" default="$(find sobit_mapping)/map"/>
+    <group ns = "create_location_file">
+        <node pkg="sobit_mapping" type="create_location_file"  name="create_location_file" output="screen">
+            <param name="save_location_folder_path" type="string" value="$(arg location_folder_path)"/>
+            <param name="use_robot" type="bool" value="$(arg use_robot)"/>
+        </node>
+        <node pkg="sobit_mapping" type="display_location_marker"  name="display_location_marker">
+        </node>
+    </group>
+
+    <!-- Map server -->
+    <node unless="$(arg use_robot)" name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+    <node unless="$(arg use_robot)" pkg="rviz" type="rviz" name="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+
+    <!-- Move Base -->
+    <include if="$(arg use_robot)" file="$(find sobit_navigation)/launch/hsr/hsr_navigation.launch">
+        <arg name="map_file" value="$(arg map_file)"/>
+    </include>
+</launch>

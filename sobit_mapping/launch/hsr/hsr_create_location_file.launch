@@ -1,7 +1,7 @@
 <!-- sobit_turtlebot_create_location_file.launch -->
 <launch>
     <!-- Navigation -->
-    <include file="$(find sobit_navigation)/launch/sobit_hsr_navigation.launch"/>
+    <include file="$(find sobit_navigation)/launch/hsr/hsr_navigation.launch"/>
 
     <arg name="sub_msg_to_robot_topic_name"       default="/handyman/message/to_robot" />
 	<arg name="pub_msg_to_moderator_topic_name"   default="/handyman/message/to_moderator" />
@@ -9,7 +9,6 @@
 	<arg name="pub_base_twist_topic_name"         default="/hsrb/command_velocity" />
 	<arg name="pub_arm_trajectory_topic_name"     default="/hsrb/arm_trajectory_controller/command" />
 	<arg name="pub_gripper_trajectory_topic_name" default="/hsrb/gripper_controller/command" />
-
     <!-- keyboard -->
 	<node name="teleop_key_handyman" pkg="handyman" type="teleop_key_handyman" output="screen" launch-prefix="xterm -e">
 

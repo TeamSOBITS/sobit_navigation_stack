@@ -26,7 +26,7 @@
 	</node>
 
     <!--save_3dmap_command.py--><!--This is not node -->
-    <arg name="map_path" default="$(find hsr_mapping)/map/" />
+    <arg name="map_path" default="$(find sobit_mapping)/map/" />
 	<node name="save_3dmap_command" pkg="sobit_mapping" type="save_3dmap_command.py" launch-prefix="xterm -font r16 -bg darkblue -e">
         <param name="map_save_path" type="str" value="$(arg map_path)"/>
     </node>

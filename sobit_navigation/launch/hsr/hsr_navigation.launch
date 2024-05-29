@@ -33,9 +33,4 @@
 
     <!-- Move_Base -->
     <include file="$(find sobit_navigation)/launch/include/hsr/hsr_move_base.launch.xml"/>
-
-
-
-    <!--param-->
-    <!-- <rosparam command="load" file="$(find sobit_mapping)/map/LayoutIC01_destination.yaml"/> -->
 </launch>

@@ -11,8 +11,8 @@
     <arg name="map_topic" default="/map" />
     <!-- <arg name="custom_param_file" default="$(find sobit_navigation)/param/hsr/dummy.yaml"/> -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
-        <rosparam file="$(find sobit_navigation)/param/hsr/global_costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find sobit_navigation)/param/hsr/local_costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find sobit_navigation)/param/hsr/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find sobit_navigation)/param/hsr/costmap_common_params.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find sobit_navigation)/param/hsr/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find sobit_navigation)/param/hsr/global_costmap_params.yaml" command="load" />
         <rosparam file="$(find sobit_navigation)/param/hsr/dwa_local_planner_params.yaml" command="load" />

@@ -1,5 +1,5 @@
 <launch>
-    <!--rtabmap-->>
+    <!--rtabmap-->
 	<arg name="database_path" default="map/rtabmap.db" />
 	<node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen">
 		<param name="databse_path" type="string" value="$(arg database_path)" />
