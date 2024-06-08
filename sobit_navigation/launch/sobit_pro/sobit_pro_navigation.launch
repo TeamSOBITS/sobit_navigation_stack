@@ -73,5 +73,7 @@
 
     <!-- addition the velocity of linear y to SOBIT PRO. default is false -->
     <arg name="ydwa" default="true"/>
-    <node if="$(arg ydwa)" name="pro_move_base" pkg="move_base" type="pro_move_base" output="screen"/>
+    <node if="$(arg ydwa)" name="pro_move_base" pkg="move_base" type="pro_move_base" output="screen">
+        <rosparam command="load" file="$(find sobit_navigation)/param/sobit_pro/pro_move_base_param.yaml"/>
+    </node>
 </launch>
