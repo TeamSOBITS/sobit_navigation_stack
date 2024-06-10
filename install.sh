@@ -14,7 +14,8 @@ if [ "clone_mode" == $1 ]; then
     git clone https://github.com/ros-perception/slam_gmapping.git
     git clone https://github.com/ros-perception/openslam_gmapping.git
     git clone https://github.com/ros-planning/navigation_msgs.git
-    git clone https://github.com/ros-planning/navigation.git
+    sudo rm -rv navigation
+    git clone -b sobit_pro/y-dwa git clone https://github.com/TeamSOBITS/navigation.git
     git clone https://github.com/ros/geometry2.git
 
 else 
