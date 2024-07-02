@@ -1,7 +1,9 @@
 <!-- gmapping.launch -->
 <launch>
     <!-- gmapping -->
-    <include file="$(find sobit_mapping)/launch/include/sobit_gmapping.launch.xml"/>
+	<include file="$(find sobit_mapping)/launch/include/sobit_gmapping.launch.xml">
+		<arg name="scan_topic" value="/scan" />
+	</include>
 
 	<!--save_map_command.py--><!--This is not node -->
     <arg name="save_map" default="true" />

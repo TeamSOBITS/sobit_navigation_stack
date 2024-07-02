@@ -8,7 +8,7 @@
         <rosparam>
             target_frame: base_footprint
             transform_tolerance: 0.01
-            min_height: 0.0
+            min_height: 0.3
             max_height: 2.0
             
             angle_min: -1.5708
@@ -44,7 +44,7 @@
 	</node>
 
     <!-- gmapping -->
-    <include file="$(find sobit_mapping)/launch/include/hsr_gmapping.launch.xml">
+    <include file="$(find sobit_mapping)/launch/include/sobit_gmapping.launch.xml">
         <arg name="scan_topic"           value="/scan_multi"/>
         <arg name="occ_thresh"           value="0.05"/>
         <arg name="map_update_interval"  value="5.0"/>
@@ -52,11 +52,15 @@
     </include>
 
 	<!--save_map_command.py--><!--This is not node -->
-	<node name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" output="screen" launch-prefix="xterm -font r16 -bg darkblue -e">
+    <arg name="save_map" default="true" />
+	<node if="$(arg save_map)" name="save_map_command" pkg="sobit_mapping" type="save_map_command.py" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <param name="map_save_path" type="str" value="$(find sobit_mapping)/map/"/>
     </node>
-    
-    <!-- rviz : Used for visualising the turtlebot while building a map or navigating with the ros navistack.-->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find sobit_mapping)/config/rviz/sobit_gmapping_multi.rviz"/>
 
+    <arg name="rviz"                    default="true"/>
+    <arg name="rviz_cfg"                default="$(find sobit_mapping)/config/rviz/sobit_navigation.rviz"/>
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_cfg)"/>
+
+    <arg name="rqt_reconfigure"         default="false"/>
+    <node if="$(arg rqt_reconfigure)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
 </launch>
