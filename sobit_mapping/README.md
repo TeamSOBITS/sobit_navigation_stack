@@ -41,12 +41,12 @@
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
 3. カメラの点群を2D LiDARと統合した地図生成を起動 \
-    以下のコマンドで起動．\
-    - 実機で地点登録 \
+    以下のコマンドで起動．
+    - 実機で地点登録
         ```sh
         $ roslaunch sobit_mapping gmapping_multi_sensor.launch
         ```
-    - HSRで地点登録 \
+    - HSRで地点登録
         ```sh
         $ roslaunch sobit_mapping hsr_gmapping_multi_sensor.launch
         ```
