@@ -12,7 +12,8 @@
 オープンソース[explore_lite](http://wiki.ros.org/explore_lite)を使って，ロボットが自律的に地図生成を行う． 
 1. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
+    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
+    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
 2. 自律地図生成を起動する 
     - SOBIT PROで自律地図生成[sobit_pro_active_slam.launch](/sobit_mapping/launch/sobit_pro_active_slam.launch)を起動
     ```sh
@@ -22,9 +23,13 @@
     ```sh
     $ roslaunch sobit_mapping sobit_turtlebot_active_slam.launch
     ```
+    - HSRで自律地図生成[hsr_active_slam.launch](/sobit_mapping/launch/hsr_active_slam.launch)を起動 
+    ```sh
+    $ roslaunch sobit_mapping hsr_active_slam.launch
+    ```
 3. Navigationしたい環境の地図を保存 \
     Rvizの地図を見て，ほしい地図ができていたらsave_map_command.pyのターミナル(青いターミナル)でEnterボタンを押して地図を保存する．\
-    保存された地図画像と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
+    保存された地図画像と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 
 # カメラを用いた地図生成
@@ -36,29 +41,40 @@
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
 3. カメラの点群を2D LiDARと統合した地図生成を起動 \
-    以下のコマンドで起動．
-    ```sh
-    $ roslaunch sobit_mapping gmapping_multi_sensor.launch
-    ```
+    以下のコマンドで起動．\
+    - 実機で地点登録 \
+        ```sh
+        $ roslaunch sobit_mapping gmapping_multi_sensor.launch
+        ```
+    - HSRで地点登録 \
+        ```sh
+        $ roslaunch sobit_mapping hsr_gmapping_multi_sensor.launch
+        ```
 4. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動 \
-    以下のコマンドで起動する． 
-    ```sh
-    $ roslaunch sobit_mapping teleop.launch
-    ```
+    以下のコマンドで起動する．
+    - 実機ロボットの場合
+        ```sh
+        $ roslaunch sobit_mapping teleop.launch
+        ```
+    - HSRの場合
+        ```sh
+        $ roslaunch sobit_mapping hsr_teleop.launch
+        ```
 5. ロボットを操作して，Navigationしたい環境の地図を保存 \
     起動したターミナルで操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
     地図ができたら，save_map_comaandのターミナル(青いターミナル)でEnterボタンを押して地図を保存する．\
-    保存された地図画像(pgmファイル)と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
+    保存された地図画像(pgmファイル)と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 > [!NOTE]
-> ロボットを起動させた状態では，カメラが正面向いているので，ロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を参照して，カメラを下に向けたりしても良い．
+> ロボットを起動させた状態では，カメラが正面向いているので，ロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))や，HSRのパッケージを参照して，カメラを下に向けたりしても良い．
 
 
 # ロボットを用いずに地点登録
 1. 生成した地図のパスを登録する \
-    [create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをfalseにし，さらにmap_fileを書き換える． \
+    実機の場合は[/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)，HSRの場合は[/sobit_mapping/launch/hsr_create_location_file.launch](/sobit_mapping/launch/hsr_create_location_file.launch)のuse_robotをfalseにする．\
+    さらにそのlaunchファイル内のmap_fileを書き換える．\
     map_fileは，自分で生成した地図を指定する．\
-    例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
+    例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．(use_robotをfalseにする例も同時に以下に示す．)
     ```xml
     <arg name="use_robot" default="false"/>
     <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
@@ -66,16 +82,21 @@
     ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する．
 2. 地点登録を起動する \
     以下のコマンドで起動する．
-    ```sh
-    $ roslaunch sobit_mapping create_location_file.launch
-    ```
+    - 実機で地点登録
+        ```sh
+        $ roslaunch sobit_mapping create_location_file.launch
+        ```
+    - HSRで地点登録
+        ```sh
+        $ roslaunch sobit_mapping hsr_create_location_file.launch
+        ```
 3. 地点を登録する \
     起動したRvizで，2D Nav Goalをmapにクリックする．
     そこで地点登録のターミナルに地点名を入力し，Enterを押してその位置を登録．
 4. 保存 \
-    この手順で全ての地点を登録する．\
+    3を繰り返していくことで地点登録したい全ての地点を登録する．\
     地点登録が終わったら，端末で「q」と入力し，最後に適当に2D Nav Goalをクリックして終了する．\
-    地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，"map_location_"+"保存した日時"のファイル名で保存される．
+    地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_location_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 
 # 地点登録確認・追加

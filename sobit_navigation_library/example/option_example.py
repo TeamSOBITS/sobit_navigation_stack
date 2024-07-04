@@ -5,7 +5,7 @@ import sys
 
 
 def test():
-    rospy.init_node("navigation_test")
+    rospy.init_node("navigation_option_test")
     args = sys.argv
     nav_lib = SOBITNavigationLibraryPython(args[0])
 

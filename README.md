@@ -1,14 +1,14 @@
 <a name="readme-top"></a>
 
-[JP](README.md) | [EN](README_EN.md)
+[JP](README.md) | [EN](README_en.md)
 
-<!-- [![Contributors][contributors-shield]][contributors-url]
+[![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url] -->
+[![Issues][issues-shield]][issues-url]
 <!-- [![MIT License][license-shield]][license-url] -->
 
-# Sobit Navigation Stack
+# SOBIT Navigation Stack
 
 <!-- 目次 -->
 <details>
@@ -40,7 +40,7 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-SOBIT PRO，SOBIT EDU，SOBIT MINIのための自律移動パッケージ．\
+SOBIT PRO，SOBIT EDU，SOBIT MINI，HSR(Simulation)のための自律移動パッケージ．\
 Navigationのオープンソースの概要は[こちら](https://robo-marc.github.io/navigation_documents/introduction.html)をチェック．\
 また自律移動の仕組みについても，[ROSのオープンソース](https://robo-marc.github.io/navigation_documents/navigation_overview.html#)を参照．
 
@@ -60,6 +60,7 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
 | Ubuntu | 20.04 (Focal Fossa) |
 | ROS | Noetic Ninjemys |
 | Python | 3.0~ |
+| Simulator(使用する場合) | Sigverse ROS |
 
 ### インストール方法
 
@@ -114,78 +115,91 @@ Navigationを使う上での基本的な流れ
 ### 地図生成
 1. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
-2. 地図生成を起動 \
+    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
+    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
+2. 地図生成を起動\
     以下のコマンドで起動． 
-    ```sh
-    $ roslaunch sobit_mapping gmapping.launch
-    ```
-3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動 \
-    以下のコマンドで起動する．
-    ```sh
-    $ roslaunch sobit_mapping teleop.launch
-    ```
+    - 実機ロボットの場合
+        ```sh
+        $ roslaunch sobit_mapping gmapping.launch
+        ```
+    - HSRの場合
+        ```sh
+        $ roslaunch sobit_mapping hsr_gmapping.launch
+        ```
+3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動\
+    以下のコマンドで起動．
+    - 実機ロボットの場合
+        ```sh
+        $ roslaunch sobit_mapping teleop.launch
+        ```
+    - HSRの場合
+        ```sh
+        $ roslaunch sobit_mapping hsr_teleop.launch
+        ```
 4. ロボットを操作して，Navigationしたい環境の地図を保存 \
-    起動したターミナルで操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
+    起動したxtermターミナル(青いターミナル)で操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
     地図ができたら，save_map_command.pyのターミナル(青いターミナル)でEnterボタンを押して地図を保存する．\
-    保存された地図画像(pgmファイル)と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に保存した日時のファイル名で保存される．
+    保存された地図画像(pgmファイル)と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 > [!NOTE]
 > これを人間がロボットを操作せずに，自律的に行えないのか？と思ったら[自律地図生成の仕方](/sobit_mapping/README.md/#自律地図生成)をチェック．
 
 > [!NOTE]
-> これは2D LiDARのみでの地図生成であるが，一脚のテーブルのような立体的な障害物は2D LiDARでの検出ができない．
+> これは2D LiDARのみでの地図生成であるが，一脚テーブルのような立体的な障害物は2D LiDARでの検出ができない．
 > そこでロボットの3D cameraを用いることで解決する[カメラを用いた地図生成について](/sobit_mapping/README.md/#カメラを用いた地図生成)をチェック．
 
 
 ### 地点登録
-1. 生成した地図のパスをNavigationに書き換える
-    - SOBIT PROで地点登録 \
-        [/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを書き換える．
-    - SOBIT EDU，SOBIT MINIで地点登録 \
-        [/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを書き換える．
+1. 生成した地図のパスをNavigationに書き換える\
+    生成した地図のパスを指定する．
+    - 実機で地点登録 \
+        [/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のmap_fileを書き換える．
+    - HSRで地点登録 \
+        [/sobit_mapping/launch/hsr_create_location_file.launch](/sobit_mapping/launch/hsr_create_location_file.launch)のmap_fileを書き換える．
+
     map_fileは，自分で生成した地図を指定する．\
     例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
     ```xml
     <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
     ```
-    ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する． \
-    また，[/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のuse_robotをtrueにする．
+    ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する． 
 2. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
-3. Navigationを起動する \
-    ロボットによって，以下どちらかのコマンドでNavigationを起動する．
-    - SOBIT PROで地点登録
-    ```sh
-    $ roslaunch sobit_navigation sobit_pro_navigation.launch
-    ```
-    - SOBIT EDU，SOBIT MINIで地点登録
-    ```sh
-    $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
-    ```
-4. 地点登録を起動する \
+    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
+    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
+3. 地点登録を起動する \
+    実機の場合は[/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)，HSRの場合は[/sobit_mapping/launch/hsr_create_location_file.launch](/sobit_mapping/launch/hsr_create_location_file.launch)のuse_robotをtrueにする．\
     以下のコマンドで起動する．
-    ```sh
-    $ roslaunch sobit_mapping create_location_file.launch
-    ```
-5. 地点を登録する \
-    ロボットのいる位置が登録される．\
+    - 実機で地点登録
+        ```sh
+        $ roslaunch sobit_mapping create_location_file.launch
+        ```
+    - HSRで地点登録
+        ```sh
+        $ roslaunch sobit_mapping hsr_create_location_file.launch
+        ```
+4. 地点を登録する\
+    この機能の概要としてロボットのいる位置が登録されるので，ロボットを地点登録したい位置まで移動させる．\
     ロボットの移動のさせ方は以下2通りがあるので好きな方を選ぶ．
-    - Navigationの機能を用いる \
-    起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する． 
-    - Mappingしたときのように人間が操作 \
-    [teleop.launch](/sobit_mapping/launch/teleop.launch)を用いてロボットを移動． \
-    以下のコマンドで起動する． 
-    ```sh
-    $ roslaunch sobit_mapping teleop.launch
-    ```
+    - Navigationの機能を用いる\
+        起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する． 
+    - 地図生成したときのように人間が操作\
+        以下のコマンドで実行
+        - 実機ロボットの場合
+            ```sh
+            $ roslaunch sobit_mapping teleop.launch
+            ```
+        - HSRの場合
+            ```sh
+            $ roslaunch sobit_mapping hsr_teleop.launch
+            ```
     ロボットを登録させたい位置まで移動． \
     そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
-6. 保存 \
-    この手順で地点登録したい全ての地点を登録する．\
+5. 保存 \
+    4を繰り返していくことで地点登録したい全ての地点を登録する．\
     地点登録が終わったら，端末で「q」と入力して保存する．\
-    地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，"map_location_"+"保存した日時"のファイル名で保存される．
+    地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_location_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 > [!NOTE]
 > ここではロボットを使っての地点登録方法を書いたが，RoboCupでは競技環境を使える時間に限りがある．
@@ -194,17 +208,19 @@ Navigationを使う上での基本的な流れ
 > 詳しい使い方は[ロボットを用いずに地点登録](/sobit_mapping/README.md/#ロボットを用いずに地点登録)をチェック．
 
 > [!NOTE]
-> 地点登録結果を見たり，追加したい場合は[こちら](/sobit_mapping/README.md/#地点登録確認・追加)．
+> 地点登録結果をRvizで見たり，追加したい場合は[こちら](/sobit_mapping/README.md/#地点登録確認・追加)．
 
 
 ### actionlibによって呼び出す（実際にNavigationする）
-1. map_fileを生成したマップに書き換える
+1. map_fileを地図生成した地図に書き換える\
+    Navigationに地図を登録する．
     - SOBIT PROでナビゲーション
-    [/sobit_navigation/launch/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．\
-    既に書き換えられている場合はそのままでOK．
+        [/sobit_navigation/launch/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
     - SOBIT EDU，SOBIT MINIでナビゲーション
-    [/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．\
-    既に書き換えられている場合はそのままでOK．
+        [/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
+    - HSRでナビゲーション
+        [/sobit_navigation/launch/hsr/hsr_navigation.launch](/sobit_navigation/launch/hsr/hsr_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
+    ここで書くのは，地図データです．地点登録のファイルと間違わないようにしてください．
 2. 地点登録した情報をrosparamに登録する \
     [/sobit_mapping/launch/load_location_file.launch](/sobit_mapping/launch/load_location_file.launch)のrosparamのfileを，自分で生成した地点登録ファイルに書き換える．\
     例えば，[map_location_example.ymal](/sobit_mapping/map/map_location_example.ymal)という地点登録ファイルの場合は，以下のように指定する．
@@ -215,19 +231,25 @@ Navigationを使う上での基本的な流れ
     ```sh
     $ roslaunch sobit_mapping load_location_file.launch
     ```
+    このlaunchファイルはターミナルが終了します
 3. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．
+    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
+    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
 4. Navigationを起動する \
     以下のコマンドでNavigationを起動する． 
     - SOBIT PROでナビゲーション
-    ```sh
-    $ roslaunch sobit_navigation sobit_pro_navigation.launch
-    ```
+        ```sh
+        $ roslaunch sobit_navigation sobit_pro_navigation.launch
+        ```
     - SOBIT EDU，SOBIT MINIでナビゲーション
-    ```sh
-    $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
-    ```
+        ```sh
+        $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
+        ```
+    - HSRでナビゲーション
+        ```sh
+        $ roslaunch sobit_navigation hsr_navigation.launch
+        ```
 5. アクションクライアントを起動する \
     これは基本的にプログラムから起動する．\
     地点登録した地点名ならどこにでも移動することが可能．\
@@ -244,7 +266,7 @@ Navigationを使う上での基本的な流れ
 
 > [!NOTE]
 > ここで紹介したNavigtionは，基本的な使い方とテスト動作について書いた．
-> ロボットに自律的に移動してもらうには，細かいシチュエーションごとに様々な課題があり，これまでSOBITSではいくつかの工夫が考えられてきた．
+> ロボットに自律的な移動をしてもらうには，細かいシチュエーションごとに様々な課題があり，これまでSOBITSではいくつかの工夫が考えられてきた．
 > そこで様々な工夫がされたものについては，[こちら](/sobit_navigation/README.md)を参照して下さい．
 
 
@@ -253,16 +275,16 @@ Navigationを使う上での基本的な流れ
 
 
 <!-- マイルストーン -->
-<!-- ## マイルストーン
-
+## マイルストーン
+<!-- 
 - [x] 目標 1
 - [ ] 目標 2
 - [ ] 目標 3
-    - [ ] サブ目標
+    - [ ] サブ目標 -->
 
-現時点のバッグや新規機能の依頼を確認するために[Issueページ](https://github.com/github_username/repo_name/issues) をご覧ください．
+現時点のバッグや新規機能の依頼を確認するために[Issueページ](issues-url) をご覧ください．
 
-<p align="right">(<a href="#readme-top">上に</a>)</p> -->
+<p align="right">(<a href="#readme-top">上に</a>)</p>
 
 
 
@@ -319,16 +341,16 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-<!-- [license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt -->
+[contributors-shield]: https://img.shields.io/github/contributors/TeamSOBITS/sobit_navigation_stack.svg?style=for-the-badge
+[contributors-url]: https://github.com/TeamSOBITS/sobit_navigation_stack/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/TeamSOBITS/sobit_navigation_stack.svg?style=for-the-badge
+[forks-url]: https://github.com/TeamSOBITS/sobit_navigation_stack/network/members
+[stars-shield]: https://img.shields.io/github/stars/TeamSOBITS/sobit_navigation_stack.svg?style=for-the-badge
+[stars-url]: https://github.com/TeamSOBITS/sobit_navigation_stack/stargazers
+[issues-shield]: https://img.shields.io/github/issues/TeamSOBITS/sobit_navigation_stack.svg?style=for-the-badge
+[issues-url]: https://github.com/TeamSOBITS/sobit_navigation_stack/issues
+[license-shield]: https://img.shields.io/github/license/TeamSOBITS/sobit_navigation_stack.svg?style=for-the-badge
+[license-url]: LICENSE
 
 
 
