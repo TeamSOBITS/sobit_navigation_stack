@@ -75,6 +75,5 @@
     <arg name="ydwa" default="false"/>
     <node if="$(arg ydwa)" name="pro_move_base" pkg="move_base" type="pro_move_base" output="screen">
         <rosparam command="load" file="$(find sobit_navigation)/param/sobit_pro/pro_move_base_param.yaml"/>
-        <!-- <rosparam if="$(arg ydwa)" command="load" file="$(find sobit_navigation)/param/sobit_pro/pro_move_base_param.yaml"/> -->
     </node>
 </launch>

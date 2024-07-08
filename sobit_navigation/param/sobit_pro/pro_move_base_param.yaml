@@ -1,0 +1,36 @@
+# speed
+sum_max_speed : 0.30
+sum_min_speed : 0.05
+max_speed_x : 0.30
+min_speed_x : 0.00
+max_speed_y :  0.20
+min_speed_y : -0.20
+max_angle : 0.523 # 約30°
+max_angle_y : 0.523 # 約30°
+
+# accel
+max_accel_x : 0.35
+max_accel_y : 0.30
+max_angle_accel : 0.523 # 約30°
+max_angle_accel_y : 0.523 # 約30°
+
+# weight
+velocity_weight : 1.0
+angle_weight : 1.0
+obstacle_distance_weight : 1.0
+trajectory_weight : 1.0
+
+# time
+delta_time : 0.1
+predect_step : 6
+
+# reso
+speed_reso_x : 0.03
+speed_reso_y : 0.02
+speed_reso_ang : 0.088 # 約5°
+
+# other
+robot_radius : 0.35
+goal_position_range : 0.6
+local_position_range : 0.2
+linear_y_angle_range : 0.698 # 約40°
