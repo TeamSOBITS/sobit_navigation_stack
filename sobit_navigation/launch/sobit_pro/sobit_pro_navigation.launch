@@ -69,4 +69,12 @@
         <param name="pan_angle_deg"     type="double"   value="$(arg pan_angle_deg)"/>
         <param name="tilt_angle_deg"    type="double"   value="$(arg tilt_angle_deg)"/>
     </node>
+
+
+    <!-- addition the velocity of linear y to SOBIT PRO. default is false -->
+    <arg name="ydwa" default="false"/>
+    <node if="$(arg ydwa)" name="pro_move_base" pkg="move_base" type="pro_move_base" output="screen">
+        <rosparam command="load" file="$(find sobit_navigation)/param/sobit_pro/pro_move_base_param.yaml"/>
+        <!-- <rosparam if="$(arg ydwa)" command="load" file="$(find sobit_navigation)/param/sobit_pro/pro_move_base_param.yaml"/> -->
+    </node>
 </launch>
