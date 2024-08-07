@@ -1,0 +1,25 @@
+location_pose:
+    - {
+        location_name: "kitchen",
+        frame_id: "map",
+        translation_x: 5.0993176,
+        translation_y: -0.1737386,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.0177582,
+        rotation_w: 0.9998423,
+    }
+
+    - {
+        location_name: "living",
+        frame_id: "map",
+        translation_x: 4.0851297,
+        translation_y: -0.1697296,
+        translation_z: 0.0000000,
+        rotation_x: 0.0000000,
+        rotation_y: 0.0000000,
+        rotation_z: -0.9944646,
+        rotation_w: 0.1050722,
+    }
+

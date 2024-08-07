@@ -24,7 +24,9 @@
         <li><a href="#インストール方法">インストール方法</a></li>
       </ul>
     </li>
-    <li><a href="#Navigationの主な使い方">Navigationの主な使い方</a></li>
+    <li><a href="#地点登録">地点登録</a></li>
+    <li><a href="#地点登録確認・追加">地点登録確認・追加</a></li>
+    <li><a href="#Navigationの使い方">Navigationの使い方</a></li>
     <!-- <li><a href="#マイルストーン">マイルストーン</a></li> -->
     <!-- <li><a href="#変更履歴">変更履歴</a></li> -->
     <!-- <li><a href="#contributing">Contributing</a></li> -->
@@ -40,9 +42,11 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-SOBIT PRO，SOBIT EDU，SOBIT MINI，HSR(Simulation)のための自律移動パッケージ．\
-Navigationのオープンソースの概要は[こちら](https://robo-marc.github.io/navigation_documents/introduction.html)をチェック．\
-また自律移動の仕組みについても，[ROSのオープンソース](https://robo-marc.github.io/navigation_documents/navigation_overview.html#)を参照．
+Kachaka(ROS2)のための自律移動パッケージ．\
+
+> [!NOTE]
+> kachaka-apiがインストールされている必要があります.
+
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
@@ -54,15 +58,14 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
 
 ### 環境条件
 
-必要な外部ソフトや正常動作を確認した環境について説明してください．
 | System  | Version |
 | ------------- | ------------- |
-| Ubuntu | 20.04 (Focal Fossa) |
+| Ubuntu | 22.04 (Focal Fossa) |
 | ROS | Noetic Ninjemys |
-| Python | 3.0~ |
-| Simulator(使用する場合) | Sigverse ROS |
+| Python | 3.10~ |
 
 ### インストール方法
+
 
 1. ROSの`src`フォルダに移動します．
    ```sh
@@ -70,27 +73,12 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
    ```
 2. 本レポジトリをcloneします．
    ```sh
-   $ git clone https://github.com/TeamSOBITS/sobit_navigation_stack.git
+   $ git clone -b feature/kachaka https://github.com/TeamSOBITS/sobit_navigation_stack.git
    ```
-3. レポジトリの中へ移動します．
+3. パッケージをコンパイルします．
    ```sh
-   $ cd sobit_navigation_stack
-   ```
-4. 依存パッケージをインストールします．
-    - 通常のインストール方法
-        ```sh
-        $ bash install.sh
-        ```
-    - Navigationを深く勉強したい人向け
-        ```sh
-        $ bash install.sh clone_mode
-        ```
-        Navigation関係のパッケージをgit cloneによりインストールすることで，プログラムコードを編集して改良することができる \
-        プログラムコードは[パッケージ一覧](/sobit_navigation_packages/)のところにまとめてインストールされる
-5. パッケージをコンパイルします．
-   ```sh
-   $ cd ~/catkin_ws/
-   $ catkin_make
+   $ cd ~/colcon_ws/
+   $ colcon build
    ```
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
@@ -98,176 +86,62 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
 
 
 <!-- 実行・操作方法 -->
-## Navigationの主な使い方
-
-Navigationを使う上での基本的な流れ
-1. 地図生成 
-    - 目的地まで，障害物を回避した経路を生成するため，ロボットが事前に地図を知る必要がある
-    - 地図の障害物のデータと，現在ロボットが取得しているデータから，ロボットが現在どこにいるのかを推測する
-2. 地点登録 
-    - 生成した地図の，どの位置からどの位置までの経路を生成するかのポイントとなる位置を登録する
-3. actionlibによって呼び出す 
-    - ロボットの現在の地点から登録した地点まで，地図上の障害物がない安全なエリアに経路生成をする
-    - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるactionlib通信を用いる
 
 
 
-### 地図生成
-1. ロボットを起動する \
-    ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
-    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
-2. 地図生成を起動\
-    以下のコマンドで起動． 
-    - 実機ロボットの場合
-        ```sh
-        $ roslaunch sobit_mapping gmapping.launch
-        ```
-    - HSRの場合
-        ```sh
-        $ roslaunch sobit_mapping hsr_gmapping.launch
-        ```
-3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動\
-    以下のコマンドで起動．
-    - 実機ロボットの場合
-        ```sh
-        $ roslaunch sobit_mapping teleop.launch
-        ```
-    - HSRの場合
-        ```sh
-        $ roslaunch sobit_mapping hsr_teleop.launch
-        ```
-4. ロボットを操作して，Navigationしたい環境の地図を保存 \
-    起動したxtermターミナル(青いターミナル)で操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
-    地図ができたら，save_map_command.pyのターミナル(青いターミナル)でEnterボタンを押して地図を保存する．\
-    保存された地図画像(pgmファイル)と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_ + 保存した日時 + .yaml」のファイル名で保存される．
-
-> [!NOTE]
-> これを人間がロボットを操作せずに，自律的に行えないのか？と思ったら[自律地図生成の仕方](/sobit_mapping/README.md/#自律地図生成)をチェック．
-
-> [!NOTE]
-> これは2D LiDARのみでの地図生成であるが，一脚テーブルのような立体的な障害物は2D LiDARでの検出ができない．
-> そこでロボットの3D cameraを用いることで解決する[カメラを用いた地図生成について](/sobit_mapping/README.md/#カメラを用いた地図生成)をチェック．
-
-
-### 地点登録
-1. 生成した地図のパスをNavigationに書き換える\
-    生成した地図のパスを指定する．
-    - 実機で地点登録 \
-        [/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のmap_fileを書き換える．
-    - HSRで地点登録 \
-        [/sobit_mapping/launch/hsr_create_location_file.launch](/sobit_mapping/launch/hsr_create_location_file.launch)のmap_fileを書き換える．
-
-    map_fileは，自分で生成した地図を指定する．\
-    例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
-    ```xml
-    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
-    ```
-    ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する． 
-2. ロボットを起動する \
-    ロボット本体と，2D-LiDARを起動させる． \
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
-    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
+## 地点登録
+1. Kachakaを起動し接続する \
+2. アプリで地点登録したい地図を設定する\
 3. 地点登録を起動する \
-    実機の場合は[/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)，HSRの場合は[/sobit_mapping/launch/hsr_create_location_file.launch](/sobit_mapping/launch/hsr_create_location_file.launch)のuse_robotをtrueにする．\
+    ロボットを動かして地点登録する場合は[/sobit_navigation_stack/launch/create_location_file_launch.py](/sobit_navigation_stack/launch/create_location_file_launch.py)のuse_robotをtrueにする．\
+    動かさない場合はfalseにする．\
     以下のコマンドで起動する．
     - 実機で地点登録
         ```sh
-        $ roslaunch sobit_mapping create_location_file.launch
-        ```
-    - HSRで地点登録
-        ```sh
-        $ roslaunch sobit_mapping hsr_create_location_file.launch
+        $ ros2 launch sobit_navigation_stack create_location_file_launch.py
         ```
 4. 地点を登録する\
-    この機能の概要としてロボットのいる位置が登録されるので，ロボットを地点登録したい位置まで移動させる．\
-    ロボットの移動のさせ方は以下2通りがあるので好きな方を選ぶ．
-    - Navigationの機能を用いる\
+    - use_robotをfalseにした場合\
         起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する． 
-    - 地図生成したときのように人間が操作\
-        以下のコマンドで実行
-        - 実機ロボットの場合
-            ```sh
-            $ roslaunch sobit_mapping teleop.launch
-            ```
-        - HSRの場合
-            ```sh
-            $ roslaunch sobit_mapping hsr_teleop.launch
-            ```
-    ロボットを登録させたい位置まで移動． \
-    そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
+    - use_robotをtrueにした場合\
+        teleopでKachakaを登録させたい位置まで移動． \
+    それぞれ地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
 5. 保存 \
     4を繰り返していくことで地点登録したい全ての地点を登録する．\
     地点登録が終わったら，端末で「q」と入力して保存する．\
-    地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_location_ + 保存した日時 + .yaml」のファイル名で保存される．
-
-> [!NOTE]
-> ここではロボットを使っての地点登録方法を書いたが，RoboCupでは競技環境を使える時間に限りがある．
-> そのため，競技環境が使えるときは，なるべく競技練習の時間に充てることが望ましい．
-> そこで，地点登録をロボットを使わずにすることで時間を有効にすることができる．
-> 詳しい使い方は[ロボットを用いずに地点登録](/sobit_mapping/README.md/#ロボットを用いずに地点登録)をチェック．
-
-> [!NOTE]
-> 地点登録結果をRvizで見たり，追加したい場合は[こちら](/sobit_mapping/README.md/#地点登録確認・追加)．
+    地点登録された情報が入ったymalデータは，[/sobit_navigation_stack/location/](/sobit_navigation_stack/location/)に，「map_location_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 
-### actionlibによって呼び出す（実際にNavigationする）
-1. map_fileを地図生成した地図に書き換える\
-    Navigationに地図を登録する．
-    - SOBIT PROでナビゲーション
-        [/sobit_navigation/launch/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
-    - SOBIT EDU，SOBIT MINIでナビゲーション
-        [/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
-    - HSRでナビゲーション
-        [/sobit_navigation/launch/hsr/hsr_navigation.launch](/sobit_navigation/launch/hsr/hsr_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
-    ここで書くのは，地図データです．地点登録のファイルと間違わないようにしてください．
-2. 地点登録した情報をrosparamに登録する \
-    [/sobit_mapping/launch/load_location_file.launch](/sobit_mapping/launch/load_location_file.launch)のrosparamのfileを，自分で生成した地点登録ファイルに書き換える．\
-    例えば，[map_location_example.ymal](/sobit_mapping/map/map_location_example.ymal)という地点登録ファイルの場合は，以下のように指定する．
-    ```xml
-    <rosparam command="load" file="$(find sobit_mapping)/map/map_location_example.yaml"/>
-    ```
-    書き換えたら，以下のコマンドでrosparamに登録する． 
+## 地点登録確認・追加
+1. Kachakaを起動し接続する \
+2. アプリで地点登録したい地図を設定する\
+3. 地点登録のファイルパスを登録する \
+    - [location_file_viewer_launch.py](/sobit_navigation_stack/launch/location_file_viewer_launch.py)のlocation_fileをそれぞれ書き換える． \    
+4. 地点登録・追加のノードを起動する \
+    [location_file_viewer_launch.py](/sobit_navigation_stack/launch/location_file_viewer_launch.py)を起動する．
     ```sh
-    $ roslaunch sobit_mapping load_location_file.launch
+    $ ros2 launch sobit_navigation_stack location_file_viewer_launch.py
     ```
-    このlaunchファイルはターミナルが終了します
-3. ロボットを起動する \
-    ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
-    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
-4. Navigationを起動する \
-    以下のコマンドでNavigationを起動する． 
-    - SOBIT PROでナビゲーション
-        ```sh
-        $ roslaunch sobit_navigation sobit_pro_navigation.launch
-        ```
-    - SOBIT EDU，SOBIT MINIでナビゲーション
-        ```sh
-        $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
-        ```
-    - HSRでナビゲーション
-        ```sh
-        $ roslaunch sobit_navigation hsr_navigation.launch
-        ```
-5. アクションクライアントを起動する \
-    これは基本的にプログラムから起動する．\
-    地点登録した地点名ならどこにでも移動することが可能．\
-    移動する例として，[/sobit_navigation_library/example/move_location_example.py](/sobit_navigation_library/example/move_location_example.py)を起動．\
-    このexampleコードでは，"table"という地点名の位置まで移動する． \
-    以下のコマンドで実行．
-    ```sh
-    $ rosrun sobit_navigation_library move_location_example.py
-    ```
-
-> [!NOTE]
-> この呼び出した[move_location_example.py](/sobit_navigation_library/example/move_location_example.py)や，C++での呼び出し方([move_location_example.cpp](/sobit_navigation_library/example/move_location_example.cpp))を使用したい場合，またいろいろなNavigationのツールについても，詳しくは[こちら](/sobit_navigation_library/README.md)をチェック．
+5. 確認・追加 \
+    起動したRvizをみて，赤い矢印が既に登録されている地点として確認する． \
+    追加する場合は，Rvizの2D Nav Goalでクリックし，ターミナルで新たな地点名を登録する． \
+    Rviz上に追加された地点が青く表示されたら追加完了．
+6. 保存 \
+    確認・追加が終わったら，端末で「q」と入力し，最後に適当に2D Nav Goalをクリックして終了する．
 
 
-> [!NOTE]
-> ここで紹介したNavigtionは，基本的な使い方とテスト動作について書いた．
-> ロボットに自律的な移動をしてもらうには，細かいシチュエーションごとに様々な課題があり，これまでSOBITSではいくつかの工夫が考えられてきた．
-> そこで様々な工夫がされたものについては，[こちら](/sobit_navigation/README.md)を参照して下さい．
+
+## Navigationの使い方
+
+1. [navigation.py](/sobit_navigation_stack/example/navigation.py)のグローバル変数と目的地を変更する
+    - 地点登録したyamlファイルのパスに書き換える
+    - 移動してほしい場所まで移動する
+2. 以下のコマンドで起動する 
+    - ```sh
+        $ ros2 run sobit_navigation_stack navigation.py
+        ```
+3. actionlibによって呼び出す 
+    - 登録された地点まで移動します
 
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
@@ -334,8 +208,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- 参考文献 -->
 ## 参考文献
 
-* [ROS Navigationスタックソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)
-* [explore_lite](http://wiki.ros.org/explore_lite)
+<!-- * [ROS Navigationスタックソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)
+* [explore_lite](http://wiki.ros.org/explore_lite) -->
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
