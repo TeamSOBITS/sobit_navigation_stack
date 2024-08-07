@@ -93,7 +93,7 @@ Kachaka(ROS2)のための自律移動パッケージ．
 1. Kachakaを起動し接続する \
 2. アプリで地点登録したい地図を設定する\
 3. 地点登録を起動する \
-    ロボットを動かして地点登録する場合は[/launch/create_location_file_launch.py](/sobit_navigation_stack/launch/create_location_file_launch.py)のuse_robotをtrueにする．\
+    ロボットを動かして地点登録する場合は[/sobit_navigation_stack/launch/create_location_file_launch.py](/launch/create_location_file_launch.py)のuse_robotをtrueにする．\
     動かさない場合はfalseにする．\
     以下のコマンドで起動する．
     - 実機で地点登録
@@ -109,7 +109,7 @@ Kachaka(ROS2)のための自律移動パッケージ．
 5. 保存 \
     4を繰り返していくことで地点登録したい全ての地点を登録する．\
     地点登録が終わったら，端末で「q」と入力して保存する．\
-    地点登録された情報が入ったymalデータは，[/location/](/sobit_navigation_stack/location/)に，「map_location_ + 保存した日時 + .yaml」のファイル名で保存される．
+    地点登録された情報が入ったymalデータは，[/sobit_navigation_stack/location/](/location/)に，「map_location_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 
 ## 地点登録確認・追加
