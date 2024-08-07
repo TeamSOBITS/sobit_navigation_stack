@@ -69,7 +69,7 @@ Kachaka(ROS2)のための自律移動パッケージ．
 
 1. ROSの`src`フォルダに移動します．
    ```sh
-   $ cd　~/catkin_ws/src/
+   $ cd　~/colcon_ws/src/
    ```
 2. 本レポジトリをcloneします．
    ```sh
