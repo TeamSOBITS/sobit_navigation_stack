@@ -39,18 +39,12 @@ class LocationFileViewer : public rclcpp::Node {
 
 // ロケーションファイルを読み込む関数
 void LocationFileViewer::loadLocationFile() {
-    this->declare_parameter<std::string>("location_pose", "/home/sobits/colcon_ws/src/sobit_navigation_stack/location/location.yaml");
+    // this->declare_parameter<std::string>("location_file", "/home/sobits/colcon_ws/src/sobit_navigation_stack/location/location.yaml");
 
-    rclcpp::Parameter param;
-    if (this->get_parameter("location_pose", param)) {
-        RCLCPP_INFO(this->get_logger(), "[ LocationFileViewer ] Load the location file\n");
-    } else {
-        RCLCPP_ERROR(this->get_logger(), "[ LocationFileViewer ] The location file path does not exist.\n");
-        return;
-    }
-    auto pose_val = param.as_string();
+    
 
-    YAML::Node node = YAML::LoadFile(pose_val);
+
+    YAML::Node node = YAML::LoadFile(file_name_);
     YAML::Node config = node["location_pose"];
 
     for (const auto location_node: config) {
@@ -194,8 +188,14 @@ visualization_msgs::msg::Marker LocationFileViewer::makeMakerString(const std::s
 }
 
 LocationFileViewer::LocationFileViewer() : Node("location_file_viewer") {
-    this->declare_parameter<std::string>("location_file_path", "/map");
-    this->get_parameter("location_file_path", file_name_);
+    this->declare_parameter<std::string>("location_file_path", "/home/sobits/colcon_ws/src/sobit_navigation_stack/location/location.yaml");
+
+    if (this->get_parameter("location_file_path", file_name_)) {
+        RCLCPP_INFO(this->get_logger(), "[ LocationFileViewer ] Load the location file\n");
+    } else {
+        RCLCPP_ERROR(this->get_logger(), "[ LocationFileViewer ] The location file path does not exist.\n");
+        return;
+    }
     loadLocationFile();
     sub_msg_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/goal_pose2", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
     pub_location_marker_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("/location_pose_marker", 1);

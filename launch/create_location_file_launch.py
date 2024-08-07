@@ -10,7 +10,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'use_robot',
             # ロボットを動かす場合true,動かさない場合false
-            default_value='false',
+            default_value='true',
             description='Whether to use the robot'
         ),
         DeclareLaunchArgument(
@@ -39,21 +39,12 @@ def generate_launch_description():
             name='display_location_marker'
         ),
 
-        # teleop(ロボットを使う場合のみ)
-        Node(
-            package='sobit_navigation_stack',
-            executable='teleop.py',
-            name='teleop',
-            output='screen',
-            prefix='xterm -e',
-            condition=IfCondition(LaunchConfiguration('use_robot'))
-        ),
         
         # Rviz2
         Node(
             package='rviz2',
             executable='rviz2',
             name='rviz',
-            arguments=['-d', '/home/sobits/colcon_ws/src/kachaka-api/ros2/demos/kachaka_nav2_bringup/rviz/kachaka-nav.rviz']
+            arguments=['-d', '/home/sobits/colcon_ws/src/sobit_navigation_stack/rviz/create_location.rviz']
         )
     ])

@@ -15,7 +15,7 @@ find_package(yaml-cpp REQUIRED)
 
 nav2_package()
 
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY launch rviz DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -35,7 +35,7 @@ target_link_libraries(location_file_viewer yaml-cpp)
 
 
 install(PROGRAMS
-  scripts/teleop.py
+  example/navigation.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

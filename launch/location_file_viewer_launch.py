@@ -6,20 +6,16 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 
 def generate_launch_description():
+    location_file_path = '/home/sobits/colcon_ws/src/sobit_navigation_stack/location/location.yaml'
+
     return LaunchDescription([
-        # Launch argument for location file
-        DeclareLaunchArgument(
-            'location_file',
-            default_value='/home/sobits/colcon_ws/src/sobit_navigation_stack/location/location.yaml', #ここのパスを適宜変えてください
-            description='Path to the location file'
-        ),
 
         # Node to launch RViz
         Node(
             package='rviz2',
             executable='rviz2',
             name='rviz2',
-            arguments=['-d', '/home/sobits/colcon_ws/src/kachaka-api/ros2/demos/kachaka_nav2_bringup/rviz/kachaka-nav.rviz'],
+            arguments=['-d', '/home/sobits/colcon_ws/src/sobit_navigation_stack/rviz/create_location.rviz'],
             output='screen'
         ),
 
@@ -29,7 +25,8 @@ def generate_launch_description():
             executable='location_file_viewer',
             name='location_file_viewer',
             namespace='location_file_viewer',
-            parameters=['location_file'],
+            # ここのパスを適宜変えてください
+            parameters=[{'location_file_path': location_file_path}],
             output='screen',
             prefix= 'xterm -e'
         )
