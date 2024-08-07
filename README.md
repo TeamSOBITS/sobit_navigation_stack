@@ -42,7 +42,7 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-Kachaka(ROS2)のための自律移動パッケージ．\
+Kachaka(ROS2)のための自律移動パッケージ．
 
 > [!NOTE]
 > kachaka-apiがインストールされている必要があります.
