@@ -5,7 +5,7 @@ from rclpy.node import Node
 from geometry_msgs.msg import PoseStamped
 import yaml
 from scipy.spatial.transform import Rotation as R
-from kachaka_api import KachakaApiClient  # Adjust the import path as necessary
+from kachaka_api import KachakaApiClient
 
 # 地点が記録されたのファイルのパス
 location_path = "/home/sobits/colcon_ws/src/sobit_navigation_stack/location/location.yaml"
@@ -48,7 +48,7 @@ class RobotMover(Node):
             config["location_pose"][num]["rotation_z"],
             config["location_pose"][num]["rotation_w"]
         ])
-        euler = quat.as_euler('zyx', degrees=True)
+        euler = quat.as_euler('zyx')
 
         x = config["location_pose"][num]["translation_x"]
         y = config["location_pose"][num]["translation_y"]
@@ -61,7 +61,7 @@ def main(args=None):
     rclpy.init(args=args)
     node = RobotMover()
     # 登録された地点名に変更する
-    node.move("b")
+    node.move("kitchen")
     rclpy.shutdown()
 
 
