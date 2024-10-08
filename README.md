@@ -61,7 +61,7 @@ Kachaka(ROS2)のための自律移動パッケージ．
 | System  | Version |
 | ------------- | ------------- |
 | Ubuntu | 22.04 (Focal Fossa) |
-| ROS | Noetic Ninjemys |
+| ROS | Humble Hawksbill |
 | Python | 3.10~ |
 
 ### インストール方法
