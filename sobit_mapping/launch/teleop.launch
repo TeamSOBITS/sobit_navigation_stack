@@ -1,11 +1,13 @@
 <launch>
+    <arg name="robot_namespace" default="sobit_pro_1"/>
+
     <node pkg="sobit_mapping" type="keyboard_teleop" name="keyboard_teleop" launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
         <param name="max_linear" value="0.2" type="double"/>
         <param name="max_angular" value="0.5" type="double"/>
         <param name="accel_linear" value="0.3" type="double"/>
         <param name="accel_angular" value="0.6" type="double"/>
-        <param name="velocity_topic_name" value="/mobile_base/commands/velocity" type="string"/>
+        <param name="velocity_topic_name" value="/$(arg robot_namespace)/mobile_base/commands/velocity" type="string"/>
         <param name="timeout_sec" value="0.3" type="double"/>
-        <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/mobile_base/commands/velocity"/>
+        <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/$(arg robot_namespace)/mobile_base/commands/velocity"/>
     </node>
 </launch>
