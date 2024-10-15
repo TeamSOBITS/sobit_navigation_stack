@@ -1,0 +1,84 @@
+<!-- sobit_pro_navigation.launch -->
+<launch>
+    <arg name="robot_namespace" default="sobit_pro_1"/>
+    <arg name="use_als_ros"     default="false"/>
+    <arg name="initial_pose_x"  default="0.0"/>
+    <arg name="initial_pose_y"  default="0.0"/>
+    <arg name="initial_pose_a"  default="0.0"/>
+    <arg name="use_smoother"    default="false" />
+    <arg name="use_rgbd_cam"    default="false"/>
+    <arg name="pan_angle_deg"   default="0.0"/>
+    <arg name="tilt_angle_deg"  default="0.0"/>
+    <arg name="cloud_topic_name"        default="/points2"/>
+    <arg name="object_cloud_topic_name" default="/bbox_to_tf/object_cloud"/>  <!-- yolov8_ros="/yolo_to_tf/object_cloud" ssd_nodelet="ssd_to_tf/object_cloud" -->
+    <arg name="use_y_dwa"       default="false"/>
+    <arg name="map_file"        default="$(find sobit_mapping)/map/example.yaml" />
+
+    <group ns="$(arg robot_namespace)" >
+        <!-- Map server -->
+        <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" >
+            <param name="frame_id" value="map" />
+        </node>
+
+        <!-- AMCL -->
+        <include unless="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_amcl.launch.xml">
+            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            <arg name="initial_pose_x"  value="$(arg initial_pose_x)"/>
+            <arg name="initial_pose_y"  value="$(arg initial_pose_y)"/>
+            <arg name="initial_pose_a"  value="$(arg initial_pose_a)"/>
+        </include>
+
+
+        <!-- MCL node -->
+        <include if="$(arg use_als_ros)" file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_als_ros.launch.xml">
+            <arg name="robot_namespace"  value="$(arg robot_namespace)"/>
+            <arg name="initial_pose_x"   value="$(arg initial_pose_x)"/>
+            <arg name="initial_pose_y"   value="$(arg initial_pose_y)"/>
+            <arg name="initial_pose_yaw" value="$(arg initial_pose_a)"/>
+        </include>
+
+
+        <!-- Move Base -->
+        <include file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_move_base.launch.xml">
+            <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+            <arg name="use_smoother"    value="$(arg use_smoother)"/>
+        </include>
+
+
+        <!-- RGBD Camera-based Navigation -->
+        <!-- - move_camera_node -->
+        <node if="$(arg use_rgbd_cam)" pkg="sobit_navigation" type="sobit_pro_pantilt_controll.py" name="sobit_pro_pantilt_controll" output="screen">
+            <param name="pan_angle_deg"  type="double" value="$(arg pan_angle_deg)"/>
+            <param name="tilt_angle_deg" type="double" value="$(arg tilt_angle_deg)"/>
+        </node>
+
+        <!-- - obstacle_layer -->
+        <node if="$(arg use_rgbd_cam)" pkg="sobit_navigation" type="noise_removal_pointcloud_publisher" name="noise_removal_pointcloud_publisher" >
+            <param name="topic_name" type="str"    value="$(arg cloud_topic_name)"/>
+            <param name="voxel_size" type="double" value="0.025"/>
+            <param name="radius"     type="double" value="0.05"/>
+            <param name="min_pt"     type="int"    value="10"/>
+        </node>
+
+        <!-- - noise_color_layer -->
+        <node if="$(arg use_rgbd_cam)" pkg="sobit_navigation" type="noise_color_pointcloud_publisher" name="noise_color_pointcloud_publisher" >
+            <rosparam file="$(find sobit_navigation)/param/floor_color/rgb_base.yaml" command="load" ns="rgb"/>
+            <param name="target_frame" value="base_footprint"/>
+            <param name="topic_name"   value="$(arg cloud_topic_name)"/>
+            <!-- ↓セットした床の色からどれくらいの範囲は同じ色とするかの許容範囲↓ -->
+            <param name="color_noise" type="int" value="80"/>
+        </node>
+
+        <!-- - objects_layer -->
+        <node if="$(arg use_rgbd_cam)" pkg="sobit_navigation" type="object_pointcloud_publisher" name="object_pointcloud_publisher" output="screen" >
+            <param name="object_cloud_topic_name" value="$(arg object_cloud_topic_name)"/>
+        </node>
+
+
+        <!-- Y-Linear Velocity in DWA -->
+        <node if="$(arg use_y_dwa)" name="pro_move_base" pkg="move_base" type="pro_move_base" output="screen">
+            <rosparam command="load" file="$(find sobit_navigation)/param/sobit_pro/pro_move_base_param.yaml"/>
+        </node>
+    </group>
+
+</launch>
