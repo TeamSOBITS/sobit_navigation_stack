@@ -6,7 +6,7 @@
     <arg name="robot_namespace" default="sobit_pro_1" />
     <arg name="odom_frame_id"   default="$(arg robot_namespace)/odom" />
     <arg name="base_frame_id"   default="$(arg robot_namespace)/base_footprint" />
-    <arg name="global_frame_id" default="map" />
+    <arg name="global_frame_id" default="$(arg robot_namespace)/map" />
     <arg name="odom_topic"      default="/$(arg robot_namespace)/odom" />
     <arg name="laser_topic"     default="/$(arg robot_namespace)/scan" />
     <!-- <arg name="custom_param_file" default="$(find sobit_navigation)/param/sobit_pro/dummy.yaml" /> -->
@@ -15,7 +15,7 @@
     <include if="$(arg use_smoother)" file="$(find sobit_navigation)/launch/include/sobit_pro/sobit_pro_velocity_smoother.launch.xml"/>
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base"  launch-prefix="xterm -font r16 -fg floralwhite -bg darkslateblue -e">
-        <rosparam param="robot_namespace" subst_value="true">$(arg robot_namespace)</rosparam>
+        <!-- <rosparam param="robot_namespace" subst_value="true">$(arg robot_namespace)</rosparam> -->
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/costmap_common_params.yaml"       command="load" ns="global_costmap" />
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/costmap_common_params.yaml"       command="load" ns="local_costmap" />
         <rosparam file="$(find sobit_navigation)/param/sobit_pro/local_costmap_params.yaml"        command="load" />

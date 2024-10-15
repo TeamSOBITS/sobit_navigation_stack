@@ -1,23 +1,23 @@
 <!-- sobit_pro_navigation.launch -->
 <launch>
     <arg name="robot_namespace" default="sobit_pro_1"/>
-    <arg name="use_als_ros"     default="false"/>
+    <arg name="use_als_ros"     default="False"/>
     <arg name="initial_pose_x"  default="0.0"/>
     <arg name="initial_pose_y"  default="0.0"/>
     <arg name="initial_pose_a"  default="0.0"/>
-    <arg name="use_smoother"    default="false" />
-    <arg name="use_rgbd_cam"    default="false"/>
+    <arg name="use_smoother"    default="False" />
+    <arg name="use_rgbd_cam"    default="False"/>
     <arg name="pan_angle_deg"   default="0.0"/>
     <arg name="tilt_angle_deg"  default="0.0"/>
     <arg name="cloud_topic_name"        default="/points2"/>
     <arg name="object_cloud_topic_name" default="/bbox_to_tf/object_cloud"/>  <!-- yolov8_ros="/yolo_to_tf/object_cloud" ssd_nodelet="ssd_to_tf/object_cloud" -->
-    <arg name="use_y_dwa"       default="false"/>
+    <arg name="use_y_dwa"       default="False"/>
     <arg name="map_file"        default="$(find sobit_mapping)/map/example.yaml" />
 
     <group ns="$(arg robot_namespace)" >
         <!-- Map server -->
         <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" >
-            <param name="frame_id" value="map" />
+            <param name="frame_id" value="$(arg robot_namespace)/map" />
         </node>
 
         <!-- AMCL -->

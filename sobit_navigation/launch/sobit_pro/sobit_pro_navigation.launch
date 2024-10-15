@@ -1,21 +1,21 @@
 <!-- sobit_pro_navigation.launch -->
 <launch>
     <!-- Visualization -->
-    <arg name="rviz"            default="true"/>
+    <arg name="rviz"            default="False"/>
     <!-- Reconfigure -->
-    <arg name="rqt_reconfigure" default="false"/>
+    <arg name="rqt_reconfigure" default="False"/>
     <!-- Localization -->
-    <arg name="use_als_ros"     default="false"/>
+    <arg name="use_als_ros"     default="False"/>
     <!-- Move Base -->
-    <arg name="use_smoother"    default="false"/>
+    <arg name="use_smoother"    default="False"/>
     <!-- RGBD Camera-based Navigation -->
-    <arg name="use_rgbd_cam"    default="false"/>
+    <arg name="use_rgbd_cam"    default="False"/>
     <arg name="pan_angle_deg"   default="0.0"/>
     <arg name="tilt_angle_deg"  default="0.0"/>
     <arg name="cloud_topic_name"        default="/points2"/>
     <arg name="object_cloud_topic_name" default="/bbox_to_tf/object_cloud"/>  <!-- yolov8_ros="/yolo_to_tf/object_cloud" ssd_nodelet="ssd_to_tf/object_cloud" -->
     <!-- Y-Linear Velocity in DWA -->
-    <arg name="use_y_dwa"       default="false"/>
+    <arg name="use_y_dwa"       default="False"/>
 
     <!-- Map server -->
     <arg name="map_file"        default="$(find sobit_mapping)/map/example.yaml" />

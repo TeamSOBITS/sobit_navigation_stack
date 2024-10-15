@@ -9,9 +9,9 @@
     <arg name="node_name" default="$(arg robot_namespace)" />
 
     <!-- Input messages -->
-    <arg name="scan_name" default="/$(arg robot_name)/scan" /> <!-- sensor_msgs::LaserScan -->
-    <arg name="odom_name" default="/$(arg robot_name)/odom" /> <!-- nav_msgs::Odometry -->
-    <arg name="map_name"  default="/$(arg robot_name)/map" /> <!-- nav_msgs::OccupancyGrid -->
+    <arg name="scan_name" default="/$(arg robot_namespace)/scan" /> <!-- sensor_msgs::LaserScan -->
+    <arg name="odom_name" default="/$(arg robot_namespace)/odom" /> <!-- nav_msgs::Odometry -->
+    <arg name="map_name"  default="/$(arg robot_namespace)/map" /> <!-- nav_msgs::OccupancyGrid -->
 
     <!-- Output messages -->
     <arg name="pose_name"                default="/mcl_pose" /> <!-- geometry_msgs::PoseStamped -->
@@ -27,10 +27,10 @@
     <arg name="local_sdf_keypoints_name" default="/gl_local_sdf_keypoints" /> <!-- visualization_msgs::Marker -->
 
     <!-- TF frames -->
-    <arg name="laser_frame"     default="$(arg robot_name)/lidar_laser" />
-    <arg name="base_link_frame" default="$(arg robot_name)/base_footprint" />
-    <arg name="map_frame"       default="map" />
-    <arg name="odom_frame"      default="$(arg robot_name)/odom" />
+    <arg name="laser_frame"     default="$(arg robot_namespace)/lidar_laser" />
+    <arg name="base_link_frame" default="$(arg robot_namespace)/base_footprint" />
+    <arg name="map_frame"       default="$(arg robot_namespace)/map" />
+    <arg name="odom_frame"      default="$(arg robot_namespace)/odom" />
 
     <!-- If broadcast_tf is true,
          the localizer broadcasts transformation between the map and odometry frames. -->
