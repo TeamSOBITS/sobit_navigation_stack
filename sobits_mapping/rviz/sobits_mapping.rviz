@@ -4,7 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Map1
+        - /Pose1/Topic1
       Splitter Ratio: 0.5
     Tree Height: 419
   - Class: rviz_common/Selection
@@ -153,8 +153,8 @@ Visualization Manager:
       Shaft Radius: 0.05000000074505806
       Shape: Arrow
       Topic:
-        Depth: 5
-        Durability Policy: Volatile
+        Depth: 1
+        Durability Policy: Transient Local
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
@@ -167,15 +167,15 @@ Visualization Manager:
       Enabled: true
       Name: Map
       Topic:
-        Depth: 5
-        Durability Policy: Volatile
+        Depth: 1
+        Durability Policy: Transient Local
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /map
       Update Topic:
-        Depth: 5
-        Durability Policy: Volatile
+        Depth: 1
+        Durability Policy: Transient Local
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /map_updates
@@ -236,11 +236,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 41.60643768310547
+      Scale: 82.40904998779297
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: 1.9122332334518433
-      Y: -0.03587427735328674
+      X: 2.7480270862579346
+      Y: 0.3640832006931305
     Saved: ~
 Window Geometry:
   Displays:

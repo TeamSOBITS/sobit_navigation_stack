@@ -1,4 +1,5 @@
 #include <rclcpp/rclcpp.hpp>
+#include <rclcpp/qos.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -28,6 +29,7 @@ class CreateLocationFile : public rclcpp::Node {
         std::string file_name_;
         bool use_robot_;
         geometry_msgs::msg::Pose nav_goal_msg_;
+
         bool saveLocation(const std::string &location_name);
         std::string getSavePath();
         void callbackMessage(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
@@ -38,15 +40,16 @@ class CreateLocationFile : public rclcpp::Node {
 };
 
 std::string CreateLocationFile::getSavePath() {
-    char buffer[1024];
-    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=location_file_name.yaml", "r");
-    if (!pipe) return "";
-    fgets(buffer, sizeof(buffer), pipe);
-    pclose(pipe);
-    std::string path(buffer);
-    path.erase(path.find_last_not_of(" \n\r\t") + 1);
+    // char buffer[1024];
+    // FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/location_file_name.yaml  2>/dev/null", "r");
+    // if (!pipe) return "";
+    // fgets(buffer, sizeof(buffer), pipe);
+    // pclose(pipe);
+    // std::string path(buffer);
+    // path.erase(path.find_last_not_of(" \n\r\t") + 1);
     
-    return path;
+    // return path;
+    return "/home/sobits/colcon_ws/src/location_file_name.yaml";
 }
 
 bool CreateLocationFile::saveLocation(const std::string &location_name) {
@@ -127,8 +130,8 @@ void CreateLocationFile::callbackMessage(const geometry_msgs::msg::PoseStamped::
     std::cout << "========================================" << std::endl;
     std::cout << "[ 登録地点一覧 ]" << std::endl;
     int i = 1;
-    for (const auto &name : location_names)std::cout << "    [ " << i++ << " ] : " << name << std::endl;
-    std::cout << "\n[ クリックした地点を登録 ] \n場所名を入力してください。「q」で終了。\nLocation Name : "<< std::endl;
+    for (const auto &name : location_names) std::cout << "    [ " << i++ << " ] : " << name << std::endl;
+    std::cout << "[ クリックした地点を登録 ]" << std::endl << "場所名を入力してください。「q」で終了。" << std::endl << "Location Name : ";
 
     std::string location_name;
     std::getline(std::cin, location_name);
@@ -138,7 +141,7 @@ void CreateLocationFile::callbackMessage(const geometry_msgs::msg::PoseStamped::
         rclcpp::sleep_for(std::chrono::seconds(2));
         exit(EXIT_SUCCESS);
     } else {
-        std::cout << "\nクリックした地点を「" << location_name << "」で保存します。" << std::endl;
+        std::cout << "クリックした地点を「" << location_name << "」で保存します。" << std::endl;
         if (saveLocation(location_name))
             location_names.push_back(location_name);
     }
@@ -146,7 +149,11 @@ void CreateLocationFile::callbackMessage(const geometry_msgs::msg::PoseStamped::
 }
 
 CreateLocationFile::CreateLocationFile() : Node("create_location_file"), tfBuffer_(std::make_shared<tf2_ros::Buffer>(this->get_clock())), tf_listener_(std::make_shared<tf2_ros::TransformListener>(*tfBuffer_)) {
-    pub_pose_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/location_pose", 1);
+    rclcpp::QoS qos_profile(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
+    qos_profile.durability(RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL);
+    qos_profile.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);
+
+    pub_pose_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/location_pose", qos_profile);
     // std::string save_location_folder_path = this->declare_parameter<std::string>("save_location_folder_path", "/home/sobits/colcon_ws/src/sobit_navigation_stack/location/");
     // auto now = std::chrono::system_clock::now();
     // std::time_t now_c = std::chrono::system_clock::to_time_t(now);
@@ -170,7 +177,7 @@ CreateLocationFile::CreateLocationFile() : Node("create_location_file"), tfBuffe
     if (use_robot_) {
         createLocationFile();
     } else {
-        sub_msg_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/goal_pose2", 10, std::bind(&CreateLocationFile::callbackMessage, this, std::placeholders::_1));
+        sub_msg_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/goal_pose", 1, std::bind(&CreateLocationFile::callbackMessage, this, std::placeholders::_1));
         std::cout << "地点登録したいところを、2D Nav Goalでクリックしてください。" << std::endl;
     }
 }
@@ -182,7 +189,7 @@ void CreateLocationFile::createLocationFile() {
         int i = 1;
         for (const auto &name : location_names)
             std::cout << "    [ " << i++ << " ] : " << name << std::endl;
-        std::cout << "\n[ ロボットの現在地点を登録 ] \n場所名を入力してください。「q」で終了。\n Location Name : "<< std::endl;
+        std::cout << "[ ロボットの現在地点を登録 ]" << std::endl << "場所名を入力してください。「q」で終了。" << std::endl << "Location Name : ";
 
         std::string location_name;
         std::getline(std::cin, location_name);

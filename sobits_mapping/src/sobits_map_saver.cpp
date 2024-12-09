@@ -5,7 +5,7 @@
 
 std::string getSavePath() {
     char buffer[1024];
-    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=map_name", "r");
+    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/map_name 2>/dev/null", "r");
     if (!pipe) return "";
     fgets(buffer, sizeof(buffer), pipe);
     pclose(pipe);
