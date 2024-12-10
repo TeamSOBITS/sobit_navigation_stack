@@ -11,6 +11,8 @@ find_package(rclcpp REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(yaml-cpp REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -30,6 +32,7 @@ ament_target_dependencies(sobits_map_saver rclcpp rosidl_default_runtime)
 install(TARGETS sobits_map_saver DESTINATION lib/${PROJECT_NAME})
 add_executable(location_setting src/location_setting.cpp)
 ament_target_dependencies(location_setting rclcpp tf2_ros tf2_geometry_msgs geometry_msgs rosidl_default_runtime)
+target_link_libraries(location_setting yaml-cpp)
 install(TARGETS location_setting DESTINATION lib/${PROJECT_NAME})
 
 

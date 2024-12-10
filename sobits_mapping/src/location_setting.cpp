@@ -14,14 +14,16 @@
 #include <geometry_msgs/msg/pose.hpp>
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include <geometry_msgs/msg/transform.hpp>
+#include <std_msgs/msg/string.hpp>
 
+#include <yaml-cpp/yaml.h>
 
 using namespace std;
-using namespace std::chrono_literals;
+// using namespace std::chrono_literals;
 
 class CreateLocationFile : public rclcpp::Node {
     private:
-        rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pub_pose_;
+        rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_location_file_path_;
         rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_msg_;
         std::shared_ptr<tf2_ros::Buffer> tfBuffer_;
         std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
@@ -32,6 +34,7 @@ class CreateLocationFile : public rclcpp::Node {
 
         bool saveLocation(const std::string &location_name);
         std::string getSavePath();
+        void loadYaml();
         void callbackMessage(const geometry_msgs::msg::PoseStamped::SharedPtr msg);
 
     public:
@@ -40,16 +43,29 @@ class CreateLocationFile : public rclcpp::Node {
 };
 
 std::string CreateLocationFile::getSavePath() {
-    // char buffer[1024];
-    // FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/location_file_name.yaml  2>/dev/null", "r");
-    // if (!pipe) return "";
-    // fgets(buffer, sizeof(buffer), pipe);
-    // pclose(pipe);
-    // std::string path(buffer);
-    // path.erase(path.find_last_not_of(" \n\r\t") + 1);
+    char buffer[1024];
+    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/location_file_name.yaml  2>/dev/null", "r");
+    if (!pipe) return "";
+    fgets(buffer, sizeof(buffer), pipe);
+    pclose(pipe);
+    std::string path(buffer);
+    path.erase(path.find_last_not_of(" \n\r\t") + 1);
     
-    // return path;
-    return "/home/sobits/colcon_ws/src/location_file_name.yaml";
+    return path;
+}
+
+void CreateLocationFile::loadYaml() {
+    YAML::Node config = YAML::LoadFile(file_name_);
+    auto location_poses = config["location_pose"];
+
+    std::cout << "========================================" << std::endl;
+    std::cout << "[ LOCATION LIST ]" << std::endl;
+    location_names.clear();
+    int i = 1;
+    for (const auto& location_pose : location_poses) {
+        location_names.push_back(location_pose.first.as<std::string>());
+        std::cout << "    [ " << i++ << " ] : " << location_pose.first.as<std::string>() << std::endl;
+    }
 }
 
 bool CreateLocationFile::saveLocation(const std::string &location_name) {
@@ -62,8 +78,7 @@ bool CreateLocationFile::saveLocation(const std::string &location_name) {
                 transform = transformStamped.transform;
             } else {
                 RCLCPP_ERROR(this->get_logger(), "Transform failed");
-                std::cout << "位置取得失敗。tfは出ていますか？mapとbase_footprintのフレームが繋がっていません。" << std::endl;
-                std::cout << "しっかりとロボットを接続してからやり直してください。" << std::endl;
+                std::cout << "[ CONNECTION ERROR ] Robot and PC are not connected..." << std::endl;
                 return false;
             }
         } else {
@@ -91,35 +106,27 @@ bool CreateLocationFile::saveLocation(const std::string &location_name) {
 
     ofstream ofs(file_name_, ios::app);
     if (ofs) {
-        ofs << "    - {" << std::endl;
-        ofs << "        location_name: \"" << location_name << "\"," << std::endl;
-        ofs << "        frame_id: \"map\"," << std::endl;
-        ofs << "        translation_x: " << fixed << std::setprecision(7) << transform.translation.x << "," << std::endl;
-        ofs << "        translation_y: " << fixed << std::setprecision(7) << transform.translation.y << "," << std::endl;
-        ofs << "        translation_z: " << fixed << std::setprecision(7) << transform.translation.z << "," << std::endl;
-        ofs << "        rotation_x: " << fixed << std::setprecision(7) << transform.rotation.x << "," << std::endl;
-        ofs << "        rotation_y: " << fixed << std::setprecision(7) << transform.rotation.y << "," << std::endl;
-        ofs << "        rotation_z: " << fixed << std::setprecision(7) << transform.rotation.z << "," << std::endl;
-        ofs << "        rotation_w: " << fixed << std::setprecision(7) << transform.rotation.w << "," << std::endl;
-        ofs << "    }" << std::endl;
-        ofs << std::endl;
+        ofs << "  \"" << location_name << "\": " << std::endl;
+        ofs << "    frame_id: \"map\"" << std::endl;
+        ofs << "    translation: " << std::endl;
+        ofs << "      x: " << fixed << std::setprecision(7) << transform.translation.x << std::endl;
+        ofs << "      y: " << fixed << std::setprecision(7) << transform.translation.y << std::endl;
+        ofs << "      z: " << fixed << std::setprecision(7) << transform.translation.z << std::endl;
+        ofs << "    rotation: " << std::endl;
+        ofs << "      x: " << fixed << std::setprecision(7) << transform.rotation.x << std::endl;
+        ofs << "      y: " << fixed << std::setprecision(7) << transform.rotation.y << std::endl;
+        ofs << "      z: " << fixed << std::setprecision(7) << transform.rotation.z << std::endl;
+        ofs << "      w: " << fixed << std::setprecision(7) << transform.rotation.w << std::endl;
+        ofs << "" << std::endl;
         ofs.close();
-        std::cout << "「" << file_name_ << "」として保存完了。" << std::endl;
+        std::cout << "Saved in \"" << file_name_ << "\"." << std::endl;
 
-        auto pose = geometry_msgs::msg::PoseStamped();
-        pose.pose.position.x = transform.translation.x;
-        pose.pose.position.y = transform.translation.y;
-        pose.pose.position.z = transform.translation.z;
-        pose.pose.orientation.x = transform.rotation.x;
-        pose.pose.orientation.y = transform.rotation.y;
-        pose.pose.orientation.z = transform.rotation.z;
-        pose.pose.orientation.w = transform.rotation.w;
-        pose.header.frame_id = location_name;
-        pub_pose_->publish(pose);
+        std_msgs::msg::String file_path_;
+        file_path_.data = file_name_;
+        pub_location_file_path_->publish(file_path_);
     } else {
         ofs.close();
-        std::cout << file_name_ << "は作成できませんでした。" << std::endl;
-        std::cout << "ファイルのパスを確認して下さい。" << std::endl;
+        std::cout << file_name_ << " could not be created. Check the path of the file." << std::endl;
         return false;
     }
     return true;
@@ -128,10 +135,10 @@ bool CreateLocationFile::saveLocation(const std::string &location_name) {
 void CreateLocationFile::callbackMessage(const geometry_msgs::msg::PoseStamped::SharedPtr msg) {
     nav_goal_msg_ = msg->pose;
     std::cout << "========================================" << std::endl;
-    std::cout << "[ 登録地点一覧 ]" << std::endl;
+    std::cout << "[ LOCATION LIST ]" << std::endl;
     int i = 1;
     for (const auto &name : location_names) std::cout << "    [ " << i++ << " ] : " << name << std::endl;
-    std::cout << "[ クリックした地点を登録 ]" << std::endl << "場所名を入力してください。「q」で終了。" << std::endl << "Location Name : ";
+    std::cout << "[ ENTER THE LOCATION ]" << std::endl << "Please enter the Location Name. If you want to exit, type \"q\"." << std::endl << "Location Name : ";
 
     std::string location_name;
     std::getline(std::cin, location_name);
@@ -141,74 +148,87 @@ void CreateLocationFile::callbackMessage(const geometry_msgs::msg::PoseStamped::
         rclcpp::sleep_for(std::chrono::seconds(2));
         exit(EXIT_SUCCESS);
     } else {
-        std::cout << "クリックした地点を「" << location_name << "」で保存します。" << std::endl;
-        if (saveLocation(location_name))
-            location_names.push_back(location_name);
+        bool there_is_location_ = false;
+        for (const auto &name : location_names) {
+            if (name == location_name) there_is_location_ = true;
+        }
+        if (!there_is_location_) {
+            std::cout << "Save the clicked location with \"" << location_name << "\"." << std::endl;
+            if (saveLocation(location_name))
+                location_names.push_back(location_name);
+        }
+        else std::cout << "The \""  << location_name << "\" already exists." << std::endl;
     }
-    std::cout << "地点登録したいところを、2D Nav Goalでクリックしてください。" << std::endl;
+    std::cout << "Click on the location you wish to register with the 2D Nav Goal." << std::endl;
 }
 
 CreateLocationFile::CreateLocationFile() : Node("create_location_file"), tfBuffer_(std::make_shared<tf2_ros::Buffer>(this->get_clock())), tf_listener_(std::make_shared<tf2_ros::TransformListener>(*tfBuffer_)) {
-    rclcpp::QoS qos_profile(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
-    qos_profile.durability(RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL);
-    qos_profile.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);
-
-    pub_pose_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("/location_pose", qos_profile);
-    // std::string save_location_folder_path = this->declare_parameter<std::string>("save_location_folder_path", "/home/sobits/colcon_ws/src/sobit_navigation_stack/location/");
-    // auto now = std::chrono::system_clock::now();
-    // std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-    // struct tm *parts = std::localtime(&now_c);
-    // file_name_ = save_location_folder_path + "/map_location_" + std::to_string(parts->tm_mon + 1) + "_" + std::to_string(parts->tm_mday) + "_" + std::to_string(parts->tm_hour) + "_" + std::to_string(parts->tm_min) + ".yaml";
+    pub_location_file_path_ = this->create_publisher<std_msgs::msg::String>("/location_file_path", 1);
     while (rclcpp::ok()) {
         file_name_ = getSavePath();
         if (!file_name_.empty()) break;
-        else std::cout << "正しいパスが得られませんでした。もう一度お願いします。" << std::endl;
+        else std::cout << "Not get the correct path. Please try again." << std::endl;
     }
-    std::cout << "Location File Path : " << file_name_ << std::endl;
+
+    std::ifstream ifs(file_name_);
+    bool is_empty = true;
+    if (ifs) {
+        is_empty = ifs.peek() == std::ifstream::traits_type::eof();
+        ifs.close();
+    }
     ofstream ofs(file_name_, ios::app);
     if (ofs) {
-        ofs << "location_pose:" << std::endl;
+        if (is_empty) ofs << "location_pose:" << std::endl;
+        else loadYaml();
+        std_msgs::msg::String file_path_;
+        file_path_.data = file_name_;
+        pub_location_file_path_->publish(file_path_);
     } else {
-        ofs.close();
-        std::cout << file_name_ << "は作成できませんでした。" << std::endl;
-        std::cout << "ファイルのパスを確認して下さい。" << std::endl;
+        std::cout << file_name_ << " could not be created. Check the path of the file." << std::endl;
     }
     use_robot_ = this->declare_parameter<bool>("use_robot", false);
     if (use_robot_) {
         createLocationFile();
     } else {
         sub_msg_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/goal_pose", 1, std::bind(&CreateLocationFile::callbackMessage, this, std::placeholders::_1));
-        std::cout << "地点登録したいところを、2D Nav Goalでクリックしてください。" << std::endl;
+        std::cout << "Click on the location you wish to register with the 2D Nav Goal." << std::endl;
     }
 }
 
 void CreateLocationFile::createLocationFile() {
     while (rclcpp::ok()) {
-        std::cout << "========================================" << std::endl;
-        std::cout << "[ 登録地点一覧 ]" << std::endl;
-        int i = 1;
-        for (const auto &name : location_names)
-            std::cout << "    [ " << i++ << " ] : " << name << std::endl;
-        std::cout << "[ ロボットの現在地点を登録 ]" << std::endl << "場所名を入力してください。「q」で終了。" << std::endl << "Location Name : ";
+        std::cout << "[ ENTER THE LOCATION OF ROBOT ]" << std::endl << "Please enter the Location Name. If you want to exit, type \"q\"." << std::endl << "Location Name : ";
 
         std::string location_name;
         std::getline(std::cin, location_name);
         if (location_name == "q") {
-            std::cout << "\nOK, I'll end...." << std::endl;
+            std::cout << std::endl << "OK, I'll end...." << std::endl;
             rclcpp::sleep_for(std::chrono::seconds(2));
             exit(EXIT_SUCCESS);
         } else {
-            std::cout << "\n現在地点を「" << location_name << "」で保存します。" << std::endl;
-            if (saveLocation(location_name))
-                location_names.push_back(location_name);
+            bool there_is_location_ = false;
+            for (const auto &name : location_names) {
+                if (name == location_name) there_is_location_ = true;
+            }
+            if (!there_is_location_) {
+                std::cout << "Save the current location as \"" << location_name << "\"." << std::endl;
+                if (saveLocation(location_name))
+                    location_names.push_back(location_name);
+            }
+            else std::cout << "The \""  << location_name << "\" already exists." << std::endl;
         }
+
+        std::cout << "========================================" << std::endl;
+        std::cout << "[ LOCATION LIST ]" << std::endl;
+        int i = 1;
+        for (const auto &name : location_names) std::cout << "    [ " << i++ << " ] : " << name << std::endl;
     }
 }
 
 int main(int argc, char **argv) {
-    std::cout << "========================================" << std::endl;
+    // std::cout << "========================================" << std::endl;
     rclcpp::init(argc, argv);
-    std::cout << "場所名を入力すると位置座標を保存" << std::endl;
+    // std::cout << "場所名を入力すると位置座標を保存" << std::endl;
     auto node = std::make_shared<CreateLocationFile>();
     rclcpp::spin(node);
     rclcpp::shutdown();

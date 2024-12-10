@@ -1,0 +1,49 @@
+location_pose:
+  "test1": 
+    frame_id: "map"
+    translation: 
+      x: 2.4141376
+      y: 1.6951373
+      z: 0.0000000
+    rotation: 
+      x: 0.0000000
+      y: 0.0000000
+      z: -0.2293653
+      w: 0.9733404
+
+  "test2": 
+    frame_id: "map"
+    translation: 
+      x: 1.5461782
+      y: -0.4313710
+      z: 0.0000000
+    rotation: 
+      x: 0.0000000
+      y: 0.0000000
+      z: -0.5590474
+      w: 0.8291357
+
+  "test3": 
+    frame_id: "map"
+    translation: 
+      x: 1.4381040
+      y: 0.4596684
+      z: 0.0000000
+    rotation: 
+      x: 0.0000000
+      y: 0.0000000
+      z: 0.0354891
+      w: 0.9993701
+
+  "test4": 
+    frame_id: "map"
+    translation: 
+      x: 2.2220099
+      y: 0.2777728
+      z: 0.0000000
+    rotation: 
+      x: 0.0000000
+      y: 0.0000000
+      z: -0.1366284
+      w: 0.9906224
+
