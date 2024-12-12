@@ -9,27 +9,13 @@ from launch.conditions import IfCondition, UnlessCondition
 
 def generate_launch_description():
     return LaunchDescription([
-        DeclareLaunchArgument(
-            # ロボットを動かす場合true,動かさない場合false
-            'use_robot', default_value='false'
-        ),
-
-        # Create Location File
-        Node(
-            package='sobits_mapping',
-            executable='location_setting',
-            name='location_setting',
-            output='screen',
-            prefix='xterm -font r16 -fg floralwhite -bg darkslateblue -e',
-            parameters=[
-                {'use_robot': LaunchConfiguration('use_robot')}
-            ]
-        ),
-
         Node(
             package='sobits_navigation',
             executable='location_tf_broadcaster',
-            name='location_tf_broadcaster'
+            name='location_tf_broadcaster',
+            parameters=[
+                {'location_file_path': os.path.join(get_package_share_directory("sobits_mapping"), 'location', 'location_file_name.yaml')}
+            ]
         ),
 
         Node(
