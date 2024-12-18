@@ -34,6 +34,9 @@ add_executable(location_setting src/location_setting.cpp)
 ament_target_dependencies(location_setting rclcpp tf2_ros tf2_geometry_msgs geometry_msgs rosidl_default_runtime)
 target_link_libraries(location_setting yaml-cpp)
 install(TARGETS location_setting DESTINATION lib/${PROJECT_NAME})
+add_executable(keyboard_teleop src/keyboard_teleop.cpp)
+ament_target_dependencies(keyboard_teleop rclcpp geometry_msgs rosidl_default_runtime)
+install(TARGETS keyboard_teleop DESTINATION lib/${PROJECT_NAME})
 
 
 if(BUILD_TESTING)
