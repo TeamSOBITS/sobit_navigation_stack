@@ -19,7 +19,6 @@
 #include <yaml-cpp/yaml.h>
 
 using namespace std;
-// using namespace std::chrono_literals;
 
 class CreateLocationFile : public rclcpp::Node {
     private:
@@ -29,6 +28,7 @@ class CreateLocationFile : public rclcpp::Node {
         std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
         std::vector<std::string> location_names;
         std::string file_name_;
+        std::string robot_name_;
         bool use_robot_;
         geometry_msgs::msg::Pose nav_goal_msg_;
 
@@ -44,7 +44,7 @@ class CreateLocationFile : public rclcpp::Node {
 
 std::string CreateLocationFile::getSavePath() {
     char buffer[1024];
-    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/location_file_name.yaml  2>/dev/null", "r");
+    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/sobit_navigation_stack/sobits_mapping/location/location_example.yaml  2>/dev/null", "r");
     if (!pipe) return "";
     fgets(buffer, sizeof(buffer), pipe);
     pclose(pipe);
@@ -73,8 +73,8 @@ bool CreateLocationFile::saveLocation(const std::string &location_name) {
     try {
         if (use_robot_) {
             geometry_msgs::msg::TransformStamped transformStamped;
-            if (tfBuffer_->canTransform("map", "base_footprint", tf2::TimePointZero, tf2::durationFromSec(0.5))) {
-                transformStamped = tfBuffer_->lookupTransform("map", "base_footprint", tf2::TimePointZero);
+            if (tfBuffer_->canTransform("map", robot_name_ + "/base_footprint", tf2::TimePointZero, tf2::durationFromSec(0.5))) {
+                transformStamped = tfBuffer_->lookupTransform("map", robot_name_ + "/base_footprint", tf2::TimePointZero);
                 transform = transformStamped.transform;
             } else {
                 RCLCPP_ERROR(this->get_logger(), "Transform failed");
@@ -187,6 +187,7 @@ CreateLocationFile::CreateLocationFile() : Node("create_location_file"), tfBuffe
         std::cout << file_name_ << " could not be created. Check the path of the file." << std::endl;
     }
     use_robot_ = this->declare_parameter<bool>("use_robot", false);
+    robot_name_ = this->declare_parameter<std::string>("robot_name", "");
     if (use_robot_) {
         createLocationFile();
     } else {

@@ -3,7 +3,8 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch.conditions import IfCondition, UnlessCondition
 
@@ -12,6 +13,17 @@ def generate_launch_description():
         DeclareLaunchArgument(
             # ロボットを動かす場合true,動かさない場合false
             'use_robot', default_value='false'
+        ),
+        DeclareLaunchArgument(
+            # ロボットの名前を指定
+            # 'robot_name', default_value='sobit_pro'
+            'robot_name', default_value='sobit_edu'
+            # 'robot_name', default_value='sobit_mini'
+            # 'robot_name', default_value='sobit_light'
+        ),
+        DeclareLaunchArgument(
+            # mapのファイルパス
+            'yaml_filename', default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'example.yaml')
         ),
 
         # Create Location File
@@ -22,21 +34,30 @@ def generate_launch_description():
             output='screen',
             prefix='xterm -font r16 -fg floralwhite -bg darkslateblue -e',
             parameters=[
-                {'use_robot': LaunchConfiguration('use_robot')}
+                {
+                    'use_robot': LaunchConfiguration('use_robot'),
+                    'robot_name': LaunchConfiguration('robot_name')
+                }
             ]
         ),
 
         Node(
             package='sobits_navigation',
             executable='location_tf_broadcaster',
-            name='location_tf_broadcaster'
+            name='location_tf_broadcaster',
+            output='screen',
+            # prefix='xterm -font r16 -fg floralwhite -bg darkslateblue -e',
+            parameters=[{
+                'initial_command': "false",
+            }],
+            # condition=UnlessCondition(LaunchConfiguration("use_robot"))
         ),
 
         Node(
             package='nav2_map_server',
             executable='map_server',
             output='screen',
-            parameters=[{'yaml_filename': os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'example.yaml')}],
+            parameters=[{'yaml_filename': LaunchConfiguration('yaml_filename')}],
             name='map_server'
         ),
 
@@ -50,10 +71,18 @@ def generate_launch_description():
                         {'node_names': ['map_server']}]
         ),
 
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource(
+        #         os.path.join(get_package_share_directory("sobits_navigation"), 'launch', 'nav2.launch.py')),
+        #     launch_arguments={'use_tbc': "False"}.items(),
+        #     condition=IfCondition(LaunchConfiguration("use_robot"))
+        # ),
+
         # Rviz2
         Node(
             package='rviz2',
             executable='rviz2',
             arguments=['-d', os.path.join(get_package_share_directory("sobits_mapping"), 'rviz', 'sobits_mapping.rviz')],
+            condition=UnlessCondition(LaunchConfiguration('use_robot'))
         )
     ])

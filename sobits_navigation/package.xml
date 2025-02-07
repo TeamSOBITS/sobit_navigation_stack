@@ -20,6 +20,12 @@
   <exec_depend>geometry_msgs</exec_depend>
   <build_depend>tf2_ros</build_depend>
   <exec_depend>tf2_ros</exec_depend>
+  <build_depend>tf2</build_depend>
+  <exec_depend>tf2</exec_depend>
+  <build_depend>tf2_geometry_msgs</build_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <build_depend>nav2_msgs</build_depend>
+  <exec_depend>nav2_msgs</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

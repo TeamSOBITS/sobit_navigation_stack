@@ -4,22 +4,36 @@
 #include <string>
 #include <sstream>
 #include <geometry_msgs/msg/pose_stamped.hpp>
+#include <geometry_msgs/msg/quaternion.hpp>
 #include <tf2_ros/transform_broadcaster.h>
+#include <nav2_msgs/srv/set_initial_pose.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <yaml-cpp/yaml.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
 using namespace std;
+using namespace std::chrono_literals;
 
 
 class LocationFileViewer : public rclcpp::Node {
     private:
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_location_file_path_;
+        rclcpp::Client<nav2_msgs::srv::SetInitialPose>::SharedPtr client;
         tf2_ros::TransformBroadcaster tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
 
+        double initial_x_;
+        double initial_y_;
+        double initial_yaw_;
+
         std::string file_name_;
 
+        bool initial_command_;
+
         void loadLocationFile();
+        void initialPoseSet();
         void callbackMessage(const std_msgs::msg::String::SharedPtr msg);
     public:
         LocationFileViewer();
@@ -54,17 +68,54 @@ void LocationFileViewer::loadLocationFile() {
     }
 }
 
+void LocationFileViewer::initialPoseSet() {
+    client = this->create_client<nav2_msgs::srv::SetInitialPose>("/set_initial_pose");
+    auto request = std::make_shared<nav2_msgs::srv::SetInitialPose::Request>();
+    request->pose.header.frame_id = "map";
+    request->pose.pose.pose.position.x = initial_x_;
+    request->pose.pose.pose.position.y = initial_y_;
+    geometry_msgs::msg::Quaternion qur;
+    geometry_msgs::msg::Vector3 rpy;
+    rpy.x = 0.0;
+    rpy.y = 0.0;
+    rpy.z = initial_yaw_;
+    tf2::Quaternion quat_tf;
+
+    quat_tf.setRPY(rpy.x, rpy.y, rpy.z);
+    qur = tf2::toMsg(quat_tf);
+    request->pose.pose.pose.orientation.w = qur.w;
+    request->pose.pose.pose.orientation.x = qur.x;
+    request->pose.pose.pose.orientation.y = qur.y;
+    request->pose.pose.pose.orientation.z = qur.z;
+
+    while (!client->wait_for_service(10s)) {
+        if (!rclcpp::ok()) return;
+    }
+    auto result = client->async_send_request(request);
+}
+
 void LocationFileViewer::callbackMessage(const std_msgs::msg::String::SharedPtr msg) {
     std::cout << msg->data << std::endl;
     file_name_ = msg->data;
+    RCLCPP_INFO(this->get_logger(), "SSSSSSSS:%s", file_name_.c_str());
+    if (initial_command_) initialPoseSet();
     loadLocationFile();
 }
 
 
 LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroadcaster_(this){
-    this->declare_parameter<std::string>("location_file_path", "");
-    if (this->get_parameter("location_file_path", file_name_)) loadLocationFile();
     sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
+    this->declare_parameter<double>("initial_x", 0.0);
+    this->declare_parameter<double>("initial_y", 0.0);
+    this->declare_parameter<double>("initial_yaw", 0.0);
+    this->declare_parameter<std::string>("location_file_path", "");
+    this->declare_parameter<bool>("initial_command", true);
+    this->get_parameter("initial_x", initial_x_);
+    this->get_parameter("initial_y", initial_y_);
+    this->get_parameter("initial_yaw", initial_yaw_);
+    this->get_parameter("initial_command", initial_command_);
+    if (initial_command_) initialPoseSet();
+    if (this->get_parameter("location_file_path", file_name_)) loadLocationFile();
     viewer();
 }
 
@@ -87,3 +138,80 @@ int main(int argc, char *argv[]) {
     rclcpp::shutdown();
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #include "rclcpp/rclcpp.hpp"
+// #include "example_interfaces/srv/add_two_ints.hpp"
+
+// #include <chrono>
+// #include <cstdlib>
+// #include <memory>
+
+// using namespace std::chrono_literals;
+
+// int main(int argc, char **argv)
+// {
+//   rclcpp::init(argc, argv);
+
+//   if (argc != 3) {
+//       RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "usage: add_two_ints_client X Y");
+//       return 1;
+//   }
+
+//   std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("add_two_ints_client");
+//   rclcpp::Client<example_interfaces::srv::AddTwoInts>::SharedPtr client =
+//     node->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints");
+
+//   auto request = std::make_shared<example_interfaces::srv::AddTwoInts::Request>();
+//   request->a = atoll(argv[1]);
+//   request->b = atoll(argv[2]);
+
+//   while (!client->wait_for_service(1s)) {
+//     if (!rclcpp::ok()) {
+//       RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+//       return 0;
+//     }
+//     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "service not available, waiting again...");
+//   }
+
+//   auto result = client->async_send_request(request);
+//   // Wait for the result.
+//   if (rclcpp::spin_until_future_complete(node, result) ==
+//     rclcpp::FutureReturnCode::SUCCESS)
+//   {
+//     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sum: %ld", result.get()->sum);
+//   } else {
+//     RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service add_two_ints");
+//   }
+
+//   rclcpp::shutdown();
+//   return 0;
+// }

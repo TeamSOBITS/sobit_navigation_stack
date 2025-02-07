@@ -17,12 +17,20 @@ from lifecycle_msgs.msg import Transition
 def generate_launch_description():
     save_map_command = True
     rviz_viewer = True
+    # robot_name = "sobit_pro"
+    robot_name = "sobit_edu"
+    # robot_name = "sobit_mini"
+    # robot_name = "sobit_light"
 
     autostart = LaunchConfiguration('autostart')
     use_lifecycle_manager = LaunchConfiguration("use_lifecycle_manager")
     use_sim_time = LaunchConfiguration('use_sim_time')
     slam_params_file = LaunchConfiguration('slam_params_file')
 
+    declare_slam_params_file_cmd = DeclareLaunchArgument(
+        'slam_params_file',
+        default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'param', robot_name + '_gmapping_config.yaml'),
+        description='Full path to the ROS2 parameters file to use for the slam_toolbox node')
     declare_autostart_cmd = DeclareLaunchArgument(
         'autostart', default_value='true',
         description='Automatically startup the slamtoolbox. '
@@ -34,11 +42,6 @@ def generate_launch_description():
         'use_sim_time',
         default_value='true',
         description='Use simulation/Gazebo clock')
-    declare_slam_params_file_cmd = DeclareLaunchArgument(
-        'slam_params_file',
-        default_value=os.path.join(get_package_share_directory("sobits_mapping"),
-                                   'param', 'gmapping_config.yaml'),
-        description='Full path to the ROS2 parameters file to use for the slam_toolbox node')
 
     start_async_slam_toolbox_node = LifecycleNode(
         parameters=[
@@ -92,7 +95,7 @@ def generate_launch_description():
         rviz_node = Node(
             package='rviz2',
             executable='rviz2',
-            output='screen',
+            output='log',
             arguments=['-d', os.path.join(get_package_share_directory("sobits_mapping"), 'rviz', 'sobits_mapping.rviz')],
         )
 
