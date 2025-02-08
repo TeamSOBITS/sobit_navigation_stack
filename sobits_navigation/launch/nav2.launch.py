@@ -20,7 +20,7 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription
-from launch.conditions import IfCondition
+from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
@@ -28,8 +28,8 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # Get the launch directory
-    bringup_dir = get_package_share_directory('nav2_bringup')
-    launch_dir = os.path.join(bringup_dir, 'launch')
+    # bringup_dir = get_package_share_directory('nav2_bringup')
+    # launch_dir = os.path.join(bringup_dir, 'launch')
 
     # Create the launch configuration variables
     slam = LaunchConfiguration('slam')
@@ -153,12 +153,12 @@ def generate_launch_description():
         package='rviz2',
         executable='rviz2',
         arguments=['-d', os.path.join(get_package_share_directory("sobits_mapping"), 'rviz', 'sobits_mapping.rviz')],
-        condition=UnlessCondition(use_rviz)
+        condition=IfCondition(use_rviz)
     )
 
     bringup_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(launch_dir, 'bringup_launch.py')),
+            os.path.join(get_package_share_directory('sobits_navigation'), 'launch', 'bringup.launch.py')),
         launch_arguments={'namespace': namespace,
                           'use_namespace': use_namespace,
                           'slam': slam,
@@ -178,7 +178,9 @@ def generate_launch_description():
                 "initial_x": initial_x,
                 "initial_y": initial_y,
                 "initial_yaw": initial_yaw,
-                "location_file_path": location_file_path
+                "location_file_path": location_file_path,
+                "initial_command": True,
+                "create_location_file": False,
             }
         ],
         condition=IfCondition(use_tbc)

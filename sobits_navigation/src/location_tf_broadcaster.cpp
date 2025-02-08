@@ -31,6 +31,7 @@ class LocationFileViewer : public rclcpp::Node {
         std::string file_name_;
 
         bool initial_command_;
+        bool create_location_file_;
 
         void loadLocationFile();
         void initialPoseSet();
@@ -64,12 +65,11 @@ void LocationFileViewer::loadLocationFile() {
             location_poses_.push_back(pose);
         }
     } catch (const YAML::Exception& e) {
-        std::cout << "Faild" << std::endl;
+        std::cout << "Faild Open the Yaml File..." << std::endl;
     }
 }
 
 void LocationFileViewer::initialPoseSet() {
-    client = this->create_client<nav2_msgs::srv::SetInitialPose>("/set_initial_pose");
     auto request = std::make_shared<nav2_msgs::srv::SetInitialPose::Request>();
     request->pose.header.frame_id = "map";
     request->pose.pose.pose.position.x = initial_x_;
@@ -97,25 +97,32 @@ void LocationFileViewer::initialPoseSet() {
 void LocationFileViewer::callbackMessage(const std_msgs::msg::String::SharedPtr msg) {
     std::cout << msg->data << std::endl;
     file_name_ = msg->data;
-    RCLCPP_INFO(this->get_logger(), "SSSSSSSS:%s", file_name_.c_str());
-    if (initial_command_) initialPoseSet();
+    // RCLCPP_INFO(this->get_logger(), "SSSSSSSS:%s", file_name_.c_str());
+    // if (initial_command_) initialPoseSet();
     loadLocationFile();
 }
 
 
 LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroadcaster_(this){
-    sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
+    // sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
+    client = this->create_client<nav2_msgs::srv::SetInitialPose>("/set_initial_pose");
     this->declare_parameter<double>("initial_x", 0.0);
     this->declare_parameter<double>("initial_y", 0.0);
     this->declare_parameter<double>("initial_yaw", 0.0);
     this->declare_parameter<std::string>("location_file_path", "");
     this->declare_parameter<bool>("initial_command", true);
+    this->declare_parameter<bool>("create_location_file", false);
     this->get_parameter("initial_x", initial_x_);
     this->get_parameter("initial_y", initial_y_);
     this->get_parameter("initial_yaw", initial_yaw_);
+    this->get_parameter("location_file_path", file_name_);
     this->get_parameter("initial_command", initial_command_);
+    this->get_parameter("create_location_file", create_location_file_);
+
     if (initial_command_) initialPoseSet();
-    if (this->get_parameter("location_file_path", file_name_)) loadLocationFile();
+    if (create_location_file_) sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
+    else loadLocationFile();
+
     viewer();
 }
 

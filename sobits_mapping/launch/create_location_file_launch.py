@@ -45,12 +45,15 @@ def generate_launch_description():
             package='sobits_navigation',
             executable='location_tf_broadcaster',
             name='location_tf_broadcaster',
-            output='screen',
-            # prefix='xterm -font r16 -fg floralwhite -bg darkslateblue -e',
-            parameters=[{
-                'initial_command': "false",
-            }],
-            # condition=UnlessCondition(LaunchConfiguration("use_robot"))
+            parameters=[
+                {
+                    "initial_x": 0.0,
+                    "initial_y": 0.0,
+                    "initial_yaw": 0.0,
+                    "initial_command": LaunchConfiguration('use_robot'),
+                    "create_location_file": True,
+                }
+            ]
         ),
 
         Node(
@@ -71,12 +74,12 @@ def generate_launch_description():
                         {'node_names': ['map_server']}]
         ),
 
-        # IncludeLaunchDescription(
-        #     PythonLaunchDescriptionSource(
-        #         os.path.join(get_package_share_directory("sobits_navigation"), 'launch', 'nav2.launch.py')),
-        #     launch_arguments={'use_tbc': "False"}.items(),
-        #     condition=IfCondition(LaunchConfiguration("use_robot"))
-        # ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join(get_package_share_directory("sobits_navigation"), 'launch', 'nav2.launch.py')),
+            launch_arguments={'use_tbc': 'False'}.items(),
+            condition=IfCondition(LaunchConfiguration("use_robot"))
+        ),
 
         # Rviz2
         Node(
