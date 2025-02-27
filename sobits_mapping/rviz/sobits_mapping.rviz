@@ -25,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
 Visualization Manager:
   Class: ""
   Displays:
@@ -83,7 +83,7 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz_default_plugins/LaserScan
       Color: 255; 255; 255
-      Color Transformer: ""
+      Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -92,7 +92,7 @@ Visualization Manager:
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: LaserScan
-      Position Transformer: ""
+      Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.009999999776482582
@@ -187,14 +187,324 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        map:
+          Value: true
+        sobit_edu/arm_base_link:
+          Value: true
+        sobit_edu/arm_elbow_1_tilt_link:
+          Value: true
+        sobit_edu/arm_elbow_2_tilt_link:
+          Value: true
+        sobit_edu/arm_shoulder_1_tilt_link:
+          Value: true
+        sobit_edu/arm_shoulder_2_tilt_link:
+          Value: true
+        sobit_edu/arm_shoulder_pan_link:
+          Value: true
+        sobit_edu/arm_wrist_tilt_link:
+          Value: true
+        sobit_edu/back_base_link:
+          Value: true
+        sobit_edu/base_footprint:
+          Value: true
+        sobit_edu/base_link:
+          Value: true
+        sobit_edu/caster_back_link:
+          Value: true
+        sobit_edu/caster_front_link:
+          Value: true
+        sobit_edu/cliff_sensor_front_link:
+          Value: true
+        sobit_edu/cliff_sensor_left_link:
+          Value: true
+        sobit_edu/cliff_sensor_right_link:
+          Value: true
+        sobit_edu/cover_link:
+          Value: true
+        sobit_edu/gyro_link:
+          Value: true
+        sobit_edu/hand_base_link:
+          Value: true
+        sobit_edu/hand_finger_l_link:
+          Value: true
+        sobit_edu/hand_finger_r_link:
+          Value: true
+        sobit_edu/hand_inner_l_link:
+          Value: true
+        sobit_edu/hand_inner_r_link:
+          Value: true
+        sobit_edu/hand_outer_l_link:
+          Value: true
+        sobit_edu/hand_outer_r_link:
+          Value: true
+        sobit_edu/head_camera_base_link:
+          Value: true
+        sobit_edu/head_camera_link:
+          Value: true
+        sobit_edu/head_camera_pan_link:
+          Value: true
+        sobit_edu/head_camera_plug_base_link:
+          Value: true
+        sobit_edu/head_camera_tilt_link:
+          Value: true
+        sobit_edu/head_camera_visor_base_link:
+          Value: true
+        sobit_edu/lidar_base_link:
+          Value: true
+        sobit_edu/lidar_laser:
+          Value: true
+        sobit_edu/lidar_laser_mount:
+          Value: true
+        sobit_edu/matrix_base_link:
+          Value: true
+        sobit_edu/matrix_board_link:
+          Value: true
+        sobit_edu/matrix_sensor_1_link:
+          Value: true
+        sobit_edu/matrix_sensor_2_link:
+          Value: true
+        sobit_edu/matrix_sensor_3_link:
+          Value: true
+        sobit_edu/matrix_sensor_4_link:
+          Value: true
+        sobit_edu/matrix_sensor_5_link:
+          Value: true
+        sobit_edu/matrix_sensor_6_link:
+          Value: true
+        sobit_edu/matrix_sensor_7_link:
+          Value: true
+        sobit_edu/matrix_sensor_8_link:
+          Value: true
+        sobit_edu/mic_base_link:
+          Value: true
+        sobit_edu/mic_link:
+          Value: true
+        sobit_edu/odom:
+          Value: true
+        sobit_edu/plate_bottom_link:
+          Value: true
+        sobit_edu/plate_middle_link:
+          Value: true
+        sobit_edu/plate_top_link:
+          Value: true
+        sobit_edu/pole_bottom_0_link:
+          Value: true
+        sobit_edu/pole_bottom_1_link:
+          Value: true
+        sobit_edu/pole_bottom_2_link:
+          Value: true
+        sobit_edu/pole_bottom_3_link:
+          Value: true
+        sobit_edu/pole_bottom_4_link:
+          Value: true
+        sobit_edu/pole_bottom_5_link:
+          Value: true
+        sobit_edu/pole_middle_4_link:
+          Value: true
+        sobit_edu/pole_middle_5_link:
+          Value: true
+        sobit_edu/pole_middle_6_link:
+          Value: true
+        sobit_edu/pole_middle_7_link:
+          Value: true
+        sobit_edu/pole_top_0_link:
+          Value: true
+        sobit_edu/pole_top_1_link:
+          Value: true
+        sobit_edu/pole_top_2_link:
+          Value: true
+        sobit_edu/pole_top_3_link:
+          Value: true
+        sobit_edu/sim_laser_frame:
+          Value: true
+        sobit_edu/wheel_l_link:
+          Value: true
+        sobit_edu/wheel_r_link:
+          Value: true
+        test1:
+          Value: true
+        test2:
+          Value: true
+        test3:
+          Value: true
+        test4:
+          Value: true
+        test5:
+          Value: true
+        test6:
+          Value: true
+        test7:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        map:
+          sobit_edu/odom:
+            sobit_edu/base_footprint:
+              sobit_edu/base_link:
+                sobit_edu/caster_back_link:
+                  {}
+                sobit_edu/caster_front_link:
+                  {}
+                sobit_edu/cliff_sensor_front_link:
+                  {}
+                sobit_edu/cliff_sensor_left_link:
+                  {}
+                sobit_edu/cliff_sensor_right_link:
+                  {}
+                sobit_edu/gyro_link:
+                  {}
+                sobit_edu/plate_bottom_link:
+                  sobit_edu/lidar_base_link:
+                    sobit_edu/lidar_laser_mount:
+                      sobit_edu/lidar_laser:
+                        {}
+                    sobit_edu/sim_laser_frame:
+                      {}
+                sobit_edu/plate_middle_link:
+                  {}
+                sobit_edu/plate_top_link:
+                  sobit_edu/arm_base_link:
+                    sobit_edu/arm_shoulder_pan_link:
+                      sobit_edu/arm_shoulder_1_tilt_link:
+                        sobit_edu/arm_elbow_1_tilt_link:
+                          sobit_edu/arm_wrist_tilt_link:
+                            sobit_edu/hand_base_link:
+                              sobit_edu/hand_inner_l_link:
+                                sobit_edu/hand_finger_l_link:
+                                  sobit_edu/hand_outer_l_link:
+                                    {}
+                              sobit_edu/hand_inner_r_link:
+                                sobit_edu/hand_finger_r_link:
+                                  sobit_edu/hand_outer_r_link:
+                                    {}
+                        sobit_edu/arm_elbow_2_tilt_link:
+                          {}
+                      sobit_edu/arm_shoulder_2_tilt_link:
+                        {}
+                  sobit_edu/back_base_link:
+                    sobit_edu/head_camera_base_link:
+                      sobit_edu/head_camera_pan_link:
+                        sobit_edu/head_camera_tilt_link:
+                          sobit_edu/head_camera_link:
+                            sobit_edu/head_camera_plug_base_link:
+                              sobit_edu/head_camera_visor_base_link:
+                                {}
+                    sobit_edu/matrix_base_link:
+                      sobit_edu/matrix_board_link:
+                        sobit_edu/matrix_sensor_1_link:
+                          {}
+                        sobit_edu/matrix_sensor_2_link:
+                          {}
+                        sobit_edu/matrix_sensor_3_link:
+                          {}
+                        sobit_edu/matrix_sensor_4_link:
+                          {}
+                        sobit_edu/matrix_sensor_5_link:
+                          {}
+                        sobit_edu/matrix_sensor_6_link:
+                          {}
+                        sobit_edu/matrix_sensor_7_link:
+                          {}
+                        sobit_edu/matrix_sensor_8_link:
+                          {}
+                    sobit_edu/mic_base_link:
+                      sobit_edu/mic_link:
+                        {}
+                  sobit_edu/cover_link:
+                    {}
+                sobit_edu/pole_bottom_0_link:
+                  {}
+                sobit_edu/pole_bottom_1_link:
+                  {}
+                sobit_edu/pole_bottom_2_link:
+                  {}
+                sobit_edu/pole_bottom_3_link:
+                  {}
+                sobit_edu/pole_bottom_4_link:
+                  {}
+                sobit_edu/pole_bottom_5_link:
+                  {}
+                sobit_edu/pole_middle_4_link:
+                  {}
+                sobit_edu/pole_middle_5_link:
+                  {}
+                sobit_edu/pole_middle_6_link:
+                  {}
+                sobit_edu/pole_middle_7_link:
+                  {}
+                sobit_edu/pole_top_0_link:
+                  {}
+                sobit_edu/pole_top_1_link:
+                  {}
+                sobit_edu/pole_top_2_link:
+                  {}
+                sobit_edu/pole_top_3_link:
+                  {}
+                sobit_edu/wheel_l_link:
+                  {}
+                sobit_edu/wheel_r_link:
+                  {}
+          test1:
+            {}
+          test2:
+            {}
+          test3:
+            {}
+          test4:
+            {}
+          test5:
+            {}
+          test6:
+            {}
+          test7:
+            {}
       Update Interval: 0
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Global Cost Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /global_costmap/costmap
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /global_costmap/costmap_updates
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Local Cost Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /local_costmap/costmap
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /local_costmap/costmap_updates
+      Use Timestamp: false
       Value: true
   Enabled: true
   Global Options:

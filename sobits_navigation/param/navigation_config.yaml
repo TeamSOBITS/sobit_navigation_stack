@@ -1,6 +1,6 @@
 amcl:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     alpha1: 0.2
     alpha2: 0.2
     alpha3: 0.2
@@ -41,10 +41,10 @@ amcl:
 
 bt_navigator:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     global_frame: map
     robot_base_frame: sobit_edu/base_footprint
-    odom_topic: odom
+    odom_topic: /odom
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 1000
@@ -103,15 +103,15 @@ bt_navigator:
 
 bt_navigator_navigate_through_poses_rclcpp_node:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
 
 bt_navigator_navigate_to_pose_rclcpp_node:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
 
 controller_server:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     controller_frequency: 20.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
@@ -187,30 +187,30 @@ local_costmap:
       publish_frequency: 2.0
       global_frame: sobit_edu/odom
       robot_base_frame: sobit_edu/base_footprint
-      use_sim_time: False
+      use_sim_time: True
       rolling_window: true
-      width: 3
-      height: 3
-      resolution: 0.1
-      robot_radius: 0.3
+      width: 4.0
+      height: 4.0
+      resolution: 0.05
+      robot_radius: 0.2
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.50
+        cost_scaling_factor: 10.0  ###
+        inflation_radius: 0.25     ###
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
         publish_voxel_map: True
-        origin_z: 0.0
+        origin_z: 0.05   ###
         z_resolution: 0.05
-        z_voxels: 16
-        max_obstacle_height: 2.0
+        z_voxels: 20  ###
+        max_obstacle_height: 1.0 ###
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /scan
-          max_obstacle_height: 2.0
+          topic: scan
+          max_obstacle_height: 1.0  ###
           clearing: True
           marking: True
           data_type: "LaserScan"
@@ -227,12 +227,12 @@ global_costmap:
   global_costmap:
     ros__parameters:
       update_frequency: 1.0
-      publish_frequency: 1.0
+      publish_frequency: 0.5  ###
       global_frame: map
-      robot_base_frame: sobit_edu/base_footprint
-      use_sim_time: False
-      robot_radius: 0.22
-      resolution: 0.1
+      robot_base_frame: sobit_edu/odom
+      use_sim_time: True
+      robot_radius: 0.2   ###
+      resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
@@ -241,7 +241,7 @@ global_costmap:
         observation_sources: scan
         scan:
           topic: /scan
-          max_obstacle_height: 2.0
+          max_obstacle_height: 1.0   ###
           clearing: True
           marking: True
           data_type: "LaserScan"
@@ -254,20 +254,20 @@ global_costmap:
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.55
+        cost_scaling_factor: 10.0   ###
+        inflation_radius: 0.25    ###
       always_send_full_costmap: True
 
 map_server:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     # Overridden in launch by the "map" launch configuration or provided default value.
     # To use in yaml, remove the default "map" value in the tb3_simulation_launch.py file & provide full path to map below.
     yaml_filename: ""
 
 map_saver:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     save_map_timeout: 5.0
     free_thresh_default: 0.25
     occupied_thresh_default: 0.65
@@ -276,7 +276,7 @@ map_saver:
 planner_server:
   ros__parameters:
     expected_planner_frequency: 20.0
-    use_sim_time: False
+    use_sim_time: True
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
@@ -286,7 +286,7 @@ planner_server:
 
 smoother_server:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     smoother_plugins: ["simple_smoother"]
     simple_smoother:
       plugin: "nav2_smoother::SimpleSmoother"
@@ -313,7 +313,7 @@ behavior_server:
     global_frame: sobit_edu/odom
     robot_base_frame: sobit_edu/base_footprint
     transform_tolerance: 0.1
-    use_sim_time: False
+    use_sim_time: True
     simulate_ahead_time: 2.0
     max_rotational_vel: 1.0
     min_rotational_vel: 0.4
@@ -321,11 +321,11 @@ behavior_server:
 
 robot_state_publisher:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
 
 waypoint_follower:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     loop_rate: 20
     stop_on_failure: false
     waypoint_task_executor_plugin: "wait_at_waypoint"
@@ -336,7 +336,7 @@ waypoint_follower:
 
 velocity_smoother:
   ros__parameters:
-    use_sim_time: False
+    use_sim_time: True
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
@@ -348,36 +348,3 @@ velocity_smoother:
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0
-
-
-# collision_monitor:
-#   ros__parameters:
-#     base_frame_id: "base_footprint"
-#     odom_frame_id: "odom"
-#     cmd_vel_in_topic: "cmd_vel_smoothed"
-#     cmd_vel_out_topic: "/commands/velocity"
-#     state_topic: "collision_monitor_state"
-#     transform_tolerance: 0.2
-#     source_timeout: 1.0
-#     base_shift_correction: True
-#     stop_pub_timeout: 2.0
-#     # Polygons represent zone around the robot for "stop", "slowdown" and "limit" action types,
-#     # and robot footprint for "approach" action type.
-#     polygons: ["FootprintApproach"]
-#     FootprintApproach:
-#       type: "polygon"
-#       action_type: "approach"
-#       footprint_topic: "local_costmap/published_footprint"
-#       time_before_collision: 1.2
-#       simulation_time_step: 0.1
-#       min_points: 6
-#       visualize: False
-#       enabled: True
-#     observation_sources: ["scan"]
-#     scan:
-#       type: "scan"
-#       topic: "scan"
-#       min_height: 0.15
-#       max_height: 2.0
-#       enabled: True
-
