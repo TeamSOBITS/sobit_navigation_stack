@@ -6,6 +6,7 @@
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <geometry_msgs/msg/quaternion.hpp>
 #include <tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/static_transform_broadcaster.h>
 #include <nav2_msgs/srv/set_initial_pose.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <yaml-cpp/yaml.h>
@@ -21,7 +22,7 @@ class LocationFileViewer : public rclcpp::Node {
     private:
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_location_file_path_;
         rclcpp::Client<nav2_msgs::srv::SetInitialPose>::SharedPtr client;
-        tf2_ros::TransformBroadcaster tfBroadcaster_;
+        tf2_ros::StaticTransformBroadcaster tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
 
         double initial_x_;
@@ -38,7 +39,7 @@ class LocationFileViewer : public rclcpp::Node {
         void callbackMessage(const std_msgs::msg::String::SharedPtr msg);
     public:
         LocationFileViewer();
-        void viewer();
+        // void viewer();
         void displayMarker();
 };
 
@@ -97,8 +98,6 @@ void LocationFileViewer::initialPoseSet() {
 void LocationFileViewer::callbackMessage(const std_msgs::msg::String::SharedPtr msg) {
     std::cout << msg->data << std::endl;
     file_name_ = msg->data;
-    // RCLCPP_INFO(this->get_logger(), "SSSSSSSS:%s", file_name_.c_str());
-    // if (initial_command_) initialPoseSet();
     loadLocationFile();
 }
 
@@ -123,20 +122,13 @@ LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroad
     if (create_location_file_) sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
     else loadLocationFile();
 
-    viewer();
-}
-
-void LocationFileViewer::viewer() {
-    rclcpp::Rate loop_rate(10);
-    while (rclcpp::ok()) {
-        rclcpp::spin_some(this->get_node_base_interface());
-        loop_rate.sleep();
-        for (auto& pose : location_poses_) {
-            pose.header.stamp = this->now();
-            tfBroadcaster_.sendTransform(pose);
-        }
+    rclcpp::spin_some(this->get_node_base_interface());
+    for (auto& pose : location_poses_) {
+        pose.header.stamp = this->now();
+        tfBroadcaster_.sendTransform(pose);
     }
 }
+
 
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);

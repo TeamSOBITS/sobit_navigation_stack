@@ -21,8 +21,12 @@ find_package(yaml-cpp REQUIRED)
 install(DIRECTORY
   launch
   rviz
-  param
   DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY
+  param/sobit_edu
+  DESTINATION share/${PROJECT_NAME}/param
 )
 
 add_executable(location_tf_broadcaster src/location_tf_broadcaster.cpp)

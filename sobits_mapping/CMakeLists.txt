@@ -19,7 +19,6 @@ find_package(yaml-cpp REQUIRED)
 
 install(DIRECTORY
   launch
-  rviz
   param
   location
   map

@@ -77,15 +77,14 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory("sobits_navigation"), 'launch', 'nav2.launch.py')),
-            launch_arguments={'use_tbc': 'False'}.items(),
+            launch_arguments={'use_location': 'False'}.items(),
             condition=IfCondition(LaunchConfiguration("use_robot"))
         ),
 
-        # Rviz2
         Node(
             package='rviz2',
             executable='rviz2',
-            arguments=['-d', os.path.join(get_package_share_directory("sobits_mapping"), 'rviz', 'sobits_mapping.rviz')],
+            arguments=['-d', os.path.join(get_package_share_directory("sobits_navigation"), 'rviz', 'sobits_navigation.rviz')],
             condition=UnlessCondition(LaunchConfiguration('use_robot'))
         )
     ])
