@@ -26,6 +26,7 @@ install(DIRECTORY
 
 install(DIRECTORY
   param/sobit_edu
+  param/hsr
   DESTINATION share/${PROJECT_NAME}/param
 )
 

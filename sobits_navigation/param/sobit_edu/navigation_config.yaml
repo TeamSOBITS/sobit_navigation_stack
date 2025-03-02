@@ -229,7 +229,7 @@ global_costmap:
       update_frequency: 1.0
       publish_frequency: 1.0
       global_frame: map
-      robot_base_frame: sobit_edu/odom
+      robot_base_frame: sobit_edu/base_footprint
       use_sim_time: False
       robot_radius: 0.2
       resolution: 0.1
