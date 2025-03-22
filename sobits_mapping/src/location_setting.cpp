@@ -159,7 +159,7 @@ void CreateLocationFile::callbackMessage(const geometry_msgs::msg::PoseStamped::
         }
         else std::cout << "The \""  << location_name << "\" already exists." << std::endl;
     }
-    std::cout << "Click on the location you wish to register with the 2D Nav Goal." << std::endl;
+    std::cout << "Click on the location you wish to register with the 2D Goal Pose." << std::endl;
 }
 
 CreateLocationFile::CreateLocationFile() : Node("create_location_file"), tfBuffer_(std::make_shared<tf2_ros::Buffer>(this->get_clock())), tf_listener_(std::make_shared<tf2_ros::TransformListener>(*tfBuffer_)) {
@@ -192,7 +192,7 @@ CreateLocationFile::CreateLocationFile() : Node("create_location_file"), tfBuffe
         createLocationFile();
     } else {
         sub_msg_ = this->create_subscription<geometry_msgs::msg::PoseStamped>("/goal_pose", 1, std::bind(&CreateLocationFile::callbackMessage, this, std::placeholders::_1));
-        std::cout << "Click on the location you wish to register with the 2D Nav Goal." << std::endl;
+        std::cout << "Click on the location you wish to register with the 2D Goal Pose." << std::endl;
     }
 }
 
