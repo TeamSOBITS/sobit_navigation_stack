@@ -32,7 +32,7 @@
     保存された地図画像と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_ + 保存した日時 + .yaml」のファイル名で保存される．
 
 
-# カメラを用いた地図生成
+## カメラを用いた地図生成
 1. カメラの点群のトピック名を揃える \
     [gmapping_multi_sensor.launch](/sobit_mapping/launch/gmapping_multi_sensor.launch)の6行目のremapをtoを点群のトピック名にする．\
     ロボットに搭載されているカメラによって，点群のトピック名が異なるので，詳しくは各ロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))で点群名をチェック．\
