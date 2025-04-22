@@ -18,10 +18,10 @@ def generate_launch_description():
     save_map_command = True
     rviz_viewer = True
     # robot_name = "sobit_pro"
-    # robot_name = "sobit_edu"
+    robot_name = "sobit_edu"
     # robot_name = "sobit_mini"
     # robot_name = "sobit_light"
-    robot_name = "hsr"
+    # robot_name = "hsr"
 
     autostart = LaunchConfiguration('autostart')
     use_lifecycle_manager = LaunchConfiguration("use_lifecycle_manager")

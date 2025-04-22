@@ -17,7 +17,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, GroupAction, SetEnvironmentVariable, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, GroupAction, SetEnvironmentVariable, IncludeLaunchDescription, OpaqueFunction
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PythonExpression
@@ -26,6 +26,19 @@ from launch_ros.actions import Node
 from launch_ros.actions import PushRosNamespace
 from launch_ros.descriptions import ComposableNode, ParameterFile
 from nav2_common.launch import RewrittenYaml
+
+
+
+def declare_param_file(context, *args, **kwargs):
+    bringup_dir = get_package_share_directory('sobits_navigation')
+    robot_name_value = LaunchConfiguration('robot_name').perform(context)
+    param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'navigation_config.yaml')
+
+    return [DeclareLaunchArgument(
+        'params_file',
+        default_value=param_file_path,
+        description='Full path to the ROS2 parameters file to use for all launched nodes'
+    )]
 
 
 def generate_launch_description():
@@ -39,6 +52,7 @@ def generate_launch_description():
     autostart = LaunchConfiguration('autostart')
 
     map_yaml_file = LaunchConfiguration('map')
+    # robot_name = LaunchConfiguration('robot_name')
     params_file = LaunchConfiguration('params_file')
     use_rviz = LaunchConfiguration('use_rviz')
 
@@ -47,6 +61,8 @@ def generate_launch_description():
     initial_y = LaunchConfiguration('initial_y')
     initial_yaw = LaunchConfiguration('initial_yaw')
     location_file_path = LaunchConfiguration('location_file_path')
+
+    velocity_topic_name = LaunchConfiguration('velocity_topic_name')
 
     use_composition = LaunchConfiguration('use_composition')
     container_name = LaunchConfiguration('container_name')
@@ -106,6 +122,15 @@ def generate_launch_description():
         default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'example.yaml'),
         description='Full path to map yaml file to load')
 
+    declare_robot_name_cmd = DeclareLaunchArgument(
+        'robot_name',
+        # default_value="sobit_pro",
+        default_value="sobit_edu",
+        # default_value="sobit_mini",
+        # default_value="sobit_light",
+        # default_value="hsr_sim",
+        description='choice your used robot name')
+
     declare_location_yaml_cmd = DeclareLaunchArgument(
         'location_file_path',
         default_value=os.path.join(
@@ -118,10 +143,10 @@ def generate_launch_description():
         default_value='false',
         description='Use simulation (Gazebo) clock if true')
 
-    declare_params_file_cmd = DeclareLaunchArgument(
-        'params_file',
-        default_value=os.path.join(bringup_dir, 'param', 'sobit_edu', 'navigation_config.yaml'),
-        description='Full path to the ROS2 parameters file to use for all launched nodes')
+    # declare_params_file_cmd = DeclareLaunchArgument(
+    #     'params_file',
+    #     default_value=os.path.join(bringup_dir, 'param', robot_name, 'navigation_config.yaml'),
+    #     description='Full path to the ROS2 parameters file to use for all launched nodes')
 
     declare_use_rviz_cmd = DeclareLaunchArgument(
         'use_rviz',
@@ -168,6 +193,12 @@ def generate_launch_description():
         default_value="0.0",
         description='initial_rotation yaw')
 
+    declare_velocity_topic_name_cmd = DeclareLaunchArgument(
+        'velocity_topic_name',
+        default_value="/commands/velocity",  ## SOBIT EDU or SOBIT MINI ##
+        # default_value="/sobit_pro/cmd_vel",  ## SOBIT PRO ##
+        description='velocity topic name')
+
     load_nodes = GroupAction(
         condition=IfCondition(PythonExpression(['not ', use_composition])),
         actions=[
@@ -179,7 +210,7 @@ def generate_launch_description():
                 respawn_delay=2.0,
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings + [('/commands/velocity', 'cmd_vel_nav')]),
+                remappings=remappings + [(velocity_topic_name, 'cmd_vel_nav')]),
             Node(
                 package='nav2_smoother',
                 executable='smoother_server',
@@ -240,7 +271,7 @@ def generate_launch_description():
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings +
-                        [('/commands/velocity', 'cmd_vel_nav'), ('cmd_vel_smoothed', '/commands/velocity')]),
+                        [(velocity_topic_name, 'cmd_vel_nav'), ('cmd_vel_smoothed', velocity_topic_name)]),
             Node(
                 package='nav2_lifecycle_manager',
                 executable='lifecycle_manager',
@@ -262,7 +293,7 @@ def generate_launch_description():
                 plugin='nav2_controller::ControllerServer',
                 name='controller_server',
                 parameters=[configured_params],
-                remappings=remappings + [('/commands/velocity', 'cmd_vel_nav')]),
+                remappings=remappings + [(velocity_topic_name, 'cmd_vel_nav')]),
             ComposableNode(
                 package='nav2_smoother',
                 plugin='nav2_smoother::SmootherServer',
@@ -299,7 +330,7 @@ def generate_launch_description():
                 name='velocity_smoother',
                 parameters=[configured_params],
                 remappings=remappings +
-                           [('/commands/velocity', 'cmd_vel_nav'), ('cmd_vel_smoothed', '/commands/velocity')]),
+                           [(velocity_topic_name, 'cmd_vel_nav'), ('cmd_vel_smoothed', velocity_topic_name)]),
             ComposableNode(
                 package='nav2_lifecycle_manager',
                 plugin='nav2_lifecycle_manager::LifecycleManager',
@@ -387,13 +418,16 @@ def generate_launch_description():
     ld.add_action(declare_use_namespace_cmd)
     ld.add_action(declare_slam_cmd)
     ld.add_action(declare_map_yaml_cmd)
+    ld.add_action(declare_robot_name_cmd)
+    ld.add_action(OpaqueFunction(function=declare_param_file))
+    # ld.add_action(declare_params_file_cmd)
     ld.add_action(declare_use_sim_time_cmd)
-    ld.add_action(declare_params_file_cmd)
     ld.add_action(declare_use_rviz_cmd)
     ld.add_action(declare_use_location_cmd)
     ld.add_action(declare_initial_x_cmd)
     ld.add_action(declare_initial_y_cmd)
     ld.add_action(declare_initial_yaw_cmd)
+    ld.add_action(declare_velocity_topic_name_cmd)
     ld.add_action(declare_location_yaml_cmd)
     ld.add_action(rviz_cmd)
     ld.add_action(declare_autostart_cmd)

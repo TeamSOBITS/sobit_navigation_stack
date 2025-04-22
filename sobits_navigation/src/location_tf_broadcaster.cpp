@@ -22,7 +22,7 @@ class LocationFileViewer : public rclcpp::Node {
     private:
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_location_file_path_;
         rclcpp::Client<nav2_msgs::srv::SetInitialPose>::SharedPtr client;
-        tf2_ros::StaticTransformBroadcaster tfBroadcaster_;
+        tf2_ros::TransformBroadcaster tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
 
         double initial_x_;
@@ -122,11 +122,19 @@ LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroad
     if (create_location_file_) sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
     else loadLocationFile();
 
-    rclcpp::spin_some(this->get_node_base_interface());
-    for (auto& pose : location_poses_) {
-        pose.header.stamp = this->now();
-        tfBroadcaster_.sendTransform(pose);
+    while (rclcpp::ok()) {
+        // if (create_location_file_) rclcpp::spin_some(this->get_node_base_interface());
+        rclcpp::spin_some(this->get_node_base_interface());
+        for (auto& pose : location_poses_) {
+            pose.header.stamp = this->now();
+            tfBroadcaster_.sendTransform(pose);
+        }
     }
+    // if (!create_location_file_) rclcpp::spin_some(this->get_node_base_interface());
+    // for (auto& pose : location_poses_) {
+    //     pose.header.stamp = this->now();
+    //     tfBroadcaster_.sendTransform(pose);
+    // }
 }
 
 

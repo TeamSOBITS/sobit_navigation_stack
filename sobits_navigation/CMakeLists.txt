@@ -25,7 +25,10 @@ install(DIRECTORY
 )
 
 install(DIRECTORY
+  param/sobit_pro
   param/sobit_edu
+  param/sobit_mini
+  param/sobit_light
   param/hsr
   DESTINATION share/${PROJECT_NAME}/param
 )

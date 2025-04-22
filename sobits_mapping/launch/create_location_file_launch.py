@@ -17,13 +17,13 @@ def generate_launch_description():
         DeclareLaunchArgument(
             # ロボットの名前を指定
             # 'robot_name', default_value='sobit_pro'
-            'robot_name', default_value='sobit_edu'
-            # 'robot_name', default_value='sobit_mini'
+            # 'robot_name', default_value='sobit_edu'
+            'robot_name', default_value='sobit_mini'
             # 'robot_name', default_value='sobit_light'
         ),
         DeclareLaunchArgument(
             # mapのファイルパス
-            'yaml_filename', default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'example.yaml')
+            'yaml_filename', default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'hsr_map.yaml')
         ),
 
         # Create Location File
@@ -53,7 +53,7 @@ def generate_launch_description():
                     "initial_command": LaunchConfiguration('use_robot'),
                     "create_location_file": True,
                 }
-            ]
+            ],
         ),
 
         Node(
@@ -77,7 +77,11 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory("sobits_navigation"), 'launch', 'nav2.launch.py')),
-            launch_arguments={'use_location': 'False'}.items(),
+            launch_arguments={
+                'use_location' : 'False',
+                'map'          : LaunchConfiguration('yaml_filename'),
+                'robot_name'   : LaunchConfiguration('robot_name')
+            }.items(),
             condition=IfCondition(LaunchConfiguration("use_robot"))
         ),
 
