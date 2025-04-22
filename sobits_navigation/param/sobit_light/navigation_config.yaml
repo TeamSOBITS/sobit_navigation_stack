@@ -37,14 +37,14 @@ amcl:
     z_max: 0.05
     z_rand: 0.5
     z_short: 0.05
-    scan_topic: /scan
+    scan_topic: /sobit_light/scan
 
 bt_navigator:
   ros__parameters:
     use_sim_time: False
     global_frame: map
     robot_base_frame: sobit_light/base_footprint
-    odom_topic: odom
+    odom_topic: /sobit_light/odom
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 1000
@@ -209,7 +209,7 @@ local_costmap:
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /scan
+          topic: /sobit_light/kachaka/lidar/scan
           max_obstacle_height: 1.0
           clearing: True
           marking: True
@@ -240,7 +240,7 @@ global_costmap:
         enabled: True
         observation_sources: scan
         scan:
-          topic: /scan
+          topic: /sobit_light/kachaka/lidar/scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -344,7 +344,7 @@ velocity_smoother:
     min_velocity: [-0.26, 0.0, -1.0]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
-    odom_topic: odom
+    odom_topic: /sobit_light/odom
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0
