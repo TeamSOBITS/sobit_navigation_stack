@@ -25,6 +25,7 @@ obstacle_layer:
   publish_voxel_map: true
   observation_sources: scan #scan #obstacle #noise_color #objects
   scan:
+    sensor_frame: $(arg robot_namespace)/lidar_laser
     data_type: LaserScan
     topic: scan
     marking: true

@@ -56,6 +56,6 @@ DWAPlannerROS: # SOBIT PRO
   prune_plan: true
 
 # Debugging
-  publish_traj_pc : true        # プランナーが計画時に使用するコストグリッドを公開するかどうか
-  publish_cost_grid_pc: true    # 経路候補をを公開するかどうか
-  global_frame_id: odom         # 経路候補を描画するフレーム
+  publish_traj_pc : true            # プランナーが計画時に使用するコストグリッドを公開するかどうか
+  publish_cost_grid_pc: true        # 経路候補をを公開するかどうか
+  global_frame_id: $(arg robot_namespace)/odom # 経路候補を描画するフレーム

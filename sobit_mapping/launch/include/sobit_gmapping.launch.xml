@@ -1,11 +1,12 @@
 <!-- sobit_gmapping.launch.xml -->
 <launch>
-    <arg name="scan_topic"  default="scan" />
-    <arg name="base_frame"  default="base_footprint"/>
-    <arg name="odom_frame"  default="odom"/>
-    <arg name="occ_thresh"  default="0.25"/>
+    <arg name="robot_namespace"      default="sobit_pro_1"/>
+    <arg name="scan_topic"           default="$(arg robot_namespace)/scan"/>
+    <arg name="base_frame"           default="$(arg robot_namespace)/base_footprint"/>
+    <arg name="odom_frame"           default="$(arg robot_namespace)/odom"/>
+    <arg name="occ_thresh"           default="0.25"/>
     <arg name="map_update_interval"  default="5.0"/>
-    <arg name="throttle_scans"  default="1"/>
+    <arg name="throttle_scans"       default="1"/>
 
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
         <param name="base_frame" value="$(arg base_frame)"/>
