@@ -12,7 +12,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             # ロボットを動かす場合true,動かさない場合false
-            'use_robot', default_value='false'
+            'use_robot', default_value='true'
         ),
         DeclareLaunchArgument(
             # ロボットの名前を指定
@@ -20,6 +20,7 @@ def generate_launch_description():
             # 'robot_name', default_value='sobit_edu'
             'robot_name', default_value='sobit_mini'
             # 'robot_name', default_value='sobit_light'
+            # 'robot_name', default_value='hsr_sim'
         ),
         DeclareLaunchArgument(
             # mapのファイルパス
@@ -69,7 +70,7 @@ def generate_launch_description():
             executable='lifecycle_manager',
             name='lifecycle_manager_map',
             output='screen',
-            parameters=[{'use_sim_time': True},
+            parameters=[{'use_sim_time': False},
                         {'autostart': True},
                         {'node_names': ['map_server']}]
         ),

@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
       Splitter Ratio: 0.5833333134651184
-    Tree Height: 386
+    Tree Height: 290
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -74,14 +74,285 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        map:
+          Value: true
+        sobit_mini/base_footprint:
+          Value: true
+        sobit_mini/base_link:
+          Value: true
+        sobit_mini/body_back_pole_link:
+          Value: true
+        sobit_mini/body_big_gear_base_link:
+          Value: true
+        sobit_mini/body_big_gear_link:
+          Value: true
+        sobit_mini/body_front_pole_link:
+          Value: true
+        sobit_mini/body_roll_link:
+          Value: true
+        sobit_mini/body_small_gear_base_link:
+          Value: true
+        sobit_mini/body_small_gear_link:
+          Value: true
+        sobit_mini/body_sobit_mini_cover:
+          Value: true
+        sobit_mini/caster_back_link:
+          Value: true
+        sobit_mini/caster_front_link:
+          Value: true
+        sobit_mini/cliff_sensor_front_link:
+          Value: true
+        sobit_mini/cliff_sensor_left_link:
+          Value: true
+        sobit_mini/cliff_sensor_right_link:
+          Value: true
+        sobit_mini/gyro_link:
+          Value: true
+        sobit_mini/head_camera_base_color_frame:
+          Value: true
+        sobit_mini/head_camera_base_color_optical_frame:
+          Value: true
+        sobit_mini/head_camera_base_depth_frame:
+          Value: true
+        sobit_mini/head_camera_base_depth_optical_frame:
+          Value: true
+        sobit_mini/head_camera_base_link:
+          Value: true
+        sobit_mini/head_camera_bottom_screw_frame:
+          Value: true
+        sobit_mini/head_camera_link:
+          Value: true
+        sobit_mini/head_camera_pan_link:
+          Value: true
+        sobit_mini/head_camera_tilt_link:
+          Value: true
+        sobit_mini/l_arm_elbow_tilt_link:
+          Value: true
+        sobit_mini/l_arm_shoulder_fixed_link:
+          Value: true
+        sobit_mini/l_arm_shoulder_pan_link:
+          Value: true
+        sobit_mini/l_arm_shoulder_roll_link:
+          Value: true
+        sobit_mini/l_arm_wrist_tilt_link:
+          Value: true
+        sobit_mini/l_hand_left_finger_link:
+          Value: true
+        sobit_mini/l_hand_right_finger_link:
+          Value: true
+        sobit_mini/lidar_base_link:
+          Value: true
+        sobit_mini/lidar_laser:
+          Value: true
+        sobit_mini/lidar_laser_mount:
+          Value: true
+        sobit_mini/mic_base_link:
+          Value: true
+        sobit_mini/odom:
+          Value: true
+        sobit_mini/plate_bottom_link:
+          Value: true
+        sobit_mini/plate_middle_link:
+          Value: true
+        sobit_mini/pole_middle_4_link:
+          Value: true
+        sobit_mini/pole_middle_5_link:
+          Value: true
+        sobit_mini/pole_middle_6_link:
+          Value: true
+        sobit_mini/pole_middle_7_link:
+          Value: true
+        sobit_mini/pole_top_0_link:
+          Value: true
+        sobit_mini/pole_top_1_link:
+          Value: true
+        sobit_mini/pole_top_2_link:
+          Value: true
+        sobit_mini/pole_top_3_link:
+          Value: true
+        sobit_mini/r_arm_elbow_tilt_link:
+          Value: true
+        sobit_mini/r_arm_shoulder_fixed_link:
+          Value: true
+        sobit_mini/r_arm_shoulder_pan_link:
+          Value: true
+        sobit_mini/r_arm_shoulder_roll_link:
+          Value: true
+        sobit_mini/r_arm_wrist_tilt_link:
+          Value: true
+        sobit_mini/r_hand_left_finger_link:
+          Value: true
+        sobit_mini/r_hand_right_finger_link:
+          Value: true
+        sobit_mini/sim_laser_frame:
+          Value: true
+        sobit_mini/wheel_l_link:
+          Value: true
+        sobit_mini/wheel_r_link:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        map:
+          sobit_mini/odom:
+            sobit_mini/base_footprint:
+              sobit_mini/base_link:
+                sobit_mini/caster_back_link:
+                  {}
+                sobit_mini/caster_front_link:
+                  {}
+                sobit_mini/cliff_sensor_front_link:
+                  {}
+                sobit_mini/cliff_sensor_left_link:
+                  {}
+                sobit_mini/cliff_sensor_right_link:
+                  {}
+                sobit_mini/gyro_link:
+                  {}
+                sobit_mini/plate_bottom_link:
+                  sobit_mini/lidar_base_link:
+                    sobit_mini/lidar_laser_mount:
+                      sobit_mini/lidar_laser:
+                        {}
+                    sobit_mini/sim_laser_frame:
+                      {}
+                sobit_mini/plate_middle_link:
+                  sobit_mini/body_big_gear_base_link:
+                    sobit_mini/body_roll_link:
+                      sobit_mini/body_back_pole_link:
+                        {}
+                      sobit_mini/body_big_gear_link:
+                        {}
+                      sobit_mini/body_front_pole_link:
+                        sobit_mini/head_camera_pan_link:
+                          sobit_mini/head_camera_tilt_link:
+                            sobit_mini/head_camera_base_link:
+                              sobit_mini/head_camera_base_color_frame:
+                                sobit_mini/head_camera_base_color_optical_frame:
+                                  {}
+                              sobit_mini/head_camera_base_depth_frame:
+                                sobit_mini/head_camera_base_depth_optical_frame:
+                                  {}
+                              sobit_mini/head_camera_bottom_screw_frame:
+                                sobit_mini/head_camera_link:
+                                  {}
+                            sobit_mini/mic_base_link:
+                              {}
+                        sobit_mini/l_arm_shoulder_fixed_link:
+                          sobit_mini/l_arm_shoulder_roll_link:
+                            sobit_mini/l_arm_shoulder_pan_link:
+                              sobit_mini/l_arm_elbow_tilt_link:
+                                sobit_mini/l_arm_wrist_tilt_link:
+                                  sobit_mini/l_hand_left_finger_link:
+                                    {}
+                                  sobit_mini/l_hand_right_finger_link:
+                                    {}
+                        sobit_mini/r_arm_shoulder_fixed_link:
+                          sobit_mini/r_arm_shoulder_roll_link:
+                            sobit_mini/r_arm_shoulder_pan_link:
+                              sobit_mini/r_arm_elbow_tilt_link:
+                                sobit_mini/r_arm_wrist_tilt_link:
+                                  sobit_mini/r_hand_left_finger_link:
+                                    {}
+                                  sobit_mini/r_hand_right_finger_link:
+                                    {}
+                      sobit_mini/body_sobit_mini_cover:
+                        {}
+                  sobit_mini/body_small_gear_base_link:
+                    sobit_mini/body_small_gear_link:
+                      {}
+                sobit_mini/pole_middle_4_link:
+                  {}
+                sobit_mini/pole_middle_5_link:
+                  {}
+                sobit_mini/pole_middle_6_link:
+                  {}
+                sobit_mini/pole_middle_7_link:
+                  {}
+                sobit_mini/pole_top_0_link:
+                  {}
+                sobit_mini/pole_top_1_link:
+                  {}
+                sobit_mini/pole_top_2_link:
+                  {}
+                sobit_mini/pole_top_3_link:
+                  {}
+                sobit_mini/wheel_l_link:
+                  {}
+                sobit_mini/wheel_r_link:
+                  {}
       Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /sobit_pro/scan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /sobit_edu/scan
+      Use Fixed Frame: true
+      Use rainbow: true
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -113,7 +384,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
-        Value: /scan
+        Value: /sobit_mini/scan
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -615,12 +886,12 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 800
+  Height: 704
   Hide Left Dock: false
   Hide Right Dock: true
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a000002cefc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000039000001bb000000c500fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e0061007600690067006100740069006f006e0020003201000001fa0000010d0000010d00fffffffb0000001e005200650061006c00730065006e0073006500430061006d00650072006100000002c6000000c10000002800ffffff000000010000010f0000034afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d0000034a0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d006501000000000000045000000000000000000000044a000002ce00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a0000026efc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000390000015b000000c500fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e0061007600690067006100740069006f006e00200032010000019a0000010d0000010d00fffffffb0000001e005200650061006c00730065006e0073006500430061006d00650072006100000002c6000000c10000002800ffffff000000010000010f0000034afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d0000034a0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000003a00000026e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RealsenseCamera:
     collapsed: false
   Selection:
@@ -629,6 +900,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 1466
+  Width: 1296
   X: 70
   Y: 27

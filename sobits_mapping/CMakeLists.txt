@@ -19,10 +19,18 @@ find_package(yaml-cpp REQUIRED)
 
 install(DIRECTORY
   launch
-  param
   location
   map
   DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY
+  param/sobit_pro
+  param/sobit_edu
+  param/sobit_mini
+  param/sobit_light
+  param/hsr_sim
+  DESTINATION share/${PROJECT_NAME}/param
 )
 
 

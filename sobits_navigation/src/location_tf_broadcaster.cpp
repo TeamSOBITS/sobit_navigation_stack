@@ -40,7 +40,7 @@ class LocationFileViewer : public rclcpp::Node {
     public:
         LocationFileViewer();
         // void viewer();
-        void displayMarker();
+        // void displayMarker();
 };
 
 // ロケーションファイルを読み込む関数

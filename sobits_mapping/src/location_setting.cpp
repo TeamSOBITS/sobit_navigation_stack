@@ -44,7 +44,7 @@ class CreateLocationFile : public rclcpp::Node {
 
 std::string CreateLocationFile::getSavePath() {
     char buffer[1024];
-    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/sobit_navigation_stack/sobits_mapping/location/location_example.yaml  2>/dev/null", "r");
+    FILE* pipe = popen("zenity --file-selection --save --confirm-overwrite --filename=/home/$USER/colcon_ws/src/sobits_navigation_stack/sobits_mapping/location/location_example.yaml  2>/dev/null", "r");
     if (!pipe) return "";
     fgets(buffer, sizeof(buffer), pipe);
     pclose(pipe);

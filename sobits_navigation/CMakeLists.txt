@@ -29,7 +29,7 @@ install(DIRECTORY
   param/sobit_edu
   param/sobit_mini
   param/sobit_light
-  param/hsr
+  param/hsr_sim
   DESTINATION share/${PROJECT_NAME}/param
 )
 
