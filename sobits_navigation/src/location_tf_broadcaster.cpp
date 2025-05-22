@@ -21,30 +21,25 @@ using namespace std::chrono_literals;
 class LocationFileViewer : public rclcpp::Node {
     private:
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_location_file_path_;
-        rclcpp::Client<nav2_msgs::srv::SetInitialPose>::SharedPtr client;
+        rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_add_location_;
+        rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_delete_location_;
         tf2_ros::TransformBroadcaster tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
 
-        double initial_x_;
-        double initial_y_;
-        double initial_yaw_;
-
         std::string file_name_;
 
-        bool initial_command_;
-        bool create_location_file_;
-
-        void loadLocationFile();
-        void initialPoseSet();
-        void callbackMessage(const std_msgs::msg::String::SharedPtr msg);
+        bool loadLocationFile();
+        void callback_file_path(const std_msgs::msg::String::SharedPtr msg);
     public:
         LocationFileViewer();
-        // void viewer();
-        // void displayMarker();
+        bool output_file(geometry_msgs::msg::TransformStamped location_pose, bool reset_flag);
+        void callback_add_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
+        void callback_delete_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
 };
 
 // ロケーションファイルを読み込む関数
-void LocationFileViewer::loadLocationFile() {
+bool LocationFileViewer::loadLocationFile() {
+    if (file_name_ == "") return false;
     try {
         YAML::Node config = YAML::LoadFile(file_name_);
         location_poses_.clear();
@@ -65,76 +60,141 @@ void LocationFileViewer::loadLocationFile() {
             pose.transform.rotation.w = location_poses[pose.child_frame_id]["rotation"]["w"].as<float>();
             location_poses_.push_back(pose);
         }
+        return true;
     } catch (const YAML::Exception& e) {
         std::cout << "Faild Open the Yaml File..." << std::endl;
+        return false;
     }
 }
 
-void LocationFileViewer::initialPoseSet() {
-    auto request = std::make_shared<nav2_msgs::srv::SetInitialPose::Request>();
-    request->pose.header.frame_id = "map";
-    request->pose.pose.pose.position.x = initial_x_;
-    request->pose.pose.pose.position.y = initial_y_;
-    geometry_msgs::msg::Quaternion qur;
-    geometry_msgs::msg::Vector3 rpy;
-    rpy.x = 0.0;
-    rpy.y = 0.0;
-    rpy.z = initial_yaw_;
-    tf2::Quaternion quat_tf;
+bool LocationFileViewer::output_file(geometry_msgs::msg::TransformStamped location_pose, bool reset_flag) {
+    if (file_name_ == "") return false;
 
-    quat_tf.setRPY(rpy.x, rpy.y, rpy.z);
-    qur = tf2::toMsg(quat_tf);
-    request->pose.pose.pose.orientation.w = qur.w;
-    request->pose.pose.pose.orientation.x = qur.x;
-    request->pose.pose.pose.orientation.y = qur.y;
-    request->pose.pose.pose.orientation.z = qur.z;
+    ofstream ofs(file_name_, (reset_flag) ? ios::trunc : ios::app);
+    if (ofs) {
+        std::cout << std::endl;
+        std::cout << "point_x   : " << fixed << std::setprecision(7) << location_pose.transform.translation.x << std::endl;
+        std::cout << "point_y   : " << fixed << std::setprecision(7) << location_pose.transform.translation.y << std::endl;
+        std::cout << "point_z   : " << fixed << std::setprecision(7) << location_pose.transform.translation.z << std::endl;
+        std::cout << "rotation_x: " << fixed << std::setprecision(7) << location_pose.transform.rotation.x << std::endl;
+        std::cout << "rotation_y: " << fixed << std::setprecision(7) << location_pose.transform.rotation.y << std::endl;
+        std::cout << "rotation_z: " << fixed << std::setprecision(7) << location_pose.transform.rotation.z << std::endl;
+        std::cout << "rotation_w: " << fixed << std::setprecision(7) << location_pose.transform.rotation.w << std::endl;
 
-    while (!client->wait_for_service(10s)) {
-        if (!rclcpp::ok()) return;
+        if (reset_flag) ofs << "location_pose:" << std::endl;
+        ofs << "  \"" << location_pose.child_frame_id << "\": " << std::endl;
+        ofs << "    frame_id: \"map\"" << std::endl;
+        ofs << "    translation: " << std::endl;
+        ofs << "      x: " << fixed << std::setprecision(7) << location_pose.transform.translation.x << std::endl;
+        ofs << "      y: " << fixed << std::setprecision(7) << location_pose.transform.translation.y << std::endl;
+        ofs << "      z: " << fixed << std::setprecision(7) << location_pose.transform.translation.z << std::endl;
+        ofs << "    rotation: " << std::endl;
+        ofs << "      x: " << fixed << std::setprecision(7) << location_pose.transform.rotation.x << std::endl;
+        ofs << "      y: " << fixed << std::setprecision(7) << location_pose.transform.rotation.y << std::endl;
+        ofs << "      z: " << fixed << std::setprecision(7) << location_pose.transform.rotation.z << std::endl;
+        ofs << "      w: " << fixed << std::setprecision(7) << location_pose.transform.rotation.w << std::endl;
+        ofs << "" << std::endl;
+        ofs.close();
+        std::cout << "Saved in \"" << file_name_ << "\"." << std::endl;
+    } else {
+        ofs.close();
+        std::cout << file_name_ << " could not be created. Check the path of the file." << std::endl;
+        return false;
     }
-    auto result = client->async_send_request(request);
+    return true;
 }
 
-void LocationFileViewer::callbackMessage(const std_msgs::msg::String::SharedPtr msg) {
+void LocationFileViewer::callback_file_path(const std_msgs::msg::String::SharedPtr msg) {
     std::cout << msg->data << std::endl;
     file_name_ = msg->data;
+
+    std::ifstream ifs(file_name_);
+    bool is_empty = true;
+    if (ifs) {
+        is_empty = ifs.peek() == std::ifstream::traits_type::eof();
+        ifs.close();
+    }
+    ofstream ofs(file_name_, ios::app);
+    if (ofs && is_empty) ofs << "location_pose:" << std::endl;
+
     loadLocationFile();
+}
+
+void LocationFileViewer::callback_add_location(
+    const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request,
+    std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response) {
+    
+    bool there_is_location_ = false;
+    for (const auto &location_pose : location_poses_) {
+        if (location_pose.child_frame_id == request->pose.header.frame_id) there_is_location_ = true;
+    }
+    if (!there_is_location_) {
+        std::cout << "Save the clicked location with \"" << request->pose.header.frame_id << "\"." << std::endl;
+
+        geometry_msgs::msg::TransformStamped add_location_pose;
+        add_location_pose.header.stamp = this->now();
+        add_location_pose.header.frame_id = "map";
+        add_location_pose.child_frame_id = request->pose.header.frame_id;
+        add_location_pose.transform.translation.x = request->pose.pose.pose.position.x;
+        add_location_pose.transform.translation.y = request->pose.pose.pose.position.y;
+        add_location_pose.transform.translation.z = request->pose.pose.pose.position.z;
+        add_location_pose.transform.rotation.x = request->pose.pose.pose.orientation.x;
+        add_location_pose.transform.rotation.y = request->pose.pose.pose.orientation.y;
+        add_location_pose.transform.rotation.z = request->pose.pose.pose.orientation.z;
+        add_location_pose.transform.rotation.w = request->pose.pose.pose.orientation.w;
+
+        output_file(add_location_pose, false);
+        location_poses_.push_back(add_location_pose);
+    }
+    else std::cout << "The \""  << request->pose.header.frame_id << "\" already exists." << std::endl;
+    (void) response;
+}
+
+void LocationFileViewer::callback_delete_location(
+    const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request,
+    std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response) {
+    
+    size_t sel = location_poses_.size();
+    for (size_t i=0; i<location_poses_.size(); i++) {
+        if (location_poses_[i].child_frame_id == request->pose.header.frame_id) sel = i;
+    }
+    if (sel != location_poses_.size()) {
+        std::cout << "Delete the location with \"" << request->pose.header.frame_id << "\"." << std::endl;
+
+        location_poses_.erase(location_poses_.begin() + sel);
+
+        for (size_t i=0; i<location_poses_.size(); i++) output_file(location_poses_[i], i==0);
+
+        if (location_poses_.size() == 0) {
+            ofstream ofs(file_name_, ios::trunc);
+            ofs << "location_pose:" << std::endl;
+            ofs.close();
+        }
+    }
+    else std::cout << "The \""  << request->pose.header.frame_id << "\" is not exists." << std::endl;
+    (void) response;
 }
 
 
 LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroadcaster_(this){
-    // sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
-    client = this->create_client<nav2_msgs::srv::SetInitialPose>("/set_initial_pose");
-    this->declare_parameter<double>("initial_x", 0.0);
-    this->declare_parameter<double>("initial_y", 0.0);
-    this->declare_parameter<double>("initial_yaw", 0.0);
+    sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callback_file_path, this, std::placeholders::_1));
+    server_add_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/add_location", std::bind(&LocationFileViewer::callback_add_location, this, std::placeholders::_1, std::placeholders::_2));
+    server_delete_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/delete_location", std::bind(&LocationFileViewer::callback_delete_location, this, std::placeholders::_1, std::placeholders::_2));
+
     this->declare_parameter<std::string>("location_file_path", "");
-    this->declare_parameter<bool>("initial_command", true);
-    this->declare_parameter<bool>("create_location_file", false);
-    this->get_parameter("initial_x", initial_x_);
-    this->get_parameter("initial_y", initial_y_);
-    this->get_parameter("initial_yaw", initial_yaw_);
     this->get_parameter("location_file_path", file_name_);
-    this->get_parameter("initial_command", initial_command_);
-    this->get_parameter("create_location_file", create_location_file_);
 
-    if (initial_command_) initialPoseSet();
-    if (create_location_file_) sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callbackMessage, this, std::placeholders::_1));
-    else loadLocationFile();
+    if (file_name_ != "") loadLocationFile();
 
+    rclcpp::Rate loop_rate(10);
     while (rclcpp::ok()) {
-        // if (create_location_file_) rclcpp::spin_some(this->get_node_base_interface());
         rclcpp::spin_some(this->get_node_base_interface());
         for (auto& pose : location_poses_) {
             pose.header.stamp = this->now();
             tfBroadcaster_.sendTransform(pose);
         }
+        loop_rate.sleep();
     }
-    // if (!create_location_file_) rclcpp::spin_some(this->get_node_base_interface());
-    // for (auto& pose : location_poses_) {
-    //     pose.header.stamp = this->now();
-    //     tfBroadcaster_.sendTransform(pose);
-    // }
 }
 
 
@@ -145,80 +205,3 @@ int main(int argc, char *argv[]) {
     rclcpp::shutdown();
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// #include "rclcpp/rclcpp.hpp"
-// #include "example_interfaces/srv/add_two_ints.hpp"
-
-// #include <chrono>
-// #include <cstdlib>
-// #include <memory>
-
-// using namespace std::chrono_literals;
-
-// int main(int argc, char **argv)
-// {
-//   rclcpp::init(argc, argv);
-
-//   if (argc != 3) {
-//       RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "usage: add_two_ints_client X Y");
-//       return 1;
-//   }
-
-//   std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("add_two_ints_client");
-//   rclcpp::Client<example_interfaces::srv::AddTwoInts>::SharedPtr client =
-//     node->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints");
-
-//   auto request = std::make_shared<example_interfaces::srv::AddTwoInts::Request>();
-//   request->a = atoll(argv[1]);
-//   request->b = atoll(argv[2]);
-
-//   while (!client->wait_for_service(1s)) {
-//     if (!rclcpp::ok()) {
-//       RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
-//       return 0;
-//     }
-//     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "service not available, waiting again...");
-//   }
-
-//   auto result = client->async_send_request(request);
-//   // Wait for the result.
-//   if (rclcpp::spin_until_future_complete(node, result) ==
-//     rclcpp::FutureReturnCode::SUCCESS)
-//   {
-//     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sum: %ld", result.get()->sum);
-//   } else {
-//     RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service add_two_ints");
-//   }
-
-//   rclcpp::shutdown();
-//   return 0;
-// }

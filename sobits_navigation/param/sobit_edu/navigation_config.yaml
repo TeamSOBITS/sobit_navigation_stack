@@ -18,6 +18,11 @@ amcl:
     laser_min_range: -1.0
     laser_model_type: "likelihood_field"
     max_beams: 60
+    set_initial_pose: true
+    initial_pose.x: 0.0
+    initial_pose.y: 0.0
+    initial_pose.z: 0.0
+    initial_pose.yaw: 0.0
     max_particles: 2000
     min_particles: 500
     odom_frame_id: sobit_edu/odom
@@ -233,7 +238,7 @@ global_costmap:
       use_sim_time: False
       robot_radius: 0.2
       resolution: 0.1
-      track_unknown_space: true
+      track_unknown_space: false
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"

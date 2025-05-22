@@ -38,6 +38,9 @@ ament_target_dependencies(location_tf_broadcaster rclcpp geometry_msgs tf2_ros t
 target_link_libraries(location_tf_broadcaster yaml-cpp)
 install(TARGETS location_tf_broadcaster DESTINATION lib/${PROJECT_NAME})
 
+add_executable(keyboard_teleop src/keyboard_teleop.cpp)
+ament_target_dependencies(keyboard_teleop rclcpp geometry_msgs rosidl_default_runtime)
+install(TARGETS keyboard_teleop DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

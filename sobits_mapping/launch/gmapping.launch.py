@@ -40,8 +40,8 @@ def generate_launch_description():
     robot_name = LaunchConfiguration('robot_name')
     declare_robot_name_cmd = DeclareLaunchArgument(
         # 'robot_name', default_value='sobit_pro',
-        # 'robot_name', default_value='sobit_edu',
-        'robot_name', default_value='sobit_mini',
+        'robot_name', default_value='sobit_edu',
+        # 'robot_name', default_value='sobit_mini',
         # 'robot_name', default_value='sobit_light',
         # 'robot_name', default_value='hsr_sim',
         description='choice your used robot name')

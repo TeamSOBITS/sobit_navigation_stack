@@ -52,11 +52,11 @@ def generate_launch_description():
     autostart = LaunchConfiguration('autostart')
 
     map_yaml_file = LaunchConfiguration('map')
-    # robot_name = LaunchConfiguration('robot_name')
+    robot_name = LaunchConfiguration('robot_name')
     params_file = LaunchConfiguration('params_file')
     use_rviz = LaunchConfiguration('use_rviz')
 
-    use_location = LaunchConfiguration('use_location')
+    # use_location = LaunchConfiguration('use_location')
     initial_x = LaunchConfiguration('initial_x')
     initial_y = LaunchConfiguration('initial_y')
     initial_yaw = LaunchConfiguration('initial_yaw')
@@ -119,14 +119,14 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'example.yaml'),
+        default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'map_example.yaml'),
         description='Full path to map yaml file to load')
 
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name',
         # default_value="sobit_pro",
-        default_value="sobit_edu",
-        # default_value="sobit_mini",
+        # default_value="sobit_edu",
+        default_value="sobit_mini",
         # default_value="sobit_light",
         # default_value="hsr_sim",
         description='choice your used robot name')
@@ -172,11 +172,6 @@ def generate_launch_description():
     declare_log_level_cmd = DeclareLaunchArgument(
         'log_level', default_value='info',
         description='log level')
-    
-    declare_use_location_cmd = DeclareLaunchArgument(
-        'use_location',
-        default_value='True',
-        description='')
 
     declare_initial_x_cmd = DeclareLaunchArgument(
         'initial_x',
@@ -195,9 +190,11 @@ def generate_launch_description():
 
     declare_velocity_topic_name_cmd = DeclareLaunchArgument(
         'velocity_topic_name',
-        # default_value="/sobit_edu/commands/velocity",  ## SOBIT EDU ##
-        default_value="/sobit_mini/commands/velocity",  ## SOBIT MINI ##
         # default_value="/sobit_pro/cmd_vel",  ## SOBIT PRO ##
+        default_value="/sobit_edu/commands/velocity",  ## SOBIT EDU ##
+        # default_value="/sobit_mini/commands/velocity",  ## SOBIT MINI ##
+        # default_value="/sobit_light/cmd_vel",  ## SOBIT LIGHT ##
+        # default_value="/hsrb/command_velocity",  ## HSR(Simulation) ##
         description='velocity topic name')
 
     load_nodes = GroupAction(
@@ -370,9 +367,10 @@ def generate_launch_description():
                               'params_file': params_file}.items()),
 
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('nav2_bringup'),
+            PythonLaunchDescriptionSource(os.path.join(bringup_dir,
                                                        "launch",
-                                                       "localization_launch.py")),
+                                                       "include",
+                                                       "localization.launch.py")),
             condition=IfCondition(PythonExpression(['not ', slam])),
             launch_arguments={'namespace': namespace,
                               'map': map_yaml_file,
@@ -381,13 +379,16 @@ def generate_launch_description():
                               'params_file': params_file,
                               'use_composition': use_composition,
                               'use_respawn': use_respawn,
-                              'container_name': 'nav2_container'}.items()),
+                              'container_name': 'nav2_container',
+                              'initial_x': initial_x,
+                              'initial_y': initial_y,
+                              'initial_yaw': initial_yaw,}.items()),
     ])
 
     rviz_cmd = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', os.path.join(get_package_share_directory("sobits_navigation"), 'rviz', 'sobits_navigation.rviz')],
+        arguments=['-d', os.path.join(bringup_dir, 'rviz', 'sobits_navigation.rviz')],
         condition=IfCondition(use_rviz)
     )
 
@@ -395,17 +396,7 @@ def generate_launch_description():
         package='sobits_navigation',
         executable='location_tf_broadcaster',
         name='location_tf_broadcaster',
-        parameters=[
-            {
-                "initial_x": initial_x,
-                "initial_y": initial_y,
-                "initial_yaw": initial_yaw,
-                "location_file_path": location_file_path,
-                "initial_command": True,
-                "create_location_file": False,
-            }
-        ],
-        condition=IfCondition(use_location)
+        parameters=[{"location_file_path": location_file_path,}],
     )
 
     # Create the launch description and populate
@@ -421,10 +412,8 @@ def generate_launch_description():
     ld.add_action(declare_map_yaml_cmd)
     ld.add_action(declare_robot_name_cmd)
     ld.add_action(OpaqueFunction(function=declare_param_file))
-    # ld.add_action(declare_params_file_cmd)
     ld.add_action(declare_use_sim_time_cmd)
     ld.add_action(declare_use_rviz_cmd)
-    ld.add_action(declare_use_location_cmd)
     ld.add_action(declare_initial_x_cmd)
     ld.add_action(declare_initial_y_cmd)
     ld.add_action(declare_initial_yaw_cmd)

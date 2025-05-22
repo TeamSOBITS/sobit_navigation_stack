@@ -71,219 +71,34 @@ Visualization Manager:
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
       Enabled: true
-      Frame Timeout: 15
+      Frame Timeout: 1
       Frames:
         All Enabled: true
+        bedroom#bed:
+          Value: true
+        human_position:
+          Value: true
+        libing_room#side_table:
+          Value: true
+        living_room#glass_table:
+          Value: true
         map:
           Value: true
-        sobit_mini/base_footprint:
-          Value: true
-        sobit_mini/base_link:
-          Value: true
-        sobit_mini/body_back_pole_link:
-          Value: true
-        sobit_mini/body_big_gear_base_link:
-          Value: true
-        sobit_mini/body_big_gear_link:
-          Value: true
-        sobit_mini/body_front_pole_link:
-          Value: true
-        sobit_mini/body_roll_link:
-          Value: true
-        sobit_mini/body_small_gear_base_link:
-          Value: true
-        sobit_mini/body_small_gear_link:
-          Value: true
-        sobit_mini/body_sobit_mini_cover:
-          Value: true
-        sobit_mini/caster_back_link:
-          Value: true
-        sobit_mini/caster_front_link:
-          Value: true
-        sobit_mini/cliff_sensor_front_link:
-          Value: true
-        sobit_mini/cliff_sensor_left_link:
-          Value: true
-        sobit_mini/cliff_sensor_right_link:
-          Value: true
-        sobit_mini/gyro_link:
-          Value: true
-        sobit_mini/head_camera_base_color_frame:
-          Value: true
-        sobit_mini/head_camera_base_color_optical_frame:
-          Value: true
-        sobit_mini/head_camera_base_depth_frame:
-          Value: true
-        sobit_mini/head_camera_base_depth_optical_frame:
-          Value: true
-        sobit_mini/head_camera_base_link:
-          Value: true
-        sobit_mini/head_camera_bottom_screw_frame:
-          Value: true
-        sobit_mini/head_camera_link:
-          Value: true
-        sobit_mini/head_camera_pan_link:
-          Value: true
-        sobit_mini/head_camera_tilt_link:
-          Value: true
-        sobit_mini/l_arm_elbow_tilt_link:
-          Value: true
-        sobit_mini/l_arm_shoulder_fixed_link:
-          Value: true
-        sobit_mini/l_arm_shoulder_pan_link:
-          Value: true
-        sobit_mini/l_arm_shoulder_roll_link:
-          Value: true
-        sobit_mini/l_arm_wrist_tilt_link:
-          Value: true
-        sobit_mini/l_hand_left_finger_link:
-          Value: true
-        sobit_mini/l_hand_right_finger_link:
-          Value: true
-        sobit_mini/lidar_base_link:
-          Value: true
-        sobit_mini/lidar_laser:
-          Value: true
-        sobit_mini/lidar_laser_mount:
-          Value: true
-        sobit_mini/mic_base_link:
-          Value: true
-        sobit_mini/odom:
-          Value: true
-        sobit_mini/plate_bottom_link:
-          Value: true
-        sobit_mini/plate_middle_link:
-          Value: true
-        sobit_mini/pole_middle_4_link:
-          Value: true
-        sobit_mini/pole_middle_5_link:
-          Value: true
-        sobit_mini/pole_middle_6_link:
-          Value: true
-        sobit_mini/pole_middle_7_link:
-          Value: true
-        sobit_mini/pole_top_0_link:
-          Value: true
-        sobit_mini/pole_top_1_link:
-          Value: true
-        sobit_mini/pole_top_2_link:
-          Value: true
-        sobit_mini/pole_top_3_link:
-          Value: true
-        sobit_mini/r_arm_elbow_tilt_link:
-          Value: true
-        sobit_mini/r_arm_shoulder_fixed_link:
-          Value: true
-        sobit_mini/r_arm_shoulder_pan_link:
-          Value: true
-        sobit_mini/r_arm_shoulder_roll_link:
-          Value: true
-        sobit_mini/r_arm_wrist_tilt_link:
-          Value: true
-        sobit_mini/r_hand_left_finger_link:
-          Value: true
-        sobit_mini/r_hand_right_finger_link:
-          Value: true
-        sobit_mini/sim_laser_frame:
-          Value: true
-        sobit_mini/wheel_l_link:
-          Value: true
-        sobit_mini/wheel_r_link:
-          Value: true
-      Marker Scale: 1
+      Marker Scale: 2.299999952316284
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
         map:
-          sobit_mini/odom:
-            sobit_mini/base_footprint:
-              sobit_mini/base_link:
-                sobit_mini/caster_back_link:
-                  {}
-                sobit_mini/caster_front_link:
-                  {}
-                sobit_mini/cliff_sensor_front_link:
-                  {}
-                sobit_mini/cliff_sensor_left_link:
-                  {}
-                sobit_mini/cliff_sensor_right_link:
-                  {}
-                sobit_mini/gyro_link:
-                  {}
-                sobit_mini/plate_bottom_link:
-                  sobit_mini/lidar_base_link:
-                    sobit_mini/lidar_laser_mount:
-                      sobit_mini/lidar_laser:
-                        {}
-                    sobit_mini/sim_laser_frame:
-                      {}
-                sobit_mini/plate_middle_link:
-                  sobit_mini/body_big_gear_base_link:
-                    sobit_mini/body_roll_link:
-                      sobit_mini/body_back_pole_link:
-                        {}
-                      sobit_mini/body_big_gear_link:
-                        {}
-                      sobit_mini/body_front_pole_link:
-                        sobit_mini/head_camera_pan_link:
-                          sobit_mini/head_camera_tilt_link:
-                            sobit_mini/head_camera_base_link:
-                              sobit_mini/head_camera_base_color_frame:
-                                sobit_mini/head_camera_base_color_optical_frame:
-                                  {}
-                              sobit_mini/head_camera_base_depth_frame:
-                                sobit_mini/head_camera_base_depth_optical_frame:
-                                  {}
-                              sobit_mini/head_camera_bottom_screw_frame:
-                                sobit_mini/head_camera_link:
-                                  {}
-                            sobit_mini/mic_base_link:
-                              {}
-                        sobit_mini/l_arm_shoulder_fixed_link:
-                          sobit_mini/l_arm_shoulder_roll_link:
-                            sobit_mini/l_arm_shoulder_pan_link:
-                              sobit_mini/l_arm_elbow_tilt_link:
-                                sobit_mini/l_arm_wrist_tilt_link:
-                                  sobit_mini/l_hand_left_finger_link:
-                                    {}
-                                  sobit_mini/l_hand_right_finger_link:
-                                    {}
-                        sobit_mini/r_arm_shoulder_fixed_link:
-                          sobit_mini/r_arm_shoulder_roll_link:
-                            sobit_mini/r_arm_shoulder_pan_link:
-                              sobit_mini/r_arm_elbow_tilt_link:
-                                sobit_mini/r_arm_wrist_tilt_link:
-                                  sobit_mini/r_hand_left_finger_link:
-                                    {}
-                                  sobit_mini/r_hand_right_finger_link:
-                                    {}
-                      sobit_mini/body_sobit_mini_cover:
-                        {}
-                  sobit_mini/body_small_gear_base_link:
-                    sobit_mini/body_small_gear_link:
-                      {}
-                sobit_mini/pole_middle_4_link:
-                  {}
-                sobit_mini/pole_middle_5_link:
-                  {}
-                sobit_mini/pole_middle_6_link:
-                  {}
-                sobit_mini/pole_middle_7_link:
-                  {}
-                sobit_mini/pole_top_0_link:
-                  {}
-                sobit_mini/pole_top_1_link:
-                  {}
-                sobit_mini/pole_top_2_link:
-                  {}
-                sobit_mini/pole_top_3_link:
-                  {}
-                sobit_mini/wheel_l_link:
-                  {}
-                sobit_mini/wheel_r_link:
-                  {}
+          bedroom#bed:
+            {}
+          human_position:
+            {}
+          libing_room#side_table:
+            {}
+          living_room#glass_table:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -456,7 +271,7 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
-    - Alpha: 1
+    - Alpha: 0.699999988079071
       Class: rviz_default_plugins/Map
       Color Scheme: map
       Draw Behind: true
@@ -826,7 +641,7 @@ Visualization Manager:
       Value: true
   Enabled: true
   Global Options:
-    Background Color: 48; 48; 48
+    Background Color: 0; 0; 0
     Fixed Frame: map
     Frame Rate: 30
   Name: root
@@ -867,7 +682,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.5707999467849731
+      Angle: -1.5699987411499023
       Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -877,11 +692,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 69.92658233642578
+      Scale: 74.49882507324219
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: 1.6141951084136963
-      Y: 0.1466168314218521
+      X: 2.6174123287200928
+      Y: 0.7427389621734619
     Saved: ~
 Window Geometry:
   Displays:
@@ -891,7 +706,7 @@ Window Geometry:
   Hide Right Dock: true
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a0000026efc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000390000015b000000c500fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e0061007600690067006100740069006f006e00200032010000019a0000010d0000010d00fffffffb0000001e005200650061006c00730065006e0073006500430061006d00650072006100000002c6000000c10000002800ffffff000000010000010f0000034afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d0000034a0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000003a00000026e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a0000026efc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000390000015b000000c500fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e0061007600690067006100740069006f006e00200032010000019a0000010d0000010d00fffffffb0000001e005200650061006c00730065006e0073006500430061006d00650072006100000002c6000000c10000002800ffffff000000010000010f0000026efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000390000026e0000009d00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000003a00000026e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RealsenseCamera:
     collapsed: false
   Selection:
