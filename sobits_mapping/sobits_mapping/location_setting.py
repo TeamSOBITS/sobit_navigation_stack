@@ -78,7 +78,6 @@ class LocationSetting(Node):
         tk.Button(self.sub_tk, width=10, text="Set",    command=lambda entry=entry, pose_msg=msg: self.button_clicked_callback_sub("set", entry, pose_msg)).place(x=466, y=70)
 
         self.sub_tk.title("[ENTER] New Location Name??")
-        # self.tk.after(0, show_sub_gui)
 
 
     def reset_locations_info(self):
@@ -106,6 +105,8 @@ class LocationSetting(Node):
 
     def create_gui(self):
         # GUIウィンドウの大きさを定義する
+        self.width = self.tk.winfo_screenwidth()
+        self.height = self.tk.winfo_screenheight()
         geometry_x = 510
         if (len(self.location_poses) <= 1):
             geometry_y = 30 * 2
@@ -115,30 +116,77 @@ class LocationSetting(Node):
             else:
                 geometry_y = 30 * (len(self.location_poses))
 
-        # ウィンドウ位置を右上に配置
-        self.tk.geometry(f"{geometry_x}x{geometry_y}+0+0")
+        if ((geometry_y + 30*2) < self.height):
+        # if (False):
+            # ウィンドウ位置を右上に配置
+            self.tk.geometry(f"{geometry_x}x{geometry_y}+0+0")
 
-        i = 0
-        for k in self.location_poses.keys():
-            entry = tk.Entry(self.tk, width=24, font=("", 12))
-            entry.insert(0, k)
-            entry.place(x=250, y=i * 30 + 3)
+            i = 0
+            for k in self.location_poses.keys():
+                entry = tk.Entry(self.tk, width=24, font=("", 12))
+                entry.insert(0, k)
+                entry.place(x=250, y=i * 30 + 3)
 
-            tk.Button(self.tk, width=7, text="Delete", command=lambda k=k: self.button_clicked_callback("delete", k)).place(x=76, y=i * 30)
-            tk.Button(self.tk, width=7, text="Rename", command=lambda k=k, entry=entry: self.button_clicked_callback("rename", k, entry)).place(x=162, y=i * 30)
+                tk.Button(self.tk, width=7, text="Delete", command=lambda k=k: self.button_clicked_callback("delete", k)).place(x=76, y=i * 30)
+                tk.Button(self.tk, width=7, text="Rename", command=lambda k=k, entry=entry: self.button_clicked_callback("rename", k, entry)).place(x=162, y=i * 30)
 
-            i += 1
+                i += 1
 
-        if (self.use_robot):
-            tk.Button(self.tk, width=49, text="ADD LOCATION", command=lambda: self.get_robot_position()).place(x=76, y=i * 30)
+            if (self.use_robot):
+                tk.Button(self.tk, width=49, text="ADD LOCATION", command=lambda: self.get_robot_position()).place(x=76, y=i * 30)
 
 
-        # GUI再起動用ボタン
-        tk.Button(self.tk, width=4, text="refresh", command=self.refresh_gui).place(x=0, y=0)
-        # GUI停止用ボタン
-        tk.Button(self.tk, width=4, text="close", command=self.quit_gui).place(x=0, y=30)
+            # GUI再起動用ボタン
+            tk.Button(self.tk, width=4, text="refresh", command=self.refresh_gui).place(x=0, y=0)
+            # GUI停止用ボタン
+            tk.Button(self.tk, width=4, text="close", command=self.quit_gui).place(x=0, y=30)
 
-        self.tk.title("[Location] Location Setting GUI")
+            self.tk.title("[Location] Location Setting GUI")
+        else:
+            # --- スクロール付き Canvas構成 ---
+            # self.tk.geometry("+0+0")
+            self.tk.geometry(f"{geometry_x}x{self.height}+0+0")
+            canvas = tk.Canvas(self.tk, width=geometry_x, height=self.height)
+            scrollbar = tk.Scrollbar(self.tk, orient="vertical", command=canvas.yview)
+            canvas.configure(yscrollcommand=scrollbar.set)
+
+            scrollbar.pack(side="right", fill="y")
+            canvas.pack(side="left", fill="both", expand=True)
+
+            self.inner_frame = tk.Frame(canvas)
+            canvas.create_window((0, 0), window=self.inner_frame, anchor="nw")
+
+            # スクロール領域を更新
+            self.inner_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
+            # --- ボタンやエントリの追加 ---
+            i = 0
+            for k in self.location_poses.keys():
+                frame_row = tk.Frame(self.inner_frame)
+                frame_row.pack(fill="y", padx=65, pady=0)
+                entry = tk.Entry(frame_row, width=24, font=("", 12))
+                entry.insert(0, k)
+                # entry.place(x=250, y=i * 30 + 3)
+                entry.pack(side="right", padx=0)
+
+                # tk.Button(self.inner_frame, width=7, text="Delete", command=lambda k=k: self.button_clicked_callback("delete", k)).place(x=76, y=i * 30)
+                # tk.Button(self.inner_frame, width=7, text="Rename", command=lambda k=k, entry=entry: self.button_clicked_callback("rename", k, entry)).place(x=162, y=i * 30)
+                tk.Button(frame_row, width=7, text="Rename", command=lambda k=k, entry=entry: self.button_clicked_callback("rename", k, entry)).pack(side="right", padx=5)
+                tk.Button(frame_row, width=7, text="Delete", command=lambda k=k: self.button_clicked_callback("delete", k)).pack(side="right", padx=0)
+
+                i += 1
+
+            if self.use_robot:
+                frame_row = tk.Frame(self.inner_frame)
+                frame_row.pack(fill="y", padx=65, pady=0)
+                # tk.Button(self.inner_frame, width=49, text="ADD LOCATION", command=lambda: self.get_robot_position()).place(x=76, y=i * 30)
+                tk.Button(frame_row, width=49, text="ADD LOCATION", command=lambda: self.get_robot_position()).pack(side="right", padx=0)
+
+            # GUI再起動・停止用ボタン（画面外でもスクロール可能）
+            tk.Button(self.inner_frame, width=4, text="refresh", command=self.refresh_gui).place(x=0, y=0)
+            tk.Button(self.inner_frame, width=4, text="close", command=self.quit_gui).place(x=0, y=30)
+
+            self.tk.title("[Location] Location Setting GUI")
         self.tk.mainloop()
 
 
