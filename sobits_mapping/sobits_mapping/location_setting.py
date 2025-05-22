@@ -19,8 +19,6 @@ import threading
 
 
 
-
-
 class LocationSetting(Node):
     def __init__(self):
         super().__init__('create_location_file')
@@ -36,9 +34,6 @@ class LocationSetting(Node):
         self.robot_name = self.get_parameter('robot_name').get_parameter_value().string_value
 
         self.pub_location_path = self.create_publisher(String, "/location_file_path", 1)
-
-        # if (not self.use_robot):
-        #     self.sub_2d_nav_goal = self.create_subscription(PoseStamped, "/goal_pose", self.callback_nav_goal, 1)
 
         self.client_add_location = self.create_client(SetInitialPose, "/add_location")
         self.client_delete_location = self.create_client(SetInitialPose, "/delete_location")
@@ -61,34 +56,29 @@ class LocationSetting(Node):
 
 
     def callback_nav_goal(self, msg):
-        # self.get_logger().info("\033[31m====================================\033[0m")
         if ((not self.location_path_flag) or (self.sub_ctrl_now)):
             return
         self.sub_ctrl_now = True
-        # self.sub_tk = tk.Tk()
-        def show_sub_gui():
-            self.sub_tk = tk.Toplevel(self.tk)
-            iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_mapping'), 'img', 'mapping.png'))
-            width = self.sub_tk.winfo_screenwidth()
-            height = self.sub_tk.winfo_screenheight()
-            # self.sub_tk.call('wm', 'iconphoto', self.sub_tk._w, iconfile)
-            self.sub_tk.iconphoto(False, iconfile)
-            geometry_x = 400
-            geometry_y = 300
 
-            # ウィンドウ位置を中央に配置
-            self.sub_tk.geometry(f"{geometry_x}x{geometry_y}+{(self.width - geometry_x) // 2}+{(self.height - geometry_y) // 2}")
+        self.sub_tk = tk.Toplevel(self.tk)
+        iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_mapping'), 'img', 'mapping.png'))
+        width = self.sub_tk.winfo_screenwidth()
+        height = self.sub_tk.winfo_screenheight()
+        self.sub_tk.iconphoto(False, iconfile)
+        geometry_x = 600
+        geometry_y = 100
 
-            tk.Label(self.sub_tk, text="New Location Name : ", font=("", 15)).place(x=80, y=150)
-            entry = tk.Entry(self.sub_tk, width=24, font=("", 12))
-            entry.place(x=80, y=200)
-            tk.Button(self.sub_tk, width=6, text="Cancel", command=lambda : self.button_clicked_callback_sub("cancel")).place(x=80, y=220)
-            tk.Button(self.sub_tk, width=6, text="Set",    command=lambda entry=entry, pose_msg=msg: self.button_clicked_callback_sub("set", entry, pose_msg)).place(x=200, y=220)
+        # ウィンドウ位置を中央に配置
+        self.sub_tk.geometry(f"{geometry_x}x{geometry_y}+{(self.width - geometry_x) // 2}+{(self.height - geometry_y) // 2}")
 
-            # text = entry.get()
-            self.sub_tk.title("[ENTER] New Location Name??")
-        # self.sub_tk.mainloop()
-        self.tk.after(0, show_sub_gui)
+        tk.Label(self.sub_tk, text="New Location Name : ", font=("", 15)).place(x=15, y=20)
+        entry = tk.Entry(self.sub_tk, width=26, font=("", 15))
+        entry.place(x=230, y=20)
+        tk.Button(self.sub_tk, width=10, text="Cancel", command=lambda : self.button_clicked_callback_sub("cancel")).place(x=357, y=70)
+        tk.Button(self.sub_tk, width=10, text="Set",    command=lambda entry=entry, pose_msg=msg: self.button_clicked_callback_sub("set", entry, pose_msg)).place(x=466, y=70)
+
+        self.sub_tk.title("[ENTER] New Location Name??")
+        # self.tk.after(0, show_sub_gui)
 
 
     def reset_locations_info(self):
@@ -125,17 +115,11 @@ class LocationSetting(Node):
             else:
                 geometry_y = 30 * (len(self.location_poses))
 
-
-        # ウィンドウ位置を中央に配置
-        # self.tk.geometry(f"{geometry_x}x{geometry_y}+{(self.width - geometry_x) // 2}+{(self.height - geometry_y) // 2}")
         # ウィンドウ位置を右上に配置
-        # self.tk.geometry(f"{geometry_x}x{geometry_y}+0+{(self.height - geometry_y) // 2}")
         self.tk.geometry(f"{geometry_x}x{geometry_y}+0+0")
-        # self.tk.geometry(f"{geometry_x}x{geometry_y}+{geometry_x // 2}+{geometry_y // 2}")
 
         i = 0
         for k in self.location_poses.keys():
-            # tk.Label(text=container_info, font=("", 15)).place(x=460, y=i * 30)
             entry = tk.Entry(self.tk, width=24, font=("", 12))
             entry.insert(0, k)
             entry.place(x=250, y=i * 30 + 3)
@@ -146,7 +130,6 @@ class LocationSetting(Node):
             i += 1
 
         if (self.use_robot):
-            # tk.Button(self.tk, width=49, text="ADD LOCATION", command=lambda: self.button_clicked_callback("add", "")).place(x=76, y=i * 30)
             tk.Button(self.tk, width=49, text="ADD LOCATION", command=lambda: self.get_robot_position()).place(x=76, y=i * 30)
 
 
@@ -189,8 +172,6 @@ class LocationSetting(Node):
 
             future = self.client_add_location.call_async(self.set_pose_req)
             time.sleep(0.5) ## TODO
-        # elif (mode == "add"):
-        #     self.get_logger().info("[ADD]")
         self.refresh_gui()
 
 
@@ -208,10 +189,7 @@ class LocationSetting(Node):
             self.set_pose_req.pose.pose.pose.orientation.w = pose.pose.orientation.w
 
             future = self.client_add_location.call_async(self.set_pose_req)
-            # rclpy.spin_until_future_complete(self, future)
-            # future.result()
-            time.sleep(0.5)
-        # self.sub_tk.quit()
+            time.sleep(0.5) ## TODO
         self.sub_tk.destroy()
         self.sub_ctrl_now = False
         self.refresh_gui()
@@ -247,11 +225,6 @@ class LocationSetting(Node):
         detection = False
         goal_pose = PoseStamped()
         if (self.robot_name != ""):
-            # while not self.tf_buffer.can_transform('map', self.robot_name + '/base_footprint', rclpy.time.Time(), timeout=rclpy.time.Duration(seconds=1.0)):
-            #     self.get_logger().info("Waiting for transform from %s to map" % (self.robot_name + '/base_footprint'))
-                # rclpy.spin_once(self)
-
-
             try:
                 transform = self.tf_buffer.lookup_transform(
                     'map',
@@ -275,10 +248,6 @@ class LocationSetting(Node):
             except TransformException as e:
                 self.get_logger().error("Transform error: %s" % e)
         if (not detection):
-            # while not self.tf_buffer.can_transform('map', 'base_footprint', rclpy.time.Time(), timeout=rclpy.time.Duration(seconds=1.0)):
-            #     self.get_logger().info("Waiting for transform from %s to map" % 'base_footprint')
-                # rclpy.spin_once(self)
-
             try:
                 transform = self.tf_buffer.lookup_transform(
                     'map',
@@ -315,23 +284,19 @@ class LocationSetting(Node):
         out, err = proc.communicate()
         if (str(out.decode('utf-8')) == ""):
             self.location_path = ""
-            # print("\033[91m\033[05mNONE FILE PATH\033[0m")
             self.get_logger().info('\033[91m\033[05mNONE FILE PATH\033[0m')
             self.location_path_flag = False
-            # return False, ""
         else:
             if (len(out.decode('utf-8').split(".")) == 1):
                 self.location_path = ".".join(out.decode('utf-8').split("."))
             else:
                 self.location_path = ".".join(out.decode('utf-8').split(".")[:-1])
-            # print("LOCATION FILE :\033[93m\033[05m", self.location_path, "\033[0m")
             self.get_logger().info('LOCATION FILE :\033[93m\033[05m'+self.location_path+'\033[0m')
             self.location_path_flag = True
 
             data = String()
             data.data = self.location_path + ".yaml"
             self.pub_location_path.publish(data)
-            # return True, self.location_path
 
 
 class CallbackGroup:
@@ -365,23 +330,5 @@ def main():
     # sub_node.destroy_node()
     rclpy.shutdown()
 
-    # node = Node("sobits_map_saver")
-    # while rclpy.ok():
-    #     r, path = select_location_file(node)
-    #     if r:
-    #         Popen(["ros2", "run", "nav2_map_server", "map_saver_cli", "-f", path])
-    #         Popen(["sed", "-i", "s/free_thresh: 0.25/free_thresh: 0.196/", path + ".yaml"])
-    # node.execute()
-    # rclpy.shutdown()
-
 if __name__ == '__main__':
     main()
-
-
-"""
-思うように動作しなくて，恐らくこれが原因で動きません
-これはスレッドが作られるタイミングで発生します
-```
-[WARN] [1747906461.446574846] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
-```
-"""
