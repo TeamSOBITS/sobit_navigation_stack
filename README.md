@@ -182,7 +182,7 @@ Navigationを使う上での基本的な流れ
 4. 地点登録を起動する \
     以下のコマンドで起動する．
     ```sh
-    ros2 launch sobits_mapping create_location_file.launch.py
+    ros2 launch sobits_mapping create_location_file_launch.py
     ```
     地点登録を始める前に、地点登録ファイルを保存する．
 
