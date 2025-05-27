@@ -153,28 +153,27 @@ Navigationを使う上での基本的な流れ
 1. 生成した地図のパスを指定する．
     [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)のmapを書き換える．\
     mapは，自分で生成した地図を指定する．\
-    例えば，[example.pgm](/sobits_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
+    例えば，[map_example.pgm](/sobits_mapping/map/map_example.pgm)というマップの場合は，以下のように指定する．
     ```sh  
     DeclareLaunchArgument(
             # mapのファイルパス
-            'map', default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'example.yaml')
+            'map', default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'map_example.yaml')
         ),
     ```
     ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する．
 2. 実機で地点登録するかどうかを設定する
-    - 実機で地点登録**しない**場合
+    - 実機で地点登録**しない**場合\
          [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
          **use_robot**をfalseにする．
         ```sh
         'use_robot', default_value='false'
         ```
-    - 実機で地点登録**する**場合
-        1. [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
-         **use_robot**をtrueにする．
+    - 実機で地点登録**する**場合\
+        [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
+         **use_robot**をtrueにし、**robot_name**を使用するロボットに変更する。
         ```sh
         'use_robot', default_value='true'
         ```
-        2. **robot_name**を使用するロボットに変更する。
 
 3. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
@@ -218,7 +217,7 @@ Navigationを使う上での基本的な流れ
 # 以下作成中
 
 
-### actionlibによって呼び出す（実際にNavigationする）
+### action通信によって呼び出す（実際にNavigationする）
 1. mapを地図生成した地図に書き換える\
     Navigationに地図を登録する．\
     [/sobits_navigation/launch/nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のmapを作成した地図のファイル名に書き換える．\
