@@ -8,7 +8,7 @@
 [![Issues][issues-shield]][issues-url]
 <!-- [![MIT License][license-shield]][license-url] -->
 
-# SOBIT Navigation Stack
+# SOBITS Navigation Stack
 
 <!-- 目次 -->
 <details>
@@ -41,8 +41,8 @@
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
 SOBIT PRO，SOBIT EDU，SOBIT MINI，HSR(Simulation)のための自律移動パッケージ．\
-Navigationのオープンソースの概要は[こちら](https://robo-marc.github.io/navigation_documents/introduction.html)をチェック．\
-また自律移動の仕組みについても，[ROSのオープンソース](https://robo-marc.github.io/navigation_documents/navigation_overview.html#)を参照．
+Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/)をチェック．\
+また自律移動の仕組みについても，[ROSのオープンソース](https://github.com/ros-navigation/navigation2)を参照．
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
@@ -57,40 +57,34 @@ Navigationのオープンソースの概要は[こちら](https://robo-marc.gith
 必要な外部ソフトや正常動作を確認した環境について説明してください．
 | System  | Version |
 | ------------- | ------------- |
-| Ubuntu | 20.04 (Focal Fossa) |
-| ROS | Noetic Ninjemys |
+| Ubuntu | 22.04 (Jammy Jellyfish) |
+| ROS | Noetic Humble Hawksbill |
 | Python | 3.0~ |
 | Simulator(使用する場合) | Sigverse ROS |
 
 ### インストール方法
 
-1. ROSの`src`フォルダに移動します．
+1. ROS2の`src`フォルダに移動します．
    ```sh
-   $ cd　~/catkin_ws/src/
+   cd　~/colcon_ws/src/
    ```
 2. 本レポジトリをcloneします．
    ```sh
-   $ git clone https://github.com/TeamSOBITS/sobit_navigation_stack.git
+   git clone -b feature/multi_robot https://github.com/TeamSOBITS/sobits_navigation_stack.git
    ```
 3. レポジトリの中へ移動します．
    ```sh
-   $ cd sobit_navigation_stack
+   cd sobits_navigation_stack
    ```
 4. 依存パッケージをインストールします．
-    - 通常のインストール方法
-        ```sh
-        $ bash install.sh
-        ```
-    - Navigationを深く勉強したい人向け
-        ```sh
-        $ bash install.sh clone_mode
-        ```
-        Navigation関係のパッケージをgit cloneによりインストールすることで，プログラムコードを編集して改良することができる \
-        プログラムコードは[パッケージ一覧](/sobit_navigation_packages/)のところにまとめてインストールされる
+    ```sh
+    bash install.sh
+    ```
+
 5. パッケージをコンパイルします．
    ```sh
-   $ cd ~/catkin_ws/
-   $ catkin_make
+   cd ~/colcon_ws/
+   colcon build
    ```
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
@@ -106,7 +100,7 @@ Navigationを使う上での基本的な流れ
     - 地図の障害物のデータと，現在ロボットが取得しているデータから，ロボットが現在どこにいるのかを推測する
 2. 地点登録 
     - 生成した地図の，どの位置からどの位置までの経路を生成するかのポイントとなる位置を登録する
-3. actionlibによって呼び出す 
+3. action通信で呼び出す
     - ロボットの現在の地点から登録した地点まで，地図上の障害物がない安全なエリアに経路生成をする
     - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるactionlib通信を用いる
 
@@ -118,97 +112,109 @@ Navigationを使う上での基本的な流れ
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
 2. 地図生成を起動\
-    以下のコマンドで起動． 
-    - 実機ロボットの場合
-        ```sh
-        $ roslaunch sobit_mapping gmapping.launch
-        ```
-    - HSRの場合
-        ```sh
-        $ roslaunch sobit_mapping hsr_gmapping.launch
-        ```
-3. 人間が操作できるように[teleop.launch](/sobit_mapping/launch/teleop.launch)を起動\
-    以下のコマンドで起動．
-    - 実機ロボットの場合
-        ```sh
-        $ roslaunch sobit_mapping teleop.launch
-        ```
-    - HSRの場合
-        ```sh
-        $ roslaunch sobit_mapping hsr_teleop.launch
-        ```
+    **/sobits_mapping/launch/gmapping.launch.py**にある
+    **robot_name**を使用するロボットに切り換える．
+
+    その後以下のコマンドで起動． 
+    起動後に地図を保存するか聞かれるが，一旦無視する．
+    ```sh
+    ros2 launch sobits_mapping gmapping.launch.py
+    ```
+
+3. 人間が操作できるように[teleop.launch](/sobits_mapping/launch/teleop.launch.py)を起動\
+    **/sobits_mapping/launch/teleop.launch**にある**robot_name**を使用するロボットに切り換える．
+
+    その後以下のコマンドで起動．
+    ```sh
+    ros2 launch sobits_mapping teleop.launch.py
+    ```
+
 4. ロボットを操作して，Navigationしたい環境の地図を保存 \
     起動したxtermターミナル(青いターミナル)で操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
-    地図ができたら，save_map_command.pyのターミナル(青いターミナル)でEnterボタンを押して地図を保存する．\
-    保存された地図画像(pgmファイル)と，その詳細情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_ + 保存した日時 + .yaml」のファイル名で保存される．
+    地図ができたら，地図を保存する.
+5. colcon buildを実行する
+    ```sh
+    cd　~/colcon_ws/
+    ```
+    ```sh
+    cd　colcon build
+    ```
 
 > [!NOTE]
-> これを人間がロボットを操作せずに，自律的に行えないのか？と思ったら[自律地図生成の仕方](/sobit_mapping/README.md/#自律地図生成)をチェック．
+> これを人間がロボットを操作せずに，自律的に行えないのか？と思ったら[自律地図生成の仕方](/sobits_mapping/README.md/#自律地図生成)をチェック．
 
 > [!NOTE]
 > これは2D LiDARのみでの地図生成であるが，一脚テーブルのような立体的な障害物は2D LiDARでの検出ができない．
-> そこでロボットの3D cameraを用いることで解決する[カメラを用いた地図生成について](/sobit_mapping/README.md/#カメラを用いた地図生成)をチェック．
+> そこでロボットの3D cameraを用いることで解決する[カメラを用いた地図生成について](/sobits_mapping/README.md/#カメラを用いた地図生成)をチェック．
 
 
 ### 地点登録
-1. 生成した地図のパスをNavigationに書き換える\
-    生成した地図のパスを指定する．
-    - 実機で地点登録 \
-        [/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)のmap_fileを書き換える．
-    - HSRで地点登録 \
-        [/sobit_mapping/launch/hsr_create_location_file.launch](/sobit_mapping/launch/hsr_create_location_file.launch)のmap_fileを書き換える．
-
+1. 生成した地図のパスを指定する．
+    [/sobits_mapping/launch/create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)のmap_fileを書き換える．\
     map_fileは，自分で生成した地図を指定する．\
-    例えば，[example.pgm](/sobit_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
-    ```xml
-    <arg name="map_file" default="$(find sobit_mapping)/map/example.yaml"/>
+    例えば，[example.pgm](/sobits_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
+    ```sh  
+    DeclareLaunchArgument(
+            # mapのファイルパス
+            'map', default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'example.yaml')
+        ),
     ```
-    ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する． 
-2. ロボットを起動する \
+    ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する．
+2. 実機で地点登録するかどうかを設定する
+    - 実機で地点登録**しない**場合
+         [/sobits_mapping/launch/create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の
+         **use_robot**をfalseにする．
+        ```sh
+        'use_robot', default_value='false'
+        ```
+    - 実機で地点登録**する**場合
+        1. [/sobits_mapping/launch/create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の
+         **use_robot**をtrueにする．
+        ```sh
+        'use_robot', default_value='true'
+        ```
+        2. **robot_name**を使用するロボットに変更する。
+
+3. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
-3. 地点登録を起動する \
-    実機の場合は[/sobit_mapping/launch/create_location_file.launch](/sobit_mapping/launch/create_location_file.launch)，HSRの場合は[/sobit_mapping/launch/hsr_create_location_file.launch](/sobit_mapping/launch/hsr_create_location_file.launch)のuse_robotをtrueにする．\
+4. 地点登録を起動する \
     以下のコマンドで起動する．
-    - 実機で地点登録
-        ```sh
-        $ roslaunch sobit_mapping create_location_file.launch
-        ```
-    - HSRで地点登録
-        ```sh
-        $ roslaunch sobit_mapping hsr_create_location_file.launch
-        ```
-4. 地点を登録する\
+    ```sh
+    ros2 launch sobits_mapping create_location_file.launch.py
+    ```
+    地点登録を始める前に、地点登録ファイルを保存する．
+
+5. 地点を登録する\
     この機能の概要としてロボットのいる位置が登録されるので，ロボットを地点登録したい位置まで移動させる．\
     ロボットの移動のさせ方は以下2通りがあるので好きな方を選ぶ．
-    - Navigationの機能を用いる\
-        起動したRvizの2D Nav Goalをmapにクリックすることでロボットが移動する． 
-    - 地図生成したときのように人間が操作\
+    - Navigationの機能を用いる場合\
+        起動したRvizの**2D Goal Pose**をmapにクリックすることでロボットが移動する． 
+    - 地図生成したときのように人間が操作する場合\
         以下のコマンドで実行
-        - 実機ロボットの場合
-            ```sh
-            $ roslaunch sobit_mapping teleop.launch
-            ```
-        - HSRの場合
-            ```sh
-            $ roslaunch sobit_mapping hsr_teleop.launch
-            ```
-    ロボットを登録させたい位置まで移動． \
-    そこで地点登録のターミナルに地点名を入力し，Enterを押して登録完了．
-5. 保存 \
-    4を繰り返していくことで地点登録したい全ての地点を登録する．\
-    地点登録が終わったら，端末で「q」と入力して保存する．\
-    地点登録された情報が入ったymalデータは，[map](/sobit_mapping/map/)に，「map_location_ + 保存した日時 + .yaml」のファイル名で保存される．
+        ```sh
+        ros2 launch sobits_mapping teleop.launch.py
+        ```
 
-> [!NOTE]
-> ここではロボットを使っての地点登録方法を書いたが，RoboCupでは競技環境を使える時間に限りがある．
-> そのため，競技環境が使えるときは，なるべく競技練習の時間に充てることが望ましい．
-> そこで，地点登録をロボットを使わずにすることで時間を有効にすることができる．
-> 詳しい使い方は[ロボットを用いずに地点登録](/sobit_mapping/README.md/#ロボットを用いずに地点登録)をチェック．
+    ロボットを登録させたい位置まで移動． \
+    ADD LOCATIONを選択し、地点名を入力して登録する。
+    Deleteを選択することで登録した地点を削除する。
+    Renameを選択することで、登録した地点名を変更する。
+6. すべての地点登録が終了したら、colcon buildを実行する
+    ```sh
+    cd　~/colcon_ws/
+    ```
+    ```sh
+    cd　colcon build
+    ```
+
+
 
 > [!NOTE]
 > 地点登録結果をRvizで見たり，追加したい場合は[こちら](/sobit_mapping/README.md/#地点登録確認・追加)．
+
+# 以下作成中
 
 
 ### actionlibによって呼び出す（実際にNavigationする）
