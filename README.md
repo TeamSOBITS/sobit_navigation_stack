@@ -102,7 +102,7 @@ Navigationを使う上での基本的な流れ
     - 生成した地図の，どの位置からどの位置までの経路を生成するかのポイントとなる位置を登録する
 3. action通信で呼び出す
     - ロボットの現在の地点から登録した地点まで，地図上の障害物がない安全なエリアに経路生成をする
-    - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるactionlib通信を用いる
+    - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるaction通信を用いる
 
 
 
@@ -112,7 +112,8 @@ Navigationを使う上での基本的な流れ
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
 2. 地図生成を起動\
-    **/sobits_mapping/launch/gmapping.launch.py**にある
+    [gmapping.launch.py](/sobits_mapping/launch/gmapping.launch.py)
+    にある
     **robot_name**を使用するロボットに切り換える．
 
     その後以下のコマンドで起動． 
@@ -121,8 +122,8 @@ Navigationを使う上での基本的な流れ
     ros2 launch sobits_mapping gmapping.launch.py
     ```
 
-3. 人間が操作できるように[teleop.launch](/sobits_mapping/launch/teleop.launch.py)を起動\
-    **/sobits_mapping/launch/teleop.launch**にある**robot_name**を使用するロボットに切り換える．
+3. 人間が操作できるように[teleop.launch.py](/sobits_mapping/launch/teleop.launch.py)を起動\
+    [teleop.launch.py](/sobits_mapping/launch/teleop.launch.py)にある**robot_name**を使用するロボットに切り換える．
 
     その後以下のコマンドで起動．
     ```sh
@@ -150,8 +151,8 @@ Navigationを使う上での基本的な流れ
 
 ### 地点登録
 1. 生成した地図のパスを指定する．
-    [/sobits_mapping/launch/create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)のmap_fileを書き換える．\
-    map_fileは，自分で生成した地図を指定する．\
+    [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)のmapを書き換える．\
+    mapは，自分で生成した地図を指定する．\
     例えば，[example.pgm](/sobits_mapping/map/example.pgm)というマップの場合は，以下のように指定する．
     ```sh  
     DeclareLaunchArgument(
@@ -162,13 +163,13 @@ Navigationを使う上での基本的な流れ
     ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する．
 2. 実機で地点登録するかどうかを設定する
     - 実機で地点登録**しない**場合
-         [/sobits_mapping/launch/create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の
+         [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
          **use_robot**をfalseにする．
         ```sh
         'use_robot', default_value='false'
         ```
     - 実機で地点登録**する**場合
-        1. [/sobits_mapping/launch/create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の
+        1. [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
          **use_robot**をtrueにする．
         ```sh
         'use_robot', default_value='true'
@@ -218,44 +219,40 @@ Navigationを使う上での基本的な流れ
 
 
 ### actionlibによって呼び出す（実際にNavigationする）
-1. map_fileを地図生成した地図に書き換える\
-    Navigationに地図を登録する．
-    - SOBIT PROでナビゲーション
-        [/sobit_navigation/launch/sobit_pro_navigation.launch](/sobit_navigation/launch/sobit_pro/sobit_pro_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
-    - SOBIT EDU，SOBIT MINIでナビゲーション
-        [/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch](/sobit_navigation/launch/sobit_turtlebot/sobit_turtlebot_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
-    - HSRでナビゲーション
-        [/sobit_navigation/launch/hsr/hsr_navigation.launch](/sobit_navigation/launch/hsr/hsr_navigation.launch)のmap_fileを地点登録のときと同様に書き換える．
-    ここで書くのは，地図データです．地点登録のファイルと間違わないようにしてください．
-2. 地点登録した情報をrosparamに登録する \
-    [/sobit_mapping/launch/load_location_file.launch](/sobit_mapping/launch/load_location_file.launch)のrosparamのfileを，自分で生成した地点登録ファイルに書き換える．\
-    例えば，[map_location_example.ymal](/sobit_mapping/map/map_location_example.ymal)という地点登録ファイルの場合は，以下のように指定する．
-    ```xml
-    <rosparam command="load" file="$(find sobit_mapping)/map/map_location_example.yaml"/>
-    ```
-    書き換えたら，以下のコマンドでrosparamに登録する． 
+1. mapを地図生成した地図に書き換える\
+    Navigationに地図を登録する．\
+    [/sobits_navigation/launch/nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のmapを作成した地図のファイル名に書き換える．\
+    \
+    例：作成した地図のファイル名がmap_example.yamlのとき
+
     ```sh
-    $ roslaunch sobit_mapping load_location_file.launch
+    default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'map_example.yaml'),
     ```
-    このlaunchファイルはターミナルが終了します
-3. ロボットを起動する \
+
+    ここで書くのは，地図データです．地点登録のファイルと間違わないようにしてください．
+
+2. 地点登録した情報を登録する \
+    [/sobits_navigation/launch/nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のlocation_file_pathを作成した地点登録ファイルに書き換える。\
+    \
+    例：作成した地点登録ファイル名がlocation_example.yamlのとき
+    ```sh
+    default_value=os.path.join(
+            get_package_share_directory('sobits_mapping'), 'location', 'location_example.yaml'),
+    ```
+3. [/sobits_navigation/launch/nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)の
+**robot_name**を使用するロボット名に書き換える。
+
+4. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
-4. Navigationを起動する \
+5. Navigationを起動する \
     以下のコマンドでNavigationを起動する． 
-    - SOBIT PROでナビゲーション
-        ```sh
-        $ roslaunch sobit_navigation sobit_pro_navigation.launch
-        ```
-    - SOBIT EDU，SOBIT MINIでナビゲーション
-        ```sh
-        $ roslaunch sobit_navigation sobit_turtlebot_navigation.launch
-        ```
-    - HSRでナビゲーション
-        ```sh
-        $ roslaunch sobit_navigation hsr_navigation.launch
-        ```
+    ```sh
+    ros2 launch sobits_navigation nav2.launch.py
+    ```
+
+# 以下作成中
 5. アクションクライアントを起動する \
     これは基本的にプログラムから起動する．\
     地点登録した地点名ならどこにでも移動することが可能．\
