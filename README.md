@@ -54,11 +54,10 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
 
 ### 環境条件
 
-必要な外部ソフトや正常動作を確認した環境について説明してください．
 | System  | Version |
 | ------------- | ------------- |
 | Ubuntu | 22.04 (Jammy Jellyfish) |
-| ROS | Noetic Humble Hawksbill |
+| ROS | Humble Hawksbill |
 | Python | 3.0~ |
 | Simulator(使用する場合) | Sigverse ROS |
 
@@ -96,7 +95,7 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
 
 Navigationを使う上での基本的な流れ
 1. 地図生成 
-    - 目的地まで，障害物を回避した経路を生成するため，ロボットが事前に地図を知る必要がある
+    - 目的地まで障害物を回避した経路を生成するため，ロボットが事前に地図を知る必要がある
     - 地図の障害物のデータと，現在ロボットが取得しているデータから，ロボットが現在どこにいるのかを推測する
 2. 地点登録 
     - 生成した地図の，どの位置からどの位置までの経路を生成するかのポイントとなる位置を登録する
@@ -132,22 +131,15 @@ Navigationを使う上での基本的な流れ
 
 4. ロボットを操作して，Navigationしたい環境の地図を保存 \
     起動したxtermターミナル(青いターミナル)で操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
-    地図ができたら，地図を保存する.
-5. colcon buildを実行する
+    **地図生成が完了したら，地図を保存する.**
+5. 新たに地図ファイルを作成した場合はcolcon buildを実行する．\
+   既存の地図ファイルと置き換えて作成した場合はcolcon buildを実行する必要はない．
     ```sh
     cd　~/colcon_ws/
     ```
     ```sh
-    cd　colcon build
+    colcon build
     ```
-
-> [!NOTE]
-> これを人間がロボットを操作せずに，自律的に行えないのか？と思ったら[自律地図生成の仕方](/sobits_mapping/README.md/#自律地図生成)をチェック．
-
-> [!NOTE]
-> これは2D LiDARのみでの地図生成であるが，一脚テーブルのような立体的な障害物は2D LiDARでの検出ができない．
-> そこでロボットの3D cameraを用いることで解決する[カメラを用いた地図生成について](/sobits_mapping/README.md/#カメラを用いた地図生成)をチェック．
-
 
 ### 地点登録
 1. 生成した地図のパスを指定する．
@@ -170,7 +162,7 @@ Navigationを使う上での基本的な流れ
         ```
     - 実機で地点登録**する**場合\
         [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
-         **use_robot**をtrueにし、**robot_name**を使用するロボットに変更する。
+         **use_robot**をtrueにし，**robot_name**を使用するロボットに変更する．
         ```sh
         'use_robot', default_value='true'
         ```
@@ -186,7 +178,7 @@ Navigationを使う上での基本的な流れ
         #default_value="/hsrb/command_velocity",  ## HSR(Simulation) ##
         description='velocity topic name')
       ```
-      を、使用するロボットのトピック名に変更する。
+      を，使用するロボットのトピック名に変更する．
 
 3. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
@@ -197,7 +189,7 @@ Navigationを使う上での基本的な流れ
     ```sh
     ros2 launch sobits_mapping create_location_file_launch.py
     ```
-    地点登録を始める前に、地点登録ファイルを保存する．
+    **地点登録を始める前に，地点登録ファイルを保存する．**
 
 5. 地点を登録する\
     この機能の概要としてロボットのいる位置が登録されるので，ロボットを地点登録したい位置まで移動させる．\
@@ -214,12 +206,13 @@ Navigationを使う上での基本的な流れ
     - ADD LOCATION：地点名を入力して登録
     - Delete　　　：登録した地点を削除
     - Rename　　　：登録した地点名を変更
-6. すべての地点登録が終了したら、colcon buildを実行する
+6. すべての地点登録が終了したら，起動しているlaunchをすべて終了させる．\
+   新たに地点登録ファイルを作成した場合はcolcon buildを実行する．既存の地点登録ファイルと置き換えて作成した場合はcolcon buildを実行する必要はない．
     ```sh
     cd　~/colcon_ws/
     ```
     ```sh
-    cd　colcon build
+    colcon build
     ```
 
 
@@ -237,7 +230,7 @@ Navigationを使う上での基本的な流れ
     ここで書くのは，地図データです．地点登録のファイルと間違わないようにしてください．
 
 2. 地点登録した情報を登録する \
-    [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のlocation_file_pathを作成した地点登録ファイルに書き換える。\
+    [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のlocation_file_pathを作成した地点登録ファイルに書き換える．\
     \
     例：作成した地点登録ファイル名がlocation_example.yamlのとき
     ```sh
@@ -245,7 +238,7 @@ Navigationを使う上での基本的な流れ
             get_package_share_directory('sobits_mapping'), 'location', 'location_example.yaml'),
     ```
 3. [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)の
-**robot_name**を使用するロボット名に書き換える。
+**robot_name**を使用するロボット名に書き換える．
 
 4. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
@@ -259,14 +252,7 @@ Navigationを使う上での基本的な流れ
 
 5. アクションクライアントを起動する \
     これは基本的にプログラムから起動する．\
-    地点登録した地点名ならどこにでも移動することが可能．\
-
-
-> [!NOTE]
-> ここで紹介したNavigtionは，基本的な使い方とテスト動作について書いた．
-> ロボットに自律的な移動をしてもらうには，細かいシチュエーションごとに様々な課題があり，これまでSOBITSではいくつかの工夫が考えられてきた．
-> そこで様々な工夫がされたものについては，[こちら](/sobit_navigation/README.md)を参照して下さい．
-
+    地点登録した地点名ならどこにでも移動することが可能．
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
@@ -450,6 +436,6 @@ The ROS navigation stack is powerful for mobile robots to move from place to pla
 This article intends to guide the reader through the process of fine tuning navigation parameters. It is the reference when someone need to know the ”how” and ”why” when setting the value of key parameters. This guide assumes that the reader has already set up the navigation stack and ready to optimize it. This is also a summary of my work with the ROS navigation stack.
 
 ## 日本語アブストラクト
-ROSナビゲーションスタックは、移動ロボットが場所から場所へ確実に移動するために威力を発揮します。ナビゲーションスタックの仕事は、オドメトリ、センサー、環境マップからのデータを処理して、ロボットが実行するための安全な経路を生成することです。このナビゲーションスタックの性能を最大限に引き出すには、パラメータの微調整が必要ですが、これは見た目ほど簡単なことではありません。しかし、この作業は見た目ほど簡単ではありません。概念や推論が未熟な人は、手当たり次第に試してしまい、多くの時間を浪費してしまいます。
+ROSナビゲーションスタックは，移動ロボットが場所から場所へ確実に移動するために威力を発揮します．ナビゲーションスタックの仕事は，オドメトリ，センサー、環境マップからのデータを処理して、ロボットが実行するための安全な経路を生成することです．このナビゲーションスタックの性能を最大限に引き出すには、パラメータの微調整が必要ですが、これは見た目ほど簡単なことではありません．しかし、この作業は見た目ほど簡単ではありません．概念や推論が未熟な人は、手当たり次第に試してしまい、多くの時間を浪費してしまいます．
 
-この記事は、ナビゲーションパラメータの微調整のプロセスを通じて読者を導くことを意図しています。どのように」「なぜ」調整するのかを知るための参考資料です。主要なパラメータの値を設定する際に このガイドでは、読者が以下を完了していることを想定しています。すでにナビゲーションスタックをセットアップし、最適化する準備ができています。これはまた、以下の要約でもあります。ROSナビゲーションスタックに関する私の研究の成果です。 -->
+この記事は、ナビゲーションパラメータの微調整のプロセスを通じて読者を導くことを意図しています．どのように」「なぜ」調整するのかを知るための参考資料です．主要なパラメータの値を設定する際に このガイドでは、読者が以下を完了していることを想定しています．すでにナビゲーションスタックをセットアップし、最適化する準備ができています．これはまた、以下の要約でもあります．ROSナビゲーションスタックに関する私の研究の成果です． -->
