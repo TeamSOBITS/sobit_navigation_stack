@@ -189,7 +189,7 @@ Navigationを使う上での基本的な流れ
     ```sh
     ros2 launch sobits_mapping create_location_file_launch.py
     ```
-    **地点登録を始める前に，地点登録ファイルを保存する．**
+    起動後，**地点登録を始める前に地点登録ファイルを保存する．**
 
 5. 地点を登録する
     - 実機で地点登録**しない**場合\
