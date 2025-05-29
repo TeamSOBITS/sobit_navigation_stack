@@ -161,7 +161,7 @@ Navigationを使う上での基本的な流れ
         'use_robot', default_value='false'
         ```
     - 実機で地点登録**する**場合\
-        [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
+        はじめに[create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
          **use_robot**をtrueにし，**robot_name**を使用するロボットに変更する．
         ```sh
         'use_robot', default_value='true'
@@ -180,7 +180,7 @@ Navigationを使う上での基本的な流れ
       ```
       を，使用するロボットのトピック名に変更する．
 
-3. ロボットを起動する \
+3. 実機で地点登録する場合はロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
