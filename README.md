@@ -100,9 +100,9 @@ Navigationを使う上での基本的な流れ
     - 地図の障害物のデータと，現在ロボットが取得しているデータから，ロボットが現在どこにいるのかを推測する
 2. 地点登録 
     - 生成した地図の，どの位置からどの位置までの経路を生成するかのポイントとなる位置を登録する
-3. action通信で呼び出す
+3. Action通信で呼び出す
     - ロボットの現在の地点から登録した地点まで，地図上の障害物がない安全なエリアに経路生成をする
-    - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるaction通信を用いる
+    - 到着まで時間がかかることから，結果だけでなく途中経過も発信することのできるAction通信を用いる
 
 
 
@@ -174,6 +174,19 @@ Navigationを使う上での基本的な流れ
         ```sh
         'use_robot', default_value='true'
         ```
+        次に[nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)
+      の
+      ```sh
+      declare_velocity_topic_name_cmd = DeclareLaunchArgument(
+        'velocity_topic_name',
+        # default_value="/sobit_pro/cmd_vel",  ## SOBIT PRO ##
+        # default_value="/sobit_edu/commands/velocity",  ## SOBIT EDU ##
+        default_value="/sobit_mini/commands/velocity",  ## SOBIT MINI ##
+        # default_value="/sobit_light/cmd_vel",  ## SOBIT LIGHT ##
+        #default_value="/hsrb/command_velocity",  ## HSR(Simulation) ##
+        description='velocity topic name')
+      ```
+      を、使用するロボットのトピック名に変更する。
 
 3. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
@@ -197,10 +210,10 @@ Navigationを使う上での基本的な流れ
         ros2 launch sobits_mapping teleop.launch.py
         ```
 
-    ロボットを登録させたい位置まで移動． \
-    ADD LOCATIONを選択し、地点名を入力して登録する。
-    Deleteを選択することで登録した地点を削除する。
-    Renameを選択することで、登録した地点名を変更する。
+    ロボットを登録させたい位置まで移動． 
+    - ADD LOCATION：地点名を入力して登録
+    - Delete　　　：登録した地点を削除
+    - Rename　　　：登録した地点名を変更
 6. すべての地点登録が終了したら、colcon buildを実行する
     ```sh
     cd　~/colcon_ws/
@@ -210,17 +223,10 @@ Navigationを使う上での基本的な流れ
     ```
 
 
-
-> [!NOTE]
-> 地点登録結果をRvizで見たり，追加したい場合は[こちら](/sobit_mapping/README.md/#地点登録確認・追加)．
-
-# 以下作成中
-
-
-### action通信によって呼び出す（実際にNavigationする）
+### Action通信によって呼び出す（実際にNavigationする）
 1. mapを地図生成した地図に書き換える\
     Navigationに地図を登録する．\
-    [/sobits_navigation/launch/nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のmapを作成した地図のファイル名に書き換える．\
+    [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のmapを作成した地図のファイル名に書き換える．\
     \
     例：作成した地図のファイル名がmap_example.yamlのとき
 
@@ -231,14 +237,14 @@ Navigationを使う上での基本的な流れ
     ここで書くのは，地図データです．地点登録のファイルと間違わないようにしてください．
 
 2. 地点登録した情報を登録する \
-    [/sobits_navigation/launch/nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のlocation_file_pathを作成した地点登録ファイルに書き換える。\
+    [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のlocation_file_pathを作成した地点登録ファイルに書き換える。\
     \
     例：作成した地点登録ファイル名がlocation_example.yamlのとき
     ```sh
     default_value=os.path.join(
             get_package_share_directory('sobits_mapping'), 'location', 'location_example.yaml'),
     ```
-3. [/sobits_navigation/launch/nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)の
+3. [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)の
 **robot_name**を使用するロボット名に書き換える。
 
 4. ロボットを起動する \
@@ -251,19 +257,9 @@ Navigationを使う上での基本的な流れ
     ros2 launch sobits_navigation nav2.launch.py
     ```
 
-# 以下作成中
 5. アクションクライアントを起動する \
     これは基本的にプログラムから起動する．\
     地点登録した地点名ならどこにでも移動することが可能．\
-    移動する例として，[/sobit_navigation_library/example/move_location_example.py](/sobit_navigation_library/example/move_location_example.py)を起動．\
-    このexampleコードでは，"table"という地点名の位置まで移動する． \
-    以下のコマンドで実行．
-    ```sh
-    $ rosrun sobit_navigation_library move_location_example.py
-    ```
-
-> [!NOTE]
-> この呼び出した[move_location_example.py](/sobit_navigation_library/example/move_location_example.py)や，C++での呼び出し方([move_location_example.cpp](/sobit_navigation_library/example/move_location_example.cpp))を使用したい場合，またいろいろなNavigationのツールについても，詳しくは[こちら](/sobit_navigation_library/README.md)をチェック．
 
 
 > [!NOTE]
