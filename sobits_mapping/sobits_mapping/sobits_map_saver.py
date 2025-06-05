@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 import os
 from subprocess import Popen, PIPE
+import time
 
 def save_map_command(node):
     proc = Popen(["zenity", "--file-selection", "--save", "--confirm-overwrite", "--filename=/home/" + str(os.getenv("USER")) + "/colcon_ws/src/sobits_navigation_stack/sobits_mapping/map/map_name.yaml"],
@@ -29,6 +30,7 @@ def main(args=None):
         r, path = save_map_command(node)
         if r:
             Popen(["ros2", "run", "nav2_map_server", "map_saver_cli", "-f", path])
+            time.sleep(1)
             Popen(["sed", "-i", "s/free_thresh: 0.25/free_thresh: 0.196/", path + ".yaml"])
     node.execute()
     rclpy.shutdown()

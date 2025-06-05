@@ -40,10 +40,10 @@ def generate_launch_description():
     robot_name = LaunchConfiguration('robot_name')
     declare_robot_name_cmd = DeclareLaunchArgument(
         # 'robot_name', default_value='sobit_pro',
-        'robot_name', default_value='sobit_edu',
+        # 'robot_name', default_value='sobit_edu',
         # 'robot_name', default_value='sobit_mini',
         # 'robot_name', default_value='sobit_light',
-        # 'robot_name', default_value='hsr_sim',
+        'robot_name', default_value='hsr_sim',
         description='choice your used robot name')
 
     autostart = LaunchConfiguration('autostart')
@@ -53,19 +53,16 @@ def generate_launch_description():
 
     declare_autostart_cmd = DeclareLaunchArgument(
         'autostart', default_value='true',
-        description='Automatically startup the slamtoolbox. '
-                    'Ignored when use_lifecycle_manager is true.')
+        description='Automatically startup the slamtoolbox. Ignored when use_lifecycle_manager is true.')
+
     declare_use_lifecycle_manager = DeclareLaunchArgument(
         'use_lifecycle_manager', default_value='false',
         description='Enable bond connection during node activation')
+
     declare_use_sim_time_argument = DeclareLaunchArgument(
         'use_sim_time',
         default_value='false',
         description='Use simulation/Gazebo clock')
-    # declare_slam_params_file_cmd = DeclareLaunchArgument(
-    #     'slam_params_file',
-    #     default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'param', robot_name + '_gmapping_config.yaml'),
-    #     description='Full path to the ROS2 parameters file to use for the slam_toolbox node')
 
     start_async_slam_toolbox_node = LifecycleNode(
         parameters=[

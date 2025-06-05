@@ -69,7 +69,7 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
    ```
 2. 本レポジトリをcloneします．
    ```sh
-   git clone -b feature/multi_robot https://github.com/TeamSOBITS/sobits_navigation_stack.git
+   git clone -b humble-devel https://github.com/TeamSOBITS/sobits_navigation_stack.git
    ```
 3. レポジトリの中へ移動します．
    ```sh
@@ -83,7 +83,7 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
 5. パッケージをコンパイルします．
    ```sh
    cd ~/colcon_ws/
-   colcon build
+   colcon build --symlink-install
    ```
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
@@ -122,7 +122,7 @@ Navigationを使う上での基本的な流れ
     ```
 
 3. 人間が操作できるように[teleop.launch.py](/sobits_mapping/launch/teleop.launch.py)を起動\
-    [teleop.launch.py](/sobits_mapping/launch/teleop.launch.py)にある**robot_name**を使用するロボットに切り換える．
+    [teleop.launch.py](/sobits_mapping/launch/teleop.launch.py)にある**velocity_topic_name**を使用するロボットのトピック名に切り換える．
 
     その後以下のコマンドで起動．
     ```sh
@@ -138,12 +138,12 @@ Navigationを使う上での基本的な流れ
     cd　~/colcon_ws/
     ```
     ```sh
-    colcon build
+    colcon build --symlink-install
     ```
 
 ### 地点登録
 1. 生成した地図のパスを指定する．
-    [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)のmapを書き換える．\
+    [create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)のmapを書き換える．\
     mapは，自分で生成した地図を指定する．\
     例えば，[map_example.pgm](/sobits_mapping/map/map_example.pgm)というマップの場合は，以下のように指定する．
     ```sh  
@@ -155,18 +155,17 @@ Navigationを使う上での基本的な流れ
     ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する．
 2. 実機で地点登録するかどうかを設定する
     - 実機で地点登録**しない**場合\
-         [create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
+         [create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の
          **use_robot**をfalseにする．
         ```sh
         'use_robot', default_value='false'
         ```
     - 実機で地点登録**する**場合\
-        はじめに[create_location_file_launch.py](/sobits_mapping/launch/create_location_file_launch.py)の
-         **use_robot**をtrueにし，**robot_name**を使用するロボットに変更する．
+        はじめに[create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の**use_robot**をtrueにし，**robot_name**を使用するロボットに変更する．
         ```sh
         'use_robot', default_value='true'
         ```
-        次に[nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)
+        <!-- 次に[nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)
       の
       ```sh
       declare_velocity_topic_name_cmd = DeclareLaunchArgument(
@@ -178,7 +177,7 @@ Navigationを使う上での基本的な流れ
         #default_value="/hsrb/command_velocity",  ## HSR(Simulation) ##
         description='velocity topic name')
       ```
-      を，使用するロボットのトピック名に変更する．
+      を，使用するロボットのトピック名に変更する． -->
 
 3. 実機で地点登録する場合はロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
@@ -187,7 +186,7 @@ Navigationを使う上での基本的な流れ
 4. 地点登録を起動する \
     以下のコマンドで起動する．
     ```sh
-    ros2 launch sobits_mapping create_location_file_launch.py
+    ros2 launch sobits_mapping create_location_file.launch.py
     ```
     起動後，**地点登録を始める前に地点登録ファイルを保存する．**
 
@@ -209,12 +208,10 @@ Navigationを使う上での基本的な流れ
     - Delete　　　：登録した地点を削除
     - Rename　　　：登録した地点名を変更
 7. すべての地点登録が終了したら，起動しているlaunchをすべて終了させる．\
-   新たに地点登録ファイルを作成した場合はcolcon buildを実行する．既存の地点登録ファイルと置き換えて作成した場合はcolcon buildを実行する必要はない．
+   新たに地点登録ファイルを作成した場合はcolcon buildを実行する．
     ```sh
     cd　~/colcon_ws/
-    ```
-    ```sh
-    colcon build
+    colcon build --symlink-install
     ```
 
 
@@ -251,6 +248,7 @@ Navigationを使う上での基本的な流れ
     ```sh
     ros2 launch sobits_navigation nav2.launch.py
     ```
+    これによりマップとその上に地点登録したTFが出ていると思います．
 
 5. アクションクライアントを起動する \
     これは基本的にプログラムから起動する．\
@@ -263,11 +261,10 @@ Navigationを使う上での基本的な流れ
 <!-- マイルストーン -->
 ## マイルストーン
 
-- [ ] 自律地図生成
+- [ ] 自律地図生成のREADMEを書く
 - [ ] カメラを用いた地図生成
 - [ ] 障害物のレイヤーのカスタム
     - [ ] bumperレイヤー
-    - [ ] obstacleレイヤー
     - [ ] noise_colorレイヤー
     - [ ] objectsレイヤー
 

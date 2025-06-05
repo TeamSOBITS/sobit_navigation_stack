@@ -13,7 +13,8 @@ sudo apt install -y \
     ros-$ROS_DISTRO-nav2-lifecycle-manager \
     ros-$ROS_DISTRO-slam-toolbox \
     ros-$ROS_DISTRO-rmw-cyclonedds-cpp
-    
+
+git clone -b $ROS_DISTRO-devel https://github.com/TeamSOBITS/explore_ros2.git
 
 echo export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp >> ~/.bashrc
 source ~/.bashrc

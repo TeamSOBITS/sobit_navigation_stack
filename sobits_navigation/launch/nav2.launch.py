@@ -34,11 +34,23 @@ def declare_param_file(context, *args, **kwargs):
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
     param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'navigation_config.yaml')
 
-    return [DeclareLaunchArgument(
-        'params_file',
-        default_value=param_file_path,
-        description='Full path to the ROS2 parameters file to use for all launched nodes'
-    )]
+    if   ("pro" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
+    elif ("edu" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
+    elif ("mini" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
+    elif ("light" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
+    elif ("hsr" in robot_name_value):
+        vel_topic_name = "/hsrb/command_velocity"
+    else:
+        vel_topic_name = ""  ## CUSTOM TOPIC
+
+    return [
+            DeclareLaunchArgument('params_file', default_value=param_file_path, description='Full path to the parameters file.'),
+            DeclareLaunchArgument('velocity_topic_name', default_value=vel_topic_name, description='Velocity Topic Name.'),
+        ]
 
 
 def generate_launch_description():
@@ -119,16 +131,16 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'map_example.yaml'),
+        default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'map_name2.yaml'),
         description='Full path to map yaml file to load')
 
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name',
         # default_value="sobit_pro",
         # default_value="sobit_edu",
-        default_value="sobit_mini",
+        # default_value="sobit_mini",
         # default_value="sobit_light",
-        # default_value="hsr_sim",
+        default_value="hsr_sim",
         description='choice your used robot name')
 
     declare_location_yaml_cmd = DeclareLaunchArgument(
@@ -187,15 +199,6 @@ def generate_launch_description():
         'initial_yaw',
         default_value="0.0",
         description='initial_rotation yaw')
-
-    declare_velocity_topic_name_cmd = DeclareLaunchArgument(
-        'velocity_topic_name',
-        # default_value="/sobit_pro/cmd_vel",  ## SOBIT PRO ##
-        default_value="/sobit_edu/commands/velocity",  ## SOBIT EDU ##
-        # default_value="/sobit_mini/commands/velocity",  ## SOBIT MINI ##
-        # default_value="/sobit_light/cmd_vel",  ## SOBIT LIGHT ##
-        # default_value="/hsrb/command_velocity",  ## HSR(Simulation) ##
-        description='velocity topic name')
 
     load_nodes = GroupAction(
         condition=IfCondition(PythonExpression(['not ', use_composition])),
@@ -417,7 +420,6 @@ def generate_launch_description():
     ld.add_action(declare_initial_x_cmd)
     ld.add_action(declare_initial_y_cmd)
     ld.add_action(declare_initial_yaw_cmd)
-    ld.add_action(declare_velocity_topic_name_cmd)
     ld.add_action(declare_location_yaml_cmd)
     ld.add_action(rviz_cmd)
     ld.add_action(declare_autostart_cmd)
