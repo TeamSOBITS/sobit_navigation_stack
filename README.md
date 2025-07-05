@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-[JA](README.md) | [EN](README_en.md)
+[JP](README.md) | [EN](README_en.md)
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -18,7 +18,7 @@
       <a href="#概要">概要</a>
     </li>
     <li>
-      <a href="#環境構築">環境構築</a>
+      <a href="#セットアップ">セットアップ</a>
       <ul>
         <li><a href="#環境条件">環境条件</a></li>
         <li><a href="#インストール方法">インストール方法</a></li>
@@ -50,8 +50,8 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 
-<!-- 環境構築 -->
-## 環境構築
+<!-- セットアップ -->
+## セットアップ
 本レポジトリのセットアップ方法について説明します．
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
@@ -63,35 +63,39 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
 | Ubuntu | 22.04 (Jammy Jellyfish) |
 | ROS | Humble Hawksbill |
 | Python | 3.0~ |
-| Simulator(使用する場合) | Sigverse ROS |
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 ### インストール方法
 
 1. ROS2の`src`フォルダに移動します．
-   ```sh
+   ```bash
    cd　~/colcon_ws/src/
    ```
 2. 本レポジトリをcloneします．
-   ```sh
+   ```bash
    git clone -b humble-devel https://github.com/TeamSOBITS/sobits_nav_stack.git
    ```
 3. レポジトリの中へ移動します．
-   ```sh
+   ```bash
    cd sobits_navigation_stack
    ```
 4. 依存パッケージをインストールします．
-    ```sh
+    ```bash
     bash install.sh
     ```
 
 5. パッケージをコンパイルします．
-   ```sh
+   ```bash
    cd ~/colcon_ws/
+   ```
+   ```bash
    colcon build --symlink-install
    ```
-
+   ```bash
+   source ~/colcon_ws/install/setup.sh
+   ```
+   
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 <!-- 実行・操作方法 -->
@@ -114,27 +118,30 @@ Navigationを使う上での基本的な流れ
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
-2. 地図生成を起動\
-    [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py)
-    にある
-    **robot_name**を使用するロボットに切り換える．
+2. 地図を生成
+    - 手動で地図を生成する場合 
+        
+      1. [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py)
+      にある**robot_name**を使用するロボットに切り換えた後，以下のコマンドを実行する． 
+      実行後に地図を保存するか聞かれるが，一旦無視する．
+          ```sh
+          ros2 launch sobits_slam gmapping.launch.py
+          ```
+      
+      2. 次に[teleop.launch.py](/sobits_slam/launch/teleop.launch.py)にある**velocity_topic_name**を使用するロボットのトピック名に切り換えた後，以下のコマンドを実行する．
+      起動したxtermターミナル(青いターミナル)で操作方法を確認しながら，Rvizの地図を見てロボットを操作する．
+          ```sh
+          ros2 launch sobits_slam teleop.launch.py
+          ```
 
-    その後以下のコマンドで起動． 
-    起動後に地図を保存するか聞かれるが，一旦無視する．
-    ```sh
-    ros2 launch sobits_slam gmapping.launch.py
-    ```
+    - 自律地図生成を使用する場合
 
-3. 人間が操作できるように[teleop.launch.py](/sobits_slam/launch/teleop.launch.py)を起動\
-    [teleop.launch.py](/sobits_slam/launch/teleop.launch.py)にある**velocity_topic_name**を使用するロボットのトピック名に切り換える．
+      [active_slam.launch.py](/sobits_slam/launch/active_slam.launch.py)にある**robot_name**を使用するロボットに切り換えた後，以下のコマンドを実行する． 
+      ```sh
+      ros2 launch sobits_slam active_slam.launch.py
+      ```
 
-    その後以下のコマンドで起動．
-    ```sh
-    ros2 launch sobits_slam teleop.launch.py
-    ```
-
-4. ロボットを操作して，Navigationしたい環境の地図を保存 \
-    起動したxtermターミナル(青いターミナル)で操作方法を確認しながら，Rvizの地図を見てロボットを操作する．\
+4. 生成した地図を保存 \
     **地図生成が完了したら，地図を保存する.**
 5. 新たに地図ファイルを作成した場合はcolcon buildを実行する．\
    既存の地図ファイルと置き換えて作成した場合はcolcon buildを実行する必要はない．
@@ -144,6 +151,12 @@ Navigationを使う上での基本的な流れ
     ```sh
     colcon build --symlink-install
     ```
+    ```bash
+    source ~/colcon_ws/install/setup.sh
+    ```
+
+
+
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 ### 地点登録
@@ -170,20 +183,6 @@ Navigationを使う上での基本的な流れ
         ```sh
         'use_robot', default_value='true'
         ```
-        <!-- 次に[nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)
-      の
-      ```sh
-      declare_velocity_topic_name_cmd = DeclareLaunchArgument(
-        'velocity_topic_name',
-        # default_value="/sobit_pro/cmd_vel",  ## SOBIT PRO ##
-        # default_value="/sobit_edu/commands/velocity",  ## SOBIT EDU ##
-        default_value="/sobit_mini/commands/velocity",  ## SOBIT MINI ##
-        # default_value="/sobit_light/cmd_vel",  ## SOBIT LIGHT ##
-        #default_value="/hsrb/command_velocity",  ## HSR(Simulation) ##
-        description='velocity topic name')
-      ```
-      を，使用するロボットのトピック名に変更する． -->
-
 3. 実機で地点登録する場合はロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
@@ -216,7 +215,12 @@ Navigationを使う上での基本的な流れ
    新たに地点登録ファイルを作成した場合はcolcon buildを実行する．
     ```sh
     cd　~/colcon_ws/
+    ```
+    ```sh
     colcon build --symlink-install
+    ```
+    ```bash
+    source ~/colcon_ws/install/setup.sh
     ```
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
@@ -264,7 +268,6 @@ Navigationを使う上での基本的な流れ
 <!-- マイルストーン -->
 ## マイルストーン
 
-- [ ] 自律地図生成のREADMEを書く
 - [ ] カメラを用いた地図生成
 - [ ] 障害物のレイヤーのカスタム
     - [ ] bumperレイヤー
@@ -274,34 +277,6 @@ Navigationを使う上での基本的な流れ
 現時点のバッグや新規機能の依頼を確認するために[Issueページ](issues-url) をご覧ください．
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
-
-
-<!-- CONTRIBUTING -->
-<!-- ## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p> -->
-
-
-
-<!-- LICENSE -->
-<!-- ## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p> -->
-
-
 
 <!-- 参考文献 -->
 ## 参考文献
