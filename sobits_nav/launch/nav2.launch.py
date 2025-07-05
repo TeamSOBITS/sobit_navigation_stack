@@ -30,7 +30,7 @@ from nav2_common.launch import RewrittenYaml
 
 
 def declare_param_file(context, *args, **kwargs):
-    bringup_dir = get_package_share_directory('sobits_navigation')
+    bringup_dir = get_package_share_directory('sobits_nav')
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
     param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'navigation_config.yaml')
 
@@ -55,7 +55,7 @@ def declare_param_file(context, *args, **kwargs):
 
 def generate_launch_description():
     # Get the launch directory
-    bringup_dir = get_package_share_directory('sobits_navigation')
+    bringup_dir = get_package_share_directory('sobits_nav')
 
     namespace = LaunchConfiguration('namespace')
     use_namespace = LaunchConfiguration('use_namespace')
@@ -131,7 +131,7 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'map_name2.yaml'),
+        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml'),
         description='Full path to map yaml file to load')
 
     declare_robot_name_cmd = DeclareLaunchArgument(
@@ -146,7 +146,7 @@ def generate_launch_description():
     declare_location_yaml_cmd = DeclareLaunchArgument(
         'location_file_path',
         default_value=os.path.join(
-            get_package_share_directory('sobits_mapping'), 'location', 'location_example.yaml'),
+            get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
         description='Full path to location file to load')
 
 
@@ -391,12 +391,12 @@ def generate_launch_description():
     rviz_cmd = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', os.path.join(bringup_dir, 'rviz', 'sobits_navigation.rviz')],
+        arguments=['-d', os.path.join(bringup_dir, 'rviz', 'sobits_nav.rviz')],
         condition=IfCondition(use_rviz)
     )
 
     tf_broadcaster_cmd = Node(
-        package='sobits_navigation',
+        package='sobits_nav',
         executable='location_tf_broadcaster',
         name='location_tf_broadcaster',
         parameters=[{"location_file_path": location_file_path,}],

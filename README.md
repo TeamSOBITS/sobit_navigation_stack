@@ -75,7 +75,7 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
    ```
 2. 本レポジトリをcloneします．
    ```sh
-   git clone -b humble-devel https://github.com/TeamSOBITS/sobits_navigation_stack.git
+   git clone -b humble-devel https://github.com/TeamSOBITS/sobits_nav_stack.git
    ```
 3. レポジトリの中へ移動します．
    ```sh
@@ -115,22 +115,22 @@ Navigationを使う上での基本的な流れ
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
 2. 地図生成を起動\
-    [gmapping.launch.py](/sobits_mapping/launch/gmapping.launch.py)
+    [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py)
     にある
     **robot_name**を使用するロボットに切り換える．
 
     その後以下のコマンドで起動． 
     起動後に地図を保存するか聞かれるが，一旦無視する．
     ```sh
-    ros2 launch sobits_mapping gmapping.launch.py
+    ros2 launch sobits_slam gmapping.launch.py
     ```
 
-3. 人間が操作できるように[teleop.launch.py](/sobits_mapping/launch/teleop.launch.py)を起動\
-    [teleop.launch.py](/sobits_mapping/launch/teleop.launch.py)にある**velocity_topic_name**を使用するロボットのトピック名に切り換える．
+3. 人間が操作できるように[teleop.launch.py](/sobits_slam/launch/teleop.launch.py)を起動\
+    [teleop.launch.py](/sobits_slam/launch/teleop.launch.py)にある**velocity_topic_name**を使用するロボットのトピック名に切り換える．
 
     その後以下のコマンドで起動．
     ```sh
-    ros2 launch sobits_mapping teleop.launch.py
+    ros2 launch sobits_slam teleop.launch.py
     ```
 
 4. ロボットを操作して，Navigationしたい環境の地図を保存 \
@@ -148,25 +148,25 @@ Navigationを使う上での基本的な流れ
 
 ### 地点登録
 1. 生成した地図のパスを指定する．
-    [create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)のmapを書き換える．\
+    [create_location_file.launch.py](/sobits_slam/launch/create_location_file.launch.py)のmapを書き換える．\
     mapは，自分で生成した地図を指定する．\
-    例えば，[map_example.pgm](/sobits_mapping/map/map_example.pgm)というマップの場合は，以下のように指定する．
+    例えば，[map_example.pgm](/sobits_slam/map/map_example.pgm)というマップの場合は，以下のように指定する．
     ```sh  
     DeclareLaunchArgument(
             # mapのファイルパス
-            'map', default_value=os.path.join(get_package_share_directory("sobits_mapping"), 'map', 'map_example.yaml')
+            'map', default_value=os.path.join(get_package_share_directory("sobits_slam"), 'map', 'map_example.yaml')
         ),
     ```
     ※ 拡張子が.ymalになることに注意．直接画像ファイルを指定するのではなく，地図のymalデータファイルを指定する．
 2. 実機で地点登録するかどうかを設定する
     - 実機で地点登録**しない**場合\
-         [create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の
+         [create_location_file.launch.py](/sobits_slam/launch/create_location_file.launch.py)の
          **use_robot**をfalseにする．
         ```sh
         'use_robot', default_value='false'
         ```
     - 実機で地点登録**する**場合\
-        はじめに[create_location_file.launch.py](/sobits_mapping/launch/create_location_file.launch.py)の**use_robot**をtrueにし，**robot_name**を使用するロボットに変更する．
+        はじめに[create_location_file.launch.py](/sobits_slam/launch/create_location_file.launch.py)の**use_robot**をtrueにし，**robot_name**を使用するロボットに変更する．
         ```sh
         'use_robot', default_value='true'
         ```
@@ -191,7 +191,7 @@ Navigationを使う上での基本的な流れ
 4. 地点登録を起動する \
     以下のコマンドで起動する．
     ```sh
-    ros2 launch sobits_mapping create_location_file.launch.py
+    ros2 launch sobits_slam create_location_file.launch.py
     ```
     起動後，**地点登録を始める前に地点登録ファイルを保存する．**
 
@@ -207,7 +207,7 @@ Navigationを使う上での基本的な流れ
       - 地図生成したときのように人間が操作する場合\
         以下のコマンドで実行
         ```sh
-        ros2 launch sobits_mapping teleop.launch.py
+        ros2 launch sobits_slam teleop.launch.py
         ```
     - ADD LOCATION：地点名を入力して登録
     - Delete　　　：登録した地点を削除
@@ -223,25 +223,25 @@ Navigationを使う上での基本的な流れ
 ### ナビゲーションを実行
 1. mapを地図生成した地図に書き換える\
     Navigationに地図を登録する．\
-    [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のmapを作成した地図のファイル名に書き換える．\
+    [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)のmapを作成した地図のファイル名に書き換える．\
     \
     例：作成した地図のファイル名がmap_example.yamlのとき
 
     ```sh
-    default_value=os.path.join(get_package_share_directory('sobits_mapping'), 'map', 'map_example.yaml'),
+    default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml'),
     ```
 
     ここで書くのは，地図データです．地点登録のファイルと間違わないようにしてください．
 
 2. 地点登録した情報を登録する \
-    [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)のlocation_file_pathを作成した地点登録ファイルに書き換える．\
+    [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)のlocation_file_pathを作成した地点登録ファイルに書き換える．\
     \
     例：作成した地点登録ファイル名がlocation_example.yamlのとき
     ```sh
     default_value=os.path.join(
-            get_package_share_directory('sobits_mapping'), 'location', 'location_example.yaml'),
+            get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
     ```
-3. [nav2.launch.py](/sobits_navigation/launch/nav2.launch.py)の
+3. [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)の
 **robot_name**を使用するロボット名に書き換える．
 
 4. ロボットを起動する \
@@ -251,7 +251,7 @@ Navigationを使う上での基本的な流れ
 5. Navigationを起動する \
     以下のコマンドでNavigationを起動する． 
     ```sh
-    ros2 launch sobits_navigation nav2.launch.py
+    ros2 launch sobits_nav nav2.launch.py
     ```
     これによりマップとその上に地点登録したTFが出ていると思います．
 

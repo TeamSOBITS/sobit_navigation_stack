@@ -39,8 +39,8 @@ def declare_param_value(context, *args, **kwargs):
 
 def generate_launch_description():
     # Get the launch directory
-    navigation_dir = get_package_share_directory('sobits_navigation')
-    mapping_dir = get_package_share_directory('sobits_mapping')
+    navigation_dir = get_package_share_directory('sobits_nav')
+    mapping_dir = get_package_share_directory('sobits_slam')
 
     explore_config = os.path.join(get_package_share_directory("explore_lite"), "config", "params.yaml")
 
@@ -53,10 +53,10 @@ def generate_launch_description():
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name',
         # default_value="sobit_pro",
-        default_value="sobit_edu",
+        # default_value="sobit_edu",
         # default_value="sobit_mini",
         # default_value="sobit_light",
-        # default_value="hsr_sim",
+        default_value="hsr_sim",
         description='choice your used robot name')
 
     declare_save_map_command_cmd = DeclareLaunchArgument(
@@ -103,7 +103,7 @@ def generate_launch_description():
     rviz_cmd = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', os.path.join(navigation_dir, 'rviz', 'sobits_navigation.rviz')]
+        arguments=['-d', os.path.join(navigation_dir, 'rviz', 'sobits_nav.rviz')]
     )
 
     # Create the launch description and populate

@@ -30,7 +30,7 @@ def generate_launch_description():
 
     # Node configuration
     keyboard_teleop_node = Node(
-        package='sobits_navigation',
+        package='sobits_nav',
         executable='keyboard_teleop',
         name='keyboard_teleop',
         output='screen',
