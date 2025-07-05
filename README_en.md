@@ -115,19 +115,19 @@ Basic workflow for using Navigation:
 ### Map Generation
 
 1.  **Start the robot**
-    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://www.google.com/search?q=https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
+    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
 2.  **Generate a map**
       * **To generate a map manually:**
-        1.  Switch the `robot_name` in [gmapping.launch.py](https://www.google.com/search?q=/sobits_slam/launch/gmapping.launch.py) to the robot you are using, then execute the following command. You will be asked if you want to save the map after execution, but ignore it for now.
+        1.  Switch the `robot_name` in [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py) to the robot you are using, then execute the following command. You will be asked if you want to save the map after execution, but ignore it for now.
             ```sh
             ros2 launch sobits_slam gmapping.launch.py
             ```
-        2.  Next, switch the `velocity_topic_name` in [teleop.launch.py](https://www.google.com/search?q=/sobits_slam/launch/teleop.launch.py) to the topic name of the robot you are using, then execute the following command. Refer to the instructions in the launched xterm terminal (blue terminal) to operate the robot while viewing the map in Rviz.
+        2.  Next, switch the `velocity_topic_name` in [teleop.launch.py](/sobits_slam/launch/teleop.launch.py) to the topic name of the robot you are using, then execute the following command. Refer to the instructions in the launched xterm terminal (blue terminal) to operate the robot while viewing the map in Rviz.
             ```sh
             ros2 launch sobits_slam teleop.launch.py
             ```
       * **To use autonomous map generation:**
-        Switch the `robot_name` in [active_slam.launch.py](https://www.google.com/search?q=/sobits_slam/launch/active_slam.launch.py) to the robot you are using, then execute the following command.
+        Switch the `robot_name` in [active_slam.launch.py](/sobits_slam/launch/active_slam.launch.py) to the robot you are using, then execute the following command.
         ```sh
         ros2 launch sobits_slam active_slam.launch.py
         ```
@@ -150,7 +150,7 @@ Basic workflow for using Navigation:
 ### Registering Locations
 
 1.  **Specify the path to the generated map.**
-    Modify the `map` parameter in [create_location_file.launch.py](https://www.google.com/search?q=/sobits_slam/launch/create_location_file.launch.py). The `map` should point to the map you generated. For example, if your map is named `map_example.pgm`, specify it as follows:
+    Modify the `map` parameter in [create_location_file.launch.py](/sobits_slam/launch/create_location_file.launch.py). The `map` should point to the map you generated. For example, if your map is named `map_example.pgm`, specify it as follows:
     ```sh
     DeclareLaunchArgument(
             # Map file path
@@ -160,17 +160,17 @@ Basic workflow for using Navigation:
     *Note: The extension should be `.yaml`. Do not directly specify the image file; specify the YAML data file of the map.*
 2.  **Set whether to register locations with the actual robot.**
       * **If you are NOT registering locations with the actual robot:**
-        Set `use_robot` to `false` in [create_location_file.launch.py](https://www.google.com/search?q=/sobits_slam/launch/create_location_file.launch.py).
+        Set `use_robot` to `false` in [create_location_file.launch.py](/sobits_slam/launch/create_location_file.launch.py).
         ```sh
         'use_robot', default_value='false'
         ```
       * **If you ARE registering locations with the actual robot:**
-        First, set `use_robot` to `true` and change `robot_name` to the robot you are using in [create_location_file.launch.py](https://www.google.com/search?q=/sobits_slam/launch/create_location_file.launch.py).
+        First, set `use_robot` to `true` and change `robot_name` to the robot you are using in [create_location_file.launch.py](/sobits_slam/launch/create_location_file.launch.py).
         ```sh
         'use_robot', default_value='true'
         ```
 3.  **If registering locations with the actual robot, start the robot.**
-    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://www.google.com/search?q=https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
+    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
 4.  **Start location registration.**
     Launch with the following command:
     ```sh
@@ -209,7 +209,7 @@ Basic workflow for using Navigation:
 ### Running Navigation
 
 1.  **Change the map to the one you generated.**
-    Register the map with Navigation. Modify the `map` parameter in [nav2.launch.py](https://www.google.com/search?q=/sobits_nav/launch/nav2.launch.py) to the filename of the map you created.
+    Register the map with Navigation. Modify the `map` parameter in [nav2.launch.py](/sobits_nav/launch/nav2.launch.py) to the filename of the map you created.
 
     Example: If the created map file is `map_example.yaml`
 
@@ -220,7 +220,7 @@ Basic workflow for using Navigation:
     *Here, you are specifying the map data. Do not confuse it with the location registration file.*
 
 2.  **Register the location information.**
-    Change the `location_file_path` in [nav2.launch.py](https://www.google.com/search?q=/sobits_nav/launch/nav2.launch.py) to the location registration file you created.
+    Change the `location_file_path` in [nav2.launch.py](/sobits_nav/launch/nav2.launch.py) to the location registration file you created.
 
     Example: If the created location registration file is `location_example.yaml`
 
@@ -229,10 +229,10 @@ Basic workflow for using Navigation:
             get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
     ```
 
-3.  Change the `robot_name` in [nav2.launch.py](https://www.google.com/search?q=/sobits_nav/launch/nav2.launch.py) to the robot you are using.
+3.  Change the `robot_name` in [nav2.launch.py](/sobits_nav/launch/nav2.launch.py) to the robot you are using.
 
 4.  **Start the robot.**
-    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://www.google.com/search?q=https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
+    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
 
 5.  **Start Navigation.**
     Launch Navigation with the following command:
@@ -257,7 +257,7 @@ Basic workflow for using Navigation:
       - [ ] Noise color layer
       - [ ] Objects layer
 
-Please check the [Issues page](https://www.google.com/search?q=issues-url) for current bugs and feature requests.
+Please check the [Issues page](issues-url) for current bugs and feature requests.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
