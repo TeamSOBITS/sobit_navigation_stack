@@ -118,7 +118,7 @@ Navigationを使う上での基本的な流れ
     ロボット本体と，2D-LiDARを起動させる．\
     詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
     HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
-2. 地図を生成
+2. 地図を生成する
     - 手動で地図を生成する場合 
         
       1. [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py)
@@ -141,7 +141,7 @@ Navigationを使う上での基本的な流れ
       ros2 launch sobits_slam active_slam.launch.py
       ```
 
-4. 生成した地図を保存 \
+4. 生成した地図を保存する \
     **地図生成が完了したら，地図を保存する.**
 5. 新たに地図ファイルを作成した場合はcolcon buildを実行する．\
    既存の地図ファイルと置き換えて作成した場合はcolcon buildを実行する必要はない．
@@ -160,7 +160,7 @@ Navigationを使う上での基本的な流れ
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 ### 地点登録
-1. 生成した地図のパスを指定する．
+1. 生成した地図のパスを指定する
     [create_location_file.launch.py](/sobits_slam/launch/create_location_file.launch.py)のmapを書き換える．\
     mapは，自分で生成した地図を指定する．\
     例えば，[map_example.pgm](/sobits_slam/map/map_example.pgm)というマップの場合は，以下のように指定する．
@@ -211,7 +211,7 @@ Navigationを使う上での基本的な流れ
     - ADD LOCATION：地点名を入力して登録
     - Delete　　　：登録した地点を削除
     - Rename　　　：登録した地点名を変更
-7. すべての地点登録が終了したら，起動しているlaunchをすべて終了させる．\
+7. すべての地点登録が終了したら，起動しているlaunchをすべて終了させる\
    新たに地点登録ファイルを作成した場合はcolcon buildを実行する．
     ```sh
     cd　~/colcon_ws/
