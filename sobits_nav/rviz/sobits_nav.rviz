@@ -74,31 +74,13 @@ Visualization Manager:
       Frame Timeout: 1
       Frames:
         All Enabled: true
-        bedroom#bed:
-          Value: true
-        human_position:
-          Value: true
-        libing_room#side_table:
-          Value: true
-        living_room#glass_table:
-          Value: true
-        map:
-          Value: true
       Marker Scale: 2.299999952316284
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          bedroom#bed:
-            {}
-          human_position:
-            {}
-          libing_room#side_table:
-            {}
-          living_room#glass_table:
-            {}
+        {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -234,6 +216,40 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /hsrb/base_scan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.009999999776482582
+      Style: Flat Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /scan
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -604,40 +620,6 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /waypoints
-      Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz_default_plugins/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: RGB8
-      Decay Time: 0
-      Enabled: true
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        Filter size: 10
-        History Policy: Keep Last
-        Reliability Policy: Best Effort
-        Value: /hsrb/head_rgbd_sensor/depth_registered/points
-      Use Fixed Frame: true
-      Use rainbow: true
       Value: true
   Enabled: true
   Global Options:

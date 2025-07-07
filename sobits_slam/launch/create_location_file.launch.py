@@ -16,10 +16,11 @@ def generate_launch_description():
         DeclareLaunchArgument(
             # ロボットの名前を指定
             # 'robot_name', default_value='sobit_pro'
-            'robot_name', default_value='sobit_edu'
+            # 'robot_name', default_value='sobit_edu'
             # 'robot_name', default_value='sobit_mini'
             # 'robot_name', default_value='sobit_light'
             # 'robot_name', default_value='hsr_sim'
+            'robot_name', default_value='hsrb_robot'
         ),
         DeclareLaunchArgument(
             # mapのファイルパス

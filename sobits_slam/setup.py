@@ -21,6 +21,7 @@ setup(
         (os.path.join('share', package_name, 'param', 'sobit_mini'), glob('param/sobit_mini/*.yaml')),
         (os.path.join('share', package_name, 'param', 'sobit_light'), glob('param/sobit_light/*.yaml')),
         (os.path.join('share', package_name, 'param', 'hsr_sim'), glob('param/hsr_sim/*.yaml')),
+        (os.path.join('share', package_name, 'param', 'hsrb_robot'), glob('param/hsrb_robot/*.yaml')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

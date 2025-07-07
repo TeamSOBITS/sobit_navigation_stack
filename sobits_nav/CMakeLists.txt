@@ -36,6 +36,7 @@ install(DIRECTORY
   param/sobit_mini
   param/sobit_light
   param/hsr_sim
+  param/hsrb_robot
   DESTINATION share/${PROJECT_NAME}/param
 )
 
