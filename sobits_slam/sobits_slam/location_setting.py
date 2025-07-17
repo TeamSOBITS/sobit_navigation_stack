@@ -42,7 +42,7 @@ class LocationSetting(Node):
         self.set_pose_req = SetInitialPose.Request()
 
         self.tk = tk.Tk()
-        self.iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_mapping'), 'img', 'mapping.png'))
+        self.iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_slam'), 'img', 'mapping.png'))
         self.width = self.tk.winfo_screenwidth()
         self.height = self.tk.winfo_screenheight()
         self.tk.call('wm', 'iconphoto', self.tk._w, self.iconfile)
@@ -61,7 +61,7 @@ class LocationSetting(Node):
         self.sub_ctrl_now = True
 
         self.sub_tk = tk.Toplevel(self.tk)
-        iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_mapping'), 'img', 'mapping.png'))
+        iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_slam'), 'img', 'mapping.png'))
         width = self.sub_tk.winfo_screenwidth()
         height = self.sub_tk.winfo_screenheight()
         self.sub_tk.iconphoto(False, iconfile)
@@ -255,7 +255,7 @@ class LocationSetting(Node):
         self.tk.destroy()
 
         self.tk = tk.Tk()
-        self.iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_mapping'), 'img', 'mapping.png'))
+        self.iconfile = tk.PhotoImage(file=os.path.join(get_package_share_directory('sobits_slam'), 'img', 'mapping.png'))
         self.width = self.tk.winfo_screenwidth()
         self.height = self.tk.winfo_screenheight()
         self.tk.call('wm', 'iconphoto', self.tk._w, self.iconfile)
@@ -326,7 +326,7 @@ class LocationSetting(Node):
 
 
     def select_location_file(self):
-        proc = Popen(["zenity", "--file-selection", "--save", "--confirm-overwrite", "--filename=/home/" + str(os.getenv("USER")) + "/colcon_ws/src/sobits_navigation_stack/sobits_mapping/location/location_example.yaml"],
+        proc = Popen(["zenity", "--file-selection", "--save", "--confirm-overwrite", "--filename=/home/" + str(os.getenv("USER")) + "/colcon_ws/src/sobits_navigation_stack/sobits_slam/location/location_example.yaml"],
             stdout=PIPE,
             shell=False)
         out, err = proc.communicate()

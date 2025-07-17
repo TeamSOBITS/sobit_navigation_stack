@@ -15,7 +15,7 @@ from lifecycle_msgs.msg import Transition
 
 
 def declare_param_file(context, *args, **kwargs):
-    bringup_dir = get_package_share_directory('sobits_mapping')
+    bringup_dir = get_package_share_directory('sobits_slam')
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
     param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'gmapping_config.yaml')
 
@@ -40,10 +40,11 @@ def generate_launch_description():
     robot_name = LaunchConfiguration('robot_name')
     declare_robot_name_cmd = DeclareLaunchArgument(
         # 'robot_name', default_value='sobit_pro',
-        'robot_name', default_value='sobit_edu',
+        # 'robot_name', default_value='sobit_edu',
         # 'robot_name', default_value='sobit_mini',
         # 'robot_name', default_value='sobit_light',
         # 'robot_name', default_value='hsr_sim',
+        'robot_name', default_value='hsrb_robot',
         description='choice your used robot name')
 
     autostart = LaunchConfiguration('autostart')
@@ -105,8 +106,8 @@ def generate_launch_description():
 
 
     # if (save_map_command):
-    sobits_mapping = Node(
-        package='sobits_mapping',
+    sobits_slam = Node(
+        package='sobits_slam',
         executable='sobits_map_saver',
         output='log',
         name='sobits_map_saver',
@@ -118,7 +119,7 @@ def generate_launch_description():
         package='rviz2',
         executable='rviz2',
         output='log',
-        arguments=['-d', os.path.join(get_package_share_directory("sobits_navigation"), 'rviz', 'sobits_navigation.rviz')],
+        arguments=['-d', os.path.join(get_package_share_directory("sobits_nav"), 'rviz', 'sobits_nav.rviz')],
         condition=IfCondition(rviz_viewer),
     )
 
@@ -136,7 +137,7 @@ def generate_launch_description():
     ld.add_action(configure_event)
     ld.add_action(activate_event)
     # if (save_map_command):
-    ld.add_action(sobits_mapping)
+    ld.add_action(sobits_slam)
     # if (rviz_viewer):
     ld.add_action(rviz_node)
 

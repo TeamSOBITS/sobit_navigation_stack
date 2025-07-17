@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE
 import time
 
 def save_map_command(node):
-    proc = Popen(["zenity", "--file-selection", "--save", "--confirm-overwrite", "--filename=/home/" + str(os.getenv("USER")) + "/colcon_ws/src/sobits_navigation_stack/sobits_mapping/map/map_name.yaml"],
+    proc = Popen(["zenity", "--file-selection", "--save", "--confirm-overwrite", "--filename=/home/" + str(os.getenv("USER")) + "/colcon_ws/src/sobits_navigation_stack/sobits_slam/map/map_name.yaml"],
         stdout=PIPE,
         shell=False)
     out, err = proc.communicate()

@@ -3,7 +3,7 @@ import os
 from glob import glob
 from setuptools import setup
 
-package_name = 'sobits_mapping'
+package_name = 'sobits_slam'
 
 setup(
     name=package_name,
@@ -21,6 +21,7 @@ setup(
         (os.path.join('share', package_name, 'param', 'sobit_mini'), glob('param/sobit_mini/*.yaml')),
         (os.path.join('share', package_name, 'param', 'sobit_light'), glob('param/sobit_light/*.yaml')),
         (os.path.join('share', package_name, 'param', 'hsr_sim'), glob('param/hsr_sim/*.yaml')),
+        (os.path.join('share', package_name, 'param', 'hsrb_robot'), glob('param/hsrb_robot/*.yaml')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -31,8 +32,8 @@ setup(
     # tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'sobits_map_saver = sobits_mapping.sobits_map_saver:main',
-            'location_setting = sobits_mapping.location_setting:main',
+            'sobits_map_saver = sobits_slam.sobits_map_saver:main',
+            'location_setting = sobits_slam.location_setting:main',
         ],
     },
 )
