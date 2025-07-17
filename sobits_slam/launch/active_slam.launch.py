@@ -25,7 +25,7 @@ def declare_param_value(context, *args, **kwargs):
         robot_base_frame = robot_name_value + "/base_footprint"
         vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("hsrb" in robot_name_value):
-        robot_base_frame = robot_name_value + "/base_footprint"
+        robot_base_frame = "base_footprint"
         vel_topic_name = "/omni_base_controller/cmd_vel"
     elif ("hsr" in robot_name_value):
         robot_base_frame = "base_footprint"
