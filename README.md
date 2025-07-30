@@ -74,7 +74,7 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
    ```
 2. 本レポジトリをcloneします．
    ```bash
-   git clone -b humble-devel https://github.com/TeamSOBITS/sobits_nav_stack.git
+   git clone -b humble-devel https://github.com/TeamSOBITS/sobits_navigation_stack.git
    ```
 3. レポジトリの中へ移動します．
    ```bash
