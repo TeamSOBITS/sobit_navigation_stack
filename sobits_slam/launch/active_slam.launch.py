@@ -8,8 +8,6 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
-
-
 def declare_param_value(context, *args, **kwargs):
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
     if   ("pro" in robot_name_value):
@@ -59,8 +57,8 @@ def generate_launch_description():
         # default_value="sobit_edu",
         # default_value="sobit_mini",
         # default_value="sobit_light",
-        # default_value="hsr_sim",
-        default_value="hsrb_robot",
+        default_value="hsr_sim",
+        # default_value="hsrb_robot",
         description='choice your used robot name')
 
     declare_save_map_command_cmd = DeclareLaunchArgument(
@@ -79,7 +77,8 @@ def generate_launch_description():
                             'location_file_path': "",
                             'robot_name': robot_name,
                             'velocity_topic_name': velocity_topic_name,
-                            'use_rviz': 'False'
+                            'use_rviz': 'False',
+                            'use_flex_nav': 'False',
                         }.items())
 
     mapping_cmd = IncludeLaunchDescription(
