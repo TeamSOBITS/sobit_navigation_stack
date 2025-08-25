@@ -136,7 +136,10 @@ Navigationを使う上での基本的な流れ
 
     - 自律地図生成を使用する場合
 
-      [active_slam.launch.py](/sobits_slam/launch/active_slam.launch.py)にある**robot_name**を使用するロボットに切り換えた後，以下のコマンドを実行する． 
+      [active_slam.launch.py](/sobits_slam/launch/active_slam.launch.py)にある**robot_name**を使用するロボット名に書き換える．
+        - ロボット頭部についているカメラを活用して首振りしながら自律地図生成を行う場合は`use_flex_nav`をTrueに書き換える．
+
+      以下のコマンドを実行する． 
       ```sh
       ros2 launch sobits_slam active_slam.launch.py
       ```
@@ -247,6 +250,7 @@ Navigationを使う上での基本的な流れ
     ```
 3. [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)の
 **robot_name**を使用するロボット名に書き換える．
+  - ロボット頭部についているカメラを活用して首振りしながらナビゲーションを行う場合は`use_flex_nav`をTrueに書き換える
 
 4. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
@@ -257,7 +261,7 @@ Navigationを使う上での基本的な流れ
     ```sh
     ros2 launch sobits_nav nav2.launch.py
     ```
-    これによりマップとその上に地点登録したTFが出ていると思います．
+    これによりマップとその上に地点登録したTFが出現する．
 
 5. アクションクライアントを起動する \
     これは基本的にプログラムから起動する．\
