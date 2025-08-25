@@ -205,7 +205,6 @@ controller_server:
         collision_cost: 1000000.0
         near_goal_distance: 1.0
       PathAlignCritic:
-      PathAlignCritic:
         enabled: true
         cost_power: 1
         cost_weight: 14.0
@@ -291,7 +290,7 @@ global_costmap:
       use_sim_time: False
       robot_radius: 0.2
       resolution: 0.1
-      track_unknown_space: false
+      track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
@@ -340,7 +339,7 @@ planner_server:
       plugin: "nav2_navfn_planner/NavfnPlanner"
       tolerance: 0.5
       use_astar: false
-      allow_unknown: false
+      allow_unknown: true
 
 smoother_server:
   ros__parameters:

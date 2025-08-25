@@ -56,6 +56,32 @@ def declare_param_file(context, *args, **kwargs):
 
 
 def generate_launch_description():
+    declare_robot_name_cmd = DeclareLaunchArgument(
+        'robot_name',
+        # default_value="sobit_pro",
+        # default_value="sobit_edu",
+        # default_value="sobit_mini",
+        # default_value="sobit_light",
+        default_value="hsr_sim",
+        # default_value="hsrb_robot",
+        description='choice your used robot name')
+    
+    declare_map_yaml_cmd = DeclareLaunchArgument(
+        'map',
+        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml'),
+        description='Full path to map yaml file to load')
+
+    declare_location_yaml_cmd = DeclareLaunchArgument(
+        'location_file_path',
+        default_value=os.path.join(
+            get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
+        description='Full path to location file to load')
+    
+    declare_flex_nav_cmd = DeclareLaunchArgument(
+        'use_flex_nav',
+        default_value="False",
+        description="Whether to activate Flex nav")
+
     # Get the launch directory
     bringup_dir = get_package_share_directory('sobits_nav')
 
@@ -75,7 +101,7 @@ def generate_launch_description():
     initial_y = LaunchConfiguration('initial_y')
     initial_yaw = LaunchConfiguration('initial_yaw')
     location_file_path = LaunchConfiguration('location_file_path')
-
+    use_flex_nav = LaunchConfiguration('use_flex_nav')
     velocity_topic_name = LaunchConfiguration('velocity_topic_name')
 
     use_composition = LaunchConfiguration('use_composition')
@@ -126,42 +152,16 @@ def generate_launch_description():
         'use_namespace',
         default_value='false',
         description='Whether to apply a namespace to the navigation stack')
+    
     declare_slam_cmd = DeclareLaunchArgument(
         'slam',
         default_value='False',
         description='Whether run a SLAM')
 
-    declare_map_yaml_cmd = DeclareLaunchArgument(
-        'map',
-        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml'),
-        description='Full path to map yaml file to load')
-
-    declare_robot_name_cmd = DeclareLaunchArgument(
-        'robot_name',
-        # default_value="sobit_pro",
-        # default_value="sobit_edu",
-        # default_value="sobit_mini",
-        # default_value="sobit_light",
-        # default_value="hsr_sim",
-        default_value="hsrb_robot",
-        description='choice your used robot name')
-
-    declare_location_yaml_cmd = DeclareLaunchArgument(
-        'location_file_path',
-        default_value=os.path.join(
-            get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
-        description='Full path to location file to load')
-
-
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
         default_value='false',
         description='Use simulation (Gazebo) clock if true')
-
-    # declare_params_file_cmd = DeclareLaunchArgument(
-    #     'params_file',
-    #     default_value=os.path.join(bringup_dir, 'param', robot_name, 'navigation_config.yaml'),
-    #     description='Full path to the ROS2 parameters file to use for all launched nodes')
 
     declare_use_rviz_cmd = DeclareLaunchArgument(
         'use_rviz',
@@ -405,6 +405,23 @@ def generate_launch_description():
         parameters=[{"location_file_path": location_file_path,}],
     )
 
+    head_controller_node = Node(
+        package='flex_nav',
+        executable='head_controller_node',
+        name='head_controller_node',
+        output='screen',
+        parameters=[params_file],
+        condition=IfCondition(use_flex_nav),
+    )
+    head_angle_publisher_node = Node(
+        package='flex_nav',
+        executable='head_angle_publisher_node',
+        name='head_angle_publisher_node', 
+        output='screen',
+        parameters=[params_file],
+        condition=IfCondition(use_flex_nav),
+    )
+
     # Create the launch description and populate
     ld = LaunchDescription()
 
@@ -435,5 +452,9 @@ def generate_launch_description():
     ld.add_action(load_composable_nodes)
     ld.add_action(bringup_cmd_group)
     ld.add_action(tf_broadcaster_cmd)
+
+    ld.add_action(declare_flex_nav_cmd)
+    ld.add_action(head_controller_node)
+    ld.add_action(head_angle_publisher_node)
 
     return ld

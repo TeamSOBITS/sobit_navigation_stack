@@ -16,6 +16,8 @@ sudo apt install -y \
 
 git clone -b $ROS_DISTRO-devel https://github.com/TeamSOBITS/explore_ros2.git
 
+git clone -b $ROS_DISTRO-devel https://github.com/TeamSOBITS/flex_nav.git
+
 echo export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp >> ~/.bashrc
 source ~/.bashrc
 
