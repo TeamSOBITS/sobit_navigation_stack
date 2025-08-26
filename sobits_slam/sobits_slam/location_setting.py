@@ -220,7 +220,7 @@ class LocationSetting(Node):
 
             future = self.client_add_location.call_async(self.set_pose_req)
             time.sleep(0.5) ## TODO
-        self.refresh_gui()
+        self.refresh_gui(False)
 
 
     def button_clicked_callback_sub(self, mode, new_name=None, pose=None):
@@ -240,13 +240,13 @@ class LocationSetting(Node):
             time.sleep(0.5) ## TODO
         self.sub_tk.destroy()
         self.sub_ctrl_now = False
-        self.refresh_gui()
+        self.refresh_gui(False)
 
 
-    def refresh_gui(self):
+    def refresh_gui(self, pub_flag=True):
         self.reset_locations_info()
 
-        if (self.location_path_flag):
+        if ((self.location_path_flag) and (pub_flag)):
             data = String()
             data.data = self.location_path + ".yaml"
             self.pub_location_path.publish(data)

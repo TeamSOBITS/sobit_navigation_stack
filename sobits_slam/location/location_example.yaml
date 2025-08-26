@@ -1,5 +1,5 @@
 location_pose:
-  "libing_room#side_table": 
+  "living_room#side_table": 
     frame_id: "map"
     translation: 
       x: 2.1433237

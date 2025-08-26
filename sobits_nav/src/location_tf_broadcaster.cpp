@@ -23,10 +23,12 @@ class LocationFileViewer : public rclcpp::Node {
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_location_file_path_;
         rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_add_location_;
         rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_delete_location_;
-        tf2_ros::StaticTransformBroadcaster tfBroadcaster_;
+        tf2_ros::TransformBroadcaster       dynamic_tfBroadcaster_;
+        tf2_ros::StaticTransformBroadcaster static_tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
 
         std::string file_name_;
+        bool dynamic_tf = false;
 
         bool loadLocationFile();
         void callback_file_path(const std_msgs::msg::String::SharedPtr msg);
@@ -147,6 +149,7 @@ void LocationFileViewer::callback_add_location(
 
         output_file(add_location_pose, false);
         location_poses_.push_back(add_location_pose);
+        publishTF();
     }
     else std::cout << "The \""  << request->pose.header.frame_id << "\" already exists." << std::endl;
     (void) response;
@@ -166,6 +169,7 @@ void LocationFileViewer::callback_delete_location(
         location_poses_.erase(location_poses_.begin() + sel);
 
         for (size_t i=0; i<location_poses_.size(); i++) output_file(location_poses_[i], i==0);
+        publishTF();
 
         if (location_poses_.size() == 0) {
             ofstream ofs(file_name_, ios::trunc);
@@ -179,15 +183,15 @@ void LocationFileViewer::callback_delete_location(
 
 
 void LocationFileViewer::publishTF() {
-    // rclcpp::spin_some(this->get_node_base_interface());
+    if (dynamic_tf) return;
     for (auto& pose : location_poses_) {
         pose.header.stamp = this->now();
-        tfBroadcaster_.sendTransform(pose);
+        static_tfBroadcaster_.sendTransform(pose);
     }
 }
 
 
-LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroadcaster_(this){
+LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), dynamic_tfBroadcaster_(this), static_tfBroadcaster_(this) {
     sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callback_file_path, this, std::placeholders::_1));
     server_add_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/add_location", std::bind(&LocationFileViewer::callback_add_location, this, std::placeholders::_1, std::placeholders::_2));
     server_delete_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/delete_location", std::bind(&LocationFileViewer::callback_delete_location, this, std::placeholders::_1, std::placeholders::_2));
@@ -195,17 +199,20 @@ LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroad
     this->declare_parameter<std::string>("location_file_path", "");
     this->get_parameter("location_file_path", file_name_);
 
-    if (file_name_ != "") loadLocationFile();
+    if (file_name_ == "") dynamic_tf = true;
+    else loadLocationFile();
 
-    // rclcpp::Rate loop_rate(10);
-    // while (rclcpp::ok()) {
-    //     rclcpp::spin_some(this->get_node_base_interface());
-    //     for (auto& pose : location_poses_) {
-    //         pose.header.stamp = this->now();
-    //         tfBroadcaster_.sendTransform(pose);
-    //     }
-    //     loop_rate.sleep();
-    // }
+    if (dynamic_tf) {
+        rclcpp::Rate loop_rate(10);
+        while (rclcpp::ok()) {
+            rclcpp::spin_some(this->get_node_base_interface());
+            for (auto& pose : location_poses_) {
+                pose.header.stamp = this->now();
+                dynamic_tfBroadcaster_.sendTransform(pose);
+            }
+            loop_rate.sleep();
+        }
+    }
 }
 
 
