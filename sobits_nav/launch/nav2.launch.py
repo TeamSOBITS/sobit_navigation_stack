@@ -405,20 +405,11 @@ def generate_launch_description():
         parameters=[{"location_file_path": location_file_path,}],
     )
 
-    head_controller_node = Node(
-        package='flex_nav',
-        executable='head_controller_node',
-        name='head_controller_node',
-        output='screen',
-        parameters=[params_file],
-        condition=IfCondition(use_flex_nav),
-    )
-    head_angle_publisher_node = Node(
-        package='flex_nav',
-        executable='head_angle_publisher_node',
-        name='head_angle_publisher_node', 
-        output='screen',
-        parameters=[params_file],
+    flex_nav_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('flex_nav'), 
+                                                   'launch', 
+                                                   'flex_nav.launch.py')),
+        launch_arguments={'robot_name': robot_name}.items(),
         condition=IfCondition(use_flex_nav),
     )
 
@@ -454,7 +445,6 @@ def generate_launch_description():
     ld.add_action(tf_broadcaster_cmd)
 
     ld.add_action(declare_flex_nav_cmd)
-    ld.add_action(head_controller_node)
-    ld.add_action(head_angle_publisher_node)
+    ld.add_action(flex_nav_launch)
 
     return ld
