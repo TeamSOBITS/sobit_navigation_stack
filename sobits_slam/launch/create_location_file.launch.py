@@ -26,6 +26,9 @@ def generate_launch_description():
             # mapのファイルパス
             'map', default_value=os.path.join(get_package_share_directory("sobits_slam"), 'map', 'map_example.yaml')
         ),
+        DeclareLaunchArgument(
+            'use_rviz', default_value='True'
+        ),
 
         # Create Location File
         Node(
@@ -48,6 +51,7 @@ def generate_launch_description():
                 'map'          : LaunchConfiguration('map'),
                 'robot_name'   : LaunchConfiguration('robot_name'),
                 'location_file_path' : "",
+                'use_rviz'     : LaunchConfiguration('use_rviz'),
             }.items(),
         ),
     ])
