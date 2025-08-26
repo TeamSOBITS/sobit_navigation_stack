@@ -250,7 +250,7 @@ Navigationを使う上での基本的な流れ
     ```
 3. [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)の
 **robot_name**を使用するロボット名に書き換える．
-  - ロボット頭部についているカメラを活用して首振りしながらナビゲーションを行う場合は`use_flex_nav`をTrueに書き換える
+    - ロボット頭部についているカメラを活用して首振りしながらナビゲーションを行う場合は`use_flex_nav`をTrueに書き換える
 
 4. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
@@ -287,6 +287,7 @@ Navigationを使う上での基本的な流れ
 
 * [ROS Navigationスタックソフトウェア設計仕様](https://robo-marc.github.io/navigation_documents/)
 * [explore_lite](http://wiki.ros.org/explore_lite)
+* [Flex Nav](https://github.com/TeamSOBITS/flex_nav)
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 

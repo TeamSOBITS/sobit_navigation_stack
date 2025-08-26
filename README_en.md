@@ -128,6 +128,9 @@ Basic workflow for using Navigation:
             ```
       * **To use autonomous map generation:**
         Switch the `robot_name` in [active_slam.launch.py](/sobits_slam/launch/active_slam.launch.py) to the robot you are using, then execute the following command.
+
+        - To utilize the camera on the robot's head for autonomous map generation while it's moving its neck, change ``use_flex_nav`` to ``True``.
+
         ```sh
         ros2 launch sobits_slam active_slam.launch.py
         ```
@@ -231,6 +234,8 @@ Basic workflow for using Navigation:
 
 3.  Change the `robot_name` in [nav2.launch.py](/sobits_nav/launch/nav2.launch.py) to the robot you are using.
 
+    - To utilize the camera on the robot's head to navigate while it's moving its neck, change ``use_flex_nav`` to ``True``.
+
 4.  **Start the robot.**
     Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
 
@@ -266,6 +271,7 @@ Please check the [Issues page](issues-url) for current bugs and feature requests
 
   * [ROS Navigation Stack Software Design Specification](https://robo-marc.github.io/navigation_documents/)
   * [explore_lite](http://wiki.ros.org/explore_lite)
+  * [Flex Nav](https://github.com/TeamSOBITS/flex_nav)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
