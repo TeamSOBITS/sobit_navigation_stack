@@ -23,7 +23,7 @@ class LocationFileViewer : public rclcpp::Node {
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_location_file_path_;
         rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_add_location_;
         rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_delete_location_;
-        tf2_ros::TransformBroadcaster tfBroadcaster_;
+        tf2_ros::StaticTransformBroadcaster tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
 
         std::string file_name_;
@@ -35,7 +35,8 @@ class LocationFileViewer : public rclcpp::Node {
         bool output_file(geometry_msgs::msg::TransformStamped location_pose, bool reset_flag);
         void callback_add_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
         void callback_delete_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
-};
+        void publishTF();
+    };
 
 // ロケーションファイルを読み込む関数
 bool LocationFileViewer::loadLocationFile() {
@@ -60,6 +61,7 @@ bool LocationFileViewer::loadLocationFile() {
             pose.transform.rotation.w = location_poses[pose.child_frame_id]["rotation"]["w"].as<float>();
             location_poses_.push_back(pose);
         }
+        publishTF();
         return true;
     } catch (const YAML::Exception& e) {
         std::cout << "Faild Open the Yaml File..." << std::endl;
@@ -176,6 +178,15 @@ void LocationFileViewer::callback_delete_location(
 }
 
 
+void LocationFileViewer::publishTF() {
+    // rclcpp::spin_some(this->get_node_base_interface());
+    for (auto& pose : location_poses_) {
+        pose.header.stamp = this->now();
+        tfBroadcaster_.sendTransform(pose);
+    }
+}
+
+
 LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroadcaster_(this){
     sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callback_file_path, this, std::placeholders::_1));
     server_add_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/add_location", std::bind(&LocationFileViewer::callback_add_location, this, std::placeholders::_1, std::placeholders::_2));
@@ -186,15 +197,15 @@ LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), tfBroad
 
     if (file_name_ != "") loadLocationFile();
 
-    rclcpp::Rate loop_rate(10);
-    while (rclcpp::ok()) {
-        rclcpp::spin_some(this->get_node_base_interface());
-        for (auto& pose : location_poses_) {
-            pose.header.stamp = this->now();
-            tfBroadcaster_.sendTransform(pose);
-        }
-        loop_rate.sleep();
-    }
+    // rclcpp::Rate loop_rate(10);
+    // while (rclcpp::ok()) {
+    //     rclcpp::spin_some(this->get_node_base_interface());
+    //     for (auto& pose : location_poses_) {
+    //         pose.header.stamp = this->now();
+    //         tfBroadcaster_.sendTransform(pose);
+    //     }
+    //     loop_rate.sleep();
+    // }
 }
 
 
