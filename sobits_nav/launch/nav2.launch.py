@@ -80,6 +80,11 @@ def generate_launch_description():
     keepout_mask_yaml_file = os.path.join(
         get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml')
     
+    declare_use_keepout_filter_cmd = DeclareLaunchArgument(
+        'use_keepout_filter',
+        default_value='False',
+        description='Whether to use keepout filter')
+    
     declare_flex_nav_cmd = DeclareLaunchArgument(
         'use_flex_nav',
         default_value="False",
@@ -106,6 +111,7 @@ def generate_launch_description():
     location_file_path = LaunchConfiguration('location_file_path')
     use_flex_nav = LaunchConfiguration('use_flex_nav')
     velocity_topic_name = LaunchConfiguration('velocity_topic_name')
+    use_keepout_filter = LaunchConfiguration('use_keepout_filter')
 
     use_composition = LaunchConfiguration('use_composition')
     container_name = LaunchConfiguration('container_name')
@@ -120,8 +126,7 @@ def generate_launch_description():
                        'bt_navigator',
                        'waypoint_follower',
                        'velocity_smoother',
-                       "keepout_filter_mask_server",
-                       "costmap_filter_info_server"]
+                       ]
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
@@ -448,6 +453,7 @@ def generate_launch_description():
     ld.add_action(declare_use_rviz_cmd)
     ld.add_action(declare_initial_x_cmd)
     ld.add_action(declare_initial_y_cmd)
+    ld.add_action(declare_use_keepout_filter_cmd)
     ld.add_action(declare_initial_yaw_cmd)
     ld.add_action(declare_location_yaml_cmd)
     ld.add_action(rviz_cmd)
@@ -466,7 +472,7 @@ def generate_launch_description():
     ld.add_action(flex_nav_launch)
 
     load_keepout_nodes = GroupAction(
-        condition=IfCondition(PythonExpression(['not ', use_composition])),
+        condition=IfCondition(PythonExpression(['not ', use_composition, ' and ', use_keepout_filter])),
         actions=[
             Node(
                 package='nav2_map_server',
@@ -492,6 +498,25 @@ def generate_launch_description():
         ]
     )
 
+    # Add lifecycle manager for keepout filter nodes if not using composition
+    load_keepout_lifecycle_manager = GroupAction(
+        condition=IfCondition(PythonExpression(['not ', use_composition, ' and ', use_keepout_filter])),
+        actions=[
+            Node(
+                package='nav2_lifecycle_manager',
+                executable='lifecycle_manager',
+                name='lifecycle_manager_keepout',
+                output='screen',
+                arguments=['--ros-args', '--log-level', log_level],
+                parameters=[{'use_sim_time': use_sim_time},
+                            {'autostart': autostart},
+                            {'node_names': ['keepout_filter_mask_server',
+                                            'costmap_filter_info_server']}]
+            )
+        ]
+    )
+
     ld.add_action(load_keepout_nodes)
+    ld.add_action(load_keepout_lifecycle_manager)
 
     return ld
