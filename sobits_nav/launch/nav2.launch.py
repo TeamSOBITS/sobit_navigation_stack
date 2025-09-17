@@ -77,6 +77,9 @@ def generate_launch_description():
             get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
         description='Full path to location file to load')
     
+    keepout_mask_yaml_file = os.path.join(
+        get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml')
+    
     declare_flex_nav_cmd = DeclareLaunchArgument(
         'use_flex_nav',
         default_value="False",
@@ -116,7 +119,9 @@ def generate_launch_description():
                        'behavior_server',
                        'bt_navigator',
                        'waypoint_follower',
-                       'velocity_smoother']
+                       'velocity_smoother',
+                       "keepout_filter_mask_server",
+                       "costmap_filter_info_server"]
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
@@ -342,6 +347,19 @@ def generate_launch_description():
                 parameters=[{'use_sim_time': use_sim_time,
                              'autostart': autostart,
                              'node_names': lifecycle_nodes}]),
+            ComposableNode(
+                package='nav2_map_server',
+                plugin='nav2_map_server::MapServer',
+                name='keepout_filter_mask_server',
+                parameters=[{'use_sim_time': use_sim_time},
+                            {'yaml_filename': keepout_mask_yaml_file}]
+            ),
+            ComposableNode(
+                package='nav2_map_server',
+                plugin='nav2_map_server::CostmapFilterInfoServer',
+                name='costmap_filter_info_server',
+                parameters=[configured_params]
+            ),
         ],
     )
 
@@ -447,46 +465,33 @@ def generate_launch_description():
     ld.add_action(declare_flex_nav_cmd)
     ld.add_action(flex_nav_launch)
 
-    keepout_mask_yaml_file = os.path.join(
-        get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml')
-
-    keepout_filter_mask_server_node = Node(
-        package='nav2_map_server',
-        executable='map_server',
-        name='keepout_filter_mask_server',
-        output='screen',
-        respawn=use_respawn,
-        respawn_delay=2.0,
-        parameters=[{'use_sim_time': use_sim_time},
-                    {'yaml_filename': keepout_mask_yaml_file}],
-        arguments=['--ros-args', '--log-level', log_level],
+    load_keepout_nodes = GroupAction(
+        condition=IfCondition(PythonExpression(['not ', use_composition])),
+        actions=[
+            Node(
+                package='nav2_map_server',
+                executable='map_server',
+                name='keepout_filter_mask_server',
+                output='screen',
+                respawn=use_respawn,
+                respawn_delay=2.0,
+                parameters=[{'use_sim_time': use_sim_time},
+                            {'yaml_filename': keepout_mask_yaml_file}],
+                arguments=['--ros-args', '--log-level', log_level],
+            ),
+            Node(
+                package='nav2_map_server',
+                executable='costmap_filter_info_server',
+                name='costmap_filter_info_server',
+                output='screen',
+                respawn=use_respawn,
+                respawn_delay=2.0,
+                parameters=[configured_params],
+                arguments=['--ros-args', '--log-level', log_level],
+            ),
+        ]
     )
 
-    costmap_filter_info_server_node = Node(
-        package='nav2_map_server',
-        executable='costmap_filter_info_server',
-        name='costmap_filter_info_server',
-        output='screen',
-        respawn=use_respawn,
-        respawn_delay=2.0,
-        parameters=[configured_params], 
-        arguments=['--ros-args', '--log-level', log_level],
-    )
-
-    keepout_lifecycle_manager_node = Node(
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='lifecycle_manager_keepout',
-        output='screen',
-        arguments=['--ros-args', '--log-level', log_level],
-        parameters=[{'use_sim_time': use_sim_time},
-                    {'autostart': autostart},
-                    {'node_names': ['keepout_filter_mask_server',
-                                    'costmap_filter_info_server']}]
-    )
-
-    ld.add_action(keepout_filter_mask_server_node)
-    ld.add_action(costmap_filter_info_server_node)
-    ld.add_action(keepout_lifecycle_manager_node)
+    ld.add_action(load_keepout_nodes)
 
     return ld
