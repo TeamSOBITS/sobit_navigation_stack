@@ -31,6 +31,7 @@ install(DIRECTORY
 )
 
 install(DIRECTORY
+  param/sobit_home
   param/sobit_pro
   param/sobit_edu
   param/sobit_mini

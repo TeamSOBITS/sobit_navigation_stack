@@ -16,6 +16,7 @@ setup(
         (os.path.join('share', package_name, 'location'), glob('location/*.yaml')),
         (os.path.join('share', package_name, 'map'), glob('map/*')),
         (os.path.join('share', package_name, 'img'), glob('img/*')),
+        (os.path.join('share', package_name, 'param', 'sobit_home'), glob('param/sobit_home/*.yaml')),
         (os.path.join('share', package_name, 'param', 'sobit_pro'), glob('param/sobit_pro/*.yaml')),
         (os.path.join('share', package_name, 'param', 'sobit_edu'), glob('param/sobit_edu/*.yaml')),
         (os.path.join('share', package_name, 'param', 'sobit_mini'), glob('param/sobit_mini/*.yaml')),
