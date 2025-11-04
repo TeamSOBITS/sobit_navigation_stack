@@ -39,12 +39,13 @@ def generate_launch_description():
 
     robot_name = LaunchConfiguration('robot_name')
     declare_robot_name_cmd = DeclareLaunchArgument(
+        'robot_name', default_value='sobit_home',
         # 'robot_name', default_value='sobit_pro',
         # 'robot_name', default_value='sobit_edu',
         # 'robot_name', default_value='sobit_mini',
         # 'robot_name', default_value='sobit_light',
         # 'robot_name', default_value='hsr_sim',
-        'robot_name', default_value='hsrb_robot',
+        # 'robot_name', default_value='hsrb_robot',
         description='choice your used robot name')
 
     autostart = LaunchConfiguration('autostart')
@@ -136,9 +137,7 @@ def generate_launch_description():
     ld.add_action(start_async_slam_toolbox_node)
     ld.add_action(configure_event)
     ld.add_action(activate_event)
-    # if (save_map_command):
     ld.add_action(sobits_slam)
-    # if (rviz_viewer):
     ld.add_action(rviz_node)
 
     return ld

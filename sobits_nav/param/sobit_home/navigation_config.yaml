@@ -381,7 +381,7 @@ collision_monitor:
     base_frame_id: "sobit_home/base_footprint"
     odom_frame_id: "sobit_home/odom"
     cmd_vel_in_topic: "cmd_vel_smoothed"
-    cmd_vel_out_topic: "cmd_vel"
+    cmd_vel_out_topic: "/sobit_home/cmd_vel" # "cmd_vel"
     state_topic: "collision_monitor_state"
     transform_tolerance: 0.2
     source_timeout: 1.0

@@ -67,6 +67,76 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        arm_left_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_elbow_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_shoulder_tilt_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_upper_flex_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_upper_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_wrist_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_left_wrist_tilt_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_elbow_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_shoulder_tilt_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_upper_flex_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_upper_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_wrist_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_right_wrist_tilt_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_footprint:
           Alpha: 1
           Show Axes: false
@@ -79,6 +149,171 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
+        body_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_cmc_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_c_ip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_c_mcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_l_dip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_l_mcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_l_pip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_r_dip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_r_mcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_left_finger_r_pip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_cmc_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_c_ip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_c_mcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_l_dip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_l_mcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_l_pip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_r_dip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_r_mcp_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hand_right_finger_r_pip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        head_camera_bottom_screw_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_color_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_color_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_infra2_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_infra2_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_infra_1_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_camera_infra_1_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_pan_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_plug_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_tilt_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         lidar_back_base_link:
           Alpha: 1
           Show Axes: false
@@ -259,6 +494,345 @@ Visualization Manager:
         Value: /local_costmap/costmap_updates
       Use Timestamp: false
       Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /explore/frontiers
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz_default_plugins/Path
+      Color: 25; 255; 0
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Billboards
+      Line Width: 0.07000000029802322
+      Name: GlobalPath
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /plan
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz_default_plugins/Path
+      Color: 0; 0; 255
+      Enabled: true
+      Head Diameter: 0.30000001192092896
+      Head Length: 0.20000000298023224
+      Length: 0.30000001192092896
+      Line Style: Billboards
+      Line Width: 0.10000000149011612
+      Name: LocalPath
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.029999999329447746
+      Shaft Diameter: 0.10000000149011612
+      Shaft Length: 0.10000000149011612
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /optimal_trajectory
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
+      Frame Timeout: 5
+      Frames:
+        All Enabled: true
+        bedroom#bed:
+          Value: true
+        human_position:
+          Value: true
+        living_room#glass_table:
+          Value: true
+        living_room#side_table:
+          Value: true
+        map:
+          Value: true
+        sobit_home/arm_left_base_link:
+          Value: true
+        sobit_home/arm_left_elbow_link:
+          Value: true
+        sobit_home/arm_left_shoulder_tilt_link:
+          Value: true
+        sobit_home/arm_left_upper_flex_link:
+          Value: true
+        sobit_home/arm_left_upper_roll_link:
+          Value: true
+        sobit_home/arm_left_wrist_roll_link:
+          Value: true
+        sobit_home/arm_left_wrist_tilt_link:
+          Value: true
+        sobit_home/arm_right_base_link:
+          Value: true
+        sobit_home/arm_right_elbow_link:
+          Value: true
+        sobit_home/arm_right_shoulder_tilt_link:
+          Value: true
+        sobit_home/arm_right_upper_flex_link:
+          Value: true
+        sobit_home/arm_right_upper_roll_link:
+          Value: true
+        sobit_home/arm_right_wrist_roll_link:
+          Value: true
+        sobit_home/arm_right_wrist_tilt_link:
+          Value: true
+        sobit_home/base_footprint:
+          Value: true
+        sobit_home/base_link:
+          Value: true
+        sobit_home/body_lift_link:
+          Value: true
+        sobit_home/body_link:
+          Value: true
+        sobit_home/hand_left_cmc_link:
+          Value: true
+        sobit_home/hand_left_finger_c_ip_link:
+          Value: true
+        sobit_home/hand_left_finger_c_mcp_link:
+          Value: true
+        sobit_home/hand_left_finger_l_dip_link:
+          Value: true
+        sobit_home/hand_left_finger_l_mcp_link:
+          Value: true
+        sobit_home/hand_left_finger_l_pip_link:
+          Value: true
+        sobit_home/hand_left_finger_r_dip_link:
+          Value: true
+        sobit_home/hand_left_finger_r_mcp_link:
+          Value: true
+        sobit_home/hand_left_finger_r_pip_link:
+          Value: true
+        sobit_home/hand_right_cmc_link:
+          Value: true
+        sobit_home/hand_right_finger_c_ip_link:
+          Value: true
+        sobit_home/hand_right_finger_c_mcp_link:
+          Value: true
+        sobit_home/hand_right_finger_l_dip_link:
+          Value: true
+        sobit_home/hand_right_finger_l_mcp_link:
+          Value: true
+        sobit_home/hand_right_finger_l_pip_link:
+          Value: true
+        sobit_home/hand_right_finger_r_dip_link:
+          Value: true
+        sobit_home/hand_right_finger_r_mcp_link:
+          Value: true
+        sobit_home/hand_right_finger_r_pip_link:
+          Value: true
+        sobit_home/head_base_link:
+          Value: true
+        sobit_home/head_camera_base_link:
+          Value: true
+        sobit_home/head_camera_bottom_screw_frame:
+          Value: true
+        sobit_home/head_camera_color_frame:
+          Value: true
+        sobit_home/head_camera_color_optical_frame:
+          Value: true
+        sobit_home/head_camera_depth_frame:
+          Value: true
+        sobit_home/head_camera_depth_optical_frame:
+          Value: true
+        sobit_home/head_camera_infra2_frame:
+          Value: true
+        sobit_home/head_camera_infra2_optical_frame:
+          Value: true
+        sobit_home/head_camera_infra_1_frame:
+          Value: true
+        sobit_home/head_camera_infra_1_optical_frame:
+          Value: true
+        sobit_home/head_pan_link:
+          Value: true
+        sobit_home/head_plug_base_link:
+          Value: true
+        sobit_home/head_tilt_link:
+          Value: true
+        sobit_home/lidar_back_base_link:
+          Value: true
+        sobit_home/lidar_back_laser:
+          Value: true
+        sobit_home/lidar_back_laser_mount:
+          Value: true
+        sobit_home/lidar_front_base_link:
+          Value: true
+        sobit_home/lidar_front_laser:
+          Value: true
+        sobit_home/lidar_front_laser_mount:
+          Value: true
+        sobit_home/odom:
+          Value: true
+        sobit_home/plate_bottom_link:
+          Value: true
+        sobit_home/plate_middle_link:
+          Value: true
+        sobit_home/plate_top_link:
+          Value: true
+        sobit_home/wheel_drive_b_l_link:
+          Value: true
+        sobit_home/wheel_drive_b_r_link:
+          Value: true
+        sobit_home/wheel_drive_f_l_link:
+          Value: true
+        sobit_home/wheel_drive_f_r_link:
+          Value: true
+        sobit_home/wheel_steer_b_l_link:
+          Value: true
+        sobit_home/wheel_steer_b_r_link:
+          Value: true
+        sobit_home/wheel_steer_base_b_l_link:
+          Value: true
+        sobit_home/wheel_steer_base_b_r_link:
+          Value: true
+        sobit_home/wheel_steer_base_f_l_link:
+          Value: true
+        sobit_home/wheel_steer_base_f_r_link:
+          Value: true
+        sobit_home/wheel_steer_f_l_link:
+          Value: true
+        sobit_home/wheel_steer_f_r_link:
+          Value: true
+      Marker Scale: 1
+      Name: Locations View
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        map:
+          bedroom#bed:
+            {}
+          human_position:
+            {}
+          living_room#glass_table:
+            {}
+          living_room#side_table:
+            {}
+          sobit_home/odom:
+            sobit_home/base_footprint:
+              sobit_home/base_link:
+                sobit_home/plate_middle_link:
+                  sobit_home/lidar_back_base_link:
+                    sobit_home/lidar_back_laser_mount:
+                      sobit_home/lidar_back_laser:
+                        {}
+                  sobit_home/lidar_front_base_link:
+                    sobit_home/lidar_front_laser_mount:
+                      sobit_home/lidar_front_laser:
+                        {}
+                  sobit_home/plate_bottom_link:
+                    {}
+                  sobit_home/plate_top_link:
+                    sobit_home/body_link:
+                      sobit_home/body_lift_link:
+                        sobit_home/arm_left_base_link:
+                          sobit_home/arm_left_shoulder_tilt_link:
+                            sobit_home/arm_left_upper_roll_link:
+                              sobit_home/arm_left_upper_flex_link:
+                                sobit_home/arm_left_elbow_link:
+                                  sobit_home/arm_left_wrist_tilt_link:
+                                    sobit_home/arm_left_wrist_roll_link:
+                                      sobit_home/hand_left_cmc_link:
+                                        sobit_home/hand_left_finger_c_mcp_link:
+                                          sobit_home/hand_left_finger_c_ip_link:
+                                            {}
+                                        sobit_home/hand_left_finger_l_mcp_link:
+                                          sobit_home/hand_left_finger_l_pip_link:
+                                            sobit_home/hand_left_finger_l_dip_link:
+                                              {}
+                                        sobit_home/hand_left_finger_r_mcp_link:
+                                          sobit_home/hand_left_finger_r_pip_link:
+                                            sobit_home/hand_left_finger_r_dip_link:
+                                              {}
+                        sobit_home/arm_right_base_link:
+                          sobit_home/arm_right_shoulder_tilt_link:
+                            sobit_home/arm_right_upper_roll_link:
+                              sobit_home/arm_right_upper_flex_link:
+                                sobit_home/arm_right_elbow_link:
+                                  sobit_home/arm_right_wrist_tilt_link:
+                                    sobit_home/arm_right_wrist_roll_link:
+                                      sobit_home/hand_right_cmc_link:
+                                        sobit_home/hand_right_finger_c_mcp_link:
+                                          sobit_home/hand_right_finger_c_ip_link:
+                                            {}
+                                        sobit_home/hand_right_finger_l_mcp_link:
+                                          sobit_home/hand_right_finger_l_pip_link:
+                                            sobit_home/hand_right_finger_l_dip_link:
+                                              {}
+                                        sobit_home/hand_right_finger_r_mcp_link:
+                                          sobit_home/hand_right_finger_r_pip_link:
+                                            sobit_home/hand_right_finger_r_dip_link:
+                                              {}
+                        sobit_home/head_base_link:
+                          sobit_home/head_pan_link:
+                            sobit_home/head_tilt_link:
+                              sobit_home/head_camera_base_link:
+                                sobit_home/head_plug_base_link:
+                                  sobit_home/head_camera_bottom_screw_frame:
+                                    sobit_home/head_camera_color_frame:
+                                      {}
+                                    sobit_home/head_camera_color_optical_frame:
+                                      {}
+                                    sobit_home/head_camera_depth_frame:
+                                      {}
+                                    sobit_home/head_camera_depth_optical_frame:
+                                      {}
+                                    sobit_home/head_camera_infra2_frame:
+                                      {}
+                                    sobit_home/head_camera_infra2_optical_frame:
+                                      {}
+                                    sobit_home/head_camera_infra_1_frame:
+                                      {}
+                                    sobit_home/head_camera_infra_1_optical_frame:
+                                      {}
+                  sobit_home/wheel_steer_base_b_l_link:
+                    sobit_home/wheel_steer_b_l_link:
+                      sobit_home/wheel_drive_b_l_link:
+                        {}
+                  sobit_home/wheel_steer_base_b_r_link:
+                    sobit_home/wheel_steer_b_r_link:
+                      sobit_home/wheel_drive_b_r_link:
+                        {}
+                  sobit_home/wheel_steer_base_f_l_link:
+                    sobit_home/wheel_steer_f_l_link:
+                      sobit_home/wheel_drive_f_l_link:
+                        {}
+                  sobit_home/wheel_steer_base_f_r_link:
+                    sobit_home/wheel_steer_f_r_link:
+                      sobit_home/wheel_drive_f_r_link:
+                        {}
+      Update Interval: 0
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -314,11 +888,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 101.94397735595703
+      Scale: 124.2221450805664
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: 1.5019214153289795
-      Y: 0.2945164144039154
+      X: 2.580575942993164
+      Y: 0.3678259551525116
     Saved: ~
 Window Geometry:
   Displays:

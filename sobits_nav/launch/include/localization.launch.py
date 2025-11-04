@@ -19,9 +19,8 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, GroupAction, SetEnvironmentVariable
 from launch.conditions import IfCondition
-from launch.substitutions import LaunchConfiguration, PythonExpression
-from launch_ros.actions import LoadComposableNodes
-from launch_ros.actions import Node
+from launch.substitutions import LaunchConfiguration, PythonExpression, EqualsSubstitution, NotEqualsSubstitution
+from launch_ros.actions import LoadComposableNodes, SetParameter, Node
 from launch_ros.descriptions import ComposableNode, ParameterFile
 from nav2_common.launch import RewrittenYaml
 
@@ -111,10 +110,26 @@ def generate_launch_description():
         'log_level', default_value='info',
         description='log level')
 
+    declare_initial_x_cmd = DeclareLaunchArgument(
+        'initial_x', default_value='0.0',
+        description='initial position(x) of robot')
+
+    declare_initial_y_cmd = DeclareLaunchArgument(
+        'initial_y', default_value='0.0',
+        description='initial position(y) of robot')
+
+    declare_initial_yaw_cmd = DeclareLaunchArgument(
+        'initial_yaw', default_value='0.0',
+        description='initial orientation(yaw) of robot')
+
     load_nodes = GroupAction(
         condition=IfCondition(PythonExpression(['not ', use_composition])),
         actions=[
+            SetParameter('use_sim_time', use_sim_time),
             Node(
+                condition=IfCondition(
+                    EqualsSubstitution(LaunchConfiguration('map'), '')
+                ),
                 package='nav2_map_server',
                 executable='map_server',
                 name='map_server',
@@ -124,6 +139,20 @@ def generate_launch_description():
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings),
+            Node(
+                condition=IfCondition(
+                    NotEqualsSubstitution(LaunchConfiguration('map'), '')
+                ),
+                package='nav2_map_server',
+                executable='map_server',
+                name='map_server',
+                output='screen',
+                respawn=use_respawn,
+                respawn_delay=2.0,
+                parameters=[configured_params, {'yaml_filename': map_yaml_file}],
+                arguments=['--ros-args', '--log-level', log_level],
+                remappings=remappings,
+            ),
             Node(
                 package='nav2_amcl',
                 executable='amcl',
@@ -147,35 +176,78 @@ def generate_launch_description():
                 name='lifecycle_manager_localization',
                 output='screen',
                 arguments=['--ros-args', '--log-level', log_level],
-                parameters=[{'use_sim_time': use_sim_time},
-                            {'autostart': autostart},
-                            {'node_names': lifecycle_nodes}])
+                parameters=[{'autostart': autostart}, {'node_names': lifecycle_nodes}])
         ]
     )
-
-    load_composable_nodes = LoadComposableNodes(
+    # LoadComposableNode for map server twice depending if we should use the
+    # value of map from a CLI or launch default or user defined value in the
+    # yaml configuration file. They are separated since the conditions
+    # currently only work on the LoadComposableNodes commands and not on the
+    # ComposableNode node function itself
+    load_composable_nodes = GroupAction(
         condition=IfCondition(use_composition),
-        target_container=container_name_full,
-        composable_node_descriptions=[
-            ComposableNode(
-                package='nav2_map_server',
-                plugin='nav2_map_server::MapServer',
-                name='map_server',
-                parameters=[configured_params],
-                remappings=remappings),
-            ComposableNode(
-                package='nav2_amcl',
-                plugin='nav2_amcl::AmclNode',
-                name='amcl',
-                parameters=[configured_params],
-                remappings=remappings),
-            ComposableNode(
-                package='nav2_lifecycle_manager',
-                plugin='nav2_lifecycle_manager::LifecycleManager',
-                name='lifecycle_manager_localization',
-                parameters=[{'use_sim_time': use_sim_time,
-                             'autostart': autostart,
-                             'node_names': lifecycle_nodes}]),
+        actions=[
+            SetParameter('use_sim_time', use_sim_time),
+            LoadComposableNodes(
+                target_container=container_name_full,
+                condition=IfCondition(
+                    EqualsSubstitution(LaunchConfiguration('map'), '')
+                ),
+                composable_node_descriptions=[
+                    ComposableNode(
+                        package='nav2_map_server',
+                        plugin='nav2_map_server::MapServer',
+                        name='map_server',
+                        parameters=[configured_params],
+                        remappings=remappings,
+                    ),
+                ],
+            ),
+            LoadComposableNodes(
+                target_container=container_name_full,
+                condition=IfCondition(
+                    NotEqualsSubstitution(LaunchConfiguration('map'), '')
+                ),
+                composable_node_descriptions=[
+                    ComposableNode(
+                        package='nav2_map_server',
+                        plugin='nav2_map_server::MapServer',
+                        name='map_server',
+                        parameters=[
+                            configured_params,
+                            {'yaml_filename': map_yaml_file},
+                        ],
+                        remappings=remappings,
+                    ),
+                ],
+            ),
+            LoadComposableNodes(
+                target_container=container_name_full,
+                composable_node_descriptions=[
+                    ComposableNode(
+                        package='nav2_amcl',
+                        plugin='nav2_amcl::AmclNode',
+                        name='amcl',
+                        parameters=[
+                            configured_params, 
+                            {
+                                "initial_pose.x": initial_x,
+                                "initial_pose.y": initial_y,
+                                "initial_pose.yaw": initial_yaw,
+                            },
+                        ],
+                        remappings=remappings,
+                    ),
+                    ComposableNode(
+                        package='nav2_lifecycle_manager',
+                        plugin='nav2_lifecycle_manager::LifecycleManager',
+                        name='lifecycle_manager_localization',
+                        parameters=[
+                            {'autostart': autostart, 'node_names': lifecycle_nodes}
+                        ],
+                    ),
+                ],
+            ),
         ],
     )
 
@@ -195,6 +267,9 @@ def generate_launch_description():
     ld.add_action(declare_container_name_cmd)
     ld.add_action(declare_use_respawn_cmd)
     ld.add_action(declare_log_level_cmd)
+    ld.add_action(declare_initial_x_cmd)
+    ld.add_action(declare_initial_y_cmd)
+    ld.add_action(declare_initial_yaw_cmd)
 
     # Add the actions to launch all of the localiztion nodes
     ld.add_action(load_nodes)

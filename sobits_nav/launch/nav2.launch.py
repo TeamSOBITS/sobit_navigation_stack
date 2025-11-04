@@ -22,6 +22,7 @@ from launch.actions import (
     GroupAction,
     IncludeLaunchDescription,
     SetEnvironmentVariable,
+    OpaqueFunction,
 )
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -33,9 +34,60 @@ from nav2_common.launch import ReplaceString, RewrittenYaml
 
 
 def generate_launch_description():
+
+    declare_robot_name_cmd = DeclareLaunchArgument(
+        'robot_name',
+        default_value="sobit_home",
+        # default_value="sobit_pro",
+        # default_value="sobit_edu",
+        # default_value="sobit_mini",
+        # default_value="sobit_light",
+        # default_value="hsr_sim",
+        # default_value="hsrb_robot",
+        description='choice your used robot name')
+
+    declare_map_yaml_cmd = DeclareLaunchArgument(
+        'map',
+        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml'),
+        description='Full path to map yaml file to load')
+
+    declare_location_yaml_cmd = DeclareLaunchArgument(
+        'location_file_path',
+        default_value=os.path.join(
+            get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
+        description='Full path to location file to load')
+
+    declare_flex_nav_cmd = DeclareLaunchArgument(
+        'use_flex_nav',
+        default_value="False",
+        description="Whether to activate Flex nav")
+
+    declare_initial_x_cmd = DeclareLaunchArgument(
+        'initial_x',
+        default_value="0.0",
+        description='initial_point x')
+
+    declare_initial_y_cmd = DeclareLaunchArgument(
+        'initial_y',
+        default_value="0.0",
+        description='initial_point y')
+
+    declare_initial_yaw_cmd = DeclareLaunchArgument(
+        'initial_yaw',
+        default_value="0.0",
+        description='initial_rotation yaw')
+
+    declare_use_rviz_cmd = DeclareLaunchArgument(
+        'use_rviz',
+        default_value="True",
+        description='Whether to use Rviz')
+
+
+
+
+
     # Get the launch directory
-    bringup_dir = get_package_share_directory('nav2_bringup')
-    launch_dir = os.path.join(bringup_dir, 'launch')
+    bringup_dir = get_package_share_directory('sobits_nav')
 
     # Create the launch configuration variables
     namespace = LaunchConfiguration('namespace')
@@ -49,6 +101,13 @@ def generate_launch_description():
     use_respawn = LaunchConfiguration('use_respawn')
     log_level = LaunchConfiguration('log_level')
     use_localization = LaunchConfiguration('use_localization')
+    robot_name = LaunchConfiguration('robot_name')
+    location_file_path = LaunchConfiguration('location_file_path')
+    use_flex_nav = LaunchConfiguration('use_flex_nav')
+    initial_x = LaunchConfiguration('initial_x')
+    initial_y = LaunchConfiguration('initial_y')
+    initial_yaw = LaunchConfiguration('initial_yaw')
+    use_rviz = LaunchConfiguration('use_rviz')
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
@@ -96,10 +155,6 @@ def generate_launch_description():
         'slam', default_value='False', description='Whether run a SLAM'
     )
 
-    declare_map_yaml_cmd = DeclareLaunchArgument(
-        'map', default_value='/home/fumiya/colcon_ws/src/sobits_navigation_stack/sobits_slam/map/map_example.yaml', description='Full path to map yaml file to load'
-    )
-
     declare_use_localization_cmd = DeclareLaunchArgument(
         'use_localization', default_value='True',
         description='Whether to enable localization or not'
@@ -107,14 +162,8 @@ def generate_launch_description():
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='True',
+        default_value='False',
         description='Use simulation (Gazebo) clock if true',
-    )
-
-    declare_params_file_cmd = DeclareLaunchArgument(
-        'params_file',
-        default_value=os.path.join(get_package_share_directory('sobits_nav'), 'param', 'sobit_home', 'navigation_config.yaml'),
-        description='Full path to the ROS2 parameters file to use for all launched nodes',
     )
 
     declare_autostart_cmd = DeclareLaunchArgument(
@@ -154,8 +203,8 @@ def generate_launch_description():
                 output='screen',
             ),
             IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    os.path.join(launch_dir, 'slam_launch.py')
+                PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('nav2_bringup'), 
+                                                            'launch', 'slam_launch.py')
                 ),
                 condition=IfCondition(PythonExpression([slam, ' and ', use_localization])),
                 launch_arguments={
@@ -168,7 +217,7 @@ def generate_launch_description():
             ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
-                    os.path.join(launch_dir, 'localization_launch.py')
+                    os.path.join(bringup_dir, 'launch', 'include', 'localization.launch.py')
                 ),
                 condition=IfCondition(PythonExpression(['not ', slam, ' and ', use_localization])),
                 launch_arguments={
@@ -180,11 +229,14 @@ def generate_launch_description():
                     'use_composition': use_composition,
                     'use_respawn': use_respawn,
                     'container_name': 'nav2_container',
+                    'initial_x': initial_x,
+                    'initial_y': initial_y,
+                    'initial_yaw': initial_yaw,
                 }.items(),
             ),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
-                    os.path.join(launch_dir, 'navigation_launch.py')
+                    os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'navigation_launch.py')
                 ),
                 launch_arguments={
                     'namespace': namespace,
@@ -199,6 +251,31 @@ def generate_launch_description():
         ]
     )
 
+    # SOBITS Customize
+
+    tf_broadcaster_cmd = Node(
+        package='sobits_nav',
+        executable='location_tf_broadcaster',
+        name='location_tf_broadcaster',
+        parameters=[{"location_file_path": location_file_path,}],
+    )
+
+    flex_nav_cmd = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('flex_nav'), 
+                                                   'launch', 
+                                                   'flex_nav.launch.py')),
+        launch_arguments={'robot_name': robot_name}.items(),
+        condition=IfCondition(use_flex_nav),
+    )
+
+    rviz_cmd = Node(
+        package='rviz2',
+        executable='rviz2',
+        arguments=['-d', os.path.join(bringup_dir, 'rviz', 'sobits_nav.rviz')],
+        condition=IfCondition(use_rviz)
+    )
+
+
     # Create the launch description and populate
     ld = LaunchDescription()
 
@@ -206,19 +283,38 @@ def generate_launch_description():
     ld.add_action(stdout_linebuf_envvar)
 
     # Declare the launch options
+    ld.add_action(declare_robot_name_cmd)
+    ld.add_action(declare_map_yaml_cmd)
+    ld.add_action(declare_location_yaml_cmd)
+    ld.add_action(declare_flex_nav_cmd)
+    ld.add_action(declare_initial_x_cmd)
+    ld.add_action(declare_initial_y_cmd)
+    ld.add_action(declare_initial_yaw_cmd)
+    ld.add_action(declare_use_rviz_cmd)
     ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_use_namespace_cmd)
     ld.add_action(declare_slam_cmd)
-    ld.add_action(declare_map_yaml_cmd)
+    ld.add_action(declare_use_localization_cmd)
     ld.add_action(declare_use_sim_time_cmd)
-    ld.add_action(declare_params_file_cmd)
+    ld.add_action(OpaqueFunction(function=declare_param_file))
     ld.add_action(declare_autostart_cmd)
     ld.add_action(declare_use_composition_cmd)
     ld.add_action(declare_use_respawn_cmd)
     ld.add_action(declare_log_level_cmd)
-    ld.add_action(declare_use_localization_cmd)
 
     # Add the actions to launch all of the navigation nodes
     ld.add_action(bringup_cmd_group)
+    ld.add_action(tf_broadcaster_cmd)
+    ld.add_action(flex_nav_cmd)
+    ld.add_action(rviz_cmd)
 
     return ld
+
+
+
+def declare_param_file(context, *args, **kwargs):
+    bringup_dir = get_package_share_directory('sobits_nav')
+    robot_name_value = LaunchConfiguration('robot_name').perform(context)
+    param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'navigation_config.yaml')
+
+    return [DeclareLaunchArgument('params_file', default_value=param_file_path, description='Full path to the ROS2 parameters file to use for all launched nodes')]

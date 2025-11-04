@@ -10,7 +10,10 @@ from launch_ros.actions import Node
 
 def declare_param_value(context, *args, **kwargs):
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
-    if   ("pro" in robot_name_value):
+    if   ("home" in robot_name_value):
+        robot_base_frame = robot_name_value + "/base_footprint"
+        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
+    elif ("pro" in robot_name_value):
         robot_base_frame = robot_name_value + "/base_footprint"
         vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("edu" in robot_name_value):
@@ -53,11 +56,12 @@ def generate_launch_description():
 
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name',
+        default_value="sobit_home",
         # default_value="sobit_pro",
         # default_value="sobit_edu",
         # default_value="sobit_mini",
         # default_value="sobit_light",
-        default_value="hsr_sim",
+        # default_value="hsr_sim",
         # default_value="hsrb_robot",
         description='choice your used robot name')
 

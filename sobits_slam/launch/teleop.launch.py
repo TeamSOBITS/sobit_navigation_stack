@@ -9,12 +9,13 @@ def generate_launch_description():
         'timeout_sec', default_value='0.3', description='Timeout in seconds'
     )
     velocity_topic_name_arg = DeclareLaunchArgument(
+        'velocity_topic_name', default_value='/sobit_home/cmd_vel', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/sobit_pro/cmd_vel', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/sobit_edu/commands/velocity', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/sobit_mini/commands/velocity', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/sobit_light/cmd_vel', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/hsrb/command_velocity', description='Velocity topic name',
-        'velocity_topic_name', default_value='/omni_base_controller/cmd_vel', description='Velocity topic name',
+        # 'velocity_topic_name', default_value='/omni_base_controller/cmd_vel', description='Velocity topic name',
     )
     max_linear_arg = DeclareLaunchArgument(
         'max_linear', default_value='0.2', description='Maximum linear velocity'

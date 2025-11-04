@@ -15,16 +15,20 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             # ロボットの名前を指定
+            'robot_name', default_value='sobit_home'
             # 'robot_name', default_value='sobit_pro'
             # 'robot_name', default_value='sobit_edu'
             # 'robot_name', default_value='sobit_mini'
             # 'robot_name', default_value='sobit_light'
             # 'robot_name', default_value='hsr_sim'
-            'robot_name', default_value='hsrb_robot'
+            # 'robot_name', default_value='hsrb_robot'
         ),
         DeclareLaunchArgument(
             # mapのファイルパス
             'map', default_value=os.path.join(get_package_share_directory("sobits_slam"), 'map', 'map_example.yaml')
+        ),
+        DeclareLaunchArgument(
+            'use_sim_time', default_value='false'
         ),
         DeclareLaunchArgument(
             'use_rviz', default_value='True'
@@ -51,6 +55,7 @@ def generate_launch_description():
                 'map'          : LaunchConfiguration('map'),
                 'robot_name'   : LaunchConfiguration('robot_name'),
                 'location_file_path' : "",
+                'use_sim_time' : LaunchConfiguration('use_sim_time'),
                 'use_rviz'     : LaunchConfiguration('use_rviz'),
             }.items(),
         ),
