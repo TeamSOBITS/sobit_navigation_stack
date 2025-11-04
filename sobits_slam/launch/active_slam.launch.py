@@ -12,32 +12,23 @@ def declare_param_value(context, *args, **kwargs):
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
     if   ("home" in robot_name_value):
         robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("pro" in robot_name_value):
         robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("edu" in robot_name_value):
         robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
     elif ("mini" in robot_name_value):
         robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
     elif ("light" in robot_name_value):
         robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("hsrb" in robot_name_value):
         robot_base_frame = "base_footprint"
-        vel_topic_name = "/omni_base_controller/cmd_vel"
     elif ("hsr" in robot_name_value):
         robot_base_frame = "base_footprint"
-        vel_topic_name = "/hsrb/command_velocity"
     else:
         robot_base_frame = ""  ## CUSTOM FRAME
-        vel_topic_name = ""    ## CUSTOM TOPIC
 
     return [
         DeclareLaunchArgument('robot_base_frame', default_value=robot_base_frame, description='ROBOT base frame name.'),
-        DeclareLaunchArgument('velocity_topic_name', default_value=vel_topic_name, description='Velocity Topic Name.'),
     ]
 
 
@@ -49,7 +40,6 @@ def generate_launch_description():
     explore_config = os.path.join(get_package_share_directory("explore_lite"), "config", "params.yaml")
 
     robot_name = LaunchConfiguration('robot_name')
-    velocity_topic_name = LaunchConfiguration('velocity_topic_name')
     save_map_command = LaunchConfiguration('save_map_command')
     robot_base_frame = LaunchConfiguration('robot_base_frame')
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -80,7 +70,6 @@ def generate_launch_description():
                             'slam': "True",
                             'location_file_path': "",
                             'robot_name': robot_name,
-                            'velocity_topic_name': velocity_topic_name,
                             'use_rviz': 'False',
                             'use_flex_nav': 'False',
                         }.items())

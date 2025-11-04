@@ -1,10 +1,10 @@
 amcl:
   ros__parameters:
 
-    alpha1: 0.2
-    alpha2: 0.2
-    alpha3: 0.2
-    alpha4: 0.2
+    alpha1: 0.1
+    alpha2: 0.1
+    alpha3: 0.1
+    alpha4: 0.1
     alpha5: 0.2
     base_frame_id: "sobit_home/base_footprint"
     beam_skip_distance: 0.5
@@ -98,8 +98,8 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.15
+      yaw_goal_tolerance: 0.20
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
       time_steps: 56
@@ -114,7 +114,7 @@ controller_server:
       vy_std: 0.2
       wz_std: 0.4
       vx_max: 0.5
-      vx_min: -0.35
+      vx_min: -0.3
       vy_max: 0.5
       wz_max: 1.9
       iteration_count: 1
@@ -122,7 +122,7 @@ controller_server:
       transform_tolerance: 0.1
       temperature: 0.3
       gamma: 0.015
-      motion_model: "DiffDrive"
+      motion_model: "Omni"
       visualize: true
       regenerate_noises: true
       TrajectoryVisualizer:
@@ -367,10 +367,10 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.5, 0.0, 2.0]
-    min_velocity: [-0.5, 0.0, -2.0]
-    max_accel: [2.5, 0.0, 3.2]
-    max_decel: [-2.5, 0.0, -3.2]
+    max_velocity: [0.5, 0.4, 2.0]
+    min_velocity: [-0.5, -0.4, -2.0]
+    max_accel: [2.5, 2.0, 2.0]
+    max_decel: [-2.5, -2.0, -2.0]
     odom_topic: "/sobit_home/odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
