@@ -118,9 +118,9 @@ Basic workflow for using Navigation:
     Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
 2.  **Generate a map**
       * **To generate a map manually:**
-        1.  Switch the `robot_name` in [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py) to the robot you are using, then execute the following command. You will be asked if you want to save the map after execution, but ignore it for now.
+        1.  Switch the `robot_name` in [slam.launch.py](/sobits_slam/launch/slam.launch.py) to the robot you are using, then execute the following command. You will be asked if you want to save the map after execution, but ignore it for now.
             ```sh
-            ros2 launch sobits_slam gmapping.launch.py
+            ros2 launch sobits_slam slam.launch.py
             ```
         2.  Next, switch the `velocity_topic_name` in [teleop.launch.py](/sobits_slam/launch/teleop.launch.py) to the topic name of the robot you are using, then execute the following command. Refer to the instructions in the launched xterm terminal (blue terminal) to operate the robot while viewing the map in Rviz.
             ```sh
@@ -205,6 +205,29 @@ Basic workflow for using Navigation:
     ```bash
     source ~/colcon_ws/install/setup.sh
     ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Setting Up Keep-out Zones
+You can set up areas on the map where you do not want the robot to enter (keep-out zones).
+
+1.  **Creating the Keep-out Zone Map**
+    1.  Open the map image (`.pgm` file) created during map generation with an image editor (e.g., GIMP).
+    2.  Fill the areas you want to designate as keep-out zones with black (color code: `#000000`). Leave other areas as white (`#FFFFFF`) or gray (`#CDCDCD`).
+    3.  Save the edited image with a new name (e.g., `map_example_keepout_mask.pgm`).
+    4.  Copy the original map's `.yaml` file and rename it (e.g., `map_example_keepout_mask.yaml`).
+    5.  Open the copied `.yaml` file and change the `image` value to the new image file name (`map_example_keepout_mask.pgm`).
+
+2.  **Launching Navigation**
+    When launching `nav2.launch.py`, set the `use_keepout_filter` argument to `True`.
+    ```sh
+    ros2 launch sobits_nav nav2.launch.py use_keepout_filter:=True
+    ```
+    This will load `sobits_slam/map/map_example_keepout_mask.yaml` as the keep-out zone map.
+    > [!NOTE]
+    > If you want to use a different keep-out zone map, please edit the `keepout_mask_yaml_file` path in nav2.launch.py.
+
+Now, when navigation is running, the black-filled areas will be recognized as high-cost obstacles, and paths will be generated to avoid these zones.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

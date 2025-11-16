@@ -8,49 +8,9 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
-def declare_param_value(context, *args, **kwargs):
-    robot_name_value = LaunchConfiguration('robot_name').perform(context)
-    if   ("pro" in robot_name_value):
-        robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
-    elif ("edu" in robot_name_value):
-        robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
-    elif ("mini" in robot_name_value):
-        robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
-    elif ("light" in robot_name_value):
-        robot_base_frame = robot_name_value + "/base_footprint"
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
-    elif ("hsrb" in robot_name_value):
-        robot_base_frame = "base_footprint"
-        vel_topic_name = "/omni_base_controller/cmd_vel"
-    elif ("hsr" in robot_name_value):
-        robot_base_frame = "base_footprint"
-        vel_topic_name = "/hsrb/command_velocity"
-    else:
-        robot_base_frame = ""  ## CUSTOM FRAME
-        vel_topic_name = ""    ## CUSTOM TOPIC
-
-    return [
-        DeclareLaunchArgument('robot_base_frame', default_value=robot_base_frame, description='ROBOT base frame name.'),
-        DeclareLaunchArgument('velocity_topic_name', default_value=vel_topic_name, description='Velocity Topic Name.'),
-    ]
-
 
 def generate_launch_description():
-    # Get the launch directory
-    navigation_dir = get_package_share_directory('sobits_nav')
-    mapping_dir = get_package_share_directory('sobits_slam')
-
-    explore_config = os.path.join(get_package_share_directory("explore_lite"), "config", "params.yaml")
-
-    robot_name = LaunchConfiguration('robot_name')
-    velocity_topic_name = LaunchConfiguration('velocity_topic_name')
-    save_map_command = LaunchConfiguration('save_map_command')
-    robot_base_frame = LaunchConfiguration('robot_base_frame')
-    use_sim_time = LaunchConfiguration('use_sim_time')
-
+    ########## Customizable parameters ##########
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name',
         # default_value="sobit_pro",
@@ -64,6 +24,18 @@ def generate_launch_description():
     declare_save_map_command_cmd = DeclareLaunchArgument(
         'save_map_command', default_value='true',
         description='command map saver select')
+    #############################################
+
+    # Get the launch directory
+    navigation_dir = get_package_share_directory('sobits_nav')
+    mapping_dir = get_package_share_directory('sobits_slam')
+
+    explore_config = os.path.join(get_package_share_directory("explore_lite"), "config", "params.yaml")
+
+    robot_name = LaunchConfiguration('robot_name')
+    save_map_command = LaunchConfiguration('save_map_command')
+    robot_base_frame = LaunchConfiguration('robot_base_frame')
+    use_sim_time = LaunchConfiguration('use_sim_time')
 
     use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
@@ -73,20 +45,13 @@ def generate_launch_description():
     nav2_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(navigation_dir, "launch", "nav2.launch.py")),
         launch_arguments={
+                            "use_sim_time": use_sim_time,
                             'slam': "True",
                             'location_file_path': "",
                             'robot_name': robot_name,
-                            'velocity_topic_name': velocity_topic_name,
                             'use_rviz': 'False',
                             'use_flex_nav': 'False',
-                        }.items())
-
-    mapping_cmd = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(mapping_dir, "launch", "gmapping.launch.py")),
-        launch_arguments={
-                            'robot_name': robot_name,
-                            'save_map_command': save_map_command,
-                            'rviz_viewer': 'False'
+                            'use_keepout_filter': 'False',
                         }.items())
 
     explore_node_cmd = Node(
@@ -98,6 +63,7 @@ def generate_launch_description():
                         "robot_base_frame": robot_base_frame,
                         "return_to_init": "False",
                         "use_sim_time": use_sim_time,
+                        "progress_timeout": "90.0"
                     }],
         output="screen",
         remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
@@ -117,8 +83,29 @@ def generate_launch_description():
     ld.add_action(use_sim_time_cmd)
     ld.add_action(OpaqueFunction(function=declare_param_value))
     ld.add_action(nav2_cmd)
-    ld.add_action(mapping_cmd)
     ld.add_action(explore_node_cmd)
     ld.add_action(rviz_cmd)
 
     return ld
+
+
+def declare_param_value(context, *args, **kwargs):
+    robot_name_value = LaunchConfiguration('robot_name').perform(context)
+    if   ("pro" in robot_name_value):
+        robot_base_frame = robot_name_value + "/lidar_laser" # "/base_footprint"
+    elif ("edu" in robot_name_value):
+        robot_base_frame = robot_name_value + "/lidar_laser" # "/base_footprint"
+    elif ("mini" in robot_name_value):
+        robot_base_frame = robot_name_value + "/lidar_laser" # "/base_footprint"
+    elif ("light" in robot_name_value):
+        robot_base_frame = robot_name_value + "/lidar_laser" # "/base_footprint"
+    elif ("hsrb" in robot_name_value):
+        robot_base_frame = "base_footprint"
+    elif ("hsr" in robot_name_value):
+        robot_base_frame = "base_footprint"
+    else:
+        robot_base_frame = ""  ## CUSTOM FRAME
+
+    return [
+        DeclareLaunchArgument('robot_base_frame', default_value=robot_base_frame, description='ROBOT base frame name.'),
+    ]
