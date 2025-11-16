@@ -118,9 +118,9 @@ Basic workflow for using Navigation:
     Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
 2.  **Generate a map**
       * **To generate a map manually:**
-        1.  Switch the `robot_name` in [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py) to the robot you are using, then execute the following command. You will be asked if you want to save the map after execution, but ignore it for now.
+        1.  Switch the `robot_name` in [slam.launch.py](/sobits_slam/launch/slam.launch.py) to the robot you are using, then execute the following command. You will be asked if you want to save the map after execution, but ignore it for now.
             ```sh
-            ros2 launch sobits_slam gmapping.launch.py
+            ros2 launch sobits_slam slam.launch.py
             ```
         2.  Next, switch the `velocity_topic_name` in [teleop.launch.py](/sobits_slam/launch/teleop.launch.py) to the topic name of the robot you are using, then execute the following command. Refer to the instructions in the launched xterm terminal (blue terminal) to operate the robot while viewing the map in Rviz.
             ```sh

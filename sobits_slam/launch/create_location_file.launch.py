@@ -9,6 +9,7 @@ from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
     return LaunchDescription([
+        ########## Customizable parameters ##########
         DeclareLaunchArgument(
             # ロボットを動かす場合true,動かさない場合false
             'use_robot', default_value='true'
@@ -29,6 +30,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'use_rviz', default_value='True'
         ),
+        #############################################
 
         # Create Location File
         Node(

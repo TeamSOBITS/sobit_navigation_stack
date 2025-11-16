@@ -121,11 +121,11 @@ Navigationを使う上での基本的な流れ
 2. 地図を生成する
     - 手動で地図を生成する場合 
         
-      1. [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py)
+      1. [slam.launch.py](/sobits_slam/launch/slam.launch.py)
       にある**robot_name**を使用するロボットに切り換えた後，以下のコマンドを実行する． 
       実行後に地図を保存するか聞かれるが，一旦無視する．
           ```sh
-          ros2 launch sobits_slam gmapping.launch.py
+          ros2 launch sobits_slam slam.launch.py
           ```
       
       2. 次に[teleop.launch.py](/sobits_slam/launch/teleop.launch.py)にある**velocity_topic_name**を使用するロボットのトピック名に切り換えた後，以下のコマンドを実行する．

@@ -18,7 +18,7 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, GroupAction, SetEnvironmentVariable, IncludeLaunchDescription, OpaqueFunction
-from launch.conditions import IfCondition
+from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import LoadComposableNodes
@@ -29,33 +29,8 @@ from nav2_common.launch import RewrittenYaml
 
 
 
-def declare_param_file(context, *args, **kwargs):
-    bringup_dir = get_package_share_directory('sobits_nav')
-    robot_name_value = LaunchConfiguration('robot_name').perform(context)
-    param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'navigation_config.yaml')
-
-    if   ("pro" in robot_name_value):
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
-    elif ("edu" in robot_name_value):
-        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
-    elif ("mini" in robot_name_value):
-        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
-    elif ("light" in robot_name_value):
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
-    elif ("hsrb" in robot_name_value):
-        vel_topic_name = "/omni_base_controller/cmd_vel"
-    elif ("hsr" in robot_name_value):
-        vel_topic_name = "/hsrb/command_velocity"
-    else:
-        vel_topic_name = ""  ## CUSTOM TOPIC
-
-    return [
-            DeclareLaunchArgument('params_file', default_value=param_file_path, description='Full path to the parameters file.'),
-            DeclareLaunchArgument('velocity_topic_name', default_value=vel_topic_name, description='Velocity Topic Name.'),
-        ]
-
-
 def generate_launch_description():
+    ########## Customizable parameters ##########
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name',
         # default_value="sobit_pro",
@@ -90,6 +65,23 @@ def generate_launch_description():
         default_value="False",
         description="Whether to activate Flex nav")
 
+    declare_initial_x_cmd = DeclareLaunchArgument(
+        'initial_x',
+        default_value="0.0",
+        description='initial_point x')
+
+    declare_initial_y_cmd = DeclareLaunchArgument(
+        'initial_y',
+        default_value="0.0",
+        description='initial_point y')
+
+    declare_initial_yaw_cmd = DeclareLaunchArgument(
+        'initial_yaw',
+        default_value="0.0",
+        description='initial_rotation yaw')
+    #############################################
+
+
     # Get the launch directory
     bringup_dir = get_package_share_directory('sobits_nav')
 
@@ -102,6 +94,7 @@ def generate_launch_description():
     map_yaml_file = LaunchConfiguration('map')
     robot_name = LaunchConfiguration('robot_name')
     params_file = LaunchConfiguration('params_file')
+    slamtool_param_file = LaunchConfiguration('slamtool_param_file')
     use_rviz = LaunchConfiguration('use_rviz')
 
     # use_location = LaunchConfiguration('use_location')
@@ -128,6 +121,11 @@ def generate_launch_description():
                        'velocity_smoother',
                        ]
 
+    lifecycle_nodes_with_filter = lifecycle_nodes + [
+                       'keepout_filter_mask_server',
+                       'costmap_filter_info_server',
+                       ]
+
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
     # https://github.com/ros/geometry2/issues/32
@@ -140,7 +138,9 @@ def generate_launch_description():
     # Create our own temporary YAML files that include substitutions
     param_substitutions = {
         'use_sim_time': use_sim_time,
-        'autostart': autostart}
+        'autostart': autostart,
+        'keepout_filter.enabled': use_keepout_filter
+    }
 
     configured_params = ParameterFile(
         RewrittenYaml(
@@ -198,20 +198,6 @@ def generate_launch_description():
         'log_level', default_value='info',
         description='log level')
 
-    declare_initial_x_cmd = DeclareLaunchArgument(
-        'initial_x',
-        default_value="0.0",
-        description='initial_point x')
-
-    declare_initial_y_cmd = DeclareLaunchArgument(
-        'initial_y',
-        default_value="0.0",
-        description='initial_point y')
-
-    declare_initial_yaw_cmd = DeclareLaunchArgument(
-        'initial_yaw',
-        default_value="0.0",
-        description='initial_rotation yaw')
 
     load_nodes = GroupAction(
         condition=IfCondition(PythonExpression(['not ', use_composition])),
@@ -287,6 +273,41 @@ def generate_launch_description():
                 remappings=remappings +
                         [('cmd_vel_smoothed', velocity_topic_name)]),
             Node(
+                condition=IfCondition(use_keepout_filter),
+                package='nav2_map_server',
+                executable='map_server',
+                name='keepout_filter_mask_server',
+                output='screen',
+                respawn=use_respawn,
+                respawn_delay=2.0,
+                parameters=[configured_params,
+                            {'use_sim_time': use_sim_time},
+                            {'yaml_filename': keepout_mask_yaml_file}],
+                arguments=['--ros-args', '--log-level', log_level],
+            ),
+            Node(
+                condition=IfCondition(use_keepout_filter),
+                package='nav2_map_server',
+                executable='costmap_filter_info_server',
+                name='costmap_filter_info_server',
+                output='screen',
+                respawn=use_respawn,
+                respawn_delay=2.0,
+                parameters=[configured_params],
+                arguments=['--ros-args', '--log-level', log_level],
+            ),
+            Node(
+                condition=IfCondition(use_keepout_filter),
+                package='nav2_lifecycle_manager',
+                executable='lifecycle_manager',
+                name='lifecycle_manager_navigation',
+                output='screen',
+                arguments=['--ros-args', '--log-level', log_level],
+                parameters=[{'use_sim_time': use_sim_time},
+                            {'autostart': autostart},
+                            {'node_names': lifecycle_nodes_with_filter}]),
+            Node(
+                condition=UnlessCondition(use_keepout_filter),
                 package='nav2_lifecycle_manager',
                 executable='lifecycle_manager',
                 name='lifecycle_manager_navigation',
@@ -346,25 +367,36 @@ def generate_launch_description():
                 remappings=remappings +
                            [('cmd_vel_smoothed', velocity_topic_name)]),
             ComposableNode(
-                package='nav2_lifecycle_manager',
-                plugin='nav2_lifecycle_manager::LifecycleManager',
-                name='lifecycle_manager_navigation',
-                parameters=[{'use_sim_time': use_sim_time,
-                             'autostart': autostart,
-                             'node_names': lifecycle_nodes}]),
-            ComposableNode(
                 package='nav2_map_server',
                 plugin='nav2_map_server::MapServer',
                 name='keepout_filter_mask_server',
-                parameters=[{'use_sim_time': use_sim_time},
+                parameters=[configured_params,
+                            {'use_sim_time': use_sim_time},
                             {'yaml_filename': keepout_mask_yaml_file}]
             ),
             ComposableNode(
                 package='nav2_map_server',
                 plugin='nav2_map_server::CostmapFilterInfoServer',
                 name='costmap_filter_info_server',
-                parameters=[configured_params]
+                parameters=[configured_params,
+                            {'use_sim_time': use_sim_time},]
             ),
+            ComposableNode(
+                condition=IfCondition(use_keepout_filter),
+                package='nav2_lifecycle_manager',
+                plugin='nav2_lifecycle_manager::LifecycleManager',
+                name='lifecycle_manager_navigation',
+                parameters=[{'use_sim_time': use_sim_time,
+                             'autostart': autostart,
+                             'node_names': lifecycle_nodes_with_filter}]),
+            ComposableNode(
+                condition=UnlessCondition(use_keepout_filter),
+                package='nav2_lifecycle_manager',
+                plugin='nav2_lifecycle_manager::LifecycleManager',
+                name='lifecycle_manager_navigation',
+                parameters=[{'use_sim_time': use_sim_time,
+                             'autostart': autostart,
+                             'node_names': lifecycle_nodes}]),
         ],
     )
 
@@ -393,7 +425,7 @@ def generate_launch_description():
                               'use_sim_time': use_sim_time,
                               'autostart': autostart,
                               'use_respawn': use_respawn,
-                              'params_file': params_file}.items()),
+                              'params_file': slamtool_param_file}.items()),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(bringup_dir,
@@ -471,52 +503,32 @@ def generate_launch_description():
     ld.add_action(declare_flex_nav_cmd)
     ld.add_action(flex_nav_launch)
 
-    load_keepout_nodes = GroupAction(
-        condition=IfCondition(PythonExpression(['not ', use_composition, ' and ', use_keepout_filter])),
-        actions=[
-            Node(
-                package='nav2_map_server',
-                executable='map_server',
-                name='keepout_filter_mask_server',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[{'use_sim_time': use_sim_time},
-                            {'yaml_filename': keepout_mask_yaml_file}],
-                arguments=['--ros-args', '--log-level', log_level],
-            ),
-            Node(
-                package='nav2_map_server',
-                executable='costmap_filter_info_server',
-                name='costmap_filter_info_server',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-            ),
-        ]
-    )
-
-    # Add lifecycle manager for keepout filter nodes if not using composition
-    load_keepout_lifecycle_manager = GroupAction(
-        condition=IfCondition(PythonExpression(['not ', use_composition, ' and ', use_keepout_filter])),
-        actions=[
-            Node(
-                package='nav2_lifecycle_manager',
-                executable='lifecycle_manager',
-                name='lifecycle_manager_keepout',
-                output='screen',
-                arguments=['--ros-args', '--log-level', log_level],
-                parameters=[{'use_sim_time': use_sim_time},
-                            {'autostart': autostart},
-                            {'node_names': ['keepout_filter_mask_server',
-                                            'costmap_filter_info_server']}]
-            )
-        ]
-    )
-
-    ld.add_action(load_keepout_nodes)
-    ld.add_action(load_keepout_lifecycle_manager)
-
     return ld
+
+
+
+def declare_param_file(context, *args, **kwargs):
+    robot_name_value = LaunchConfiguration('robot_name').perform(context)
+    param_file_path = os.path.join(get_package_share_directory('sobits_nav'), 'param', robot_name_value, 'navigation_config.yaml')
+    slamtool_param_file_path = os.path.join(get_package_share_directory('sobits_slam'), 'param', robot_name_value, 'slamtool_config.yaml')
+
+    if   ("pro" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
+    elif ("edu" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
+    elif ("mini" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/commands/velocity"
+    elif ("light" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
+    elif ("hsrb" in robot_name_value):
+        vel_topic_name = "/omni_base_controller/cmd_vel"
+    elif ("hsr" in robot_name_value):
+        vel_topic_name = "/hsrb/command_velocity"
+    else:
+        vel_topic_name = ""  ## CUSTOM TOPIC
+
+    return [
+            DeclareLaunchArgument('params_file', default_value=param_file_path, description='Full path to the parameters file.'),
+            DeclareLaunchArgument('slamtool_param_file', default_value=slamtool_param_file_path, description='slam toolbox parameters file.'),
+            DeclareLaunchArgument('velocity_topic_name', default_value=vel_topic_name, description='Velocity Topic Name.'),
+        ]
