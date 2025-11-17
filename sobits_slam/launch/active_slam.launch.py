@@ -69,6 +69,15 @@ def generate_launch_description():
         remappings=[("/tf", "tf"), ("/tf_static", "tf_static")],
     )
 
+    sobits_map_saver = Node(
+        package='sobits_slam',
+        executable='sobits_map_saver',
+        name='sobits_map_saver',
+        output='log',
+        parameters=[{'use_sim_time': use_sim_time}],
+        condition=IfCondition(save_map_command),
+    )
+
     rviz_cmd = Node(
         package='rviz2',
         executable='rviz2',
@@ -84,6 +93,7 @@ def generate_launch_description():
     ld.add_action(OpaqueFunction(function=declare_param_value))
     ld.add_action(nav2_cmd)
     ld.add_action(explore_node_cmd)
+    ld.add_action(sobits_map_saver)
     ld.add_action(rviz_cmd)
 
     return ld

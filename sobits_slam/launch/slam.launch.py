@@ -96,8 +96,7 @@ def generate_launch_description():
     )
 
 
-    # if (save_map_command):
-    sobits_slam = Node(
+    sobits_map_saver = Node(
         package='sobits_slam',
         executable='sobits_map_saver',
         name='sobits_map_saver',
@@ -106,7 +105,6 @@ def generate_launch_description():
         condition=IfCondition(save_map_command),
     )
 
-    # if (rviz_viewer):
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
@@ -127,7 +125,7 @@ def generate_launch_description():
     ld.add_action(start_async_slam_toolbox_node)
     ld.add_action(configure_event)
     ld.add_action(activate_event)
-    ld.add_action(sobits_slam)
+    ld.add_action(sobits_map_saver)
     ld.add_action(rviz_node)
 
     return ld
