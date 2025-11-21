@@ -457,7 +457,7 @@ costmap_filter_info_server:
 
 head_angle_publisher_node:
   ros__parameters:
-    base_link: "sobit_min/base_footprint"
+    base_link: "sobit_mini/base_footprint"
 
 head_controller_node:
   ros__parameters:
