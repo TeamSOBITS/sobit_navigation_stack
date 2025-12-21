@@ -40,7 +40,7 @@ def generate_launch_description():
         default_value="hsr_sim",
         # default_value="hsrb_robot",
         description='choice your used robot name')
-    
+
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
         default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml'),
@@ -51,15 +51,17 @@ def generate_launch_description():
         default_value=os.path.join(
             get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
         description='Full path to location file to load')
-    
-    keepout_mask_yaml_file = os.path.join(
-        get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml')
-    
+
+    declare_keepout_map_yaml_cmd = DeclareLaunchArgument(
+        'keepout_map',
+        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml'),
+        description='Full path to map yaml file to load')
+
     declare_use_keepout_filter_cmd = DeclareLaunchArgument(
         'use_keepout_filter',
         default_value='False',
         description='Whether to use keepout filter')
-    
+
     declare_flex_nav_cmd = DeclareLaunchArgument(
         'use_flex_nav',
         default_value="False",
@@ -92,6 +94,7 @@ def generate_launch_description():
     autostart = LaunchConfiguration('autostart')
 
     map_yaml_file = LaunchConfiguration('map')
+    keepout_mask_yaml_file = LaunchConfiguration('keepout_map')
     robot_name = LaunchConfiguration('robot_name')
     params_file = LaunchConfiguration('params_file')
     slamtool_param_file = LaunchConfiguration('slamtool_param_file')
@@ -475,11 +478,12 @@ def generate_launch_description():
     ld.add_action(stdout_linebuf_envvar)
 
     # Declare the launch options
+    ld.add_action(declare_robot_name_cmd)
     ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_use_namespace_cmd)
     ld.add_action(declare_slam_cmd)
     ld.add_action(declare_map_yaml_cmd)
-    ld.add_action(declare_robot_name_cmd)
+    ld.add_action(declare_keepout_map_yaml_cmd)
     ld.add_action(OpaqueFunction(function=declare_param_file))
     ld.add_action(declare_use_sim_time_cmd)
     ld.add_action(declare_use_rviz_cmd)
