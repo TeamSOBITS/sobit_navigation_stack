@@ -29,7 +29,7 @@ from launch.actions import DeclareLaunchArgument, GroupAction, SetEnvironmentVar
 from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PythonExpression
-from launch_ros.actions import Node
+from launch_ros.actions import Node, LoadComposableNodes
 from launch_ros.actions import PushRosNamespace
 from launch_ros.descriptions import ComposableNode, ParameterFile
 from nav2_common.launch import RewrittenYaml
@@ -60,15 +60,15 @@ def generate_launch_description():
             get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
         description='Full path to location file to load')
 
-    declare_keepout_map_yaml_cmd = DeclareLaunchArgument(
-        'keepout_map',
-        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml'),
-        description='Full path to map yaml file to load')
-
     declare_use_keepout_filter_cmd = DeclareLaunchArgument(
         'use_keepout_filter',
         default_value='False',
         description='Whether to use keepout filter')
+
+    declare_keepout_map_yaml_cmd = DeclareLaunchArgument(
+        'keepout_map',
+        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml'),
+        description='Full path to map yaml file to load')
 
     declare_flex_nav_cmd = DeclareLaunchArgument(
         'use_flex_nav',
@@ -497,25 +497,20 @@ def generate_launch_description():
 
     # Declare the launch options
     ld.add_action(declare_robot_name_cmd)
-    ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_use_namespace_cmd)
+    ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_slam_cmd)
     ld.add_action(declare_map_yaml_cmd)
+    ld.add_action(declare_location_yaml_cmd)
+    ld.add_action(declare_use_keepout_filter_cmd)
     ld.add_action(declare_keepout_map_yaml_cmd)
-    ld.add_action(OpaqueFunction(function=declare_param_file))
-    ld.add_action(declare_use_sim_time_cmd)
-    ld.add_action(declare_use_rviz_cmd)
+    ld.add_action(declare_flex_nav_cmd)
     ld.add_action(declare_initial_x_cmd)
     ld.add_action(declare_initial_y_cmd)
-    ld.add_action(declare_use_keepout_filter_cmd)
     ld.add_action(declare_initial_yaw_cmd)
-    ld.add_action(declare_use_rviz_cmd)
-    ld.add_action(declare_namespace_cmd)
-    ld.add_action(declare_use_namespace_cmd)
-    ld.add_action(declare_slam_cmd)
-    ld.add_action(declare_use_localization_cmd)
-    ld.add_action(declare_use_sim_time_cmd)
     ld.add_action(OpaqueFunction(function=declare_param_file))
+    ld.add_action(declare_use_sim_time_cmd)
+    ld.add_action(declare_use_rviz_cmd)
     ld.add_action(declare_autostart_cmd)
     ld.add_action(declare_use_composition_cmd)
     ld.add_action(declare_use_respawn_cmd)
@@ -529,8 +524,6 @@ def generate_launch_description():
 
     return ld
 
-    return ld
-
 
 
 def declare_param_file(context, *args, **kwargs):
@@ -538,6 +531,8 @@ def declare_param_file(context, *args, **kwargs):
     param_file_path = os.path.join(get_package_share_directory('sobits_nav'), 'param', robot_name_value, 'navigation_config.yaml')
     slamtool_param_file_path = os.path.join(get_package_share_directory('sobits_slam'), 'param', robot_name_value, 'slamtool_config.yaml')
 
+    if   ("home" in robot_name_value):
+        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     if   ("pro" in robot_name_value):
         vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("edu" in robot_name_value):

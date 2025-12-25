@@ -102,6 +102,8 @@ def generate_launch_description():
 
 def declare_param_value(context, *args, **kwargs):
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
+    if   ("home" in robot_name_value):
+        robot_base_frame = robot_name_value + "/base_footprint"
     if   ("pro" in robot_name_value):
         robot_base_frame = robot_name_value + "/lidar_laser" # "/base_footprint"
     elif ("edu" in robot_name_value):
