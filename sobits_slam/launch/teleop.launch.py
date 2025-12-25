@@ -4,10 +4,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
-    # Declare launch arguments for each parameter
-    timeout_sec_arg = DeclareLaunchArgument(
-        'timeout_sec', default_value='0.3', description='Timeout in seconds'
-    )
+    ########## Customizable parameters ##########
     velocity_topic_name_arg = DeclareLaunchArgument(
         'velocity_topic_name', default_value='/sobit_home/cmd_vel', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/sobit_pro/cmd_vel', description='Velocity topic name',
@@ -16,6 +13,9 @@ def generate_launch_description():
         # 'velocity_topic_name', default_value='/sobit_light/cmd_vel', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/hsrb/command_velocity', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/omni_base_controller/cmd_vel', description='Velocity topic name',
+    )
+    timeout_sec_arg = DeclareLaunchArgument(
+        'timeout_sec', default_value='0.3', description='Timeout in seconds'
     )
     max_linear_arg = DeclareLaunchArgument(
         'max_linear', default_value='0.2', description='Maximum linear velocity'
@@ -29,6 +29,7 @@ def generate_launch_description():
     accel_angular_arg = DeclareLaunchArgument(
         'accel_angular', default_value='0.7', description='Angular acceleration'
     )
+    #############################################
 
     # Node configuration
     keyboard_teleop_node = Node(

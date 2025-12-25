@@ -18,6 +18,7 @@ def save_map_command(node):
             path = ".".join(out.decode('utf-8').split("."))
         else:
             path = ".".join(out.decode('utf-8').split(".")[:-1])
+        path = path.replace("\n", "")
         print("MAP FILE :\033[93m\033[05m", path, "\033[0m")
         node.get_logger().info('MAP FILE :\033[93m\033[05m'+path+'\033[0m')
         return True, path

@@ -201,7 +201,7 @@ controller_server:
         cost_power: 1
         cost_weight: 3.81
         critical_cost: 300.0
-        consider_footprint: true
+        consider_footprint: false
         collision_cost: 1000000.0
         near_goal_distance: 1.0
       PathAlignCritic:
@@ -246,11 +246,16 @@ local_costmap:
       robot_base_frame: sobit_mini/base_footprint
       use_sim_time: False
       rolling_window: true
-      width: 3
-      height: 3
-      resolution: 0.1
+      width: 5
+      height: 5
+      resolution: 0.05
       robot_radius: 0.2
       plugins: ["voxel_layer", "inflation_layer"]
+      # filters: ["keepout_filter"] # TODO
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        filter_info_topic: "/costmap_filter_info"
+      keepout_filter.enabled: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 10.0
@@ -264,13 +269,24 @@ local_costmap:
         z_voxels: 20
         max_obstacle_height: 1.0
         mark_threshold: 0
-        observation_sources: scan
+        observation_sources: scan # rgbd
         scan:
           topic: /sobit_mini/scan
           max_obstacle_height: 1.0
           clearing: True
           marking: True
           data_type: "LaserScan"
+          raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.0
+        rgbd:
+          topic: "/sobit_mini/head_camera_base/depth/color/points"
+          max_obstacle_height: 1.5
+          min_obstacle_height: 0.1
+          clearing: True
+          marking: True
+          data_type: "PointCloud2"
           raytrace_max_range: 3.0
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
@@ -288,10 +304,18 @@ global_costmap:
       global_frame: map
       robot_base_frame: sobit_mini/base_footprint
       use_sim_time: False
+      rolling_window: true # TODO
+      width: 50
+      height: 50
+      resolution: 0.05
       robot_radius: 0.2
-      resolution: 0.1
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      filters: ["keepout_filter"]
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        filter_info_topic: "/costmap_filter_info"
+      keepout_filter.enabled: True
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -302,6 +326,17 @@ global_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
+          raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.0
+        rgbd:
+          topic: "/sobit_mini/head_camera_base/depth/color/points"
+          max_obstacle_height: 1.5
+          min_obstacle_height: 0.1
+          clearing: True
+          marking: True
+          data_type: "PointCloud2"
           raytrace_max_range: 3.0
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
@@ -406,9 +441,23 @@ velocity_smoother:
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0
 
+keepout_filter_mask_server:
+  ros__parameters:
+    use_sim_time: True
+    topic_name: "/keepout_filter_mask"
+
+costmap_filter_info_server:
+  ros__parameters:
+    use_sim_time: True
+    type: 0
+    filter_info_topic: "/costmap_filter_info"
+    mask_topic: "/keepout_filter_mask"
+    base: 0.0
+    multiplier: 1.0
+
 head_angle_publisher_node:
   ros__parameters:
-    base_link: "sobit_min/base_footprint"
+    base_link: "sobit_mini/base_footprint"
 
 head_controller_node:
   ros__parameters:

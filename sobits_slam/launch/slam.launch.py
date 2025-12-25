@@ -14,29 +14,9 @@ from launch_ros.events.lifecycle import ChangeState
 from lifecycle_msgs.msg import Transition
 
 
-def declare_param_file(context, *args, **kwargs):
-    bringup_dir = get_package_share_directory('sobits_slam')
-    robot_name_value = LaunchConfiguration('robot_name').perform(context)
-    param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'gmapping_config.yaml')
-
-    return [DeclareLaunchArgument(
-        'slam_params_file',
-        default_value=param_file_path,
-        description='Full path to the ROS2 parameters file to use for all launched nodes'
-    )]
-
 
 def generate_launch_description():
-    save_map_command = LaunchConfiguration('save_map_command')
-    declare_save_map_command_cmd = DeclareLaunchArgument(
-        'save_map_command', default_value='true',
-        description='command map saver select')
-
-    rviz_viewer = LaunchConfiguration('rviz_viewer')
-    declare_rviz_viewer_cmd = DeclareLaunchArgument(
-        'rviz_viewer', default_value='true',
-        description='use rviz')
-
+    ########## Customizable parameters ##########
     robot_name = LaunchConfiguration('robot_name')
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name', default_value='sobit_home',
@@ -47,6 +27,17 @@ def generate_launch_description():
         # 'robot_name', default_value='hsr_sim',
         # 'robot_name', default_value='hsrb_robot',
         description='choice your used robot name')
+
+    save_map_command = LaunchConfiguration('save_map_command')
+    declare_save_map_command_cmd = DeclareLaunchArgument(
+        'save_map_command', default_value='true',
+        description='command map saver select')
+
+    rviz_viewer = LaunchConfiguration('rviz_viewer')
+    declare_rviz_viewer_cmd = DeclareLaunchArgument(
+        'rviz_viewer', default_value='true',
+        description='use rviz')
+    #############################################
 
     autostart = LaunchConfiguration('autostart')
     use_lifecycle_manager = LaunchConfiguration("use_lifecycle_manager")
@@ -106,16 +97,15 @@ def generate_launch_description():
     )
 
 
-    # if (save_map_command):
-    sobits_slam = Node(
+    sobits_map_saver = Node(
         package='sobits_slam',
         executable='sobits_map_saver',
-        output='log',
         name='sobits_map_saver',
+        output='log',
+        parameters=[{'use_sim_time': use_sim_time}],
         condition=IfCondition(save_map_command),
     )
 
-    # if (rviz_viewer):
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
@@ -132,12 +122,23 @@ def generate_launch_description():
     ld.add_action(declare_autostart_cmd)
     ld.add_action(declare_use_lifecycle_manager)
     ld.add_action(declare_use_sim_time_argument)
-    # ld.add_action(declare_slam_params_file_cmd)
     ld.add_action(OpaqueFunction(function=declare_param_file))
     ld.add_action(start_async_slam_toolbox_node)
     ld.add_action(configure_event)
     ld.add_action(activate_event)
-    ld.add_action(sobits_slam)
+    ld.add_action(sobits_map_saver)
     ld.add_action(rviz_node)
 
     return ld
+
+
+def declare_param_file(context, *args, **kwargs):
+    bringup_dir = get_package_share_directory('sobits_slam')
+    robot_name_value = LaunchConfiguration('robot_name').perform(context)
+    param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'slamtool_config.yaml')
+
+    return [DeclareLaunchArgument(
+        'slam_params_file',
+        default_value=param_file_path,
+        description='Full path to the ROS2 parameters file to use for all launched nodes'
+    )]

@@ -23,6 +23,5 @@ git clone -b $ROS_DISTRO-devel https://github.com/TeamSOBITS/flex_nav.git
 
 echo export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp >> ~/.bashrc
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-source ~/.bashrc
 
 echo "╚══╣ Install: Sobit Navigation Stack (FINISHED) ╠══╝"

@@ -121,11 +121,11 @@ Navigationを使う上での基本的な流れ
 2. 地図を生成する
     - 手動で地図を生成する場合 
         
-      1. [gmapping.launch.py](/sobits_slam/launch/gmapping.launch.py)
+      1. [slam.launch.py](/sobits_slam/launch/slam.launch.py)
       にある**robot_name**を使用するロボットに切り換えた後，以下のコマンドを実行する． 
       実行後に地図を保存するか聞かれるが，一旦無視する．
           ```sh
-          ros2 launch sobits_slam gmapping.launch.py
+          ros2 launch sobits_slam slam.launch.py
           ```
       
       2. 次に[teleop.launch.py](/sobits_slam/launch/teleop.launch.py)にある**velocity_topic_name**を使用するロボットのトピック名に切り換えた後，以下のコマンドを実行する．
@@ -267,6 +267,36 @@ Navigationを使う上での基本的な流れ
     これは基本的にプログラムから起動する．\
     地点登録した地点名ならどこにでも移動することが可能．
 
+<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+
+### 進入禁止領域の設定
+地図上にロボットが進入してほしくない領域（侵入禁止領域）を設定することができます。
+例えば机の天板の領域などです。
+
+1.  **進入禁止領域マップの作成**
+    1.  地図生成で作成した地図画像（`.pgm`ファイル）を画像編集ソフト（例: GIMP）で開きます。
+    2.  進入禁止にしたい領域を黒色（カラーコード: `#000000`）で塗りつぶします。その他の領域は白色（`#FFFFFF`）または灰色（`#CDCDCD`）のままにします。
+    3.  編集した画像を新しい名前（例: `map_example_keepout_mask.pgm`）で保存します。
+    4.  元の地図の `.yaml` ファイルをコピーし、新しい名前（例: `map_example_keepout_mask.yaml`）に変更します。
+    5.  コピーした `.yaml` ファイルを開き、`image` の値を新しい画像ファイル名（`map_example_keepout_mask.pgm`）に変更します。
+    6. パッケージをコンパイルします．
+        ```bash
+        cd ~/colcon_ws/
+        ```
+        ```bash
+        colcon build --symlink-install
+        ```
+        ```bash
+        source ~/colcon_ws/install/setup.sh
+        ```     
+
+2.  **Navigationの起動**
+    1. [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)の `use_keepout_filter` 引数を `True` に書き換えます。
+    2. [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)の`keepout_mask_yaml_file`のパスを作成した進入禁止領域のマップに書き換えます。
+    3. [nav2.launch.py](/sobits_nav/launch/nav2.launch.py)の`を起動します。
+      ```sh
+      ros2 launch sobits_nav nav2.launch.py
+      ```
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 <!-- マイルストーン -->

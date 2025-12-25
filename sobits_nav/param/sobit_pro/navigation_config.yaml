@@ -201,7 +201,6 @@ controller_server:
         cost_power: 1
         cost_weight: 3.81
         critical_cost: 300.0
-        consider_footprint: true
         collision_cost: 1000000.0
         near_goal_distance: 1.0
       PathAlignCritic:
@@ -251,6 +250,11 @@ local_costmap:
       resolution: 0.1
       robot_radius: 0.2
       plugins: ["voxel_layer", "inflation_layer"]
+      # filters: ["keepout_filter"] # TODO
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        filter_info_topic: "/costmap_filter_info"
+      keepout_filter.enabled: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 10.0
@@ -300,10 +304,18 @@ global_costmap:
       global_frame: map
       robot_base_frame: sobit_pro/base_footprint
       use_sim_time: False
+      rolling_window: true # TODO
+      width: 50
+      height: 50
+      resolution: 0.05
       robot_radius: 0.2
-      resolution: 0.1
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      filters: ["keepout_filter"]
+      keepout_filter:
+        plugin: "nav2_costmap_2d::KeepoutFilter"
+        filter_info_topic: "/costmap_filter_info"
+      keepout_filter.enabled: True
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -429,6 +441,20 @@ velocity_smoother:
     odom_duration: 0.02
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0
+
+keepout_filter_mask_server:
+  ros__parameters:
+    use_sim_time: True
+    topic_name: "/keepout_filter_mask"
+
+costmap_filter_info_server:
+  ros__parameters:
+    use_sim_time: True
+    type: 0
+    filter_info_topic: "/costmap_filter_info"
+    mask_topic: "/keepout_filter_mask"
+    base: 0.0
+    multiplier: 1.0
 
 head_angle_publisher_node:
   ros__parameters:
