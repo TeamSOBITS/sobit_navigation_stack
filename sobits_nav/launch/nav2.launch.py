@@ -533,7 +533,7 @@ def declare_param_file(context, *args, **kwargs):
 
     if   ("home" in robot_name_value):
         vel_topic_name = "/" + robot_name_value + "/cmd_vel"
-    if   ("pro" in robot_name_value):
+    elif ("pro" in robot_name_value):
         vel_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("edu" in robot_name_value):
         vel_topic_name = "/" + robot_name_value + "/commands/velocity"
