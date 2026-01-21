@@ -523,7 +523,7 @@ def declare_param_file(context, *args, **kwargs):
     elif ("mini" in robot_name_value):
         vel_topic_name = "/" + robot_name_value + "/commands/velocity"
     elif ("light" in robot_name_value):
-        vel_topic_name = "/" + robot_name_value + "/cmd_vel"
+        vel_topic_name = "/" + robot_name_value + "/manual_control/cmd_vel"
     elif ("hsrb" in robot_name_value):
         vel_topic_name = "/omni_base_controller/cmd_vel"
     elif ("hsr" in robot_name_value):

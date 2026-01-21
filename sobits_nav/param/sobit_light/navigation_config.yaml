@@ -42,7 +42,7 @@ amcl:
     z_max: 0.05
     z_rand: 0.5
     z_short: 0.05
-    scan_topic: /sobit_light/scan
+    scan_topic: /sobit_light/lidar/scan
 
 bt_navigator:
   ros__parameters:
