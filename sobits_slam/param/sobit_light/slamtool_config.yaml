@@ -13,7 +13,7 @@ slam_toolbox:
     odom_frame: sobit_light/odom
     map_frame: map
     base_frame: sobit_light/base_footprint
-    scan_topic: /sobit_light/lidar/scan
+    scan_topic: /sobit_light/scan
     use_map_saver: true
     mode: mapping
 
@@ -23,7 +23,7 @@ slam_toolbox:
     map_update_interval: 5.0
     resolution: 0.05
     min_laser_range: 0.0 #for rastering images
-    max_laser_range: 3.5 #for rastering images
+    max_laser_range: 10.0 #for rastering images
     minimum_time_interval: 0.5
     transform_timeout: 0.2
     tf_buffer_duration: 30.0
@@ -39,7 +39,7 @@ slam_toolbox:
     scan_buffer_maximum_scan_distance: 10.0
     link_match_minimum_response_fine: 0.1
     link_scan_maximum_distance: 1.5
-    loop_search_maximum_distance: 3.0
+    loop_search_maximum_distance: 10.0
     do_loop_closing: true 
     loop_match_minimum_chain_size: 10           
     loop_match_maximum_variance_coarse: 3.0  

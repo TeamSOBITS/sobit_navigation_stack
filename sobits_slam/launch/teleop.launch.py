@@ -9,7 +9,7 @@ def generate_launch_description():
         # 'velocity_topic_name', default_value='/sobit_pro/cmd_vel', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/sobit_edu/commands/velocity', description='Velocity topic name',
         # 'velocity_topic_name', default_value='/sobit_mini/commands/velocity', description='Velocity topic name',
-        # 'velocity_topic_name', default_value='/sobit_light/cmd_vel', description='Velocity topic name',
+        # 'velocity_topic_name', default_value="/sobit_light/manual_control/cmd_vel", description='Velocity topic name',
         # 'velocity_topic_name', default_value='/hsrb/command_velocity', description='Velocity topic name',
         'velocity_topic_name', default_value='/omni_base_controller/cmd_vel', description='Velocity topic name',
     )
