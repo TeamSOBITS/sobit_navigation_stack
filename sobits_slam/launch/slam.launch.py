@@ -36,6 +36,11 @@ def generate_launch_description():
     declare_rviz_viewer_cmd = DeclareLaunchArgument(
         'rviz_viewer', default_value='true',
         description='use rviz')
+
+    declare_use_sim_time_argument = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='false',
+        description='Use simulation/Gazebo clock')
     #############################################
 
     autostart = LaunchConfiguration('autostart')
@@ -50,11 +55,6 @@ def generate_launch_description():
     declare_use_lifecycle_manager = DeclareLaunchArgument(
         'use_lifecycle_manager', default_value='false',
         description='Enable bond connection during node activation')
-
-    declare_use_sim_time_argument = DeclareLaunchArgument(
-        'use_sim_time',
-        default_value='false',
-        description='Use simulation/Gazebo clock')
 
     start_async_slam_toolbox_node = LifecycleNode(
         parameters=[

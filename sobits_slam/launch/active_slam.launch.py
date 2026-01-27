@@ -24,6 +24,11 @@ def generate_launch_description():
     declare_save_map_command_cmd = DeclareLaunchArgument(
         'save_map_command', default_value='true',
         description='command map saver select')
+
+    use_sim_time_cmd = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='false',
+        description='Use simulation (Gazebo) clock if true')
     #############################################
 
     # Get the launch directory
@@ -36,11 +41,6 @@ def generate_launch_description():
     save_map_command = LaunchConfiguration('save_map_command')
     robot_base_frame = LaunchConfiguration('robot_base_frame')
     use_sim_time = LaunchConfiguration('use_sim_time')
-
-    use_sim_time_cmd = DeclareLaunchArgument(
-        'use_sim_time',
-        default_value='false',
-        description='Use simulation (Gazebo) clock if true')
 
     nav2_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(navigation_dir, "launch", "nav2.launch.py")),
