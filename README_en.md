@@ -39,7 +39,7 @@
 
 ## Introduction
 
-This is an autonomous navigation package for SOBIT PRO, SOBIT EDU, SOBIT MINI, and HSR (Simulation).
+This is an autonomous navigation package for SOBIT PRO, SOBIT EDU, SOBIT MINI, SOBIT LIGHT, and HSR (Real&Simulation).
 For an overview of open-source navigation, check [here](https://docs.nav2.org/).
 For the mechanism of autonomous navigation, refer to the [ROS open-source project](https://github.com/ros-navigation/navigation2).
 
@@ -57,9 +57,9 @@ This section describes how to set up this repository.
 
 | System | Version |
 | :------------ | :------------ |
-| Ubuntu | 22.04 (Jammy Jellyfish) |
-| ROS | Humble Hawksbill |
-| Python | 3.0~ |
+| Ubuntu | 24.04 (Noble Numbat) |
+| ROS | Jazzy Jalisco |
+| Python | 3.12 |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -115,7 +115,8 @@ Basic workflow for using Navigation:
 ### Map Generation
 
 1.  **Start the robot**
-    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
+    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ([SOBIT PRO](https://github.com/TeamSOBITS/sobit_pro.git), [SOBIT EDU](https://github.com/TeamSOBITS/sobit_edu.git), [SOBIT MINI](https://github.com/TeamSOBITS/sobit_mini.git), [SOBIT LIGHT](https://github.com/TeamSOBITS/sobit_light.git)). For HSR (Real&simulator), start sigverse and the HSR's built-in sensor data.\
+    However, since SOBIT LIGHT requires removing maps from the Kachaka API, please refer to the [SOBIT LIGHT README](https://github.com/TeamSOBITS/sobit_light.git).
 2.  **Generate a map**
       * **To generate a map manually:**
         1.  Switch the `robot_name` in [slam.launch.py](/sobits_slam/launch/slam.launch.py) to the robot you are using, then execute the following command. You will be asked if you want to save the map after execution, but ignore it for now.
@@ -173,7 +174,8 @@ Basic workflow for using Navigation:
         'use_robot', default_value='true'
         ```
 3.  **If registering locations with the actual robot, start the robot.**
-    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
+    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ([SOBIT PRO](https://github.com/TeamSOBITS/sobit_pro.git), [SOBIT EDU](https://github.com/TeamSOBITS/sobit_edu.git), [SOBIT MINI](https://github.com/TeamSOBITS/sobit_mini.git), [SOBIT LIGHT](https://github.com/TeamSOBITS/sobit_light.git)). For HSR (Real&simulator), start sigverse and the HSR's built-in sensor data.\
+    However, since SOBIT LIGHT requires removing maps from the Kachaka API, please refer to the [SOBIT LIGHT README](https://github.com/TeamSOBITS/sobit_light.git).
 4.  **Start location registration.**
     Launch with the following command:
     ```sh
@@ -260,7 +262,8 @@ Now, when navigation is running, the black-filled areas will be recognized as hi
     - To utilize the camera on the robot's head to navigate while it's moving its neck, change ``use_flex_nav`` to ``True``.
 
 4.  **Start the robot.**
-    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ( [PRO](https://github.com/TeamSOBITS/sobit_pro.git), [EDU](https://github.com/TeamSOBITS/sobit_edu.git), [MINI](https://github.com/TeamSOBITS/sobit_mini.git)). For HSR (simulator), start sigverse and the HSR's built-in sensor data.
+    Start the robot body and the 2D-LiDAR. For details, check the GitHub repositories for each robot ([SOBIT PRO](https://github.com/TeamSOBITS/sobit_pro.git), [SOBIT EDU](https://github.com/TeamSOBITS/sobit_edu.git), [SOBIT MINI](https://github.com/TeamSOBITS/sobit_mini.git), [SOBIT LIGHT](https://github.com/TeamSOBITS/sobit_light.git)). For HSR (Real&simulator), start sigverse and the HSR's built-in sensor data.\
+    However, since SOBIT LIGHT requires removing maps from the Kachaka API, please refer to the [SOBIT LIGHT README](https://github.com/TeamSOBITS/sobit_light.git).
 
 5.  **Start Navigation.**
     Launch Navigation with the following command:

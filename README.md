@@ -43,7 +43,7 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-SOBIT PRO，SOBIT EDU，SOBIT MINI，HSR(Simulation)のための自律移動パッケージ．\
+SOBIT PRO，SOBIT EDU，SOBIT MINI，SOBIT LIGHT，HSR(実機&Simulation)のための自律移動パッケージ．\
 Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/)をチェック．\
 また自律移動の仕組みについても，[ROSのオープンソース](https://github.com/ros-navigation/navigation2)を参照．
 
@@ -60,9 +60,9 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
 
 | System  | Version |
 | ------------- | ------------- |
-| Ubuntu | 22.04 (Jammy Jellyfish) |
-| ROS | Humble Hawksbill |
-| Python | 3.0~ |
+| Ubuntu | 24.04 (Noble Numbat) |
+| ROS | Jazzy Jalisco |
+| Python | 3.12 |
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
@@ -74,7 +74,7 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
    ```
 2. 本レポジトリをcloneします．
    ```bash
-   git clone -b humble-devel https://github.com/TeamSOBITS/sobits_navigation_stack.git
+   git clone -b jazzy-devel https://github.com/TeamSOBITS/sobits_navigation_stack.git
    ```
 3. レポジトリの中へ移動します．
    ```bash
@@ -116,8 +116,9 @@ Navigationを使う上での基本的な流れ
 ### 地図生成
 1. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
-    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
+    詳しくは，それぞれのロボットのgit hub([SOBIT PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[SOBIT EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[SOBIT MINI](https://github.com/TeamSOBITS/sobit_mini.git)，[SOBIT LIGHT](https://github.com/TeamSOBITS/sobit_light.git))を確認．\
+    HSR(実機&Simulation)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．\
+    ただし，SOBIT LIGHTはKachakaAPIからマップを廃止する必要があるため，[SOBIT LIGHTのREADME](https://github.com/TeamSOBITS/sobit_light.git)を確認してください．
 2. 地図を生成する
     - 手動で地図を生成する場合 
         
@@ -188,8 +189,9 @@ Navigationを使う上での基本的な流れ
         ```
 3. 実機で地点登録する場合はロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる． \
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
-    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
+    詳しくは，それぞれのロボットのgit hub([SOBIT PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[SOBIT EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[SOBIT MINI](https://github.com/TeamSOBITS/sobit_mini.git)，[SOBIT LIGHT](https://github.com/TeamSOBITS/sobit_light.git))を確認．\
+    HSR(実機&Simulation)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．\
+    ただし，SOBIT LIGHTはKachakaAPIからマップを廃止する必要があるため，[SOBIT LIGHTのREADME](https://github.com/TeamSOBITS/sobit_light.git)を確認してください．
 4. 地点登録を起動する \
     以下のコマンドで起動する．
     ```sh
@@ -254,8 +256,9 @@ Navigationを使う上での基本的な流れ
 
 4. ロボットを起動する \
     ロボット本体と，2D-LiDARを起動させる．\
-    詳しくは，それぞれのロボットのgit hub([PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[MINI](https://github.com/TeamSOBITS/sobit_mini.git))を確認．\
-    HSR(シミュレータ)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．
+    詳しくは，それぞれのロボットのgit hub([SOBIT PRO](https://github.com/TeamSOBITS/sobit_pro.git)，[SOBIT EDU](https://github.com/TeamSOBITS/sobit_edu.git)，[SOBIT MINI](https://github.com/TeamSOBITS/sobit_mini.git)，[SOBIT LIGHT](https://github.com/TeamSOBITS/sobit_light.git))を確認．\
+    HSR(実機&Simulation)の場合はsigverseやHSR本体のセンサデータを使えるように起動する．\
+    ただし，SOBIT LIGHTはKachakaAPIからマップを廃止する必要があるため，[SOBIT LIGHTのREADME](https://github.com/TeamSOBITS/sobit_light.git)を確認してください．
 5. Navigationを起動する \
     以下のコマンドでNavigationを起動する． 
     ```sh
@@ -278,7 +281,7 @@ Navigationを使う上での基本的な流れ
     2.  進入禁止にしたい領域を黒色（カラーコード: `#000000`）で塗りつぶします。その他の領域は白色（`#FFFFFF`）または灰色（`#CDCDCD`）のままにします。
     3.  編集した画像を新しい名前（例: `map_example_keepout_mask.pgm`）で保存します。
     4.  元の地図の `.yaml` ファイルをコピーし、新しい名前（例: `map_example_keepout_mask.yaml`）に変更します。
-    5.  コピーした `.yaml` ファイルを開き、`image` の値を新しい画像ファイル名（`map_example_keepout_mask.pgm`）に変更します。
+    5.  コピーした `.yaml` ファイルを開き、`image` の値を新しい画像ファイル名（例: `map_example_keepout_mask.pgm`）に変更します。
     6. パッケージをコンパイルします．
         ```bash
         cd ~/colcon_ws/
