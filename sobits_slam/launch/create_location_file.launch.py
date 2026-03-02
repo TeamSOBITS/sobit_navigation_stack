@@ -56,7 +56,7 @@ def generate_launch_description():
             launch_arguments={
                 'map'          : LaunchConfiguration('map'),
                 'robot_name'   : LaunchConfiguration('robot_name'),
-                'location_file_path' : "",
+                'location'     : "",
                 'use_sim_time' : LaunchConfiguration('use_sim_time'),
                 'use_rviz'     : LaunchConfiguration('use_rviz'),
             }.items(),

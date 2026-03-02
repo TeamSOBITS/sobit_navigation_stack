@@ -48,7 +48,7 @@ def generate_launch_description():
         launch_arguments={
                             "use_sim_time": use_sim_time,
                             'slam': "True",
-                            'location_file_path': "",
+                            'location': "",
                             'robot_name': robot_name,
                             'use_rviz': 'False',
                             'use_flex_nav': 'False',

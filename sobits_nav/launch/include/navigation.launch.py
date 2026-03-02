@@ -32,14 +32,14 @@ def generate_launch_description():
 
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
-    use_keepout_filter = LaunchConfiguration('use_keepout_filter')
-    keepout_map_file = LaunchConfiguration('keepout_map_file')
     autostart = LaunchConfiguration('autostart')
     params_file = LaunchConfiguration('params_file')
     use_composition = LaunchConfiguration('use_composition')
     container_name = LaunchConfiguration('container_name')
     container_name_full = (namespace, '/', container_name)
     use_respawn = LaunchConfiguration('use_respawn')
+    use_keepout_map = LaunchConfiguration('use_keepout_map')  # SOBITS Customize
+    velocity_topic_name = LaunchConfiguration('velocity_topic_name')  # SOBITS Customize
     log_level = LaunchConfiguration('log_level')
 
     lifecycle_nodes = [
@@ -55,11 +55,6 @@ def generate_launch_description():
         'docking_server',
     ]
 
-    lifecycle_nodes_with_filter = lifecycle_nodes + [
-        'keepout_filter_mask_server',
-        'costmap_filter_info_server',
-    ]
-
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
     # https://github.com/ros/geometry2/issues/32
@@ -69,7 +64,7 @@ def generate_launch_description():
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
 
     # Create our own temporary YAML files that include substitutions
-    param_substitutions = {'autostart': autostart}
+    param_substitutions = {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map} ## TODO: use_sim_time too...???
 
     configured_params = ParameterFile(
         RewrittenYaml(
@@ -93,18 +88,6 @@ def generate_launch_description():
         'use_sim_time',
         default_value='false',
         description='Use simulation (Gazebo) clock if true',
-    )
-
-    declare_use_keepout_filter_cmd = DeclareLaunchArgument(
-        'use_keepout_filter',
-        default_value='false',
-        description='Use Keepout Filter if true',
-    )
-
-    declare_keepout_map_file_cmd = DeclareLaunchArgument(
-        'keepout_map_file',
-        default_value='keepout_map.yaml',
-        description='Use Keepout Filter is true, keepout map Yaml',
     )
 
     declare_params_file_cmd = DeclareLaunchArgument(
@@ -135,6 +118,18 @@ def generate_launch_description():
         'use_respawn',
         default_value='False',
         description='Whether to respawn if a node crashes. Applied when composition is disabled.',
+    )
+
+    declare_use_keepout_map_cmd = DeclareLaunchArgument(
+        'use_keepout_map',
+        default_value='false',
+        description='Whether to use of keepout map',
+    )
+
+    declare_velocity_topic_name_cmd = DeclareLaunchArgument(
+        'velocity_topic_name',
+        default_value='cmd_vel_smoothed',
+        description='velocity topic name',
     )
 
     declare_log_level_cmd = DeclareLaunchArgument(
@@ -231,7 +226,7 @@ def generate_launch_description():
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings
-                + [('cmd_vel', 'cmd_vel_nav')],
+                + [('cmd_vel', 'cmd_vel_nav'), ('cmd_vel_smoothed', velocity_topic_name)],
             ),
             Node(
                 package='nav2_collision_monitor',
@@ -242,7 +237,8 @@ def generate_launch_description():
                 respawn_delay=2.0,
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
+                remappings=remappings
+                + [('cmd_vel_smoothed', velocity_topic_name)],
             ),
             Node(
                 package='opennav_docking',
@@ -256,51 +252,12 @@ def generate_launch_description():
                 remappings=remappings,
             ),
             Node(
-                condition=IfCondition(use_keepout_filter),
-                package='nav2_map_server',
-                executable='map_server',
-                name='keepout_filter_mask_server',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params,
-                            {'yaml_filename': keepout_map_file}],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
-            ),
-            Node(
-                condition=IfCondition(use_keepout_filter),
-                package='nav2_map_server',
-                executable='costmap_filter_info_server',
-                name='costmap_filter_info_server',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
-            ),
-            Node(
-                condition=IfCondition(use_keepout_filter),
                 package='nav2_lifecycle_manager',
                 executable='lifecycle_manager',
                 name='lifecycle_manager_navigation',
                 output='screen',
                 arguments=['--ros-args', '--log-level', log_level],
-                parameters=[{'autostart': autostart},
-                            {'node_names': lifecycle_nodes_with_filter}],
-                remappings=remappings,
-            ),
-            Node(
-                condition=UnlessCondition(use_keepout_filter),
-                package='nav2_lifecycle_manager',
-                executable='lifecycle_manager',
-                name='lifecycle_manager_navigation',
-                output='screen',
-                arguments=['--ros-args', '--log-level', log_level],
-                parameters=[{'autostart': autostart},
-                            {'node_names': lifecycle_nodes}],
-                remappings=remappings,
+                parameters=[{'autostart': autostart}, {'node_names': lifecycle_nodes}],
             ),
         ],
     )
@@ -367,7 +324,7 @@ def generate_launch_description():
                         name='velocity_smoother',
                         parameters=[configured_params],
                         remappings=remappings
-                        + [('cmd_vel', 'cmd_vel_nav')],
+                        + [('cmd_vel', 'cmd_vel_nav'), ('/cmd_vel_smoothed', velocity_topic_name)],
                     ),
                     ComposableNode(
                         package='nav2_collision_monitor',
@@ -384,42 +341,12 @@ def generate_launch_description():
                         remappings=remappings,
                     ),
                     ComposableNode(
-                        condition=IfCondition(use_keepout_filter),
-                        package='nav2_map_server',
-                        plugin='nav2_map_server::MapServer',
-                        name='keepout_filter_mask_server',
-                        parameters=[configured_params,
-                                    {'yaml_filename': keepout_map_file}
-                        ],
-                        remappings=remappings,
-                    ),
-                    ComposableNode(
-                        condition=IfCondition(use_keepout_filter),
-                        package='nav2_map_server',
-                        plugin='nav2_map_server::CostmapFilterInfoServer',
-                        name='costmap_filter_info_server',
-                        parameters=[configured_params],
-                        remappings=remappings,
-                    ),
-                    ComposableNode(
-                        condition=IfCondition(use_keepout_filter),
-                        package='nav2_lifecycle_manager',
-                        plugin='nav2_lifecycle_manager::LifecycleManager',
-                        name='lifecycle_manager_navigation',
-                        parameters=[
-                            {'autostart': autostart, 'node_names': lifecycle_nodes_with_filter}
-                        ],
-                        remappings=remappings,
-                    ),
-                    ComposableNode(
-                        condition=UnlessCondition(use_keepout_filter),
                         package='nav2_lifecycle_manager',
                         plugin='nav2_lifecycle_manager::LifecycleManager',
                         name='lifecycle_manager_navigation',
                         parameters=[
                             {'autostart': autostart, 'node_names': lifecycle_nodes}
                         ],
-                        remappings=remappings,
                     ),
                 ],
             ),
@@ -435,13 +362,13 @@ def generate_launch_description():
     # Declare the launch options
     ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_use_sim_time_cmd)
-    ld.add_action(declare_use_keepout_filter_cmd)
-    ld.add_action(declare_keepout_map_file_cmd)
     ld.add_action(declare_params_file_cmd)
     ld.add_action(declare_autostart_cmd)
     ld.add_action(declare_use_composition_cmd)
     ld.add_action(declare_container_name_cmd)
     ld.add_action(declare_use_respawn_cmd)
+    ld.add_action(declare_use_keepout_map_cmd)  # SOBITS Customize
+    ld.add_action(declare_velocity_topic_name_cmd)  # SOBITS Customize
     ld.add_action(declare_log_level_cmd)
     # Add the actions to launch all of the navigation nodes
     ld.add_action(load_nodes)
