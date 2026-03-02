@@ -36,6 +36,11 @@ def generate_launch_description():
     declare_rviz_viewer_cmd = DeclareLaunchArgument(
         'rviz_viewer', default_value='true',
         description='use rviz')
+
+    declare_use_sim_time_argument = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='false',
+        description='Use simulation/Gazebo clock')
     #############################################
 
     autostart = LaunchConfiguration('autostart')
@@ -50,11 +55,6 @@ def generate_launch_description():
     declare_use_lifecycle_manager = DeclareLaunchArgument(
         'use_lifecycle_manager', default_value='false',
         description='Enable bond connection during node activation')
-
-    declare_use_sim_time_argument = DeclareLaunchArgument(
-        'use_sim_time',
-        default_value='false',
-        description='Use simulation/Gazebo clock')
 
     start_async_slam_toolbox_node = LifecycleNode(
         parameters=[
@@ -134,9 +134,51 @@ def generate_launch_description():
 def declare_param_file(context, *args, **kwargs):
     bringup_dir = get_package_share_directory('sobits_slam')
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
+    use_sim_time_value = LaunchConfiguration('use_sim_time').perform(context)
     param_file_path = os.path.join(bringup_dir, 'param', robot_name_value, 'slamtool_config.yaml')
 
-    return [DeclareLaunchArgument(
+    return_arg_list = []
+    if ("light" in robot_name_value):
+        scan_to_pcl = Node(
+            name='laserscan_to_pointcloud',
+            package='pointcloud_to_laserscan',
+            executable='laserscan_to_pointcloud_node',
+            remappings=[
+                ('/scan_in', '/' + robot_name_value + '/lidar/scan'),
+                ('/cloud'  , '/' + robot_name_value + '/lidar/scan/points'),
+            ],
+            parameters=[{
+                'target_frame': '', 
+                'transform_tolerance': 0.01,
+                'use_sim_time': True if ((use_sim_time_value == "True") or (use_sim_time_value == "true")) else False,
+            }],
+        )
+        pcl_to_scan = Node(
+            name='pointcloud_to_laserscan',
+            package='pointcloud_to_laserscan',
+            executable='pointcloud_to_laserscan_node',
+            remappings=[
+                ('/cloud_in', '/' + robot_name_value + '/lidar/scan/points'),
+                ('/scan'    , '/' + robot_name_value + '/scan'),
+            ],
+            parameters=[{
+                'target_frame': '',
+                'transform_tolerance': 0.01,
+                'min_height': -0.2,
+                'max_height': 0.2,
+                'angle_min': -3.1415,  # -M_PI/2
+                'angle_max': 3.1415,  # M_PI/2
+                'angle_increment': 0.0087,  # M_PI/360.0
+                'scan_time': 0.3333,
+                'range_min': 0.45,
+                'range_max': 30.0,
+                'use_inf': True,
+                'inf_epsilon': 1.0
+            }],
+        )
+        return_arg_list += [scan_to_pcl, pcl_to_scan]
+
+    return return_arg_list + [DeclareLaunchArgument(
         'slam_params_file',
         default_value=param_file_path,
         description='Full path to the ROS2 parameters file to use for all launched nodes'
