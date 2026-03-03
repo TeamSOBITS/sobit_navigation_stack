@@ -155,77 +155,59 @@ Visualization Manager:
               Value: true
             map:
               Value: true
-            sobit_light/L01:
+            sobit_home/arm_left_wrist_roll_link:
               Value: true
-            sobit_light/L02:
+            sobit_home/arm_right_wrist_roll_link:
               Value: true
-            sobit_light/L03:
+            sobit_home/base_footprint:
               Value: true
-            sobit_light/L04:
+            sobit_home/base_link:
               Value: true
-            sobit_light/L05:
+            sobit_home/body_lift_link:
               Value: true
-            sobit_light/L06:
+            sobit_home/lidar_back_base_link:
               Value: true
-            sobit_light/L07:
+            sobit_home/lidar_back_laser:
               Value: true
-            sobit_light/L08:
+            sobit_home/lidar_back_laser_mount:
               Value: true
-            sobit_light/L09:
+            sobit_home/lidar_front_base_link:
               Value: true
-            sobit_light/L10:
+            sobit_home/lidar_front_laser:
               Value: true
-            sobit_light/S01:
+            sobit_home/lidar_front_laser_mount:
               Value: true
-            sobit_light/S01_home:
+            sobit_home/odom:
               Value: true
-            sobit_light/S02:
+            sobit_home/plate_bottom_link:
               Value: true
-            sobit_light/S02_home:
+            sobit_home/plate_middle_link:
               Value: true
-            sobit_light/__CHARGER__:
+            sobit_home/plate_top_link:
               Value: true
-            sobit_light/base_footprint:
+            sobit_home/wheel_drive_b_l_link:
               Value: true
-            sobit_light/base_l_drive_wheel_link:
+            sobit_home/wheel_drive_b_r_link:
               Value: true
-            sobit_light/base_link:
+            sobit_home/wheel_drive_f_l_link:
               Value: true
-            sobit_light/base_r_drive_wheel_link:
+            sobit_home/wheel_drive_f_r_link:
               Value: true
-            sobit_light/camera_back:
+            sobit_home/wheel_steer_b_l_link:
               Value: true
-            sobit_light/camera_back_link:
+            sobit_home/wheel_steer_b_r_link:
               Value: true
-            sobit_light/camera_front:
+            sobit_home/wheel_steer_base_b_l_link:
               Value: true
-            sobit_light/camera_front_link:
+            sobit_home/wheel_steer_base_b_r_link:
               Value: true
-            sobit_light/docking_link:
+            sobit_home/wheel_steer_base_f_l_link:
               Value: true
-            sobit_light/global_map-grid-base:
+            sobit_home/wheel_steer_base_f_r_link:
               Value: true
-            sobit_light/home:
+            sobit_home/wheel_steer_f_l_link:
               Value: true
-            sobit_light/imu_link:
-              Value: true
-            sobit_light/laser_frame:
-              Value: true
-            sobit_light/laser_link:
-              Value: true
-            sobit_light/layout_offset:
-              Value: true
-            sobit_light/lidar_center_frame:
-              Value: true
-            sobit_light/local_map-grid-base:
-              Value: true
-            sobit_light/local_map-lidar-map-grid-base:
-              Value: true
-            sobit_light/odom:
-              Value: true
-            sobit_light/tof_camera:
-              Value: true
-            sobit_light/tof_link:
+            sobit_home/wheel_steer_f_r_link:
               Value: true
           Marker Scale: 1
           Name: Location TF viewer
@@ -242,68 +224,42 @@ Visualization Manager:
                 {}
               living_room#side_table:
                 {}
-              sobit_light/L01:
-                {}
-              sobit_light/L02:
-                {}
-              sobit_light/L03:
-                {}
-              sobit_light/L04:
-                {}
-              sobit_light/L05:
-                {}
-              sobit_light/L06:
-                {}
-              sobit_light/L07:
-                {}
-              sobit_light/L08:
-                {}
-              sobit_light/L09:
-                {}
-              sobit_light/L10:
-                {}
-              sobit_light/S01:
-                {}
-              sobit_light/S01_home:
-                {}
-              sobit_light/S02:
-                {}
-              sobit_light/S02_home:
-                {}
-              sobit_light/global_map-grid-base:
-                {}
-              sobit_light/layout_offset:
-                sobit_light/home:
-                  sobit_light/__CHARGER__:
-                    {}
-              sobit_light/odom:
-                sobit_light/base_footprint:
-                  sobit_light/base_link:
-                    sobit_light/base_l_drive_wheel_link:
-                      {}
-                    sobit_light/base_r_drive_wheel_link:
-                      {}
-                    sobit_light/camera_back_link:
-                      sobit_light/camera_back:
+              sobit_home/odom:
+                sobit_home/base_footprint:
+                  sobit_home/base_link:
+                    sobit_home/plate_middle_link:
+                      sobit_home/lidar_back_base_link:
+                        sobit_home/lidar_back_laser_mount:
+                          sobit_home/lidar_back_laser:
+                            {}
+                      sobit_home/lidar_front_base_link:
+                        sobit_home/lidar_front_laser_mount:
+                          sobit_home/lidar_front_laser:
+                            {}
+                      sobit_home/plate_bottom_link:
                         {}
-                    sobit_light/camera_front_link:
-                      sobit_light/camera_front:
-                        {}
-                    sobit_light/docking_link:
-                      {}
-                    sobit_light/imu_link:
-                      {}
-                    sobit_light/laser_link:
-                      sobit_light/laser_frame:
-                        sobit_light/lidar_center_frame:
-                          {}
-                    sobit_light/tof_link:
-                      sobit_light/tof_camera:
-                        {}
-                sobit_light/local_map-grid-base:
-                  {}
-                sobit_light/local_map-lidar-map-grid-base:
-                  {}
+                      sobit_home/plate_top_link:
+                        sobit_home/body_lift_link:
+                          sobit_home/arm_left_wrist_roll_link:
+                            {}
+                          sobit_home/arm_right_wrist_roll_link:
+                            {}
+                      sobit_home/wheel_steer_base_b_l_link:
+                        sobit_home/wheel_steer_b_l_link:
+                          sobit_home/wheel_drive_b_l_link:
+                            {}
+                      sobit_home/wheel_steer_base_b_r_link:
+                        sobit_home/wheel_steer_b_r_link:
+                          sobit_home/wheel_drive_b_r_link:
+                            {}
+                      sobit_home/wheel_steer_base_f_l_link:
+                        sobit_home/wheel_steer_f_l_link:
+                          sobit_home/wheel_drive_f_l_link:
+                            {}
+                      sobit_home/wheel_steer_base_f_r_link:
+                        sobit_home/wheel_steer_f_r_link:
+                          sobit_home/wheel_drive_f_r_link:
+                            {}
           Update Interval: 0
           Value: true
       Enabled: true
@@ -365,8 +321,7 @@ Visualization Manager:
           Enabled: true
           Name: MPPI Controller
           Namespaces:
-            Candidate Trajectories: true
-            Optimal Trajectory: true
+            {}
           Topic:
             Depth: 5
             Durability Policy: Volatile
@@ -395,7 +350,128 @@ Visualization Manager:
             Expand Joint Details: false
             Expand Link Details: false
             Expand Tree: false
-            Link Tree Style: ""
+            Link Tree Style: Links in Alphabetic Order
+            arm_left_wrist_roll_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            arm_right_wrist_roll_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            base_footprint:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            base_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            body_lift_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            lidar_back_base_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            lidar_back_laser:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            lidar_back_laser_mount:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            lidar_front_base_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            lidar_front_laser:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            lidar_front_laser_mount:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            plate_bottom_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            plate_middle_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            plate_top_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_drive_b_l_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_drive_b_r_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_drive_f_l_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_drive_f_r_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_b_l_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_b_r_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_base_b_l_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_base_b_r_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_base_f_l_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_base_f_r_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_f_l_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            wheel_steer_f_r_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
           Mass Properties:
             Inertia: false
             Mass: false
@@ -407,14 +483,14 @@ Visualization Manager:
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 10
-            Min Value: -10
+            Max Value: 0
+            Min Value: 0
             Value: true
           Axis: Z
           Channel Name: intensity
           Class: rviz_default_plugins/LaserScan
           Color: 255; 0; 0
-          Color Transformer: ""
+          Color Transformer: FlatColor
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
@@ -423,7 +499,7 @@ Visualization Manager:
           Min Color: 0; 0; 0
           Min Intensity: 0
           Name: LiDAR Points
-          Position Transformer: ""
+          Position Transformer: XYZ
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.029999999329447746
@@ -815,11 +891,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 76.89966583251953
+      Scale: 96.20198822021484
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: 0
-      Y: 0
+      X: 2.133584499359131
+      Y: -0.44127827882766724
     Saved: ~
 Window Geometry:
   Displays:
@@ -829,7 +905,7 @@ Window Geometry:
   Hide Right Dock: true
   Navigation 2:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a00000227fc0200000009fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afc0000003d00000227000001e90100001cfa000000000100000002fb00000018004e0061007600690067006100740069006f006e002000320100000000ffffffff0000012800fffffffb000000100044006900730070006c00610079007301000000000000016a0000015600fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001e005200650061006c00730065006e0073006500430061006d00650072006100000002c6000000c10000000000000000000000010000010f00000227fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d00000227000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000051000000039fc0100000002fb0000000800540069006d00650100000000000005100000022700fffffffb0000000800540069006d00650100000000000004500000000000000000000003a00000022700000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a00000227fc0200000009fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afc0000003d00000227000001fc0100001cfa000000010100000002fb00000018004e0061007600690067006100740069006f006e002000320100000000ffffffff0000012b00fffffffb000000100044006900730070006c00610079007301000000000000016a0000015600fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001e005200650061006c00730065006e0073006500430061006d00650072006100000002c6000000c10000000000000000000000010000010f00000227fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d00000227000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000051000000039fc0100000002fb0000000800540069006d00650100000000000005100000022700fffffffb0000000800540069006d00650100000000000004500000000000000000000003a00000022700000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
