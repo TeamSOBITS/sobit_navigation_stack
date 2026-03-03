@@ -226,13 +226,24 @@ local_costmap:
         z_voxels: 16
         max_obstacle_height: 2.0
         mark_threshold: 0
-        observation_sources: scan # rgbd
+        observation_sources: scan rgbd
         scan:
           topic: /scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
+          raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.0
+        rgbd:
+          topic: /hsrb/head_rgbd_sensor/depth_registered/points
+          max_obstacle_height: 1.5
+          min_obstacle_height: 0.1
+          clearing: True
+          marking: True
+          data_type: "PointCloud2"
           raytrace_max_range: 3.0
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
@@ -262,13 +273,24 @@ global_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        observation_sources: scan # rgbd
+        observation_sources: scan rgbd
         scan:
           topic: /scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
+          raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 2.5
+          obstacle_min_range: 0.0
+        rgbd:
+          topic: /hsrb/head_rgbd_sensor/depth_registered/points
+          max_obstacle_height: 1.5
+          min_obstacle_height: 0.1
+          clearing: True
+          marking: True
+          data_type: "PointCloud2"
           raytrace_max_range: 3.0
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
@@ -523,11 +545,11 @@ head_angle_publisher_node:
 
 head_controller_node:
   ros__parameters:
-    head_trajectory_topic: "TODO"
-    head_pan_joint_name: "TODO"
-    head_tilt_joint_name: "TODO"
-    max_pan_limit: 0.0
-    min_pan_limit: 0.0
-    max_tilt_limit: 0.0
-    min_tilt_limit: 0.0
-    tilt_angle_navigating: 0.0
+    head_trajectory_topic: "/hsrb/head_trajectory_controller/command"
+    head_pan_joint_name: "head_pan_joint"
+    head_tilt_joint_name: "head_tilt_joint"
+    max_pan_limit: 1.74
+    min_pan_limit: -3.141592
+    max_tilt_limit: 0.47
+    min_tilt_limit: -0.9
+    tilt_angle_navigating: -0.9

@@ -60,6 +60,7 @@ def generate_launch_description():
     initial_y = LaunchConfiguration('initial_y')  # SOBITS Customize
     initial_yaw = LaunchConfiguration('initial_yaw')  # SOBITS Customize
     velocity_topic_name = LaunchConfiguration('velocity_topic_name')  # SOBITS Customize
+    custom_costmap_layer = LaunchConfiguration('custom_costmap_layer')  # SOBITS Customize
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
     # In case of the transforms (tf), currently, there doesn't seem to be a better alternative
@@ -202,6 +203,12 @@ def generate_launch_description():
         default_value="0.0",
         description='initial rotation(yaw) on the map')
 
+    declare_custom_costmap_layer_cmd = DeclareLaunchArgument(
+        'custom_costmap_layer',
+        default_value=["scan"],
+        # default_value=["scan", "rgbd"],
+        description='Custom Costmap Layer for Global and Local Costmap')
+
     # Specify the actions
     bringup_cmd_group = GroupAction(
         [
@@ -211,7 +218,8 @@ def generate_launch_description():
                 name='nav2_container',
                 package='rclcpp_components',
                 executable='component_container_isolated',
-                parameters=[configured_params, {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map}],
+                parameters=[configured_params, {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map, 'voxel_layer.observation_sources': custom_costmap_layer, 'obstacle_layer.observation_sources': custom_costmap_layer,}],
+                # parameters=[configured_params, {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map,}],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
                 output='screen',
@@ -315,6 +323,7 @@ def generate_launch_description():
     ld.add_action(declare_initial_x_cmd)  # SOBITS Customize
     ld.add_action(declare_initial_y_cmd)  # SOBITS Customize
     ld.add_action(declare_initial_yaw_cmd)  # SOBITS Customize
+    ld.add_action(declare_custom_costmap_layer_cmd)  # SOBITS Customize
 
 
     # Add the actions to launch all of the navigation nodes
