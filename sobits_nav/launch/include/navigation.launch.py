@@ -64,7 +64,7 @@ def generate_launch_description():
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
 
     # Create our own temporary YAML files that include substitutions
-    param_substitutions = {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map} ## TODO: use_sim_time too...???
+    param_substitutions = {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map, 'use_sim_time': use_sim_time}
 
     configured_params = ParameterFile(
         RewrittenYaml(

@@ -84,7 +84,7 @@ def generate_launch_description():
         RewrittenYaml(
             source_file=params_file,
             root_key=namespace,
-            param_rewrites={},
+            param_rewrites={'use_sim_time': use_sim_time},
             convert_types=True,
         ),
         allow_substs=True,
