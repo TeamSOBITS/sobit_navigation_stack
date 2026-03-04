@@ -14,6 +14,7 @@
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
+#include <chrono>
 using namespace std;
 using namespace std::chrono_literals;
 
@@ -26,6 +27,7 @@ class LocationFileViewer : public rclcpp::Node {
         tf2_ros::TransformBroadcaster       dynamic_tfBroadcaster_;
         tf2_ros::StaticTransformBroadcaster static_tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
+        rclcpp::TimerBase::SharedPtr timer_;
 
         std::string file_name_;
         bool dynamic_tf = false;
@@ -38,6 +40,7 @@ class LocationFileViewer : public rclcpp::Node {
         void callback_add_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
         void callback_delete_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
         void publishTF();
+        void timer_callback();
     };
 
 // ロケーションファイルを読み込む関数
@@ -191,6 +194,14 @@ void LocationFileViewer::publishTF() {
 }
 
 
+void LocationFileViewer::timer_callback() {
+    for (auto& pose : location_poses_) {
+        pose.header.stamp = this->now();
+        dynamic_tfBroadcaster_.sendTransform(pose);
+    }
+}
+
+
 LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), dynamic_tfBroadcaster_(this), static_tfBroadcaster_(this) {
     sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callback_file_path, this, std::placeholders::_1));
     server_add_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/add_location", std::bind(&LocationFileViewer::callback_add_location, this, std::placeholders::_1, std::placeholders::_2));
@@ -202,17 +213,7 @@ LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), dynamic
     if (file_name_ == "") dynamic_tf = true;
     else loadLocationFile();
 
-    if (dynamic_tf) {
-        rclcpp::Rate loop_rate(10);
-        while (rclcpp::ok()) {
-            rclcpp::spin_some(this->get_node_base_interface());
-            for (auto& pose : location_poses_) {
-                pose.header.stamp = this->now();
-                dynamic_tfBroadcaster_.sendTransform(pose);
-            }
-            loop_rate.sleep();
-        }
-    }
+    if (dynamic_tf) timer_ = this->create_wall_timer(100ms, std::bind(&LocationFileViewer::timer_callback, this));
 }
 
 
