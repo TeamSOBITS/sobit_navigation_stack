@@ -1,49 +1,37 @@
 location_pose:
-  "living_room#side_table": 
+  "dining_table": 
     frame_id: "map"
     translation: 
-      x: 2.1433237
-      y: 0.7329442
+      x: 4.8665709
+      y: -3.7895026
       z: 0.0000000
     rotation: 
       x: 0.0000000
       y: 0.0000000
-      z: -0.7071081
-      w: 0.7071055
+      z: 0.9999860
+      w: 0.0052836
 
-  "bedroom#bed": 
+  "bed_room": 
     frame_id: "map"
     translation: 
-      x: 6.8119822
-      y: -5.5394011
+      x: 1.7006328
+      y: 0.1721902
       z: 0.0000000
     rotation: 
       x: 0.0000000
       y: 0.0000000
-      z: 0.7020732
-      w: 0.7121048
+      z: 0.7073882
+      w: 0.7068252
 
-  "human_position": 
+  "exit": 
     frame_id: "map"
     translation: 
-      x: -0.0732893
-      y: 0.0751197
+      x: 1.0342758
+      y: -3.9857407
       z: 0.0000000
     rotation: 
       x: 0.0000000
       y: 0.0000000
-      z: 0.9999934
-      w: 0.0036249
-
-  "living_room#glass_table": 
-    frame_id: "map"
-    translation: 
-      x: 2.8986993
-      y: 2.3074467
-      z: 0.0000000
-    rotation: 
-      x: 0.0000000
-      y: 0.0000000
-      z: 0.7071055
-      w: 0.7071081
+      z: -0.9999593
+      w: 0.0090172
 

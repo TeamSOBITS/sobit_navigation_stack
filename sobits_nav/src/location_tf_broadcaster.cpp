@@ -250,7 +250,7 @@ void LocationFileViewer::timer_callback() {
         // color addition config
         if ((goal_pose_.position.x != NAN) && (goal_pose_.position.y != NAN) && (goal_pose_.position.z != NAN)) {
             // TODO : judge of orientation too...
-            if (std::sqrt(std::pow(goal_pose_.position.x - pose.transform.translation.x, 2.) + std::pow(goal_pose_.position.y - pose.transform.translation.y, 2.)) < 0.1) {
+            if (std::sqrt(std::pow(goal_pose_.position.x - pose.transform.translation.x, 2.) + std::pow(goal_pose_.position.y - pose.transform.translation.y, 2.)) < 0.3) {
                 marker.color.r = 1.0;
                 marker.color.g = 0.18;
                 marker.color.b = 1.0;
@@ -273,18 +273,18 @@ LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), dynamic
 
     template_marker_.type = visualization_msgs::msg::Marker::ARROW;
     template_marker_.action = visualization_msgs::msg::Marker::ADD;
-    template_marker_.scale.x = 0.5; 
-    template_marker_.scale.y = 0.1;
-    template_marker_.scale.z = 0.1;
-    template_marker_.color.r = 0.0;
-    template_marker_.color.g = 0.0;
+    template_marker_.scale.x = 0.35; 
+    template_marker_.scale.y = 0.15;
+    template_marker_.scale.z = 0.15;
+    template_marker_.color.r = 0.1;
+    template_marker_.color.g = 0.1;
     template_marker_.color.b = 1.0;
     template_marker_.color.a = 1.0;
     template_marker_.lifetime = rclcpp::Duration::from_seconds(0.1);
 
     template_text_.type = visualization_msgs::msg::Marker::TEXT_VIEW_FACING;
     template_text_.action = visualization_msgs::msg::Marker::ADD;
-    template_text_.scale.z = 0.15; 
+    template_text_.scale.z = 0.25;
     template_text_.color.r = 0.0;
     template_text_.color.g = 0.0;
     template_text_.color.b = 0.0;
