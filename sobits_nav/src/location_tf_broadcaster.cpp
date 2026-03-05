@@ -1,19 +1,28 @@
 #include <rclcpp/rclcpp.hpp>
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
+
+#include <geometry_msgs/msg/pose.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <geometry_msgs/msg/quaternion.hpp>
+
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/static_transform_broadcaster.h>
-#include <nav2_msgs/srv/set_initial_pose.hpp>
-#include <std_msgs/msg/string.hpp>
-#include <yaml-cpp/yaml.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 
+#include <nav2_msgs/srv/set_initial_pose.hpp>
+#include <nav_msgs/msg/path.hpp>
+#include <visualization_msgs/msg/marker_array.hpp>
+#include <visualization_msgs/msg/marker.hpp>
+#include <std_msgs/msg/string.hpp>
+#include <yaml-cpp/yaml.h>
+
+#include <chrono>
 using namespace std;
 using namespace std::chrono_literals;
 
@@ -21,14 +30,20 @@ using namespace std::chrono_literals;
 class LocationFileViewer : public rclcpp::Node {
     private:
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_location_file_path_;
+        rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr sub_global_path_;
+        rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_marker_;
         rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_add_location_;
         rclcpp::Service<nav2_msgs::srv::SetInitialPose>::SharedPtr server_delete_location_;
         tf2_ros::TransformBroadcaster       dynamic_tfBroadcaster_;
         tf2_ros::StaticTransformBroadcaster static_tfBroadcaster_;
         std::vector<geometry_msgs::msg::TransformStamped> location_poses_;
+        visualization_msgs::msg::MarkerArray marker_array_;
+        visualization_msgs::msg::Marker template_marker_, template_text_;
+        rclcpp::TimerBase::SharedPtr timer_;
 
         std::string file_name_;
         bool dynamic_tf = false;
+        geometry_msgs::msg::Pose goal_pose_;
 
         bool loadLocationFile();
         void callback_file_path(const std_msgs::msg::String::SharedPtr msg);
@@ -38,9 +53,11 @@ class LocationFileViewer : public rclcpp::Node {
         void callback_add_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
         void callback_delete_location(const std::shared_ptr<nav2_msgs::srv::SetInitialPose::Request> request, std::shared_ptr<nav2_msgs::srv::SetInitialPose::Response> response);
         void publishTF();
+        void callback_global_path(const nav_msgs::msg::Path::SharedPtr msg);
+        void timer_callback();
     };
 
-// ロケーションファイルを読み込む関数
+// Read location file
 bool LocationFileViewer::loadLocationFile() {
     if (file_name_ == "") return false;
     try {
@@ -191,28 +208,98 @@ void LocationFileViewer::publishTF() {
 }
 
 
+void LocationFileViewer::callback_global_path(const nav_msgs::msg::Path::SharedPtr msg) {
+    // for (int i=0; i < msg->poses.size(); i++) {}
+    if (msg->poses.size() == 0) return;
+    goal_pose_ = msg->poses[msg->poses.size()-1].pose;
+}
+
+
+void LocationFileViewer::timer_callback() {
+    marker_array_.markers.resize(location_poses_.size()*2);
+
+    for (size_t i = 0; i < location_poses_.size(); ++i) {
+        auto& pose = location_poses_[i];
+        auto& marker = marker_array_.markers[i] = template_marker_;
+        auto& text = marker_array_.markers[location_poses_.size() + i] = template_text_;
+
+
+        if (dynamic_tf) {
+            pose.header.stamp = this->now();
+            dynamic_tfBroadcaster_.sendTransform(pose);
+        }
+
+        marker.header = pose.header;
+        marker.header.stamp = this->now();
+        marker.ns = pose.child_frame_id;
+        marker.id = i;
+
+        marker.pose.position.x = pose.transform.translation.x;
+        marker.pose.position.y = pose.transform.translation.y;
+        marker.pose.position.z = pose.transform.translation.z;
+        marker.pose.orientation = pose.transform.rotation;
+
+        text.header = pose.header;
+        text.header.stamp = this->now();
+        text.ns = pose.child_frame_id + "_label";
+        text.id = i;
+        text.pose = marker.pose;
+        text.pose.position.z += 0.3;
+        text.text = pose.child_frame_id;
+
+        // color addition config
+        if ((goal_pose_.position.x != NAN) && (goal_pose_.position.y != NAN) && (goal_pose_.position.z != NAN)) {
+            // TODO : judge of orientation too...
+            if (std::sqrt(std::pow(goal_pose_.position.x - pose.transform.translation.x, 2.) + std::pow(goal_pose_.position.y - pose.transform.translation.y, 2.)) < 0.3) {
+                marker.color.r = 1.0;
+                marker.color.g = 0.18;
+                marker.color.b = 1.0;
+                text.color.r = 0.0;
+                text.color.g = 0.0;
+                text.color.b = 1.0;
+            }
+        }
+    }
+    pub_marker_->publish(marker_array_);
+}
+
+
 LocationFileViewer::LocationFileViewer() : Node("location_file_viewer"), dynamic_tfBroadcaster_(this), static_tfBroadcaster_(this) {
     sub_location_file_path_ = this->create_subscription<std_msgs::msg::String>("/location_file_path", 1, std::bind(&LocationFileViewer::callback_file_path, this, std::placeholders::_1));
+    sub_global_path_ = this->create_subscription<nav_msgs::msg::Path>("/plan", 1, std::bind(&LocationFileViewer::callback_global_path, this, std::placeholders::_1));
+    pub_marker_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("location_arrows", 1);
     server_add_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/add_location", std::bind(&LocationFileViewer::callback_add_location, this, std::placeholders::_1, std::placeholders::_2));
     server_delete_location_ = this->create_service<nav2_msgs::srv::SetInitialPose>("/delete_location", std::bind(&LocationFileViewer::callback_delete_location, this, std::placeholders::_1, std::placeholders::_2));
+
+    template_marker_.type = visualization_msgs::msg::Marker::ARROW;
+    template_marker_.action = visualization_msgs::msg::Marker::ADD;
+    template_marker_.scale.x = 0.35; 
+    template_marker_.scale.y = 0.15;
+    template_marker_.scale.z = 0.15;
+    template_marker_.color.r = 0.1;
+    template_marker_.color.g = 0.1;
+    template_marker_.color.b = 1.0;
+    template_marker_.color.a = 1.0;
+    template_marker_.lifetime = rclcpp::Duration::from_seconds(0.1);
+
+    template_text_.type = visualization_msgs::msg::Marker::TEXT_VIEW_FACING;
+    template_text_.action = visualization_msgs::msg::Marker::ADD;
+    template_text_.scale.z = 0.25;
+    template_text_.color.r = 0.0;
+    template_text_.color.g = 0.0;
+    template_text_.color.b = 0.0;
+    template_text_.color.a = 1.0;
+    template_text_.lifetime = rclcpp::Duration::from_seconds(0.1);
 
     this->declare_parameter<std::string>("location_file_path", "");
     this->get_parameter("location_file_path", file_name_);
 
+    goal_pose_.position.x = goal_pose_.position.y = goal_pose_.position.z = NAN;
+
     if (file_name_ == "") dynamic_tf = true;
     else loadLocationFile();
 
-    if (dynamic_tf) {
-        rclcpp::Rate loop_rate(10);
-        while (rclcpp::ok()) {
-            rclcpp::spin_some(this->get_node_base_interface());
-            for (auto& pose : location_poses_) {
-                pose.header.stamp = this->now();
-                dynamic_tfBroadcaster_.sendTransform(pose);
-            }
-            loop_rate.sleep();
-        }
-    }
+    timer_ = this->create_wall_timer(100ms, std::bind(&LocationFileViewer::timer_callback, this));
 }
 
 

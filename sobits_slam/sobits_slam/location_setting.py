@@ -326,7 +326,7 @@ class LocationSetting(Node):
 
 
     def select_location_file(self):
-        proc = Popen(["zenity", "--file-selection", "--save", "--confirm-overwrite", "--filename=/home/" + str(os.getenv("USER")) + "/colcon_ws/src/sobits_navigation_stack/sobits_slam/location/location_example.yaml"],
+        proc = Popen(["zenity", "--file-selection", "--save", "--confirm-overwrite", "--filename=/home/" + str(os.getenv("USERNAME")) + "/colcon_ws/src/sobits_navigation_stack/sobits_slam/location/location_example.yaml"],
             stdout=PIPE,
             shell=False)
         out, err = proc.communicate()

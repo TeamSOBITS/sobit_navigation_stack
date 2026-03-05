@@ -35,7 +35,41 @@ from nav2_common.launch import ReplaceString, RewrittenYaml
 
 
 def generate_launch_description():
-    # Get the launch directory
+
+    ############################## Customizable parameters ##############################
+
+    # Select of Robot Name
+    robot_name_val = "sobit_home"
+    # "sobit_home" "sobit_pro" "sobit_edu" "sobit_mini" "sobit_light" "hsrb_robot" "hsr_sim" #
+
+    # Starting Point on the Map
+    start_x   = 0.0
+    start_y   = 0.0
+    start_yaw = 0.0
+
+    # Map File Path
+    map_file = os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml')
+
+    # Location File Path
+    location_file = os.path.join(get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml')
+
+    # Use Gazebo
+    use_gazebo = False
+
+    # Customize of Costmaps
+    cost_map = ["scan"]
+    # "scan" "rgbd" TODO: "out_color" "objects"
+
+    # Keepout Filter Map Config
+    use_keepoutmap = False
+    keepout_map_file = os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml')
+
+    # Pan-Tilt Movement Config
+    use_pantilt_move = False
+
+    #####################################################################################
+
+
 
     # Create the launch configuration variables
     robot_name = LaunchConfiguration('robot_name')  # SOBITS Customize
@@ -96,13 +130,7 @@ def generate_launch_description():
 
     declare_robot_name_cmd = DeclareLaunchArgument(
         'robot_name',
-        default_value="sobit_home",
-        # default_value="sobit_pro",
-        # default_value="sobit_edu",
-        # default_value="sobit_mini",
-        # default_value="sobit_light",
-        # default_value="hsr_sim",
-        # default_value="hsrb_robot",
+        default_value=robot_name_val,
         description='TODO: merge of namespace param.....'
     )
 
@@ -122,25 +150,25 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example.yaml'),
+        default_value=map_file,
         description='Full path to map yaml file to load'
     )
 
     declare_keepout_map_yaml_cmd = DeclareLaunchArgument(
         'keepout_map',
-        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'map', 'map_example_keepout_mask.yaml'),
+        default_value=keepout_map_file,
         description='Full path to map yaml file to load for keepout filtered map'
     )
 
     declare_use_keepout_map_cmd = DeclareLaunchArgument(
         'use_keepout_map',
-        default_value='false',
+        default_value=str(use_keepoutmap),
         description='Whether to use of keepout map',
     )
 
     declare_location_yaml_cmd = DeclareLaunchArgument(
         'location',
-        default_value=os.path.join(get_package_share_directory('sobits_slam'), 'location', 'location_example.yaml'),
+        default_value=location_file,
         description='Full path to location yaml file to load on the map'
     )
 
@@ -157,7 +185,7 @@ def generate_launch_description():
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='false',
+        default_value=str(use_gazebo),
         description='Use simulation (Gazebo) clock if true',
     )
 
@@ -184,29 +212,28 @@ def generate_launch_description():
     )
 
     declare_use_flex_nav_cmd = DeclareLaunchArgument(
-        'use_flex_nav', default_value='False',
+        'use_flex_nav', default_value=str(use_pantilt_move),
         description='Whether to use pan-tilt movement in the navigate'
     )
 
     declare_initial_x_cmd = DeclareLaunchArgument(
         'initial_x',
-        default_value="0.0",
+        default_value=str(float(start_x)),
         description='initial point x on the map')
 
     declare_initial_y_cmd = DeclareLaunchArgument(
         'initial_y',
-        default_value="0.0",
+        default_value=str(float(start_y)),
         description='initial point y on the map')
 
     declare_initial_yaw_cmd = DeclareLaunchArgument(
         'initial_yaw',
-        default_value="0.0",
+        default_value=str(float(start_yaw)),
         description='initial rotation(yaw) on the map')
 
     declare_custom_costmap_layer_cmd = DeclareLaunchArgument(
         'custom_costmap_layer',
-        default_value=["scan"],
-        # default_value=["scan", "rgbd"],
+        default_value=cost_map,
         description='Custom Costmap Layer for Global and Local Costmap')
 
     # Specify the actions
