@@ -548,8 +548,9 @@ head_controller_node:
     head_trajectory_topic: "TODO"
     head_pan_joint_name: "TODO"
     head_tilt_joint_name: "TODO"
-    max_pan_limit: 0.0
-    min_pan_limit: 0.0
-    max_tilt_limit: 0.0
-    min_tilt_limit: 0.0
-    tilt_angle_navigating: 0.0
+    max_pan_limit: 1.571
+    min_pan_limit: -1.571
+    max_tilt_limit: 1.0
+    min_tilt_limit: -1.0
+    tilt_angle_navigating: 0.5
+    head_rotation_type: "rpy"
