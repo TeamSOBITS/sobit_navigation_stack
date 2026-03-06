@@ -384,6 +384,8 @@ def generate_launch_description():
     ld.add_action(declare_container_name_cmd)
     ld.add_action(declare_use_respawn_cmd)
     ld.add_action(declare_log_level_cmd)
+    ld.add_action(declare_keepout_map_yaml_cmd)
+    ld.add_action(declare_use_keepout_map_cmd)
     ld.add_action(declare_initial_x_cmd)
     ld.add_action(declare_initial_y_cmd)
     ld.add_action(declare_initial_yaw_cmd)

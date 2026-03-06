@@ -272,6 +272,9 @@ def generate_launch_description():
                 launch_arguments={
                     'namespace': namespace,
                     'map': map_yaml_file,
+                    'initial_x': initial_x,
+                    'initial_y': initial_y,
+                    'initial_yaw': initial_yaw,
                     'keepout_map': keepout_map_yaml_file,  # SOBITS Customize
                     'use_keepout_map': use_keepout_map,  # SOBITS Customize
                     'use_sim_time': use_sim_time,
@@ -313,6 +316,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('flex_nav'), 'launch', 'flex_nav.launch.py')
         ),
+        condition=IfCondition(use_flex_nav),
         launch_arguments={'robot_name': robot_name, 'use_sim_time': use_sim_time,}.items(),
     )
 
