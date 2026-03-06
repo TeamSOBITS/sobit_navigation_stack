@@ -546,7 +546,7 @@ head_angle_publisher_node:
 head_controller_node:
   ros__parameters:
     use_sim_time: False
-    head_trajectory_topic: "/sobit_home/joint_trajectory_controller/joint_trajectory"
+    head_trajectory_topic: "/sobit_home/head_position_controller/joint_trajectory"
     head_pan_joint_name: "head_pan_joint"
     head_tilt_joint_name: "head_tilt_joint"
     max_pan_limit: 0.773
@@ -554,3 +554,4 @@ head_controller_node:
     max_tilt_limit: 0.773
     min_tilt_limit: -0.773
     tilt_angle_navigating: -0.773
+    head_rotation_type: "pan_tilt" # "pan_tilt" # "rpy"

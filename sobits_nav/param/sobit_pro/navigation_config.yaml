@@ -555,3 +555,4 @@ head_controller_node:
     max_tilt_limit: 1.57
     min_tilt_limit: -1.0
     tilt_angle_navigating: -0.9
+    head_rotation_type: "pan_tilt" # "pan_tilt" # "rpy"
