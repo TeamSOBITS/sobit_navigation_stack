@@ -545,11 +545,11 @@ head_angle_publisher_node:
 
 head_controller_node:
   ros__parameters:
-    head_trajectory_topic: "TODO"
-    head_pan_joint_name: "TODO"
-    head_tilt_joint_name: "TODO"
-    max_pan_limit: 0.0
-    min_pan_limit: 0.0
-    max_tilt_limit: 0.0
-    min_tilt_limit: 0.0
-    tilt_angle_navigating: 0.0
+    head_trajectory_topic: "/sobit_mini/head_position_controller/joint_trajectory"
+    head_pan_joint_name: "head_camera_pan_joint"
+    head_tilt_joint_name: "head_camera_tilt_joint"
+    max_pan_limit: 0.755
+    min_pan_limit: -0.755
+    max_tilt_limit: 0.15
+    min_tilt_limit: -0.35
+    tilt_angle_navigating: -0.15
