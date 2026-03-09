@@ -545,9 +545,9 @@ head_angle_publisher_node:
 
 head_controller_node:
   ros__parameters:
-    head_trajectory_topic: "TODO"
-    head_pan_joint_name: "TODO"
-    head_tilt_joint_name: "TODO"
+    head_trajectory_topic: "/sobit_light/head_position_controller/joint_trajectory"
+    head_pan_joint_name: "head_yaw_joint"
+    head_tilt_joint_name: "head_pitch_joint"
     max_pan_limit: 1.571
     min_pan_limit: -1.571
     max_tilt_limit: 1.0
