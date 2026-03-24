@@ -27,10 +27,11 @@ from launch.actions import (
 
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PythonExpression
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.actions import PushROSNamespace
 from launch_ros.descriptions import ParameterFile
+from launch_ros.substitutions import FindPackageShare
 from nav2_common.launch import ReplaceString, RewrittenYaml
 
 
@@ -82,8 +83,12 @@ def generate_launch_description():
     location_yaml_file = LaunchConfiguration('location')  # SOBITS Customize
     use_rviz = LaunchConfiguration('use_rviz')  # SOBITS Customize
     use_sim_time = LaunchConfiguration('use_sim_time')
-    params_file = LaunchConfiguration('params_file')
-    slamtool_param_file = LaunchConfiguration('slamtool_param_file')
+    params_file = PathJoinSubstitution(
+        [FindPackageShare('sobits_nav'), 'param', robot_name, 'navigation_config.yaml']
+    )
+    slamtool_param_file = PathJoinSubstitution(
+        [FindPackageShare('sobits_slam'), 'param', robot_name, 'slamtool_config.yaml']
+    )
     autostart = LaunchConfiguration('autostart')
     use_composition = LaunchConfiguration('use_composition')
     use_respawn = LaunchConfiguration('use_respawn')
@@ -369,8 +374,6 @@ def generate_launch_description():
 
 def declare_param_file(context, *args, **kwargs):
     robot_name_value = LaunchConfiguration('robot_name').perform(context)
-    param_file_path = os.path.join(get_package_share_directory('sobits_nav'), 'param', robot_name_value, 'navigation_config.yaml')
-    slamtool_param_file_path = os.path.join(get_package_share_directory('sobits_slam'), 'param', robot_name_value, 'slamtool_config.yaml')
 
     if   ("home"    in robot_name_value): velocity_topic_name = "/" + robot_name_value + "/cmd_vel"
     elif ("pro"     in robot_name_value): velocity_topic_name = "/" + robot_name_value + "/cmd_vel"
@@ -381,7 +384,5 @@ def declare_param_file(context, *args, **kwargs):
     elif ("hsr_sim" in robot_name_value): velocity_topic_name = "/hsrb/command_velocity"
 
     return [
-            DeclareLaunchArgument('params_file', default_value=param_file_path, description='Full path to the ROS2 parameters file to use for all launched nodes'),
-            DeclareLaunchArgument('slamtool_param_file', default_value=slamtool_param_file_path, description='Full path to the ROS2 parameters file to use for SLAN launched nodes'),
-            DeclareLaunchArgument('velocity_topic_name', default_value=velocity_topic_name, description='Velocity Topic Name.'),
+            SetLaunchConfiguration('velocity_topic_name', velocity_topic_name),
         ]
