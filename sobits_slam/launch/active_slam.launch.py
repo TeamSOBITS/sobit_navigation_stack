@@ -52,7 +52,7 @@ def generate_launch_description():
                             'robot_name': robot_name,
                             'use_rviz': 'False',
                             'use_flex_nav': 'False',
-                            'use_keepout_filter': 'False',
+                            'use_keepout_map': 'False',
                         }.items())
 
     explore_node_cmd = Node(
