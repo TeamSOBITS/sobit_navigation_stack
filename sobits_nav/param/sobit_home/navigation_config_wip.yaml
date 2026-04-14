@@ -6,7 +6,7 @@ amcl:
     alpha3: 0.05
     alpha4: 0.05
     alpha5: 0.025
-    base_frame_id: "sobit_home/base_footprint"
+    base_frame_id: "base_footprint"
     beam_skip_distance: 0.5
     beam_skip_error_threshold: 0.9
     beam_skip_threshold: 0.3
@@ -25,7 +25,7 @@ amcl:
     initial_pose.yaw: 0.0
     max_particles: 2000
     min_particles: 500
-    odom_frame_id: "sobit_home/odom"
+    odom_frame_id: "odom"
     pf_err: 0.05
     pf_z: 0.99
     recovery_alpha_fast: 0.0
@@ -49,7 +49,7 @@ bt_navigator:
   ros__parameters:
     use_sim_time: False
     global_frame: map
-    robot_base_frame: sobit_home/base_footprint
+    robot_base_frame: base_footprint
     odom_topic: /sobit_home/odom
     bt_loop_duration: 10
     default_server_timeout: 20
@@ -201,8 +201,8 @@ local_costmap:
       use_sim_time: False
       update_frequency: 5.0
       publish_frequency: 2.0
-      global_frame: sobit_home/odom
-      robot_base_frame: sobit_home/base_footprint
+      global_frame: odom
+      robot_base_frame: base_footprint
       rolling_window: true
       width: 4
       height: 4
@@ -261,7 +261,7 @@ global_costmap:
       update_frequency: 1.0
       publish_frequency: 1.0
       global_frame: map
-      robot_base_frame: sobit_home/base_footprint
+      robot_base_frame: base_footprint
       robot_radius: 0.35
       resolution: 0.05
       track_unknown_space: true
@@ -364,9 +364,9 @@ behavior_server:
       plugin: "nav2_behaviors::Wait"
     assisted_teleop:
       plugin: "nav2_behaviors::AssistedTeleop"
-    local_frame: sobit_home/odom
+    local_frame: odom
     global_frame: map
-    robot_base_frame: sobit_home/base_footprint
+    robot_base_frame: base_footprint
     transform_tolerance: 0.1
     simulate_ahead_time: 2.0
     max_rotational_vel: 1.0
@@ -428,8 +428,8 @@ velocity_smoother:
 collision_monitor:
   ros__parameters:
     use_sim_time: False
-    base_frame_id: "sobit_home/base_footprint"
-    odom_frame_id: "sobit_home/odom"
+    base_frame_id: "base_footprint"
+    odom_frame_id: "odom"
     cmd_vel_in_topic: "cmd_vel_smoothed"
     cmd_vel_out_topic: "cmd_vel"
     state_topic: "collision_monitor_state"
@@ -467,8 +467,8 @@ docking_server:
     undock_linear_tolerance: 0.05
     undock_angular_tolerance: 0.1
     max_retries: 3
-    base_frame: "sobit_home/base_footprint"
-    fixed_frame: "sobit_home/odom"
+    base_frame: "base_footprint"
+    fixed_frame: "odom"
     dock_backwards: false
     dock_prestaging_tolerance: 0.5
 
@@ -514,10 +514,10 @@ docking_server:
 loopback_simulator:
   ros__parameters:
     use_sim_time: False
-    base_frame_id: "sobit_home/base_footprint"
-    odom_frame_id: "sobit_home/odom"
+    base_frame_id: "base_footprint"
+    odom_frame_id: "odom"
     map_frame_id: "map"
-    scan_frame_id: "sobit_home/base_footprint" # .... multi lidar (Laser Frame) so base frame = base_footprint
+    scan_frame_id: "base_footprint" # .... multi lidar (Laser Frame) so base frame = base_footprint
     update_duration: 0.02
     scan_range_min: 0.05
     scan_range_max: 30.0
@@ -544,7 +544,7 @@ costmap_filter_info_server:
 head_angle_publisher_node:
   ros__parameters:
     use_sim_time: False
-    base_link: "sobit_home/base_footprint"
+    base_link: "base_footprint"
 
 head_controller_node:
   ros__parameters:
