@@ -201,7 +201,10 @@ class RoomPolygonSetting(Node):
 
     def publish_room_markers(self):
         with self.lock:
-            room_polygons_snapshot = dict(self.room_polygons)
+            room_polygons_snapshot = [
+                (room_name, list(polygon))
+                for room_name, polygon in self.room_polygons.items()
+            ]
 
         marker_array = MarkerArray()
         delete_all = Marker()
@@ -209,7 +212,7 @@ class RoomPolygonSetting(Node):
         marker_array.markers.append(delete_all)
 
         timestamp = self.get_clock().now().to_msg()
-        for room_index, (room_name, polygon) in enumerate(room_polygons_snapshot.items()):
+        for room_index, (room_name, polygon) in enumerate(room_polygons_snapshot):
             color_r, color_g, color_b = _room_color(room_index)
 
             line_marker = Marker()
@@ -391,15 +394,16 @@ class RoomPolygonSetting(Node):
         self.publish_room_markers()
 
     def append_point_to_selected_room(self, point, source="GUI"):
-        if self.selected_room is None:
-            self.status_var.set(f"Ignored {source} point because no room is selected.")
-            return
-
         with self.lock:
-            self.room_polygons.setdefault(self.selected_room, []).append(point)
+            if self.selected_room is None:
+                self.status_var.set(f"Ignored {source} point because no room is selected.")
+                return
+
+            selected_room = self.selected_room
+            self.room_polygons.setdefault(selected_room, []).append(point)
         self.refresh_point_list()
         self.status_var.set(
-            f"Added point to {self.selected_room} from {source}: ({point[0]:.3f}, {point[1]:.3f})"
+            f"Added point to {selected_room} from {source}: ({point[0]:.3f}, {point[1]:.3f})"
         )
         self.publish_room_markers()
 
