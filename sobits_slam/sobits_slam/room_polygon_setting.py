@@ -114,7 +114,7 @@ class RoomPolygonSetting(Node):
         self.tk.after(0, lambda: self.append_point_to_selected_room(point, source="/goal_pose"))
 
     def select_config_file(self):
-        default_path = str(_zenity_default_room_info_path())
+        default_path = self.config_path or str(_zenity_default_room_info_path())
         proc = Popen(
             [
                 "zenity",
@@ -132,8 +132,7 @@ class RoomPolygonSetting(Node):
         if selected:
             self.config_path = selected
         else:
-            self.config_path = default_path
-            self.get_logger().info(f"Zenity returned no path. Using default room file: {self.config_path}")
+            self.get_logger().info(f"Zenity cancelled. Keeping existing path: {self.config_path}")
 
     def load_config(self):
         if not self.config_path:
@@ -201,13 +200,16 @@ class RoomPolygonSetting(Node):
         self.publish_room_markers()
 
     def publish_room_markers(self):
+        with self.lock:
+            room_polygons_snapshot = dict(self.room_polygons)
+
         marker_array = MarkerArray()
         delete_all = Marker()
         delete_all.action = Marker.DELETEALL
         marker_array.markers.append(delete_all)
 
         timestamp = self.get_clock().now().to_msg()
-        for room_index, (room_name, polygon) in enumerate(self.room_polygons.items()):
+        for room_index, (room_name, polygon) in enumerate(room_polygons_snapshot.items()):
             color_r, color_g, color_b = _room_color(room_index)
 
             line_marker = Marker()
@@ -222,7 +224,7 @@ class RoomPolygonSetting(Node):
             line_marker.color.r = color_r
             line_marker.color.g = color_g
             line_marker.color.b = color_b
-            line_marker.color.a = 0.0
+            line_marker.color.a = 1.0
             for x, y in polygon:
                 point = Point()
                 point.x = float(x)
@@ -393,7 +395,8 @@ class RoomPolygonSetting(Node):
             self.status_var.set(f"Ignored {source} point because no room is selected.")
             return
 
-        self.room_polygons.setdefault(self.selected_room, []).append(point)
+        with self.lock:
+            self.room_polygons.setdefault(self.selected_room, []).append(point)
         self.refresh_point_list()
         self.status_var.set(
             f"Added point to {self.selected_room} from {source}: ({point[0]:.3f}, {point[1]:.3f})"

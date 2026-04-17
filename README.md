@@ -231,36 +231,31 @@ Navigationを使う上での基本的な流れ
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 ### 部屋ポリゴン登録
-1. 使用する地図のパスを指定する\
-    [room_polygon_editor.launch.py](/sobits_slam/launch/room_polygon_editor.launch.py)のmapを書き換える．\
-    生成した地図を使う場合は，その`.yaml`ファイルを指定する．\
-    例えば，[map_example.yaml](/sobits_slam/map/map_example.yaml)を使う場合は以下のように指定する．
+1. 部屋ポリゴン登録を起動する\
+    `map`と`config_path`をコマンドライン引数で指定して起動する．
     ```sh
-    default_map = os.path.join(package_share, "map", "map_example.yaml")
+    ros2 launch sobits_slam room_polygon_editor.launch.py map:=<地図YAMLへのパス> config_path:=<部屋情報YAMLへのパス>
     ```
-
-2. 部屋情報ファイルの保存先を指定する\
-    [room_polygon_editor.launch.py](/sobits_slam/launch/room_polygon_editor.launch.py)のconfig_pathを書き換える．\
-    例えば，[room_information_example.yaml](/sobits_slam/location/room_information_example.yaml)を使う場合は以下のように指定する．
+    例えば，[map_example.yaml](/sobits_slam/map/map_example.yaml)と[room_information_example.yaml](/sobits_slam/location/room_information_example.yaml)を使う場合は以下のように指定する．
     ```sh
-    default_config = os.path.join(package_share, "location", "room_information_example.yaml")
+    ros2 launch sobits_slam room_polygon_editor.launch.py \
+      map:=$(ros2 pkg prefix sobits_slam)/share/sobits_slam/map/map_example.yaml \
+      config_path:=$(ros2 pkg prefix sobits_slam)/share/sobits_slam/location/room_information_example.yaml
     ```
-
-3. 部屋ポリゴン登録を起動する\
-    以下のコマンドで起動する．
+    引数を省略した場合はデフォルト値が使用される．
     ```sh
     ros2 launch sobits_slam room_polygon_editor.launch.py
     ```
     起動後，地図，RViz，部屋ポリゴン登録GUIが同時に立ち上がる．
 
-4. 部屋を追加する\
+2. 部屋を追加する\
     GUIの`Add Room`を押して部屋名を入力する．
 
-5. 部屋の頂点を登録する\
+3. 部屋の頂点を登録する\
     RViz上で，**2D Goal Pose**を選択し，部屋の頂点を順番にクリックする．\
     クリックした点はGUIとRVizの両方に反映される．
 
-6. 部屋ポリゴンを調整する\
+4. 部屋ポリゴンを調整する\
     GUI上で以下の操作が可能である．
     - `Delete Point`：選択した頂点を削除
     - `Up` / `Down`：頂点の順番を変更
@@ -269,7 +264,7 @@ Navigationを使う上での基本的な流れ
     - `Rename Room`：部屋名を変更
     - `Delete Room`：部屋を削除
 
-7. 保存する\
+5. 保存する\
     `Save`を押すと，部屋情報が`room_information.yaml`形式で保存される．\
     保存例は以下の通り．
     ```yaml
@@ -281,7 +276,7 @@ Navigationを使う上での基本的な流れ
         - [0.519, 2.612]
     ```
 
-8. RViz上で可視化を確認する\
+6. RViz上で可視化を確認する\
     各部屋は異なる色で表示される．\
     部屋領域は透明度`0.5`で塗りつぶされ，頂点は点として表示される．
 
