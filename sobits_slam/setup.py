@@ -15,6 +15,7 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
         (os.path.join('share', package_name, 'location'), glob('location/*.yaml')),
         (os.path.join('share', package_name, 'map'), glob('map/*')),
+        (os.path.join('share', package_name, 'rviz'), glob('rviz/*.rviz')),
         (os.path.join('share', package_name, 'img'), glob('img/*')),
         (os.path.join('share', package_name, 'param', 'sobit_home'), glob('param/sobit_home/*.yaml')),
         (os.path.join('share', package_name, 'param', 'sobit_pro'), glob('param/sobit_pro/*.yaml')),
@@ -35,6 +36,7 @@ setup(
         'console_scripts': [
             'sobits_map_saver = sobits_slam.sobits_map_saver:main',
             'location_setting = sobits_slam.location_setting:main',
+            'room_polygon_setting = sobits_slam.room_polygon_setting:main',
         ],
     },
 )
