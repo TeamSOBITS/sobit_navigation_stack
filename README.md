@@ -28,6 +28,7 @@
       <ul>
         <li><a href="#地図生成">地図生成</a></li>
         <li><a href="#地点登録">地点登録</a></li>
+        <li><a href="#部屋ポリゴン登録">部屋ポリゴン登録</a></li>
         <li><a href="#ナビゲーションを実行">ナビゲーションを実行</a></li>
       </ul>
     </li>
@@ -227,6 +228,63 @@ Navigationを使う上での基本的な流れ
     ```bash
     source ~/colcon_ws/install/setup.sh
     ```
+<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+
+### 部屋ポリゴン登録
+1. 使用する地図のパスを指定する\
+    [room_polygon_editor.launch.py](/sobits_slam/launch/room_polygon_editor.launch.py)のmapを書き換える．\
+    生成した地図を使う場合は，その`.yaml`ファイルを指定する．\
+    例えば，[map_example.yaml](/sobits_slam/map/map_example.yaml)を使う場合は以下のように指定する．
+    ```sh
+    default_map = os.path.join(package_share, "map", "map_example.yaml")
+    ```
+
+2. 部屋情報ファイルの保存先を指定する\
+    [room_polygon_editor.launch.py](/sobits_slam/launch/room_polygon_editor.launch.py)のconfig_pathを書き換える．\
+    例えば，[room_information_example.yaml](/sobits_slam/location/room_information_example.yaml)を使う場合は以下のように指定する．
+    ```sh
+    default_config = os.path.join(package_share, "location", "room_information_example.yaml")
+    ```
+
+3. 部屋ポリゴン登録を起動する\
+    以下のコマンドで起動する．
+    ```sh
+    ros2 launch sobits_slam room_polygon_editor.launch.py
+    ```
+    起動後，地図，RViz，部屋ポリゴン登録GUIが同時に立ち上がる．
+
+4. 部屋を追加する\
+    GUIの`Add Room`を押して部屋名を入力する．
+
+5. 部屋の頂点を登録する\
+    RViz上で，**2D Goal Pose**を選択し，部屋の頂点を順番にクリックする．\
+    クリックした点はGUIとRVizの両方に反映される．
+
+6. 部屋ポリゴンを調整する\
+    GUI上で以下の操作が可能である．
+    - `Delete Point`：選択した頂点を削除
+    - `Up` / `Down`：頂点の順番を変更
+    - `Auto Order`：頂点を自動整列
+    - `Clear`：選択中の部屋の頂点をすべて削除
+    - `Rename Room`：部屋名を変更
+    - `Delete Room`：部屋を削除
+
+7. 保存する\
+    `Save`を押すと，部屋情報が`room_information.yaml`形式で保存される．\
+    保存例は以下の通り．
+    ```yaml
+    room_polygons:
+      "bedroom":
+        - [0.595, -1.480]
+        - [5.503, -1.528]
+        - [5.579, 2.406]
+        - [0.519, 2.612]
+    ```
+
+8. RViz上で可視化を確認する\
+    各部屋は異なる色で表示される．\
+    部屋領域は透明度`0.5`で塗りつぶされ，頂点は点として表示される．
+
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 ### ナビゲーションを実行

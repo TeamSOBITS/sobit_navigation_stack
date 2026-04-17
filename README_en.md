@@ -27,6 +27,7 @@
 <ul>
 <li><a href="#map-generation">Map Generation</a></li>
 <li><a href="#registering-locations">Registering Locations</a></li>
+<li><a href="#registering-room-polygons">Registering Room Polygons</a></li>
 <li><a href="#running-navigation">Running Navigation</a></li>
 </ul>
 </li>
@@ -207,6 +208,69 @@ Basic workflow for using Navigation:
     ```bash
     source ~/colcon_ws/install/setup.sh
     ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Registering Room Polygons
+
+1.  **Specify the map path to use.**
+    Modify the `map` setting in [room_polygon_editor.launch.py](/sobits_slam/launch/room_polygon_editor.launch.py). If you want to use a generated map, specify its `.yaml` file.
+
+    Example: If you want to use [map_example.yaml](/sobits_slam/map/map_example.yaml)
+
+    ```sh
+    default_map = os.path.join(package_share, "map", "map_example.yaml")
+    ```
+
+2.  **Specify the room information file path.**
+    Modify `config_path` in [room_polygon_editor.launch.py](/sobits_slam/launch/room_polygon_editor.launch.py).
+
+    Example: If you want to use [room_information_example.yaml](/sobits_slam/location/room_information_example.yaml)
+
+    ```sh
+    default_config = os.path.join(package_share, "location", "room_information_example.yaml")
+    ```
+
+3.  **Launch the room polygon editor.**
+    Run the following command:
+
+    ```sh
+    ros2 launch sobits_slam room_polygon_editor.launch.py
+    ```
+
+    This launches the map, RViz, and the room polygon editor GUI at the same time.
+
+4.  **Add a room.**
+    Press `Add Room` in the GUI and enter the room name.
+
+5.  **Register the room vertices.**
+    In RViz, select **2D Goal Pose** and click the room vertices in order.
+    The clicked points will be reflected in both the GUI and RViz.
+
+6.  **Adjust the room polygon.**
+    The GUI supports the following operations:
+    - `Delete Point`: Delete the selected vertex
+    - `Up` / `Down`: Change the vertex order
+    - `Auto Order`: Automatically reorder vertices
+    - `Clear`: Delete all vertices in the selected room
+    - `Rename Room`: Rename the room
+    - `Delete Room`: Delete the room
+
+7.  **Save the file.**
+    Press `Save` to write the room information in `room_information.yaml` format.
+
+    ```yaml
+    room_polygons:
+      "bedroom":
+        - [0.595, -1.480]
+        - [5.503, -1.528]
+        - [5.579, 2.406]
+        - [0.519, 2.612]
+    ```
+
+8.  **Check the visualization in RViz.**
+    Each room is displayed in a different color.
+    The room area is filled with alpha `0.5`, and vertices are shown as points.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
