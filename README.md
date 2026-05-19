@@ -71,7 +71,7 @@ Navigationのオープンソースの概要は[こちら](https://docs.nav2.org/
 
 1. ROS2の`src`フォルダに移動します．
    ```bash
-   cd　~/colcon_ws/src/
+   cd ~/colcon_ws/src/
    ```
 2. 本レポジトリをcloneします．
    ```bash
