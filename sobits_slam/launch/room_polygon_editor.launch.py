@@ -28,6 +28,11 @@ def generate_launch_description():
         default_value=default_config,
         description="Full path to the room information YAML file.",
     )
+    read_only_arg = DeclareLaunchArgument(
+        "read_only",
+        default_value="false",
+        description="If true, publish room polygon markers without opening the editor GUI or accepting point edits.",
+    )
 
     map_server = Node(
         package="nav2_map_server",
@@ -58,7 +63,12 @@ def generate_launch_description():
         executable="room_polygon_setting",
         name="room_polygon_setting",
         output="screen",
-        parameters=[{"config_path": LaunchConfiguration("config_path")}],
+        parameters=[
+            {
+                "config_path": LaunchConfiguration("config_path"),
+                "read_only": LaunchConfiguration("read_only"),
+            }
+        ],
     )
 
     return LaunchDescription(
@@ -66,6 +76,7 @@ def generate_launch_description():
             map_arg,
             rviz_arg,
             config_arg,
+            read_only_arg,
             map_server,
             lifecycle_manager,
             rviz,
