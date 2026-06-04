@@ -133,7 +133,7 @@ class RoomPolygonSetting(Node):
             self.width = self.tk.winfo_screenwidth()
             self.height = self.tk.winfo_screenheight()
 
-        self.status_var = tk.StringVar(value="Select a room file to begin.") if self.tk else None
+        self.status_var = tk.StringVar(self.tk, value="Select a room file to begin.") if self.tk else None
         self.room_listbox = None
         self.point_listbox = None
 

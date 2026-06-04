@@ -5,7 +5,6 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -67,7 +66,7 @@ def generate_launch_description():
         parameters=[
             {
                 "config_path": LaunchConfiguration("config_path"),
-                "read_only": ParameterValue(LaunchConfiguration("read_only"), value_type=bool),
+                "read_only": LaunchConfiguration("read_only"),
             }
         ],
     )
