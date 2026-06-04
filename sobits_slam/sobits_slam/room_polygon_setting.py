@@ -84,7 +84,26 @@ class RoomPolygonSetting(Node):
         self.declare_parameter("config_path", "")
         self.declare_parameter("read_only", False)
         self.config_path = ""
-        self.read_only = bool(self.get_parameter("read_only").value)
+        read_only_param = self.get_parameter("read_only").value
+        if isinstance(read_only_param, bool):
+            self.read_only = read_only_param
+        elif isinstance(read_only_param, str):
+            normalized = read_only_param.strip().lower()
+            if normalized in {"true", "1", "yes", "on"}:
+                self.read_only = True
+            elif normalized in {"false", "0", "no", "off", ""}:
+                self.read_only = False
+            else:
+                self.get_logger().warning(
+                    f"Invalid 'read_only' value '{read_only_param}'. Falling back to False."
+                )
+                self.read_only = False
+        else:
+            self.get_logger().warning(
+                f"'read_only' parameter has unsupported type {type(read_only_param).__name__}. "
+                "Falling back to False."
+            )
+            self.read_only = False
 
         self.goal_pose_sub = None
         if not self.read_only:
@@ -149,8 +168,10 @@ class RoomPolygonSetting(Node):
 
         config_path = Path(self.config_path)
         if not config_path.exists():
-            self.room_polygons = {}
+            with self.lock:
+                self.room_polygons = {}
             self.set_status(f"New room file selected: {config_path}")
+            self.publish_room_markers()
             return
 
         with open(config_path, "r", encoding="utf-8") as file:
