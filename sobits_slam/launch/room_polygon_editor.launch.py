@@ -5,6 +5,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -27,6 +28,11 @@ def generate_launch_description():
         "config_path",
         default_value=default_config,
         description="Full path to the room information YAML file.",
+    )
+    read_only_arg = DeclareLaunchArgument(
+        "read_only",
+        default_value="false",
+        description="If true, publish room polygon markers without opening the editor GUI or accepting point edits.",
     )
 
     map_server = Node(
@@ -58,7 +64,12 @@ def generate_launch_description():
         executable="room_polygon_setting",
         name="room_polygon_setting",
         output="screen",
-        parameters=[{"config_path": LaunchConfiguration("config_path")}],
+        parameters=[
+            {
+                "config_path": LaunchConfiguration("config_path"),
+                "read_only": ParameterValue(LaunchConfiguration("read_only"), value_type=bool),
+            }
+        ],
     )
 
     return LaunchDescription(
@@ -66,6 +77,7 @@ def generate_launch_description():
             map_arg,
             rviz_arg,
             config_arg,
+            read_only_arg,
             map_server,
             lifecycle_manager,
             rviz,
