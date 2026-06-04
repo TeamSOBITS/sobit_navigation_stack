@@ -12,6 +12,7 @@ import rclpy
 import yaml
 from geometry_msgs.msg import Point
 from geometry_msgs.msg import PoseStamped
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from rclpy.qos import QoSDurabilityPolicy, QoSProfile, QoSReliabilityPolicy
 from visualization_msgs.msg import Marker, MarkerArray
@@ -81,14 +82,18 @@ class RoomPolygonSetting(Node):
         super().__init__("room_polygon_setting")
 
         self.declare_parameter("config_path", "")
+        self.declare_parameter("read_only", False)
         self.config_path = ""
+        self.read_only = bool(self.get_parameter("read_only").value)
 
-        self.goal_pose_sub = self.create_subscription(
-            PoseStamped,
-            "/goal_pose",
-            self.goal_pose_callback,
-            1,
-        )
+        self.goal_pose_sub = None
+        if not self.read_only:
+            self.goal_pose_sub = self.create_subscription(
+                PoseStamped,
+                "/goal_pose",
+                self.goal_pose_callback,
+                1,
+            )
         marker_qos = QoSProfile(
             depth=1,
             reliability=QoSReliabilityPolicy.RELIABLE,
@@ -100,12 +105,16 @@ class RoomPolygonSetting(Node):
         self.room_polygons = {}
         self.selected_room = None
 
-        self.tk = tk.Tk()
-        self.tk.title("[Room Polygon] Map Information Setting GUI")
-        self.width = self.tk.winfo_screenwidth()
-        self.height = self.tk.winfo_screenheight()
+        self.tk = None
+        self.width = 0
+        self.height = 0
+        if not self.read_only:
+            self.tk = tk.Tk()
+            self.tk.title("[Room Polygon] Map Information Setting GUI")
+            self.width = self.tk.winfo_screenwidth()
+            self.height = self.tk.winfo_screenheight()
 
-        self.status_var = tk.StringVar(value="Select a room file to begin.")
+        self.status_var = tk.StringVar(value="Select a room file to begin.") if self.tk else None
         self.room_listbox = None
         self.point_listbox = None
 
@@ -141,7 +150,7 @@ class RoomPolygonSetting(Node):
         config_path = Path(self.config_path)
         if not config_path.exists():
             self.room_polygons = {}
-            self.status_var.set(f"New room file selected: {config_path}")
+            self.set_status(f"New room file selected: {config_path}")
             return
 
         with open(config_path, "r", encoding="utf-8") as file:
@@ -166,8 +175,13 @@ class RoomPolygonSetting(Node):
         if self.selected_room not in self.room_polygons:
             self.selected_room = next(iter(self.room_polygons), None)
 
-        self.status_var.set(f"Loaded room polygons from {config_path}")
+        self.set_status(f"Loaded room polygons from {config_path}")
         self.publish_room_markers()
+
+    def set_status(self, message: str):
+        if self.status_var is not None:
+            self.status_var.set(message)
+        self.get_logger().info(message)
 
     def save_config(self):
         config_path = Path(self.config_path or _default_room_info_path())
@@ -521,6 +535,19 @@ def main(args=None):
 
     configured_path = str(node.get_parameter("config_path").value).strip()
     node.config_path = configured_path or str(_default_room_info_path())
+
+    if node.read_only:
+        node.load_config()
+        node.publish_room_markers()
+        try:
+            rclpy.spin(node)
+        except (KeyboardInterrupt, ExternalShutdownException):
+            pass
+        finally:
+            node.destroy_node()
+            if rclpy.ok():
+                rclpy.shutdown()
+        return
 
     try:
         node.select_config_file()
