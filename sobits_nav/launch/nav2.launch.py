@@ -141,7 +141,7 @@ def generate_launch_description():
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
         default_value=PathJoinSubstitution(
-            [FindPackageShare('sobits_nav'), 'param', LaunchConfiguration('robot_name'), 'navigation_config.yaml']
+            [FindPackageShare('sobits_nav'), 'param', robot_name_val, 'navigation_config.yaml']
         ),
         description='Full path to nav2 params YAML; override from rc_doinglaundry for competition runs',
     )
