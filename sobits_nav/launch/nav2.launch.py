@@ -29,7 +29,7 @@ from launch.actions import (
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, PythonExpression
-from launch_ros.actions import Node
+from launch_ros.actions import Node, SetParameter
 from launch_ros.actions import PushROSNamespace
 from launch_ros.descriptions import ParameterFile
 from launch_ros.substitutions import FindPackageShare
@@ -252,13 +252,19 @@ def generate_launch_description():
     bringup_cmd_group = GroupAction(
         [
             PushROSNamespace(condition=IfCondition(use_namespace), namespace=namespace),
+            # Apply costmap layer overrides globally so they take effect regardless of
+            # use_composition. Without this, custom_costmap_layer and keepout_filter.enabled
+            # were silently ignored when use_composition:=False because the inline dict on
+            # nav2_container was the only place they were set.
+            SetParameter('voxel_layer.observation_sources', custom_costmap_layer),
+            SetParameter('obstacle_layer.observation_sources', custom_costmap_layer),
+            SetParameter('keepout_filter.enabled', use_keepout_map),
             Node(
                 condition=IfCondition(use_composition),
                 name='nav2_container',
                 package='rclcpp_components',
                 executable='component_container_isolated',
-                parameters=[configured_params, {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map, 'voxel_layer.observation_sources': custom_costmap_layer, 'obstacle_layer.observation_sources': custom_costmap_layer,}],
-                # parameters=[configured_params, {'autostart': autostart, 'keepout_filter.enabled': use_keepout_map,}],
+                parameters=[configured_params, {'autostart': autostart}],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings,
                 output='screen',
