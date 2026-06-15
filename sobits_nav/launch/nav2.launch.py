@@ -84,9 +84,7 @@ def generate_launch_description():
     location_yaml_file = LaunchConfiguration('location')  # SOBITS Customize
     use_rviz = LaunchConfiguration('use_rviz')  # SOBITS Customize
     use_sim_time = LaunchConfiguration('use_sim_time')
-    params_file = PathJoinSubstitution(
-        [FindPackageShare('sobits_nav'), 'param', robot_name, 'navigation_config.yaml']
-    )
+    params_file = LaunchConfiguration('params_file')
     slamtool_param_file = PathJoinSubstitution(
         [FindPackageShare('sobits_slam'), 'param', robot_name, 'slamtool_config.yaml']
     )
@@ -138,6 +136,14 @@ def generate_launch_description():
         'robot_name',
         default_value=robot_name_val,
         description='TODO: merge of namespace param.....'
+    )
+
+    declare_params_file_cmd = DeclareLaunchArgument(
+        'params_file',
+        default_value=PathJoinSubstitution(
+            [FindPackageShare('sobits_nav'), 'param', LaunchConfiguration('robot_name'), 'navigation_config.yaml']
+        ),
+        description='Full path to nav2 params YAML; override from rc_doinglaundry for competition runs',
     )
 
     declare_namespace_cmd = DeclareLaunchArgument(
@@ -341,6 +347,7 @@ def generate_launch_description():
 
     # Declare the launch options
     ld.add_action(declare_robot_name_cmd)  # SOBITS Customize
+    ld.add_action(declare_params_file_cmd)  # SOBITS Customize
     ld.add_action(declare_namespace_cmd)
     ld.add_action(declare_use_namespace_cmd)
     ld.add_action(declare_slam_cmd)
