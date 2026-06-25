@@ -33,13 +33,21 @@ def generate_launch_description():
         default_value="false",
         description="If true, publish room polygon markers without opening the editor GUI or accepting point edits.",
     )
+    use_sim_time_arg = DeclareLaunchArgument(
+        "use_sim_time",
+        default_value="false",
+        description="Use simulation clock for all nodes.",
+    )
 
     map_server = Node(
         package="nav2_map_server",
         executable="map_server",
         name="map_server",
         output="screen",
-        parameters=[{"yaml_filename": LaunchConfiguration("map")}],
+        parameters=[
+            {"yaml_filename": LaunchConfiguration("map")},
+            {"use_sim_time": LaunchConfiguration("use_sim_time")},
+        ],
     )
 
     lifecycle_manager = Node(
@@ -47,7 +55,10 @@ def generate_launch_description():
         executable="lifecycle_manager",
         name="lifecycle_manager_map",
         output="screen",
-        parameters=[{"autostart": True, "node_names": ["map_server"]}],
+        parameters=[
+            {"autostart": True, "node_names": ["map_server"]},
+            {"use_sim_time": LaunchConfiguration("use_sim_time")},
+        ],
     )
 
     rviz = Node(
@@ -67,6 +78,7 @@ def generate_launch_description():
             {
                 "config_path": LaunchConfiguration("config_path"),
                 "read_only": LaunchConfiguration("read_only"),
+                "use_sim_time": LaunchConfiguration("use_sim_time"),
             }
         ],
     )
@@ -77,6 +89,7 @@ def generate_launch_description():
             rviz_arg,
             config_arg,
             read_only_arg,
+            use_sim_time_arg,
             map_server,
             lifecycle_manager,
             rviz,
